@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/AngreziOK.iml" filepath="$PROJECT_DIR$/AngreziOK.iml" />
+      <module fileurl="file://E:\AndroidProjects\AOPGit\AngreziOkPlease\AngreziOK.iml" filepath="E:\AndroidProjects\AOPGit\AngreziOkPlease\AngreziOK.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AngreziOkPlease.iml" filepath="$PROJECT_DIR$/AngreziOkPlease.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://E:\AndroidProjects\AOPGit\AngreziOkPlease\app\app.iml" filepath="E:\AndroidProjects\AOPGit\AngreziOkPlease\app\app.iml" />
     </modules>
   </component>
 </project>
