@@ -25,26 +25,14 @@ public class CrlAdapter extends ArrayAdapter<Crl> {
         return super.getCount() + 1;
     }
 
-    @Nullable
-    @Override
-    public Crl getItem(int position) {
-        if (position == 0) {
-            Crl crl = new Crl();
-            crl.setCrl_id("0");
-            crl.setCrl_name(getContext().getString(R.string.create_new_crl));
-            return crl;
-        }
-        return super.getItem(position - 1);
-    }
-
-    public int getCrlPosition(@Nullable String crlId) {
+    public Crl getCrlByID(@Nullable String crlId) {
         if (crlId != null) {
             for (int i = 0; i < crls.size(); i++) {
-                if (crlId == crls.get(i).getCrl_id()) {
-                    return i + 1;
+                if (crlId == crls.get(i).getCRLId()) {
+                    return crls.get(i);
                 }
             }
         }
-        return -1;
+        return null;
     }
 }

@@ -3,30 +3,16 @@ package com.example.pravin.angreziok.activities;
 import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.migration.Migration;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.database.AppDatabase;
-import com.example.pravin.angreziok.domain.Crl;
 
-import java.util.List;
-
-import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
-
-    @BindView(R.id.et_id)
-    EditText et_id;
-    @BindView(R.id.et_name)
-    EditText et_name;
 
     private AppDatabase appDatabase;
 
@@ -62,12 +48,16 @@ public class MainActivity extends AppCompatActivity {
     static final Migration MIGRATION_1_2 = new Migration(1, 2) {
         @Override
         public void migrate(@NonNull SupportSQLiteDatabase database) {
-            database.execSQL("ALTER TABLE Crl "
+           /*
+           Do migration querries here like below
+
+           database.execSQL("ALTER TABLE Crl "
                     + " ADD COLUMN crl_surname TEXT");
+          */
         }
     };
 
-    @OnClick(R.id.btn_add)
+    /*@OnClick(R.id.btn_add)
     public void addCrl() {
         String id, name;
         id = et_id.getText().toString();
@@ -102,9 +92,9 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Problem getting text", Toast.LENGTH_SHORT).show();
         }
-    }
+    }*/
 
-    @OnClick(R.id.btn_displayLog)
+/*    @OnClick(R.id.btn_displayLog)
     public void displayLogs() {
         new AsyncTask<Void, Void, Void>() {
             @Override
@@ -113,5 +103,5 @@ public class MainActivity extends AppCompatActivity {
                 return null;
             }
         }.execute();
-    }
+    }*/
 }
