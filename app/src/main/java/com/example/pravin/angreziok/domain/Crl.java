@@ -10,44 +10,116 @@ public class Crl {
 
     @PrimaryKey
     @NonNull
-    @ColumnInfo(name = "crl_id")
-    private String crl_id;
-    @ColumnInfo(name = "crl_name")
-    private String crl_name;
-    @ColumnInfo(name = "crl_lastname")
-    private String crl_lastname;
+    @ColumnInfo(name = "CRLId")
+    private String CRLId;
+    @ColumnInfo(name = "FirstName")
+    private String FirstName;
+    @ColumnInfo(name = "LastName")
+    private String LastName;
+    @ColumnInfo(name = "UserName")
+    private String UserName;
+    @ColumnInfo(name = "Password")
+    private String Password;
+    @ColumnInfo(name = "ProgramId")
+    private int ProgramId;
+    @ColumnInfo(name = "Mobile")
+    private String Mobile;
+    @ColumnInfo(name = "State")
+    private String State;
+    @ColumnInfo(name = "Email")
+    private String Email;
+    @ColumnInfo(name = "CreatedBy")
+    private String CreatedBy;
+    @ColumnInfo(name = "newCrl")
+    private String newCrl;
 
-    public String getCrl_lastname() {
-        return crl_lastname;
+
+    @NonNull
+    public String getCRLId() {
+        return CRLId;
     }
 
-    public void setCrl_lastname(String crl_lastname) {
-        this.crl_lastname = crl_lastname;
+    public void setCRLId(@NonNull String CRLId) {
+        this.CRLId = CRLId;
     }
 
-    public String getCrl_id() {
-        return crl_id;
+    public String getFirstName() {
+        return FirstName;
     }
 
-    public void setCrl_id(String crl_id) {
-        this.crl_id = crl_id;
+    public void setFirstName(String firstName) {
+        FirstName = firstName;
     }
 
-    public String getCrl_name() {
-        return crl_name;
+    public String getLastName() {
+        return LastName;
     }
 
-    public void setCrl_name(String crl_name) {
-        this.crl_name = crl_name;
+    public void setLastName(String lastName) {
+        LastName = lastName;
     }
 
+    public String getUserName() {
+        return UserName;
+    }
 
-    @Override
-    public String toString() {
-        return "Crl{" +
-                "crl_id='" + crl_id + '\'' +
-                ", crl_name='" + crl_name + '\'' +
-                ", crl_lastname='" + crl_lastname + '\'' +
-                '}';
+    public void setUserName(String userName) {
+        UserName = userName;
+    }
+
+    public String getPassword() {
+        return Password;
+    }
+
+    public void setPassword(String password) {
+        Password = password;
+    }
+
+    public int getProgramId() {
+        return ProgramId;
+    }
+
+    public void setProgramId(int programId) {
+        ProgramId = programId;
+    }
+
+    public String getMobile() {
+        return Mobile;
+    }
+
+    public void setMobile(String mobile) {
+        Mobile = mobile;
+    }
+
+    public String getState() {
+        return State;
+    }
+
+    public void setState(String state) {
+        State = state;
+    }
+
+    public String getEmail() {
+        return Email;
+    }
+
+    public void setEmail(String email) {
+        Email = email;
+    }
+
+    public String getCreatedBy() {
+        return CreatedBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        CreatedBy = createdBy;
+    }
+
+    public String getNewCrl() {
+        return newCrl;
+    }
+
+    public void setNewCrl(String newCrl) {
+        this.newCrl = newCrl;
     }
 }

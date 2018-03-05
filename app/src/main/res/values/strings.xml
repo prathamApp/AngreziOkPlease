@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">AngreziOK</string>
     <string name="create_new_crl">Create new category</string>
+    <string name="create_new_student">Create new student</string>
 </resources>
