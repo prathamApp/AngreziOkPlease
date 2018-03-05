@@ -1,0 +1,39 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 3,
+    "identityHash": "c76c22e303c0e5253f723f62facd22c8",
+    "entities": [
+      {
+        "tableName": "Crl",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`crl_id` TEXT NOT NULL, `crl_name` TEXT, PRIMARY KEY(`crl_id`))",
+        "fields": [
+          {
+            "fieldPath": "crl_id",
+            "columnName": "crl_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "crl_name",
+            "columnName": "crl_name",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "crl_id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"c76c22e303c0e5253f723f62facd22c8\")"
+    ]
+  }
+}
