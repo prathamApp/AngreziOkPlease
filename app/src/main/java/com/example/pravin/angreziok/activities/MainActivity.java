@@ -6,11 +6,14 @@ import android.arch.persistence.room.migration.Migration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 
 import com.example.pravin.angreziok.R;
+import com.example.pravin.angreziok.animations.MyRotateAnimation;
 import com.example.pravin.angreziok.database.AppDatabase;
 
 import butterknife.ButterKnife;
@@ -18,6 +21,8 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity {
 
     private AppDatabase appDatabase;
+    private MyRotateAnimation rotation;
+    private StartNextRotate startNext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,10 +113,61 @@ public class MainActivity extends AppCompatActivity {
         }.execute();
     }*/
 
-    public void rotateButton(View view){
-        RotateAnimation ra = new RotateAnimation(0.0f, 360.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        ra.setFillAfter(true);
-        ra.setDuration(0);
-        view.startAnimation(ra);
+    public void rotateButton(View view) {
+        /*RotateAnimation rotateAnimation = new RotateAnimation(0, 360f,
+                Animation.RELATIVE_TO_SELF, 0.5f,
+                Animation.RELATIVE_TO_SELF, 0.5f);
+
+        rotateAnimation.setInterpolator(new LinearInterpolator());
+        rotateAnimation.setDuration(2000);
+        rotateAnimation.setRepeatCount(Animation.INFINITE);
+
+        view.startAnimation(rotateAnimation);*/
+        startRotation(0,360,view);
     }
+
+    private void startRotation(float start, float end, View view) {
+        // Calculating center point
+        final float centerX = view.getWidth() / 2.0f;
+        final float centerY = view.getHeight() / 2.0f;
+        Log.d("MainActivity", "centerX=" + centerX + ", centerY=" + centerY);
+        // Create a new 3D rotation with the supplied parameter
+        // The animation listener is used to trigger the next animation
+        //final Rotate3dAnimation rotation =new Rotate3dAnimation(start, end, centerX, centerY, 310.0f, true);
+        //Z axis is scaled to 0
+        rotation = new MyRotateAnimation(start, end, centerX, centerY, 0f, true);
+        rotation.setDuration(3000);
+        rotation.setFillAfter(true);
+        //rotation.setInterpolator(new AccelerateInterpolator());
+        //Uniform rotation
+        rotation.setInterpolator(new LinearInterpolator());
+        //Monitor settings
+        startNext = new StartNextRotate(view);
+        rotation.setAnimationListener(startNext);
+        view.startAnimation(rotation);
+    }
+
+    private class StartNextRotate implements Animation.AnimationListener {
+        View view;
+        StartNextRotate(View view){
+            this.view = view;
+        }
+        public void onAnimationEnd(Animation animation) {
+            // TODO Auto-generated method stub
+            Log.d("MainActivity", "onAnimationEnd......");
+            view.startAnimation(rotation);
+        }
+
+        public void onAnimationRepeat(Animation animation) {
+            // TODO Auto-generated method stub
+
+        }
+
+        public void onAnimationStart(Animation animation) {
+            // TODO Auto-generated method stub
+
+        }
+
+    }
+
 }
