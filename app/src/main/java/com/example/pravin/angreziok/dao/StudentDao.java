@@ -17,7 +17,7 @@ public interface StudentDao {
     long insert(Student student);
 
     @Insert
-    long insertAll(Student... students);
+    long[] insertAll(Student... students);
 
     @Update
     int update(Student student);
@@ -41,9 +41,6 @@ public interface StudentDao {
     void setFlagFalse(String studentID);
 
     @Query("select FirstName from Student where StudentID = :studentID")
-    Student getStudentName(String studentID);
-
-    @Query("select * from Student where StudentUID = ChildID and StudentID = StudentUID")
-    Student getAllStudentsByChildIDnStudentUniqID(String ChildID, String StudentUID);
+    String getStudentName(String studentID);
 
 }

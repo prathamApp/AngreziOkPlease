@@ -6,6 +6,9 @@ import android.arch.persistence.room.migration.Migration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
 
 import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.database.AppDatabase;
@@ -104,4 +107,11 @@ public class MainActivity extends AppCompatActivity {
             }
         }.execute();
     }*/
+
+    public void rotateButton(View view){
+        RotateAnimation ra = new RotateAnimation(0.0f, 360.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        ra.setFillAfter(true);
+        ra.setDuration(0);
+        view.startAnimation(ra);
+    }
 }

@@ -16,7 +16,7 @@ public interface ScoreDao {
     long insert(Score score);
 
     @Insert
-    long insertAll(Score... scores);
+    long[] insertAll(Score... scores);
 
     @Update
     int update(Score score);

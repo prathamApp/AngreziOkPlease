@@ -17,7 +17,7 @@ public interface CrlDao {
     long insert(Crl crl);
 
     @Insert
-    long insertAll(Crl... crls);
+    long[] insertAll(Crl... crls);
 
     @Update
     int update(Crl crl);
