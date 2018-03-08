@@ -16,12 +16,24 @@ public interface CrlDao {
     @Insert
     long insert(Crl crl);
 
+    @Insert
+    long insertAll(Crl... crls);
+
     @Update
     int update(Crl crl);
 
-    @Query("SELECT * FROM Crl")
-    List<Crl> getAll();
+    @Delete
+    void delete(Crl crl);
 
     @Delete
     void deleteAll(Crl... crls);
+
+    @Query("select * from Crl where CRLId = :crlID")
+    Crl getCrl(String crlID);
+
+    @Query("select * from Crl")
+    List<Crl> getAllCrls();
+
+    @Query("select * from Crl where newCrl = 1")
+    List<Crl> getAllNewCrls();
 }
