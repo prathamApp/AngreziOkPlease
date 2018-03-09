@@ -16,12 +16,31 @@ public interface StudentDao {
     @Insert
     long insert(Student student);
 
+    @Insert
+    long[] insertAll(Student... students);
+
     @Update
     int update(Student student);
 
-    @Query("SELECT * FROM Student")
-    List<Student> getAll();
+    @Delete
+    void delete(Student student);
 
     @Delete
     void deleteAll(Student... students);
+
+    @Query("select * from Student where StudentID = :studentID")
+    Student getStudent(String studentID);
+
+    @Query("select * from Student")
+    List<Student> getAllStudents();
+
+    @Query("select * from Student where NewFlag = 1")
+    List<Student> getAllNewStudents();
+
+    @Query("update Student set NewFlag=0 where StudentID = :studentID")
+    void setFlagFalse(String studentID);
+
+    @Query("select FirstName from Student where StudentID = :studentID")
+    String getStudentName(String studentID);
+
 }
