@@ -8,6 +8,8 @@ import android.arch.persistence.room.Update;
 
 import com.example.pravin.angreziok.domain.Score;
 
+import java.util.List;
+
 
 @Dao
 public interface ScoreDao {
@@ -26,5 +28,8 @@ public interface ScoreDao {
 
     @Delete
     void deleteAll(Score... scores);
+
+    @Query("select * from Score")
+    List<Score> getAllScores();
 
 }
