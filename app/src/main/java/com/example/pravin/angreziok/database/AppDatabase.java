@@ -3,7 +3,11 @@ package com.example.pravin.angreziok.database;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.RoomDatabase;
 
+import com.example.pravin.angreziok.dao.AttendanceDao;
 import com.example.pravin.angreziok.dao.CrlDao;
+import com.example.pravin.angreziok.dao.ScoreDao;
+import com.example.pravin.angreziok.dao.SessionDao;
+import com.example.pravin.angreziok.dao.StatusDao;
 import com.example.pravin.angreziok.dao.StudentDao;
 import com.example.pravin.angreziok.domain.Attendance;
 import com.example.pravin.angreziok.domain.Crl;
@@ -21,12 +25,12 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public abstract StudentDao getStudentDao();
 
-    public abstract CrlDao getScoreDao();
+    public abstract ScoreDao getScoreDao();
 
-    public abstract CrlDao getSessionDao();
+    public abstract SessionDao getSessionDao();
 
-    public abstract CrlDao getAttendanceDao();
+    public abstract AttendanceDao getAttendanceDao();
 
-    public abstract CrlDao getStatusDao();
+    public abstract StatusDao getStatusDao();
 
 }

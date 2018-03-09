@@ -3,6 +3,7 @@ package com.example.pravin.angreziok.activities;
 import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.migration.Migration;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +16,9 @@ import android.view.animation.RotateAnimation;
 import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.animations.MyRotateAnimation;
 import com.example.pravin.angreziok.database.AppDatabase;
+import com.example.pravin.angreziok.domain.Crl;
+
+import java.util.List;
 
 import butterknife.ButterKnife;
 
@@ -48,9 +52,16 @@ public class MainActivity extends AppCompatActivity {
 
         appDatabase = Room.databaseBuilder(this,
                 AppDatabase.class, AppDatabase.DB_NAME)
-                .addMigrations(MIGRATION_1_2)
+//                .addMigrations(MIGRATION_1_2)
                 .build();
         //BackupDatabase.backup(this);
+        new AsyncTask<Object, Void, Object>() {
+            @Override
+            protected Object doInBackground(Object[] objects) {
+                Log.d(":::",""+appDatabase.getCrlDao().getAllCrls().size());
+                return null;
+            }
+        }.execute();
     }
 
     static final Migration MIGRATION_1_2 = new Migration(1, 2) {

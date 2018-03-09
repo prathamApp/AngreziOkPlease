@@ -33,6 +33,6 @@ public interface SessionDao {
     List<Session> getAllSessions();
 
     @Query("UPDATE Session SET toDate = :toDate where SessionID = :SessionID")
-    boolean UpdateToDate(String SessionID, String toDate);
+    void UpdateToDate(String SessionID, String toDate);
 
 }
