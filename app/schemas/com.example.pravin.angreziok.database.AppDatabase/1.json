@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "1c14062bf1be7cf1d942c9ccf4b3ea99",
+    "identityHash": "24e1f837ac7bc372b2d6e8a766340771",
     "entities": [
       {
         "tableName": "Crl",
@@ -163,11 +163,187 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "Score",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`SessionID` TEXT NOT NULL, `StudentID` TEXT, `DeviceID` TEXT, `ResourceID` TEXT, `QuestionId` INTEGER NOT NULL, `ScoredMarks` INTEGER NOT NULL, `TotalMarks` INTEGER NOT NULL, `StartDateTime` TEXT, `EndDateTime` TEXT, `Level` INTEGER NOT NULL, PRIMARY KEY(`SessionID`))",
+        "fields": [
+          {
+            "fieldPath": "SessionID",
+            "columnName": "SessionID",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "StudentID",
+            "columnName": "StudentID",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "DeviceID",
+            "columnName": "DeviceID",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "ResourceID",
+            "columnName": "ResourceID",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "QuestionId",
+            "columnName": "QuestionId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "ScoredMarks",
+            "columnName": "ScoredMarks",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "TotalMarks",
+            "columnName": "TotalMarks",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "StartDateTime",
+            "columnName": "StartDateTime",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "EndDateTime",
+            "columnName": "EndDateTime",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "Level",
+            "columnName": "Level",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "SessionID"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "Session",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`SessionID` TEXT NOT NULL, `fromDate` TEXT, `toDate` TEXT, PRIMARY KEY(`SessionID`))",
+        "fields": [
+          {
+            "fieldPath": "SessionID",
+            "columnName": "SessionID",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "fromDate",
+            "columnName": "fromDate",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "toDate",
+            "columnName": "toDate",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "SessionID"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "Attendance",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`attendanceID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `SessionID` TEXT, `StudentID` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "attendanceID",
+            "columnName": "attendanceID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "SessionID",
+            "columnName": "SessionID",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "StudentID",
+            "columnName": "StudentID",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "attendanceID"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "Status",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`statusID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `statusKey` TEXT, `value` TEXT NOT NULL, `description` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "statusID",
+            "columnName": "statusID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "statusKey",
+            "columnName": "statusKey",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "value",
+            "columnName": "value",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "statusID"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"1c14062bf1be7cf1d942c9ccf4b3ea99\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"24e1f837ac7bc372b2d6e8a766340771\")"
     ]
   }
 }

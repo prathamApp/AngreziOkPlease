@@ -8,6 +8,9 @@ import android.support.annotation.NonNull;
 @Entity(tableName = "Status")
 public class Status {
 
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "statusID")
+    private int statusID;
     @ColumnInfo(name = "statusKey")
     private String statusKey;
     @NonNull
@@ -16,11 +19,19 @@ public class Status {
     @ColumnInfo(name = "description")
     private String description;
 
-    public String getstatusKey() {
+    public int getStatusID() {
+        return statusID;
+    }
+
+    public void setStatusID(int statusID) {
+        this.statusID = statusID;
+    }
+
+    public String getStatusKey() {
         return statusKey;
     }
 
-    public void setstatusKey(String statusKey) {
+    public void setStatusKey(String statusKey) {
         this.statusKey = statusKey;
     }
 
