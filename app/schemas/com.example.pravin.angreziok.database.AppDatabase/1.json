@@ -2,34 +2,162 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "bba800cbb08124eee02e1fedf5b92dd0",
+    "identityHash": "1c14062bf1be7cf1d942c9ccf4b3ea99",
     "entities": [
       {
         "tableName": "Crl",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`crl_id` TEXT NOT NULL, `crl_name` TEXT, `crl_lastname` TEXT, PRIMARY KEY(`crl_id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`CRLId` TEXT NOT NULL, `FirstName` TEXT, `LastName` TEXT, `UserName` TEXT, `Password` TEXT, `ProgramId` INTEGER NOT NULL, `Mobile` TEXT, `State` TEXT, `Email` TEXT, `CreatedBy` TEXT, `newCrl` TEXT, PRIMARY KEY(`CRLId`))",
         "fields": [
           {
-            "fieldPath": "crl_id",
-            "columnName": "crl_id",
+            "fieldPath": "CRLId",
+            "columnName": "CRLId",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "crl_name",
-            "columnName": "crl_name",
+            "fieldPath": "FirstName",
+            "columnName": "FirstName",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "crl_lastname",
-            "columnName": "crl_lastname",
+            "fieldPath": "LastName",
+            "columnName": "LastName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "UserName",
+            "columnName": "UserName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "Password",
+            "columnName": "Password",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "ProgramId",
+            "columnName": "ProgramId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "Mobile",
+            "columnName": "Mobile",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "State",
+            "columnName": "State",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "Email",
+            "columnName": "Email",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "CreatedBy",
+            "columnName": "CreatedBy",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "newCrl",
+            "columnName": "newCrl",
             "affinity": "TEXT",
             "notNull": false
           }
         ],
         "primaryKey": {
           "columnNames": [
-            "crl_id"
+            "CRLId"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "Student",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`StudentID` TEXT NOT NULL, `StudentUID` TEXT, `FirstName` TEXT, `MiddleName` TEXT, `LastName` TEXT, `Gender` TEXT, `regDate` TEXT, `Age` INTEGER NOT NULL, `villageName` TEXT, `newFlag` INTEGER NOT NULL, `DeviceId` TEXT, PRIMARY KEY(`StudentID`))",
+        "fields": [
+          {
+            "fieldPath": "StudentID",
+            "columnName": "StudentID",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "StudentUID",
+            "columnName": "StudentUID",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "FirstName",
+            "columnName": "FirstName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "MiddleName",
+            "columnName": "MiddleName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "LastName",
+            "columnName": "LastName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "Gender",
+            "columnName": "Gender",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "regDate",
+            "columnName": "regDate",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "Age",
+            "columnName": "Age",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "villageName",
+            "columnName": "villageName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "newFlag",
+            "columnName": "newFlag",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "DeviceId",
+            "columnName": "DeviceId",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "StudentID"
           ],
           "autoGenerate": false
         },
@@ -39,7 +167,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"bba800cbb08124eee02e1fedf5b92dd0\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"1c14062bf1be7cf1d942c9ccf4b3ea99\")"
     ]
   }
 }
