@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void migrate(@NonNull SupportSQLiteDatabase database) {
            /*
-           Do migration querries here like below
+           Do migration queries here like below
 
            database.execSQL("ALTER TABLE Crl "
                     + " ADD COLUMN crl_surname TEXT");

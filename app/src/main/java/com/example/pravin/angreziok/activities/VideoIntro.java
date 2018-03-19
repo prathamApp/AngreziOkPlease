@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.WindowManager;
@@ -20,11 +19,11 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class VideoIntro  extends Activity implements MediaPlayer.OnCompletionListener, MediaPlayer.OnPreparedListener{
+public class VideoIntro extends Activity implements MediaPlayer.OnCompletionListener, MediaPlayer.OnPreparedListener {
 
     @BindView(R.id.intro_videoView)
     VideoView videoView;
-    String videoPath,final_sd_path;
+    String videoPath, final_sd_path;
     static String sdCardPath;
 
     @Override
@@ -33,10 +32,10 @@ public class VideoIntro  extends Activity implements MediaPlayer.OnCompletionLis
         setContentView(R.layout.activity_video_intro);
         ButterKnife.bind(this);
 
-        ArrayList<String> sdcard_path= SDCardUtil.getExtSdCardPaths(VideoIntro.this);
-        for (String path:sdcard_path){
+        ArrayList<String> sdcard_path = SDCardUtil.getExtSdCardPaths(VideoIntro.this);
+        for (String path : sdcard_path) {
             final_sd_path = path;
-            if(new File(final_sd_path + "/.AOP_External").exists()) {
+            if (new File(final_sd_path + "/.AOP_External").exists()) {
                 sdCardPath = final_sd_path + "/.AOP_External/";
                 break;
             }
@@ -69,9 +68,8 @@ public class VideoIntro  extends Activity implements MediaPlayer.OnCompletionLis
         rs.gc();
         rs.freeMemory();
         this.finish();
-
-        Intent intent = new Intent(this, StudentToTeamMapping.class);
-        ((Activity) this).startActivity(intent);    }
+        startActivity(new Intent(this, MainActivity.class));
+    }
 
     @Override
     public void onPrepared(MediaPlayer mp) {
