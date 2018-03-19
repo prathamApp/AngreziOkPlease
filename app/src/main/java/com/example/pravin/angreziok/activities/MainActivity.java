@@ -3,23 +3,12 @@ package com.example.pravin.angreziok.activities;
 import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.migration.Migration;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.LinearInterpolator;
-import android.view.animation.RotateAnimation;
 
 import com.example.pravin.angreziok.R;
-import com.example.pravin.angreziok.animations.MyRotateAnimation;
 import com.example.pravin.angreziok.database.AppDatabase;
-import com.example.pravin.angreziok.database.BackupDatabase;
-import com.example.pravin.angreziok.domain.Crl;
-
-import java.util.List;
 
 import butterknife.ButterKnife;
 
@@ -33,13 +22,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         /* 1) In case migration needed and no problem with data loss then this would work
-        */
 
-        /*
         appDatabase =  Room.databaseBuilder(this,
         AppDatabase.class, AppDatabase.DB_NAME)
                 .fallbackToDestructiveMigration()
-                .build();*/
+                .build();
+         */
 
 
         /* 2) In case migration needed and want to keep data as it is then this would work
