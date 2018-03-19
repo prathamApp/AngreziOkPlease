@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "7bf44de44818626e83fa59c109bb1b6a",
+    "identityHash": "24e1f837ac7bc372b2d6e8a766340771",
     "entities": [
       {
         "tableName": "Crl",
@@ -272,8 +272,14 @@
       },
       {
         "tableName": "Attendance",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`SessionID` TEXT, `StudentID` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`attendanceID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `SessionID` TEXT, `StudentID` TEXT)",
         "fields": [
+          {
+            "fieldPath": "attendanceID",
+            "columnName": "attendanceID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
           {
             "fieldPath": "SessionID",
             "columnName": "SessionID",
@@ -288,16 +294,24 @@
           }
         ],
         "primaryKey": {
-          "columnNames": [],
-          "autoGenerate": false
+          "columnNames": [
+            "attendanceID"
+          ],
+          "autoGenerate": true
         },
         "indices": [],
         "foreignKeys": []
       },
       {
         "tableName": "Status",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`statusKey` TEXT, `value` TEXT NOT NULL, `description` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`statusID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `statusKey` TEXT, `value` TEXT NOT NULL, `description` TEXT)",
         "fields": [
+          {
+            "fieldPath": "statusID",
+            "columnName": "statusID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
           {
             "fieldPath": "statusKey",
             "columnName": "statusKey",
@@ -318,8 +332,10 @@
           }
         ],
         "primaryKey": {
-          "columnNames": [],
-          "autoGenerate": false
+          "columnNames": [
+            "statusID"
+          ],
+          "autoGenerate": true
         },
         "indices": [],
         "foreignKeys": []
@@ -327,7 +343,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"7bf44de44818626e83fa59c109bb1b6a\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"24e1f837ac7bc372b2d6e8a766340771\")"
     ]
   }
 }

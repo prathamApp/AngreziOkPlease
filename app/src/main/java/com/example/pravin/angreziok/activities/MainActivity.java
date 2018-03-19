@@ -16,6 +16,7 @@ import android.view.animation.RotateAnimation;
 import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.animations.MyRotateAnimation;
 import com.example.pravin.angreziok.database.AppDatabase;
+import com.example.pravin.angreziok.database.BackupDatabase;
 import com.example.pravin.angreziok.domain.Crl;
 
 import java.util.List;
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             protected Object doInBackground(Object[] objects) {
                 Log.d(":::",""+appDatabase.getCrlDao().getAllCrls().size());
+                BackupDatabase.backup(MainActivity.this);
                 return null;
             }
         }.execute();

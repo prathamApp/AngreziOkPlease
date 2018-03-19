@@ -47,7 +47,6 @@ public class VideoIntro  extends Activity implements MediaPlayer.OnCompletionLis
         videoPath = sdCardPath + "Videos/intro.mp4";
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         playVideo(Uri.parse(videoPath));
-
     }
 
     public void playVideo(Uri path) {
@@ -62,7 +61,6 @@ public class VideoIntro  extends Activity implements MediaPlayer.OnCompletionLis
         videoView.setMediaController(mediaController);
         videoView.requestFocus();
     }
-
 
     @Override
     public void onCompletion(MediaPlayer mp) {
