@@ -50,7 +50,7 @@ import android.view.animation.TranslateAnimation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
-import com.example.pravin.angreziok.ui.start_menu.MainActivity;
+import com.example.pravin.angreziok.ui.start_menu.StartMenu;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -126,8 +126,8 @@ public class PD_Utility {
             mFragment.setArguments(mBundle);
 
         // TODO changes for fragments
-        if (mActivity instanceof MainActivity) {
-            ((MainActivity) mActivity).getSupportFragmentManager()
+        if (mActivity instanceof StartMenu) {
+            ((StartMenu) mActivity).getSupportFragmentManager()
                     .beginTransaction()
                     .replace(frame, mFragment, TAG)
                     .addToBackStack(TAG)
