@@ -19,8 +19,7 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
 
     @BindView(R.id.intro_videoView)
     VideoView videoView;
-    String videoPath, final_sd_path;
-    static String sdCardPath;
+    String videoPath;
 
     VideoIntroContract.VideoIntroPresenter presenter;
 
@@ -46,5 +45,5 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
         startActivity(new Intent(this, MainActivity.class));
         finish();
     }
-    
+
 }
