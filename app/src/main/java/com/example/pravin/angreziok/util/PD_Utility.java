@@ -72,6 +72,7 @@ import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -266,6 +267,23 @@ public class PD_Utility {
     public static int convertDpToSp(float dp, Context context) {
         int sp = (int) (convertDpToPixels(dp, context) / (float) convertSpToPixels(dp, context));
         return sp;
+    }
+
+    public static String getExternalPath(Context context) {
+        String sdCardPath = null;
+        ArrayList<String> sdcard_path = SDCardUtil.getExtSdCardPaths(context);
+        for (String path : sdcard_path) {
+            String final_sd_path = path;
+            if (new File(final_sd_path + "/.AOP_External").exists()) {
+                sdCardPath = final_sd_path + "/.AOP_External/";
+                break;
+            }
+        }
+        return sdCardPath;
+    }
+
+    public static void showLog(String message,String tag){
+        Log.d(tag,message+"");
     }
 
 
