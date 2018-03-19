@@ -1,4 +1,4 @@
-package com.example.pravin.angreziok.activities;
+package com.example.pravin.angreziok.ui.start_menu;
 
 import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Room;

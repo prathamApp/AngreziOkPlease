@@ -50,7 +50,7 @@ import android.view.animation.TranslateAnimation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
-import com.example.pravin.angreziok.activities.MainActivity;
+import com.example.pravin.angreziok.ui.start_menu.MainActivity;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;

@@ -1,4 +1,4 @@
-package com.example.pravin.angreziok.activities;
+package com.example.pravin.angreziok.ui.video_intro;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,6 +11,7 @@ import android.widget.MediaController;
 import android.widget.VideoView;
 
 import com.example.pravin.angreziok.R;
+import com.example.pravin.angreziok.ui.start_menu.MainActivity;
 import com.example.pravin.angreziok.util.SDCardUtil;
 
 import java.io.File;
