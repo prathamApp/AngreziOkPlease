@@ -21,7 +21,7 @@ public class StartMenu extends BaseActivity implements StartMenuContract.StartMe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_start_menu);
         ButterKnife.bind(this);
         presenter = new StartMenuPresenter(this,this);
         /* 1) In case migration needed and no problem with data loss then this would work
