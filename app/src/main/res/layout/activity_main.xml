@@ -4,12 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-<<<<<<< HEAD
     android:background="@drawable/bgaop"
-    tools:context="com.example.pravin.angreziok.ui.start_menu.MainActivity">
-=======
     tools:context="com.example.pravin.angreziok.ui.start_menu.StartMenu">
->>>>>>> 58f3fba65badcbb3b326ef88ccd2b7b1d9b9e2f4
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/rl_selector_menu"
