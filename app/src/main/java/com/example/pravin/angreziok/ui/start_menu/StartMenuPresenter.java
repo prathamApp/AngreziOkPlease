@@ -3,7 +3,6 @@ package com.example.pravin.angreziok.ui.start_menu;
 import android.content.Context;
 import android.widget.Toast;
 
-import com.example.pravin.angreziok.ui.start_menu.StartMenuContract;
 
 /**
  * Created by Pravin on 19/03/2018.
