@@ -5,7 +5,7 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.migration.Migration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import com.example.pravin.angreziok.BaseActivity;
 import com.example.pravin.angreziok.R;
@@ -13,15 +13,17 @@ import com.example.pravin.angreziok.database.AppDatabase;
 
 import butterknife.ButterKnife;
 
-public class MainActivity extends BaseActivity {
+public class StartMenu extends BaseActivity implements StartMenuContract.StartMenuView{
 
     private AppDatabase appDatabase;
+    StartMenuContract.StartMenuPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        presenter = new StartMenuPresenter(this,this);
         /* 1) In case migration needed and no problem with data loss then this would work
 
         appDatabase =  Room.databaseBuilder(this,
@@ -42,6 +44,7 @@ public class MainActivity extends BaseActivity {
                 AppDatabase.class, AppDatabase.DB_NAME)
                 .addMigrations(MIGRATION_1_2)
                 .build();
+        presenter.displayToast();
     }
 
     static final Migration MIGRATION_1_2 = new Migration(1, 2) {
@@ -55,4 +58,9 @@ public class MainActivity extends BaseActivity {
           */
         }
     };
+
+    @Override
+    public void showToast() {
+        Toast.makeText(this, "In mainview showToast", Toast.LENGTH_SHORT).show();
+    }
 }
