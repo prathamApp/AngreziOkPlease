@@ -10,6 +10,7 @@ import android.view.WindowManager;
 import android.widget.MediaController;
 import android.widget.VideoView;
 
+import com.example.pravin.angreziok.BaseActivity;
 import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.ui.start_menu.MainActivity;
 import com.example.pravin.angreziok.util.SDCardUtil;
@@ -20,7 +21,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class VideoIntro extends Activity implements MediaPlayer.OnCompletionListener, MediaPlayer.OnPreparedListener {
+public class VideoIntro extends BaseActivity implements MediaPlayer.OnCompletionListener, MediaPlayer.OnPreparedListener {
 
     @BindView(R.id.intro_videoView)
     VideoView videoView;

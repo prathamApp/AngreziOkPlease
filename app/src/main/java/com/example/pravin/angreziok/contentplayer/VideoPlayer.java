@@ -1,6 +1,5 @@
 package com.example.pravin.angreziok.contentplayer;
 
-import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -10,7 +9,9 @@ import android.view.WindowManager;
 import android.widget.MediaController;
 import android.widget.VideoView;
 
-public class VideoPlayer extends Activity implements MediaPlayer.OnCompletionListener, MediaPlayer.OnPreparedListener {
+import com.example.pravin.angreziok.BaseActivity;
+
+public class VideoPlayer extends BaseActivity implements MediaPlayer.OnCompletionListener, MediaPlayer.OnPreparedListener {
 
     VideoView myVideoView;
 
@@ -18,7 +19,6 @@ public class VideoPlayer extends Activity implements MediaPlayer.OnCompletionLis
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-
 
         //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
         // todo setContentView(R.layout.activity_play_video);

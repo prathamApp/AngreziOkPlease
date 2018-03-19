@@ -13,6 +13,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
 
+import com.example.pravin.angreziok.BaseActivity;
 import com.example.pravin.angreziok.R;
 /*TODO chnages
 import com.example.pravin.angreziok.modalDBHelpers.AttendanceDBHelper;
@@ -22,7 +23,7 @@ import com.example.pravin.angreziok.modalDBHelpers.StudentDBHelper;*/
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class WebViewActivity extends AppCompatActivity {
+public class WebViewActivity extends BaseActivity {
 
     @BindView(R.id.tv_web_view_gname)
     TextView tv_GameName;
