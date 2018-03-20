@@ -9,7 +9,7 @@ public interface JodTodContract {
     public interface JodTodView{
 
     }
-    
+
     public interface JodTodPresenter{
 
     }
