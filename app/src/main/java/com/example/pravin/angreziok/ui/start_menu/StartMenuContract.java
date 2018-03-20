@@ -10,7 +10,7 @@ public interface StartMenuContract {
         void showToast();
     }
 
-    public interface StartMenuPresenter{
+    public interface StartMenuPresenter {
         void displayToast();
     }
 }
