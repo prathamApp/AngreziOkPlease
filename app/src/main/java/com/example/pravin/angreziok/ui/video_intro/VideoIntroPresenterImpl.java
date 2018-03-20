@@ -11,14 +11,14 @@ import android.widget.VideoView;
  * Created by Pravin on 19/03/2018.
  */
 
-public class VideoIntroPresenter implements VideoIntroContract.VideoIntroPresenter,
+public class VideoIntroPresenterImpl implements VideoIntroContract.VideoIntroPresenter,
         MediaPlayer.OnCompletionListener, MediaPlayer.OnPreparedListener {
 
     VideoIntroContract.VideoIntroView videoIntroView;
     Context context;
     VideoView videoView;
 
-    public VideoIntroPresenter(VideoIntroContract.VideoIntroView videoIntroView, Context context, VideoView videoView) {
+    public VideoIntroPresenterImpl(VideoIntroContract.VideoIntroView videoIntroView, Context context, VideoView videoView) {
         this.videoIntroView = videoIntroView;
         this.context = context;
         this.videoView = videoView;

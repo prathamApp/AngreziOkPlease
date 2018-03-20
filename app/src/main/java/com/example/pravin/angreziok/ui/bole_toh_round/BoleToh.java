@@ -6,7 +6,7 @@ import android.os.Bundle;
 import com.example.pravin.angreziok.BaseActivity;
 import com.example.pravin.angreziok.R;
 
-public class BoleToh extends BaseActivity {
+public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

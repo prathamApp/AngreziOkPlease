@@ -28,7 +28,7 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_intro);
         ButterKnife.bind(this);
-        presenter = new VideoIntroPresenter(this, this, videoView);
+        presenter = new VideoIntroPresenterImpl(this, this, videoView);
         videoPath = PD_Utility.getExternalPath(this) + "Videos/intro.mp4";
         PD_Utility.showLog("ext_path::", videoPath);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);

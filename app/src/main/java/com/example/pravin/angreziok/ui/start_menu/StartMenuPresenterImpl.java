@@ -8,12 +8,12 @@ import android.widget.Toast;
  * Created by Pravin on 19/03/2018.
  */
 
-public class StartMenuPresenter implements StartMenuContract.StartMenuPresenter {
+public class StartMenuPresenterImpl implements StartMenuContract.StartMenuPresenter {
 
     Context mContext;
     StartMenuContract.StartMenuView startMenuView;
 
-    public StartMenuPresenter(Context context, StartMenuContract.StartMenuView startMenu) {
+    public StartMenuPresenterImpl(Context context, StartMenuContract.StartMenuView startMenu) {
         mContext = context;
         startMenuView = startMenu;
     }
