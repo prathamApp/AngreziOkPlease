@@ -26,13 +26,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<<<<<<< HEAD
         <activity android:name=".ui.start_menu.StartMenu" />
-        <activity android:name=".ui.bole_toh_round.video_intro.BoleToh" />
         <activity android:name=".ui.bole_toh_round.BoleToh"></activity>
-=======
-        <activity android:name=".ui.start_menu.StartMenu"></activity>
->>>>>>> 5239e9f2bf0cc819841b092970df12671bfc973f
     </application>
 
 </manifest>

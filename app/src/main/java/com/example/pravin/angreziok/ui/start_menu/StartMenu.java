@@ -3,6 +3,8 @@ package com.example.pravin.angreziok.ui.start_menu;
 import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.migration.Migration;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.widget.Toast;
@@ -10,8 +12,10 @@ import android.widget.Toast;
 import com.example.pravin.angreziok.BaseActivity;
 import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.database.AppDatabase;
+import com.example.pravin.angreziok.ui.bole_toh_round.BoleToh;
 
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class StartMenu extends BaseActivity implements StartMenuContract.StartMenuView{
 
@@ -58,6 +62,11 @@ public class StartMenu extends BaseActivity implements StartMenuContract.StartMe
           */
         }
     };
+
+    @OnClick(R.id.btn_admin)
+    public void gotoNext(){
+        startActivity(new Intent(StartMenu.this, BoleToh.class));
+    }
 
     @Override
     public void showToast() {
