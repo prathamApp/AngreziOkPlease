@@ -4,5 +4,5 @@ package com.example.pravin.angreziok.ui.jod_tod_round;
  * Created by Pravin on 20/03/2018.
  */
 
-public class JodTodPresenter implements JodTodContract.JodTodPresenter {
+public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter {
 }
