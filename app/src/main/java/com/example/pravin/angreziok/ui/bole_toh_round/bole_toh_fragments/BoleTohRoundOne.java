@@ -13,7 +13,7 @@ import com.example.pravin.angreziok.R;
 
 import butterknife.ButterKnife;
 
-public class Bole_toh_round_one extends BaseFragment implements BoleTohRoundOneContract.BoleTohRoundOneView{
+public class BoleTohRoundOne extends BaseFragment implements BoleTohRoundOneContract.BoleTohRoundOneView{
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

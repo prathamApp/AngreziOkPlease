@@ -12,7 +12,7 @@ import com.example.pravin.angreziok.BaseFragment;
  * Created by Pravin on 20/03/2018.
  */
 
-public class Jod_tod_round_one extends BaseFragment {
+public class JodTodRoundOne extends BaseFragment implements JodTodRoundOneContract.JodTodRoundOneView {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
