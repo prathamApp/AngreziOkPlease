@@ -13,7 +13,7 @@ import com.example.pravin.angreziok.R;
 
 import butterknife.ButterKnife;
 
-public class Bole_toh_round_one extends BaseFragment {
+public class Bole_toh_round_one extends BaseFragment implements BoleTohRoundOneContract.BoleTohRoundOneView{
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -32,7 +32,6 @@ public class Bole_toh_round_one extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-
     }
 }
 
