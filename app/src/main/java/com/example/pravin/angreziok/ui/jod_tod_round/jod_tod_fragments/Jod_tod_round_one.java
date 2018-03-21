@@ -13,7 +13,7 @@ import com.example.pravin.angreziok.BaseFragment;
  */
 
 public class Jod_tod_round_one extends BaseFragment {
-    
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
