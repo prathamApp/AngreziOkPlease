@@ -1,6 +1,8 @@
 package com.example.pravin.angreziok;
 
 import android.app.Application;
+import android.content.Context;
+import android.support.multidex.MultiDex;
 import android.support.v7.app.AppCompatDelegate;
 
 import java.text.DateFormat;
@@ -40,6 +42,11 @@ public class AOPApplication extends Application {
         aopApplication = this;
     }
 
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
     public static UUID getUniqueID() {
         return UUID.randomUUID();
     }
