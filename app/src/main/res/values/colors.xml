@@ -10,4 +10,8 @@
     <color name="simple_white">#ffffff</color>
     <color name="simple_black">#1e1e1e</color>
     <color name="slate_gray_board">#9f9f9f</color>
+    <color name="team_one_bg">#ff9041</color>
+    <color name="team_two_bg">#ff6060</color>
+    <color name="team_three_bg">#4ee26b</color>
+    <color name="team_four_bg">#4e78ff</color>
 </resources>
