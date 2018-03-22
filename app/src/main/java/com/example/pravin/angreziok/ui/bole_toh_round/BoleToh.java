@@ -16,6 +16,7 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bole_toh);
+        getSupportActionBar().hide();
         cl_bole_toh = (ConstraintLayout) findViewById(R.id.cl_bole_toh);
 
         loadFragment(1);
@@ -27,5 +28,15 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
         PD_Utility.showFragment(BoleToh.this, new BoleTohRoundOne(), R.id.cl_bole_toh,
                 bundle, BoleTohRoundOne.class.getSimpleName());
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        BoleTohRoundOne BoleTohRoundFragmen = (BoleTohRoundOne) getSupportFragmentManager().findFragmentByTag(BoleTohRoundOne.class.getSimpleName());
+
+        getSupportFragmentManager().popBackStack();
+        if (BoleTohRoundFragmen != null && BoleTohRoundFragmen.isVisible()) {
+            super.onBackPressed();
+        }
     }
 }

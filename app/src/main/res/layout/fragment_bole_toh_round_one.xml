@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bgaop"
+    android:background="@drawable/bole_toh_bg"
     tools:context="com.example.pravin.angreziok.ui.bole_toh_round.BoleToh">
 
     <LinearLayout
@@ -22,7 +22,37 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="8">
+                android:layout_weight="2">
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_weight="6">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_marginVertical="2dp"
+                    android:paddingHorizontal="50dp"
+                    android:background="@drawable/round_one_background">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Bole Toh Round"
+                        android:gravity="center"
+                        android:textSize="20sp"
+                        android:textColor="@color/simple_black"
+                        android:textStyle="bold|italic"
+                        android:textAlignment="center"/>
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -39,6 +69,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="7.5"
+            android:layout_marginTop="10dp
+"
             android:orientation="horizontal"
             android:weightSum="10">
 
@@ -69,24 +101,64 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="7"></LinearLayout>
+                android:layout_weight="7"
+                android:weightSum="10"
+                android:layout_marginBottom="10dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:background="@drawable/bord_frame_bg"
+                    android:layout_weight="0.7"></LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginHorizontal="8dp"
+                    android:background="@drawable/board_background"
+                    android:layout_weight="8.8"></LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:background="@drawable/bord_frame_bg"
+                    android:layout_weight="0.5"></LinearLayout>
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="5dp"
                 android:orientation="vertical"
                 android:weightSum="2">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1"></LinearLayout>
+                    android:layout_weight="1">
+                    <ImageButton
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/mike"
+                        android:scaleType="fitCenter"
+                        android:background="@color/full_transparent"/>
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1"></LinearLayout>
+                    android:layout_weight="1">
+
+                    <ImageButton
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/sound"
+                        android:scaleType="fitCenter"
+                        android:background="@color/full_transparent"/>
+
+                </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>
