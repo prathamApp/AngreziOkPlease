@@ -14,4 +14,6 @@
     <color name="team_two_bg">#ff6060</color>
     <color name="team_three_bg">#4ee26b</color>
     <color name="team_four_bg">#4e78ff</color>
+    <color name="ques_grad_top">#5f1729</color>
+    <color name="ques_grad_bot">#a23c58</color>
 </resources>

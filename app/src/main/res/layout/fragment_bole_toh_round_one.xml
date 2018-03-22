@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bole_toh_bg"
+    android:orientation="vertical"
+    android:weightSum="10"
     tools:context="com.example.pravin.angreziok.ui.bole_toh_round.BoleToh">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:weightSum="10">
+        android:layout_height="0dp"
+        android:layout_weight="9"
+        android:background="@drawable/bole_toh_bg"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -68,7 +71,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="0dp"
             android:layout_marginTop="10dp"
             android:layout_weight="7.5"
             android:orientation="horizontal"
@@ -283,22 +286,23 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:paddingHorizontal="10dp"
-            android:layout_weight="1">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:textColor="@color/simple_white"
-                android:textSize="18sp"
-                android:textStyle="italic|bold"
-                android:text="This is where the question will appear in any desired language.( The question will be played in audio format.)"/>
-        </LinearLayout>
-
     </LinearLayout>
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@drawable/question_gradiance_bg"
+        android:paddingHorizontal="10dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="This is where the question will appear in any desired language.( The question will be played in audio format.)"
+            android:textColor="@color/simple_white"
+            android:textSize="18sp"
+            android:textStyle="italic|bold" />
+    </LinearLayout>
+
+</LinearLayout>
