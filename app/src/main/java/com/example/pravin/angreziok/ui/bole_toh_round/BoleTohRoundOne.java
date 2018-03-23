@@ -10,6 +10,7 @@ import android.view.WindowManager;
 import android.widget.Toast;
 import com.example.pravin.angreziok.BaseFragment;
 import com.example.pravin.angreziok.R;
+import com.example.pravin.angreziok.ui.CustomCountDownTimer;
 import com.github.anastr.flattimelib.CountDownTimerView;
 import com.github.anastr.flattimelib.intf.OnTimeFinish;
 
@@ -38,54 +39,8 @@ public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.Bol
         ButterKnife.bind(this, view);
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
-        setOnClickListeners();
-        startTimer(60000);
-    }
-
-    private void setOnClickListeners() {
-
-        mCountDownTimer.setOnTimeFinish(new OnTimeFinish() {
-            @Override
-            public void onFinish() {
-                Toast.makeText(getActivity(), "finish", Toast.LENGTH_SHORT).show();
-                mCountDownTimer.success();
-            }
-        });
-
-        mCountDownTimer.setOnEndAnimationFinish(new OnTimeFinish() {
-            @Override
-            public void onFinish() {
-            }
-        });
-
-    }
-
-    public void pauseTimer() {
-        mCountDownTimer.pause();
-    }
-
-    public void continueTimer() {
-        mCountDownTimer.resume();
-    }
-
-    public void stopTimer() {
-        mCountDownTimer.stop();
-    }
-
-    public void startTimer(long time) {
-            mCountDownTimer.start(time);
-    }
-
-    public void displaySuccess() {
-        mCountDownTimer.success();
-    }
-
-    public void displayFailed() {
-        mCountDownTimer.failure();
-    }
-
-    public void readyTimer() {
-        mCountDownTimer.ready();
+        CustomCountDownTimer customCountDownTimer = new CustomCountDownTimer(mCountDownTimer,getActivity());
+        customCountDownTimer.startTimer(30000);
     }
 
 }
