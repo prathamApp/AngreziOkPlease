@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.example.pravin.angreziok.BaseFragment;
 import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.ui.CustomCountDownTimer;
+import com.example.pravin.angreziok.ui.GifView;
 import com.github.anastr.flattimelib.CountDownTimerView;
 import com.github.anastr.flattimelib.intf.OnTimeFinish;
 
@@ -22,6 +23,9 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
 
     @BindView(R.id.mCountDownTimer)
     CountDownTimerView mCountDownTimer;
+
+    @BindView(R.id.iv_character_dialog_gif)
+    GifView gifView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,6 +45,7 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         setOnClickListeners();
+        gifView.setGifResource(R.drawable.anupam_well_done);
         CustomCountDownTimer customCountDownTimer = new CustomCountDownTimer(mCountDownTimer,getActivity());
         customCountDownTimer.startTimer(30000);
     }

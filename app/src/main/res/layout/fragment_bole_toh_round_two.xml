@@ -242,86 +242,11 @@
                         android:padding="5dp"
                         android:weightSum="2">
 
-                        <LinearLayout
+                        <com.example.pravin.angreziok.ui.GifView
+                            android:id="@+id/iv_character_dialog_gif"
                             android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            android:orientation="horizontal"
-                            android:weightSum="2">
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_marginHorizontal="10dp"
-                                android:layout_marginVertical="3dp"
-                                android:layout_weight="1"
-                                android:background="@drawable/gameimgbg">
-
-                                <ImageView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:padding="5dp"
-                                    android:src="@drawable/img1" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_marginHorizontal="10dp"
-                                android:layout_marginVertical="3dp"
-                                android:layout_weight="1"
-                                android:background="@drawable/gameimgbg">
-
-                                <ImageView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:padding="5dp"
-                                    android:src="@drawable/img2" />
-
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            android:orientation="horizontal"
-                            android:weightSum="2">
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_marginHorizontal="10dp"
-                                android:layout_marginVertical="3dp"
-                                android:layout_weight="1"
-                                android:background="@drawable/gameimgbg">
-
-                                <ImageView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:padding="5dp"
-                                    android:src="@drawable/img3" />
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_marginHorizontal="10dp"
-                                android:layout_marginVertical="3dp"
-                                android:layout_weight="1"
-                                android:background="@drawable/gameimgbg">
-
-                                <ImageView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:padding="5dp"
-                                    android:src="@drawable/img4" />
-
-                            </LinearLayout>
-
-                        </LinearLayout>
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center" />
 
                     </LinearLayout>
 
