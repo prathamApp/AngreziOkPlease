@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Toast;
+
 import com.example.pravin.angreziok.BaseFragment;
 import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.ui.CustomCountDownTimer;
@@ -17,7 +18,7 @@ import com.github.anastr.flattimelib.intf.OnTimeFinish;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.BoleTohRoundOneView{
+public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.BoleTohRoundTwoView{
 
     @BindView(R.id.mCountDownTimer)
     CountDownTimerView mCountDownTimer;
@@ -30,7 +31,7 @@ public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.Bol
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_bole_toh_round_one, container, false);
+        return inflater.inflate(R.layout.fragment_bole_toh_round_two, container, false);
     }
 
     @Override

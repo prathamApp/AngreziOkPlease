@@ -17,26 +17,8 @@ public class CustomCountDownTimer {
     public CustomCountDownTimer(CountDownTimerView mCountDownTimer,Context mContext){
         this.mContext = mContext;
         this.mCountDownTimer = mCountDownTimer;
-        setOnClickListeners();
     }
 
-    private void setOnClickListeners() {
-
-        mCountDownTimer.setOnTimeFinish(new OnTimeFinish() {
-            @Override
-            public void onFinish() {
-                Toast.makeText(mContext, "finish", Toast.LENGTH_SHORT).show();
-                mCountDownTimer.success();
-            }
-        });
-
-        mCountDownTimer.setOnEndAnimationFinish(new OnTimeFinish() {
-            @Override
-            public void onFinish() {
-            }
-        });
-
-    }
 
     public void pauseTimer() {
         mCountDownTimer.pause();
