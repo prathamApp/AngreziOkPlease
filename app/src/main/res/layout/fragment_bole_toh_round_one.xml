@@ -64,6 +64,15 @@
                 android:layout_height="match_parent"
                 android:layout_weight="2">
 
+                <com.github.anastr.flattimelib.CountDownTimerView
+                    android:id="@+id/mCountDownTimer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    >
+
+                </com.github.anastr.flattimelib.CountDownTimerView>
+
+
             </LinearLayout>
 
         </LinearLayout>
