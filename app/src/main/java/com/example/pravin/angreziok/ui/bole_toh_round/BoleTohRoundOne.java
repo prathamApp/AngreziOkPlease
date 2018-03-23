@@ -1,4 +1,4 @@
-package com.example.pravin.angreziok.ui.bole_toh_round.bole_toh_fragments;
+package com.example.pravin.angreziok.ui.bole_toh_round;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,7 +13,7 @@ import com.example.pravin.angreziok.R;
 
 import butterknife.ButterKnife;
 
-public class BoleTohRoundOne extends BaseFragment implements BoleTohRoundOneContract.BoleTohRoundOneView{
+public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.BoleTohRoundOneView{
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

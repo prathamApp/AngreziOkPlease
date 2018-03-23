@@ -1,4 +1,4 @@
-package com.example.pravin.angreziok.ui.jod_tod_round.jod_tod_fragments;
+package com.example.pravin.angreziok.ui.jod_tod_round;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,7 +12,7 @@ import com.example.pravin.angreziok.BaseFragment;
  * Created by Pravin on 20/03/2018.
  */
 
-public class JodTodRoundOne extends BaseFragment implements JodTodRoundOneContract.JodTodRoundOneView {
+public class JodTodRoundOne extends BaseFragment implements JodTodContract.JodTodRoundOneView {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

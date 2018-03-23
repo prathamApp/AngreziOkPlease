@@ -10,4 +10,9 @@ public interface BoleTohContract {
     public interface BoleTohPresenter {
     }
 
+    public interface BoleTohRoundOneView {
+    }
+
+    public interface BoleTohRoundOnePresenter {
+    }
 }

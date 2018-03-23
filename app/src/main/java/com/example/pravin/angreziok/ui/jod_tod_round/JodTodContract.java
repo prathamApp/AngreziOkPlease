@@ -13,4 +13,12 @@ public interface JodTodContract {
     public interface JodTodPresenter {
 
     }
+
+    public interface JodTodRoundOneView {
+
+    }
+
+    public interface JodTodRoundOnePresenter {
+
+    }
 }
