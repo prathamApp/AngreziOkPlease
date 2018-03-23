@@ -62,16 +62,14 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="2">
+                android:layout_weight="2"
+                android:gravity="right">
 
                 <com.github.anastr.flattimelib.CountDownTimerView
                     android:id="@+id/mCountDownTimer"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    >
-
-                </com.github.anastr.flattimelib.CountDownTimerView>
-
+                    android:layout_marginRight="5dp" />
 
             </LinearLayout>
 
@@ -263,14 +261,14 @@
                             android:layout_height="match_parent"
                             android:layout_marginHorizontal="10dp"
                             android:layout_marginVertical="3dp"
-                            android:background="@drawable/gameimgbg"
-                            android:layout_weight="1">
+                            android:layout_weight="1"
+                            android:background="@drawable/gameimgbg">
 
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:padding="5dp"
-                                android:src="@drawable/img1"/>
+                                android:src="@drawable/img1" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -278,13 +276,14 @@
                             android:layout_height="match_parent"
                             android:layout_marginHorizontal="10dp"
                             android:layout_marginVertical="3dp"
-                            android:background="@drawable/gameimgbg"
-                            android:layout_weight="1">
+                            android:layout_weight="1"
+                            android:background="@drawable/gameimgbg">
+
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:padding="5dp"
-                                android:src="@drawable/img2"/>
+                                android:src="@drawable/img2" />
 
                         </LinearLayout>
 
@@ -302,13 +301,14 @@
                             android:layout_height="match_parent"
                             android:layout_marginHorizontal="10dp"
                             android:layout_marginVertical="3dp"
-                            android:background="@drawable/gameimgbg"
-                            android:layout_weight="1">
+                            android:layout_weight="1"
+                            android:background="@drawable/gameimgbg">
+
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:padding="5dp"
-                                android:src="@drawable/img3"/>
+                                android:src="@drawable/img3" />
 
                         </LinearLayout>
 
@@ -317,12 +317,14 @@
                             android:layout_height="match_parent"
                             android:layout_marginHorizontal="10dp"
                             android:layout_marginVertical="3dp"
-                            android:layout_weight="1">
+                            android:layout_weight="1"
+                            android:background="@drawable/gameimgbg">
+
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:padding="5dp"
-                                android:src="@drawable/img3"/>
+                                android:src="@drawable/img4" />
 
                         </LinearLayout>
 
