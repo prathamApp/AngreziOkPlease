@@ -41,7 +41,7 @@ public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.Bol
         ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         setOnClickListeners();
         CustomCountDownTimer customCountDownTimer = new CustomCountDownTimer(mCountDownTimer,getActivity());
-        customCountDownTimer.startTimer(30000);
+        customCountDownTimer.startTimer(10000);
     }
 
     private void setOnClickListeners() {
@@ -59,6 +59,11 @@ public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.Bol
             public void onFinish() {
             }
         });
+
+    }
+
+    @Override
+    public void showImages() {
 
     }
 }

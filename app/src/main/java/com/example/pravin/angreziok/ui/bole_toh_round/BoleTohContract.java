@@ -11,14 +11,10 @@ public interface BoleTohContract {
     }
 
     public interface BoleTohRoundOneView {
-    }
-
-    public interface BoleTohRoundOnePresenter {
+        void showImages();
     }
 
     public interface BoleTohRoundTwoView {
     }
 
-    public interface BoleTohRoundTwoPresenter {
-    }
 }
