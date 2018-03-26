@@ -212,10 +212,10 @@ public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.Bol
             resAudioArray.clear();
 
             for (int i = 0; i < 4; i++) {
-                resTextArray.add(questionData.get(i).getResourceText());
-                resImageArray.add(questionData.get(i).getResourceImage());
-                resAudioArray.add(questionData.get(i).getResourceImage());
-                resIdArray.add(questionData.get(i).getResourceId());
+                resTextArray.add(questionData.get(integerArray[i]).getResourceText());
+                resImageArray.add(questionData.get(integerArray[i]).getResourceImage());
+                resAudioArray.add(questionData.get(integerArray[i]).getResourceImage());
+                resIdArray.add(questionData.get(integerArray[i]).getResourceId());
             }
             Bitmap[] bitmap = {BitmapFactory.decodeFile(imagePath + resImageArray.get(0))};
             iv_image1.setImageBitmap(bitmap[0]);
