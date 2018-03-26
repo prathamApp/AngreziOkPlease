@@ -5,19 +5,24 @@ import android.os.Bundle;
 
 import com.example.pravin.angreziok.BaseActivity;
 import com.example.pravin.angreziok.R;
+import com.example.pravin.angreziok.contentplayer.TextToSpeechCustom;
 import com.example.pravin.angreziok.util.PD_Utility;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView {
 
-    ConstraintLayout cl_bole_toh;
+    public static TextToSpeechCustom playTTS;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bole_toh);
         getSupportActionBar().hide();
-        cl_bole_toh = (ConstraintLayout) findViewById(R.id.cl_bole_toh);
-
+        playTTS = new TextToSpeechCustom(this, 1.0f);
+        ButterKnife.bind(this);
         loadFragment(1);
     }
 

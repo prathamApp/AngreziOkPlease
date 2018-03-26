@@ -5,6 +5,13 @@ import android.content.Context;
 import android.support.multidex.MultiDex;
 import android.support.v7.app.AppCompatDelegate;
 
+import com.example.pravin.angreziok.modalclasses.GenericModalGson;
+import com.google.gson.Gson;
+
+import org.json.JSONObject;
+
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -64,7 +71,24 @@ public class AOPApplication extends Application {
         ext_path = path;
     }
 
-    private static int getRandomNumber(int min, int max) {
+    public static int getRandomNumber(int min, int max) {
         return min + (new Random().nextInt(max));
+    }
+    
+    public static GenericModalGson fetchJsonData(String jasonName) {
+        GenericModalGson returnGsonData = null;
+        try {
+            InputStream is = new FileInputStream("file:///android_asset/"+jasonName + ".json");
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            JSONObject jsonObj = new JSONObject(new String(buffer));
+            Gson gson = new Gson();
+            returnGsonData = gson.fromJson(jsonObj.toString(), GenericModalGson.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return returnGsonData;
     }
 }

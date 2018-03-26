@@ -14,6 +14,8 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 import com.example.pravin.angreziok.BaseFragment;
 import com.example.pravin.angreziok.R;
+import com.example.pravin.angreziok.contentplayer.TextToSpeechCustom;
+import com.example.pravin.angreziok.modalclasses.GenericModalGson;
 import com.example.pravin.angreziok.ui.CustomCountDownTimer;
 import com.example.pravin.angreziok.util.PD_Utility;
 import com.github.anastr.flattimelib.CountDownTimerView;
@@ -24,6 +26,8 @@ import java.util.Collections;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.example.pravin.angreziok.AOPApplication.fetchJsonData;
 
 public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.BoleTohRoundOneView{
 
@@ -44,7 +48,7 @@ public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.Bol
 
     @BindView(R.id.bt_temp_skip)
     Button bt_temp_skip;
-
+    GenericModalGson gsonPicGameData;
 
 
     @Override
@@ -118,7 +122,7 @@ public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.Bol
 
     @Override
     public void doInitialWork() {
-
+        gsonPicGameData = fetchJsonData("RoundOneGameOne");
     }
 
     @Override
