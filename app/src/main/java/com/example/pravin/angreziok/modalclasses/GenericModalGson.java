@@ -18,27 +18,27 @@ public class GenericModalGson {
 
     @SerializedName("nodeDesc")
     @Expose
-    private Object nodeDesc;
+    private String nodeDesc;
 
     @SerializedName("resourceId")
     @Expose
-    private Object resourceId;
+    private String resourceId;
 
     @SerializedName("resourceText")
     @Expose
-    private Object resourceText;
+    private String resourceText;
 
     @SerializedName("resourceAudio")
     @Expose
-    private Object resourceAudio;
+    private String resourceAudio;
 
     @SerializedName("resourceImage")
     @Expose
-    private Object resourceImage;
+    private String resourceImage;
 
     @SerializedName("resourceType")
     @Expose
-    private Object resourceType;
+    private String resourceType;
 
     @SerializedName("nodelist")
     @Expose
@@ -60,51 +60,51 @@ public class GenericModalGson {
         this.nodeTitle = nodeTitle;
     }
 
-    public Object getNodeDesc() {
+    public String getNodeDesc() {
         return nodeDesc;
     }
 
-    public void setNodeDesc(Object nodeDesc) {
+    public void setNodeDesc(String nodeDesc) {
         this.nodeDesc = nodeDesc;
     }
 
-    public Object getResourceId() {
+    public String getResourceId() {
         return resourceId;
     }
 
-    public void setResourceId(Object resourceId) {
+    public void setResourceId(String resourceId) {
         this.resourceId = resourceId;
     }
 
-    public Object getResourceText() {
+    public String getResourceText() {
         return resourceText;
     }
 
-    public void setResourceText(Object resourceText) {
+    public void setResourceText(String resourceText) {
         this.resourceText = resourceText;
     }
 
-    public Object getResourceAudio() {
+    public String getResourceAudio() {
         return resourceAudio;
     }
 
-    public void setResourceAudio(Object resourceAudio) {
+    public void setResourceAudio(String resourceAudio) {
         this.resourceAudio = resourceAudio;
     }
 
-    public Object getResourceImage() {
+    public String getResourceImage() {
         return resourceImage;
     }
 
-    public void setResourceImage(Object resourceImage) {
+    public void setResourceImage(String resourceImage) {
         this.resourceImage = resourceImage;
     }
 
-    public Object getResourceType() {
+    public String getResourceType() {
         return resourceType;
     }
 
-    public void setResourceType(Object resourceType) {
+    public void setResourceType(String resourceType) {
         this.resourceType = resourceType;
     }
 

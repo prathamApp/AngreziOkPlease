@@ -30,6 +30,8 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import static com.example.pravin.angreziok.AOPApplication.getRandomNumber;
@@ -58,7 +60,7 @@ public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.Bol
     @BindView(R.id.bt_temp_skip)
     Button bt_temp_skip;
 
-    JSONArray questionData;
+    List<GenericModalGson> questionData;
     GenericModalGson gsonPicGameData;
 //    ArrayList <GenericModalGson> gsonPicGameData = new ArrayList<GenericModalGson>();
     ArrayList<String> resTextArray = new ArrayList<String>();
@@ -176,7 +178,10 @@ public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.Bol
     @Override
     public void doInitialWork() {
         gsonPicGameData = fetchJsonData("RoundOneGameOne");
-        integerArray = getUniqueRandomNumber(0, gsonPicGameData.getNodelist().size(), 4);
+        questionData = gsonPicGameData.getNodelist();
+        Log.d("SIZE", "doInitialWork: "+questionData.size());
+        integerArray = getUniqueRandomNumber(0, questionData.size(), 4);
+        showImages(integerArray);
     }
 
     public GenericModalGson fetchJsonData(String jasonName) {
@@ -207,10 +212,10 @@ public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.Bol
             resAudioArray.clear();
 
             for (int i = 0; i < 4; i++) {
-                resTextArray.add(questionData.getJSONObject(integerArray[i]).getString("resourceText"));
-                resImageArray.add("PicGameImages/" + questionData.getJSONObject(integerArray[i]).getString("resourceImage"));
-                resAudioArray.add(questionData.getJSONObject(integerArray[i]).getString("resourceAudio"));
-                resIdArray.add(questionData.getJSONObject(integerArray[i]).getString("resourceId"));
+                resTextArray.add(questionData.get(i).getResourceText());
+                resImageArray.add(questionData.get(i).getResourceImage());
+                resAudioArray.add(questionData.get(i).getResourceImage());
+                resIdArray.add(questionData.get(i).getResourceId());
             }
             Bitmap[] bitmap = {BitmapFactory.decodeFile(imagePath + resImageArray.get(0))};
             iv_image1.setImageBitmap(bitmap[0]);
