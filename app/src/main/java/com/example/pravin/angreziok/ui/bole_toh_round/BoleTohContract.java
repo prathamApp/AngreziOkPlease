@@ -11,6 +11,7 @@ public interface BoleTohContract {
     }
 
     public interface BoleTohRoundOneView {
+        void doInitalWork();
         void showImages();
     }
 

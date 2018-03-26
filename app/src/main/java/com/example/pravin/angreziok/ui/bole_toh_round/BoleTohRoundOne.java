@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 import com.example.pravin.angreziok.BaseFragment;
 import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.ui.CustomCountDownTimer;
+import com.example.pravin.angreziok.util.PD_Utility;
 import com.github.anastr.flattimelib.CountDownTimerView;
 import com.github.anastr.flattimelib.intf.OnTimeFinish;
 
@@ -36,6 +38,9 @@ public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.Bol
     ImageView iv_image4;
     @BindView(R.id.ib_speaker)
     ImageButton ib_speaker;
+
+    @BindView(R.id.bt_temp_skip)
+    Button bt_temp_skip;
 
 
 
@@ -77,11 +82,19 @@ public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.Bol
             }
         });
 
+        bt_temp_skip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PD_Utility.showFragment(getActivity(), new BoleTohRoundTwo(), R.id.cl_bole_toh,
+                        null, BoleTohRoundTwo.class.getSimpleName());
+            }
+        });
+
     }
 
     @Override
     public void doInitalWork() {
-        
+
     }
 
     @Override
