@@ -1,8 +1,12 @@
 package com.example.pravin.angreziok.ui.bole_toh_round;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,22 +18,27 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 import com.example.pravin.angreziok.BaseFragment;
 import com.example.pravin.angreziok.R;
-import com.example.pravin.angreziok.contentplayer.TextToSpeechCustom;
 import com.example.pravin.angreziok.modalclasses.GenericModalGson;
-import com.example.pravin.angreziok.ui.CustomCountDownTimer;
 import com.example.pravin.angreziok.util.PD_Utility;
 import com.github.anastr.flattimelib.CountDownTimerView;
 import com.github.anastr.flattimelib.intf.OnTimeFinish;
+import com.google.gson.Gson;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import static com.example.pravin.angreziok.AOPApplication.getRandomNumber;
+import static com.example.pravin.angreziok.ui.bole_toh_round.BoleToh.playMusic;
+import static com.example.pravin.angreziok.ui.bole_toh_round.BoleToh.playTTS;
+import static com.example.pravin.angreziok.ui.bole_toh_round.BoleToh.sdCardPathString;
 
-import static com.example.pravin.angreziok.AOPApplication.fetchJsonData;
 
-public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.BoleTohRoundOneView{
+public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.BoleTohRoundOneView {
 
     @BindView(R.id.mCountDownTimer)
     CountDownTimerView mCountDownTimer;
@@ -48,7 +57,18 @@ public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.Bol
 
     @BindView(R.id.bt_temp_skip)
     Button bt_temp_skip;
+
+    JSONArray questionData;
     GenericModalGson gsonPicGameData;
+//    ArrayList <GenericModalGson> gsonPicGameData = new ArrayList<GenericModalGson>();
+    ArrayList<String> resTextArray = new ArrayList<String>();
+    ArrayList<String> resImageArray = new ArrayList<String>();
+    ArrayList<String> resAudioArray = new ArrayList<String>();
+    ArrayList<String> resIdArray = new ArrayList<String>();
+    int readQuestionNo;
+    String ttsQuestion;
+    float speechRate = 1.0f;
+    int[] integerArray = new int[4];
 
 
     @Override
@@ -98,6 +118,39 @@ public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.Bol
             }
         });
 
+        iv_image1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+/*                Animation pop = AnimationUtils.loadAnimation(getActivity(), R.anim.popup);
+                MyBounceInterpolator interpolator = new MyBounceInterpolator(0.2, 10);
+                pop.setInterpolator(interpolator);
+                iv_image1.startAnimation(pop);*/
+                checkAnswer(1);
+            }
+        });
+
+        iv_image2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkAnswer(2);
+            }
+        });
+
+        iv_image3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkAnswer(3);
+            }
+        });
+
+        iv_image4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkAnswer(4);
+            }
+        });
+
+
     }
 
     @Override
@@ -123,11 +176,88 @@ public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.Bol
     @Override
     public void doInitialWork() {
         gsonPicGameData = fetchJsonData("RoundOneGameOne");
+        integerArray = getUniqueRandomNumber(0, gsonPicGameData.getNodelist().size(), 4);
+    }
+
+    public GenericModalGson fetchJsonData(String jasonName) {
+        GenericModalGson returnGsonData = null;
+        try {
+            InputStream is = new FileInputStream(sdCardPathString+"JsonFiles/"+jasonName + ".json");
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            JSONObject jsonObj = new JSONObject(new String(buffer));
+            Gson gson = new Gson();
+            returnGsonData = gson.fromJson(jsonObj.toString(), GenericModalGson.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return returnGsonData;
+    }
+
+    public void showImages(int[] integerArray) {
+        try {
+            readQuestionNo = getRandomNumber(0, 4);
+            String imagePath = sdCardPathString + "PicGameImages/";
+
+            resTextArray.clear();
+            resIdArray.clear();
+            resImageArray.clear();
+            resAudioArray.clear();
+
+            for (int i = 0; i < 4; i++) {
+                resTextArray.add(questionData.getJSONObject(integerArray[i]).getString("resourceText"));
+                resImageArray.add("PicGameImages/" + questionData.getJSONObject(integerArray[i]).getString("resourceImage"));
+                resAudioArray.add(questionData.getJSONObject(integerArray[i]).getString("resourceAudio"));
+                resIdArray.add(questionData.getJSONObject(integerArray[i]).getString("resourceId"));
+            }
+            Bitmap[] bitmap = {BitmapFactory.decodeFile(imagePath + resImageArray.get(0))};
+            iv_image1.setImageBitmap(bitmap[0]);
+            bitmap = new Bitmap[]{BitmapFactory.decodeFile(imagePath + resImageArray.get(1))};
+            iv_image2.setImageBitmap(bitmap[0]);
+            bitmap = new Bitmap[]{BitmapFactory.decodeFile(imagePath + resImageArray.get(2))};
+            iv_image3.setImageBitmap(bitmap[0]);
+            bitmap = new Bitmap[]{BitmapFactory.decodeFile(imagePath + resImageArray.get(3))};
+            iv_image4.setImageBitmap(bitmap[0]);
+
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    readQuestion(readQuestionNo);
+                }
+            }, 1500);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void readQuestion(int questionToRead) {
+        ttsQuestion = resTextArray.get(questionToRead);
+        Log.d("speechRate", "readQuestion: " + speechRate);
+            playTTS.ttsFunction("Where Is "+ttsQuestion, "hin", speechRate);
+//            playMusic("StoriesAudio/"+ resAudioArray.get(questionToRead));
     }
 
     @Override
-    public void showImages() {
+    public void checkAnswer(int imageViewNum) {
+        String imageString = resTextArray.get(imageViewNum - 1);
 
+        if (imageString.equalsIgnoreCase(ttsQuestion)) {
+            playMusic("correct.mp3");
+
+        } else {
+            playMusic("wrong.mp3");
+        }
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                showImages(integerArray);
+            }
+        }, 1000);
     }
 }
 

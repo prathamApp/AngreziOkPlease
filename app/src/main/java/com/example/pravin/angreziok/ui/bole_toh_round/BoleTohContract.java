@@ -13,7 +13,7 @@ public interface BoleTohContract {
     public interface BoleTohRoundOneView {
         public int[] getUniqueRandomNumber(int min, int max, int numSize);
         void doInitialWork();
-        void showImages();
+        void checkAnswer(int imageViewNum);
     }
 
     public interface BoleTohRoundTwoView {

@@ -10,10 +10,12 @@ import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.Random;
@@ -29,7 +31,8 @@ public class AOPApplication extends Application {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
 
-    static AOPApplication aopApplication;
+    private static AOPApplication aopApplication;
+    private static Application wholeApplication;
     static String ext_path;
     private static final DateFormat dateTimeFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.ENGLISH);
     private static final DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
@@ -48,6 +51,7 @@ public class AOPApplication extends Application {
     public void onCreate() {
         super.onCreate();
         aopApplication = this;
+        wholeApplication = this;
     }
 
     @Override
@@ -55,6 +59,7 @@ public class AOPApplication extends Application {
         super.attachBaseContext(base);
         MultiDex.install(this);
     }
+
     public static UUID getUniqueID() {
         return UUID.randomUUID();
     }
@@ -74,21 +79,5 @@ public class AOPApplication extends Application {
     public static int getRandomNumber(int min, int max) {
         return min + (new Random().nextInt(max));
     }
-    
-    public static GenericModalGson fetchJsonData(String jasonName) {
-        GenericModalGson returnGsonData = null;
-        try {
-            InputStream is = new FileInputStream("file:///android_asset/"+jasonName + ".json");
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            JSONObject jsonObj = new JSONObject(new String(buffer));
-            Gson gson = new Gson();
-            returnGsonData = gson.fromJson(jsonObj.toString(), GenericModalGson.class);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return returnGsonData;
-    }
+
 }
