@@ -292,6 +292,7 @@
                 android:layout_weight="1">
 
                 <ImageButton
+                    android:id="@+id/ib_mic"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@color/full_transparent"
@@ -305,6 +306,7 @@
                 android:layout_weight="1">
 
                 <ImageButton
+                    android:id="@+id/ib_speaker"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@color/full_transparent"

@@ -36,6 +36,30 @@ public class TextToSpeechCustom {
         }
     }
 
+    public void ttsFunction(final String toSpeak, float sprate) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ttsGreater21(toSpeak, "", sprate);
+        } else {
+            ttsUnder20(toSpeak, "", sprate);
+        }
+    }
+
+    public void ttsFunction(final String toSpeak, String lang) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ttsGreater21(toSpeak, lang, 1.3f);
+        } else {
+            ttsUnder20(toSpeak, lang, 1.3f);
+        }
+    }
+
+    public void ttsFunction(final String toSpeak) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ttsGreater21(toSpeak, "", 1.3f);
+        } else {
+            ttsUnder20(toSpeak, "", 1.3f);
+        }
+    }
+
     @SuppressWarnings("deprecation")
     private void ttsUnder20(String text, String lang, float sprate) {
         HashMap<String, String> map = new HashMap<>();

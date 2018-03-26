@@ -8,6 +8,7 @@ public interface BoleTohContract {
     }
 
     public interface BoleTohPresenter {
+        void checkAnswers(String spokenWord);
     }
 
     public interface BoleTohRoundOneView {
