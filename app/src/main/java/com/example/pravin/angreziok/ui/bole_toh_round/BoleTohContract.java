@@ -1,6 +1,8 @@
 package com.example.pravin.angreziok.ui.bole_toh_round;
 
 
+import android.content.Context;
+
 public interface BoleTohContract {
 
     public interface BoleTohView{
@@ -8,7 +10,7 @@ public interface BoleTohContract {
     }
 
     public interface BoleTohPresenter {
-        void checkAnswers(String spokenWord);
+        void startSTT(Context context);
     }
 
     public interface BoleTohRoundOneView {

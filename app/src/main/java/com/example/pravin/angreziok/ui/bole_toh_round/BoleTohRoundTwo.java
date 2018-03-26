@@ -1,6 +1,9 @@
 package com.example.pravin.angreziok.ui.bole_toh_round;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
+import android.speech.SpeechRecognizer;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -64,8 +67,8 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
     }
 
     @OnClick(R.id.ib_speaker)
-    public void checkAnswer(){
-
+    public void startSTT(){
+        presenter.startSTT(getActivity());
     }
 
 
