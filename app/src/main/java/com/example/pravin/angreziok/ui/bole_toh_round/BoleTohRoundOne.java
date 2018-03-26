@@ -65,8 +65,9 @@ public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.Bol
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         setOnClickListeners();
-        CustomCountDownTimer customCountDownTimer = new CustomCountDownTimer(mCountDownTimer,getActivity());
-        customCountDownTimer.startTimer(10000);
+        doInitialWork();
+/*        CustomCountDownTimer customCountDownTimer = new CustomCountDownTimer(mCountDownTimer,getActivity());
+        customCountDownTimer.startTimer(10000);*/
     }
 
     private void setOnClickListeners() {
@@ -116,7 +117,7 @@ public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.Bol
     }
 
     @Override
-    public void doInitalWork() {
+    public void doInitialWork() {
 
     }
 
