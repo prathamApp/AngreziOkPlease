@@ -18,14 +18,19 @@ import com.github.anastr.flattimelib.intf.OnTimeFinish;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+import static com.example.pravin.angreziok.ui.bole_toh_round.BoleToh.playTTS;
 
 public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.BoleTohRoundTwoView{
 
     @BindView(R.id.mCountDownTimer)
     CountDownTimerView mCountDownTimer;
-
     @BindView(R.id.iv_character_dialog_gif)
     GifView gifView;
+
+    String text;
+    BoleTohContract.BoleTohPresenter presenter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,11 +49,25 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
         ButterKnife.bind(this, view);
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+
         setOnClickListeners();
         gifView.setGifResource(R.drawable.anupam_well_done);
         CustomCountDownTimer customCountDownTimer = new CustomCountDownTimer(mCountDownTimer,getActivity());
         customCountDownTimer.startTimer(30000);
+        text = "What is he/she doing?";
+        startTTS();
     }
+
+    @OnClick(R.id.ib_speaker)
+    public void startTTS(){
+        playTTS.ttsFunction(text);
+    }
+
+    @OnClick(R.id.ib_speaker)
+    public void checkAnswer(){
+
+    }
+
 
     private void setOnClickListeners() {
 
