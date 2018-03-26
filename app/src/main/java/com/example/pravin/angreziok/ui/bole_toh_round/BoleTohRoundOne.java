@@ -19,6 +19,9 @@ import com.example.pravin.angreziok.util.PD_Utility;
 import com.github.anastr.flattimelib.CountDownTimerView;
 import com.github.anastr.flattimelib.intf.OnTimeFinish;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -90,6 +93,26 @@ public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.Bol
             }
         });
 
+    }
+
+    @Override
+    public int[] getUniqueRandomNumber(int min, int max, int numSize) {
+        int[] tempArray;
+        if ((max - min) > numSize) {
+            tempArray = new int[numSize];
+            ArrayList<Integer> list = new ArrayList<Integer>();
+
+            for (int i = min; i < max; i++)
+                list.add(new Integer(i));
+
+            Collections.shuffle(list);
+            for (int i = 0; i < numSize; i++) {
+                System.out.println("===== : " + list.get(i));
+                tempArray[i] = list.get(i);
+            }
+            return tempArray;
+        } else
+            return null;
     }
 
     @Override

@@ -11,7 +11,8 @@ public interface BoleTohContract {
     }
 
     public interface BoleTohRoundOneView {
-        void doInitalWork();
+        public int[] getUniqueRandomNumber(int min, int max, int numSize);
+        void doInitialWork();
         void showImages();
     }
 
