@@ -247,6 +247,7 @@
                             android:layout_height="match_parent"
                             android:layout_gravity="center"
                             android:gravity="center"
+                            android:background="@drawable/gameimgbg"
                             android:layout_weight="1">
 
                             <com.example.pravin.angreziok.ui.GifView
@@ -266,7 +267,20 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
+                                android:layout_marginHorizontal="5dp"
+                                android:layout_marginVertical="10dp"
+                                android:background="@drawable/round_two_top_answer_background"
                                 android:layout_weight="1.2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:text="Ans"
+                                    android:textColor="@color/simple_white"
+                                    android:gravity="center"
+                                    android:textSize="25sp"
+                                    android:layout_weight="3.5"/>
+
                             </LinearLayout>
 
                             <LinearLayout
@@ -282,6 +296,9 @@
                                     android:layout_weight="1"
                                     android:orientation="horizontal"
                                     android:paddingLeft="15dp"
+                                    android:layout_marginHorizontal="15dp"
+                                    android:layout_marginVertical="5dp"
+                                    android:background="@drawable/round_two_option_background"
                                     android:weightSum="5">
                                     <TextView
                                         android:layout_width="0dp"
@@ -295,7 +312,7 @@
                                         android:src="@drawable/mike"
                                         android:layout_gravity="center"
                                         android:foregroundGravity="center"
-                                        android:layout_margin="10dp"
+                                        android:layout_margin="2dp"
                                         android:layout_weight="1.5"/>
                                 </LinearLayout>
                                 <LinearLayout
@@ -304,6 +321,9 @@
                                     android:layout_weight="1"
                                     android:orientation="horizontal"
                                     android:paddingLeft="15dp"
+                                    android:layout_marginHorizontal="15dp"
+                                    android:layout_marginVertical="5dp"
+                                    android:background="@drawable/round_two_option_background"
                                     android:weightSum="5">
                                     <TextView
                                         android:layout_width="0dp"
@@ -316,7 +336,7 @@
                                         android:layout_height="match_parent"
                                         android:layout_gravity="center"
                                         android:foregroundGravity="center"
-                                        android:layout_margin="10dp"
+                                        android:layout_margin="2dp"
                                         android:src="@drawable/mike"
                                         android:layout_weight="1.5"/>
                                 </LinearLayout>
@@ -326,6 +346,9 @@
                                     android:layout_weight="1"
                                     android:orientation="horizontal"
                                     android:paddingLeft="15dp"
+                                    android:layout_marginHorizontal="15dp"
+                                    android:layout_marginVertical="5dp"
+                                    android:background="@drawable/round_two_option_background"
                                     android:weightSum="5">
                                     <TextView
                                         android:layout_width="0dp"
@@ -338,7 +361,7 @@
                                         android:layout_height="match_parent"
                                         android:layout_gravity="center"
                                         android:foregroundGravity="center"
-                                        android:layout_margin="10dp"
+                                        android:layout_margin="2dp"
                                         android:src="@drawable/mike"
                                         android:layout_weight="1.5"/>
                                 </LinearLayout>

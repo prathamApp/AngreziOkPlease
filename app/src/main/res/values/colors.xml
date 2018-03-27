@@ -5,6 +5,7 @@
     <color name="colorAccent">#DD2C00</color>
     <color name="whiteTransparentNormal">#caffffff</color>
     <color name="whiteTransparentPressed">#9bffffff</color>
+    <color name="blackTransparent">#9b0e0e0e</color>
     <color name="full_transparent">#00ffffff</color>
     <color name="bole_toh_heading">#8b43ff</color>
     <color name="simple_white">#ffffff</color>
