@@ -1,11 +1,16 @@
 package com.example.pravin.angreziok.ui.bole_toh_round;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import com.example.pravin.angreziok.BaseActivity;
 import com.example.pravin.angreziok.R;
+import com.example.pravin.angreziok.animations.MyBounceInterpolator;
 import com.example.pravin.angreziok.contentplayer.TextToSpeechCustom;
 import com.example.pravin.angreziok.util.PD_Utility;
 
@@ -41,5 +46,12 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
         if (BoleTohRoundFragmen != null && BoleTohRoundFragmen.isVisible()) {
             super.onBackPressed();
         }
+    }
+
+    public static void animateView(View view,Context context) {
+        Animation rubber = AnimationUtils.loadAnimation(context, R.anim.popup);
+        MyBounceInterpolator interpolator = new MyBounceInterpolator(0.2, 15);
+        rubber.setInterpolator(interpolator);
+        view.startAnimation(rubber);
     }
 }

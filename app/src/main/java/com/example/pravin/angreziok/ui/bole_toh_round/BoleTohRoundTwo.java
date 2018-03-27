@@ -45,13 +45,14 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        setOnClickListeners();
+        setTimerCallBack();
         presenter = new BoleTohPresenterImpl(getActivity(),this,BoleToh.playtts);
         gifView.setGifResource(R.drawable.anupam_well_done);
         CustomCountDownTimer customCountDownTimer = new CustomCountDownTimer(mCountDownTimer,getActivity());
         customCountDownTimer.startTimer(30000);
         text = "What is he doing?";
         presenter.startTTS(text);
+        BoleToh.animateView(mCountDownTimer,getActivity());
     }
 
     @OnClick(R.id.ib_r1g2_speaker)
@@ -64,7 +65,7 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
         presenter.startSTT(getActivity());
     }
 
-    private void setOnClickListeners() {
+    private void setTimerCallBack() {
         mCountDownTimer.setOnTimeFinish(new OnTimeFinish() {
             @Override
             public void onFinish() {
