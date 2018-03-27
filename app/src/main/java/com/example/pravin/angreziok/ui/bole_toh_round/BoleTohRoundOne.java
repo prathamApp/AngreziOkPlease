@@ -117,7 +117,7 @@ public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.Bol
     }
 
     @OnClick(R.id.ib_r1g1_speaker)
-    public void playQuestion(){}
+    public void playQuestion(){presenter.replayQuestionroundone();}
 
     @Override
     public void setQuestionImages(final int readQuesNo, Bitmap... bitmaps) {
