@@ -29,7 +29,7 @@ import java.util.List;
 
 import static com.example.pravin.angreziok.AOPApplication.getRandomNumber;
 
-public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, RecognitionListener {
+public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
 
     String ttsQuestion;
     float speechRate = 1.0f;
@@ -217,53 +217,6 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, R
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public void onReadyForSpeech(Bundle params) {
-
-    }
-
-    @Override
-    public void onBeginningOfSpeech() {
-
-    }
-
-    @Override
-    public void onRmsChanged(float rmsdB) {
-
-    }
-
-    @Override
-    public void onBufferReceived(byte[] buffer) {
-
-    }
-
-    @Override
-    public void onEndOfSpeech() {
-
-    }
-
-    @Override
-    public void onError(int error) {
-
-    }
-
-    @Override
-    public void onResults(Bundle results) {
-        ArrayList<String> matches = results
-                .getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
-        Log.d(":::"+mContext, "onResults: "+matches.get(0));
-    }
-
-    @Override
-    public void onPartialResults(Bundle partialResults) {
-
-    }
-
-    @Override
-    public void onEvent(int eventType, Bundle params) {
-
     }
 
 }

@@ -1,7 +1,10 @@
 package com.example.pravin.angreziok.ui.bole_toh_round;
 
 import android.os.Bundle;
+import android.speech.RecognitionListener;
+import android.speech.SpeechRecognizer;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +17,14 @@ import com.example.pravin.angreziok.ui.GifView;
 import com.github.anastr.flattimelib.CountDownTimerView;
 import com.github.anastr.flattimelib.intf.OnTimeFinish;
 
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-
-public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.BoleTohRoundTwoView{
+public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.BoleTohRoundTwoView, RecognitionListener {
 
     @BindView(R.id.mCountDownTimer)
     CountDownTimerView mCountDownTimer;
@@ -45,26 +49,37 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        presenter = new BoleTohPresenterImpl(getActivity(),this,BoleToh.playtts);
+        presenter = new BoleTohPresenterImpl(getActivity(), this, BoleToh.playtts);
 
-        setTimerCallBack();
-        
-        gifView.setGifResource(R.drawable.anupam_well_done);
-        CustomCountDownTimer customCountDownTimer = new CustomCountDownTimer(mCountDownTimer,getActivity());
-        customCountDownTimer.startTimer(30000);
+        playTTS();
+        startTimer();
+        setActionGif();
+    }
+
+    private void playTTS() {
         text = "What is he doing?";
         presenter.startTTS(text);
-        BoleToh.animateView(mCountDownTimer,getActivity());
+    }
+
+    private void startTimer() {
+        CustomCountDownTimer customCountDownTimer = new CustomCountDownTimer(mCountDownTimer, getActivity());
+        customCountDownTimer.startTimer(30000);
+        setTimerCallBack();
+        BoleToh.animateView(mCountDownTimer, getActivity());
+    }
+
+    private void setActionGif() {
+        gifView.setGifResource(R.drawable.anupam_well_done);
     }
 
     @OnClick(R.id.ib_r1g2_speaker)
-    public void startTTS(){
+    public void startTTS() {
         presenter.startTTS(text);
     }
 
     @OnClick(R.id.ib_r1g2_mic)
-    public void startSTT(){
-        presenter.startSTT(getActivity());
+    public void startSTT() {
+        presenter.startSTT(BoleTohRoundTwo.this);
     }
 
     private void setTimerCallBack() {
@@ -72,9 +87,56 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
             @Override
             public void onFinish() {
                 Toast.makeText(getActivity(), "finish", Toast.LENGTH_SHORT).show();
-                mCountDownTimer.success();
+                mCountDownTimer.failure();
             }
         });
+    }
+
+    @Override
+    public void onReadyForSpeech(Bundle params) {
+
+    }
+
+    @Override
+    public void onBeginningOfSpeech() {
+
+    }
+
+    @Override
+    public void onRmsChanged(float rmsdB) {
+
+    }
+
+    @Override
+    public void onBufferReceived(byte[] buffer) {
+
+    }
+
+    @Override
+    public void onEndOfSpeech() {
+
+    }
+
+    @Override
+    public void onError(int error) {
+
+    }
+
+    @Override
+    public void onResults(Bundle results) {
+        ArrayList<String> matches = results
+                .getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
+        Log.d(":::" + getActivity(), "onResults: " + matches.get(0));
+    }
+
+    @Override
+    public void onPartialResults(Bundle partialResults) {
+
+    }
+
+    @Override
+    public void onEvent(int eventType, Bundle params) {
+
     }
 }
 
