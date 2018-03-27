@@ -19,7 +19,9 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
 
     @BindView(R.id.intro_videoView)
     VideoView videoView;
+
     String videoPath;
+
 
     VideoIntroContract.VideoIntroPresenter presenter;
 
