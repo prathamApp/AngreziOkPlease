@@ -20,7 +20,8 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
         getSupportActionBar().hide();
         ButterKnife.bind(this);
         presenter = new BoleTohPresenterImpl(this);
-        loadFragment(1);
+        playTTS.ttsFunction("Hello all");
+//        loadFragment(1);
     }
 
     @Override

@@ -18,7 +18,7 @@ public class TextToSpeechCustom {
     HashMap<String, String> map;
 
     public TextToSpeechCustom(Context mContext, float spRate) {
-//        super();
+        super();
         this.mContext = mContext;
         try {
             textToSpeech = new TextToSpeech(mContext, new TtsListener(spRate));
