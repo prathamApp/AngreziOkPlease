@@ -16,7 +16,6 @@ import android.widget.Toast;
 
 import com.example.pravin.angreziok.BaseFragment;
 import com.example.pravin.angreziok.R;
-import com.example.pravin.angreziok.contentplayer.TextToSpeechCustom;
 import com.example.pravin.angreziok.util.PD_Utility;
 import com.github.anastr.flattimelib.CountDownTimerView;
 import com.github.anastr.flattimelib.intf.OnTimeFinish;
@@ -25,7 +24,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.example.pravin.angreziok.ui.bole_toh_round.BoleToh.playTTS;
+import static com.example.pravin.angreziok.BaseActivity.playTTS;
 
 
 public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.BoleTohRoundOneView {
