@@ -253,6 +253,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, R
     public void onResults(Bundle results) {
         ArrayList<String> matches = results
                 .getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
+        Log.d(":::"+mContext, "onResults: "+matches.get(0));
     }
 
     @Override
