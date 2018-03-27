@@ -32,7 +32,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, R
 
     String ttsQuestion;
     float speechRate = 1.0f;
-    int[] integerArray = new int[4];
+    int[] integerArray;
     public TextToSpeechCustom playTTS;
     private SpeechRecognizer speech = null;
     String language = "en-IN";
@@ -94,7 +94,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, R
         gsonPicGameData = fetchJsonData("RoundOneGameOne", path);
         questionData = gsonPicGameData.getNodelist();
         Log.d("SIZE", "doInitialWork: " + questionData.size());
-        int[] integerArray = getUniqueRandomNumber(0, questionData.size(), 4);
+        integerArray = getUniqueRandomNumber(0, questionData.size(), 4);
         showImages(integerArray, sdCardPathString);
     }
 
@@ -140,10 +140,11 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, R
     public void checkAnswer(int imageViewNum, final String path) {
         String imageString = resTextArray.get(imageViewNum - 1);
         if (imageString.equalsIgnoreCase(ttsQuestion)) {
-            playMusic("correct.mp3");
+            playMusic("Sounds/correct.mp3", path);
         } else {
-            playMusic("wrong.mp3");
+            playMusic("Sounds/wrong.mp3", path);
         }
+        showImages(integerArray, path);
     }
 
     public GenericModalGson fetchJsonData(String jasonName, String path) {
@@ -183,13 +184,14 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, R
             return null;
     }
 
+
     @Override
-    public void playMusic(String fileName) {
+    public void playMusic(String fileName, String path) {
         try {
             if (mp == null)
                 mp = new MediaPlayer();
-//            mp.setDataSource(sdCardPathString + "/StoryData/" + fileName);
-            mp.setDataSource("file:///android_asset/sounds/" + fileName);
+            mp.setDataSource(path + fileName);
+//            mp.setDataSource("file:///android_asset/sounds/" + fileName);
             mp.prepare();
             mp.start();
             mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {

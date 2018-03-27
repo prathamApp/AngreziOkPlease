@@ -132,7 +132,6 @@ public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.Bol
             @Override
             public void run() {
                 presenter.readQuestion(readQuesNo);
-
             }
         },1500);
     }

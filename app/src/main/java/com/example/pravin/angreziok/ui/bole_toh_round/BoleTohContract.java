@@ -21,7 +21,7 @@ public interface BoleTohContract {
 
         public int[] getUniqueRandomNumber(int min, int max, int numSize);
 
-        void playMusic(String filename);
+        void playMusic(String filename,String path);
 
         void readQuestion(int questionToRead);
         void startTTS(String text);
