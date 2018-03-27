@@ -132,6 +132,11 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, R
     }
 
     @Override
+    public void replayQuestionroundone(){
+        readQuestion(readQuestionNo);
+    }
+
+    @Override
     public void startTTS(String text) {
         playTTS.ttsFunction(text);
     }
