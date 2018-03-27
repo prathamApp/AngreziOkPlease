@@ -45,8 +45,10 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        setTimerCallBack();
         presenter = new BoleTohPresenterImpl(getActivity(),this,BoleToh.playtts);
+
+        setTimerCallBack();
+        
         gifView.setGifResource(R.drawable.anupam_well_done);
         CustomCountDownTimer customCountDownTimer = new CustomCountDownTimer(mCountDownTimer,getActivity());
         customCountDownTimer.startTimer(30000);
@@ -71,11 +73,6 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
             public void onFinish() {
                 Toast.makeText(getActivity(), "finish", Toast.LENGTH_SHORT).show();
                 mCountDownTimer.success();
-            }
-        });
-        mCountDownTimer.setOnEndAnimationFinish(new OnTimeFinish() {
-            @Override
-            public void onFinish() {
             }
         });
     }
