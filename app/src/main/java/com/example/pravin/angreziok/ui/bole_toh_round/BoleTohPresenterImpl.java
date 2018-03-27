@@ -32,7 +32,6 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, R
 
     String ttsQuestion;
     float speechRate = 1.0f;
-    int[] integerArray;
     public TextToSpeechCustom playTTS;
     private SpeechRecognizer speech = null;
     String language = "en-IN";
@@ -94,7 +93,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, R
         gsonPicGameData = fetchJsonData("RoundOneGameOne", path);
         questionData = gsonPicGameData.getNodelist();
         Log.d("SIZE", "doInitialWork: " + questionData.size());
-        integerArray = getUniqueRandomNumber(0, questionData.size(), 4);
+        int[] integerArray = getUniqueRandomNumber(0, questionData.size(), 4);
         showImages(integerArray, sdCardPathString);
     }
 
@@ -144,7 +143,6 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, R
         } else {
             playMusic("Sounds/wrong.mp3", path);
         }
-        showImages(integerArray, path);
     }
 
     public GenericModalGson fetchJsonData(String jasonName, String path) {
@@ -252,6 +250,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, R
 
     @Override
     public void onCompletion(MediaPlayer mp) {
+        int[] integerArray = getUniqueRandomNumber(0, questionData.size(), 4);
         showImages(integerArray, sdCardPathString);
     }
 }
