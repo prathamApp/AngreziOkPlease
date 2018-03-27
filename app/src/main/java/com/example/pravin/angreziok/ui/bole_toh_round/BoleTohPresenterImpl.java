@@ -41,7 +41,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, R
     BoleTohContract.BoleTohRoundOneView boleTohRoundOneView;
     List<GenericModalGson> questionData;
     GenericModalGson gsonPicGameData;
-    MediaPlayer mp;
+
     ArrayList<String> resTextArray = new ArrayList<String>();
     ArrayList<String> resImageArray = new ArrayList<String>();
     ArrayList<String> resAudioArray = new ArrayList<String>();
@@ -126,8 +126,8 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, R
     @Override
     public void readQuestion(int questionToRead) {
         ttsQuestion = resTextArray.get(questionToRead);
-        Log.d("speechRate", "readQuestion: " + speechRate+","+ttsQuestion);
-        playTTS.ttsFunction("Where is "+ttsQuestion,"hin");
+        Log.d("speechRate", "readQuestion: " + speechRate + "," + ttsQuestion);
+        playTTS.ttsFunction("Where is " + ttsQuestion, "hin");
 //            playMusic("StoriesAudio/"+ resAudioArray.get(questionToRead));
     }
 
@@ -152,7 +152,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, R
                 int[] integerArray = getUniqueRandomNumber(0, questionData.size(), 4);
                 showImages(integerArray, path);
             }
-        },1000);
+        }, 1000);
 
     }
 
@@ -197,8 +197,9 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, R
     @Override
     public void playMusic(String fileName, String path) {
         try {
-            if (mp == null)
-                mp = new MediaPlayer();
+            MediaPlayer mp;
+            mp = new MediaPlayer();
+            Log.d("SoundPth", "playMusic: " + path + fileName);
             mp.setDataSource(path + fileName);
 //            mp.setDataSource("file:///android_asset/sounds/" + fileName);
             mp.prepare();
