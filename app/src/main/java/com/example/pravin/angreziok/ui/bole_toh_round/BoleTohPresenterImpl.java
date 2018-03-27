@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
@@ -28,7 +29,7 @@ import java.util.List;
 
 import static com.example.pravin.angreziok.AOPApplication.getRandomNumber;
 
-public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, RecognitionListener, MediaPlayer.OnCompletionListener {
+public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, RecognitionListener {
 
     String ttsQuestion;
     float speechRate = 1.0f;
@@ -143,6 +144,16 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, R
         } else {
             playMusic("Sounds/wrong.mp3", path);
         }
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                int[] integerArray = getUniqueRandomNumber(0, questionData.size(), 4);
+                showImages(integerArray, path);
+            }
+        },1000);
+
     }
 
     public GenericModalGson fetchJsonData(String jasonName, String path) {
@@ -248,9 +259,4 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, R
 
     }
 
-    @Override
-    public void onCompletion(MediaPlayer mp) {
-        int[] integerArray = getUniqueRandomNumber(0, questionData.size(), 4);
-        showImages(integerArray, sdCardPathString);
-    }
 }
