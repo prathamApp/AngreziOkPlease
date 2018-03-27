@@ -65,8 +65,6 @@ public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.Bol
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
         presenter = new BoleTohPresenterImpl(getActivity(), this, BoleToh.playtts);
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         setOnClickListeners();
         path = presenter.getSdcardPath();
         presenter.doInitialWork(path);
@@ -119,6 +117,9 @@ public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.Bol
     public void setIv_image4() {
         presenter.checkAnswer(4, path);
     }
+
+    @OnClick(R.id.ib_r1g1_speaker)
+    public void playQuestion(){}
 
     @Override
     public void setQuestionImages(final int readQuesNo, Bitmap... bitmaps) {
