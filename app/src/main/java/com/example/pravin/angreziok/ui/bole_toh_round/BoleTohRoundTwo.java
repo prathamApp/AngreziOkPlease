@@ -50,7 +50,7 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         setOnClickListeners();
-        presenter = new BoleTohPresenterImpl(getActivity(),this,BoleToh.playTTS);
+        presenter = new BoleTohPresenterImpl(getActivity(),this,BoleToh.playtts);
         gifView.setGifResource(R.drawable.anupam_well_done);
         CustomCountDownTimer customCountDownTimer = new CustomCountDownTimer(mCountDownTimer,getActivity());
         customCountDownTimer.startTimer(30000);
