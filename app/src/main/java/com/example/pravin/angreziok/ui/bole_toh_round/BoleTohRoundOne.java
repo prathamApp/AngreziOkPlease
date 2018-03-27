@@ -1,12 +1,9 @@
 package com.example.pravin.angreziok.ui.bole_toh_round;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,28 +13,19 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
 import com.example.pravin.angreziok.BaseFragment;
 import com.example.pravin.angreziok.R;
-import com.example.pravin.angreziok.modalclasses.GenericModalGson;
+import com.example.pravin.angreziok.contentplayer.TextToSpeechCustom;
 import com.example.pravin.angreziok.util.PD_Utility;
 import com.github.anastr.flattimelib.CountDownTimerView;
 import com.github.anastr.flattimelib.intf.OnTimeFinish;
-import com.google.gson.Gson;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import static com.example.pravin.angreziok.AOPApplication.getRandomNumber;
-import static com.example.pravin.angreziok.ui.bole_toh_round.BoleToh.playMusic;
+import butterknife.OnClick;
+
 import static com.example.pravin.angreziok.ui.bole_toh_round.BoleToh.playTTS;
-import static com.example.pravin.angreziok.ui.bole_toh_round.BoleToh.sdCardPathString;
 
 
 public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.BoleTohRoundOneView {
@@ -54,24 +42,14 @@ public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.Bol
     ImageView iv_image3;
     @BindView(R.id.iv_image4)
     ImageView iv_image4;
-    @BindView(R.id.ib_speaker)
+    @BindView(R.id.ib_r1g1_speaker)
     ImageButton ib_speaker;
-
     @BindView(R.id.bt_temp_skip)
     Button bt_temp_skip;
 
-    List<GenericModalGson> questionData;
-    GenericModalGson gsonPicGameData;
-//    ArrayList <GenericModalGson> gsonPicGameData = new ArrayList<GenericModalGson>();
-    ArrayList<String> resTextArray = new ArrayList<String>();
-    ArrayList<String> resImageArray = new ArrayList<String>();
-    ArrayList<String> resAudioArray = new ArrayList<String>();
-    ArrayList<String> resIdArray = new ArrayList<String>();
-    int readQuestionNo;
-    String ttsQuestion;
-    float speechRate = 1.0f;
-    int[] integerArray = new int[4];
-
+    //    ArrayList <GenericModalGson> gsonPicGameData = new ArrayList<GenericModalGson>();
+    BoleTohContract.BoleTohPresenter presenter;
+    String path;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -88,16 +66,17 @@ public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.Bol
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
+        presenter = new BoleTohPresenterImpl(getActivity(), this, playTTS);
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         setOnClickListeners();
-        doInitialWork();
+        path = presenter.getSdcardPath();
+        presenter.doInitialWork(path);
 /*        CustomCountDownTimer customCountDownTimer = new CustomCountDownTimer(mCountDownTimer,getActivity());
-        customCountDownTimer.startTimer(10000);*/
+        customCountDownTimer.startT`imer(10000);*/
     }
 
     private void setOnClickListeners() {
-
         mCountDownTimer.setOnTimeFinish(new OnTimeFinish() {
             @Override
             public void onFinish() {
@@ -111,158 +90,45 @@ public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.Bol
             public void onFinish() {
             }
         });
+    }
 
-        bt_temp_skip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PD_Utility.showFragment(getActivity(), new BoleTohRoundTwo(), R.id.cl_bole_toh,
-                        null, BoleTohRoundTwo.class.getSimpleName());
-            }
-        });
+    @OnClick(R.id.bt_temp_skip)
+    public void setBt_temp_skip() {
+        PD_Utility.showFragment(getActivity(), new BoleTohRoundTwo(), R.id.cl_bole_toh,
+                null, BoleTohRoundTwo.class.getSimpleName());
+    }
 
-        iv_image1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    @OnClick(R.id.iv_image1)
+    public void setIv_image1() {
 /*                Animation pop = AnimationUtils.loadAnimation(getActivity(), R.anim.popup);
                 MyBounceInterpolator interpolator = new MyBounceInterpolator(0.2, 10);
                 pop.setInterpolator(interpolator);
                 iv_image1.startAnimation(pop);*/
-                checkAnswer(1);
-            }
-        });
+        presenter.checkAnswer(1, path);
+    }
 
-        iv_image2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                checkAnswer(2);
-            }
-        });
+    @OnClick(R.id.iv_image2)
+    public void setIv_image2() {
+        presenter.checkAnswer(2, path);
+    }
 
-        iv_image3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                checkAnswer(3);
-            }
-        });
+    @OnClick(R.id.iv_image3)
+    public void setIv_image3() {
+        presenter.checkAnswer(3, path);
+    }
 
-        iv_image4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                checkAnswer(4);
-            }
-        });
-
-
+    @OnClick(R.id.iv_image4)
+    public void setIv_image4() {
+        presenter.checkAnswer(4, path);
     }
 
     @Override
-    public int[] getUniqueRandomNumber(int min, int max, int numSize) {
-        int[] tempArray;
-        if ((max - min) > numSize) {
-            tempArray = new int[numSize];
-            ArrayList<Integer> list = new ArrayList<Integer>();
-
-            for (int i = min; i < max; i++)
-                list.add(new Integer(i));
-
-            Collections.shuffle(list);
-            for (int i = 0; i < numSize; i++) {
-                System.out.println("===== : " + list.get(i));
-                tempArray[i] = list.get(i);
-            }
-            return tempArray;
-        } else
-            return null;
-    }
-
-    @Override
-    public void doInitialWork() {
-        gsonPicGameData = fetchJsonData("RoundOneGameOne");
-        questionData = gsonPicGameData.getNodelist();
-        Log.d("SIZE", "doInitialWork: "+questionData.size());
-        integerArray = getUniqueRandomNumber(0, questionData.size(), 4);
-        showImages(integerArray);
-    }
-
-    public GenericModalGson fetchJsonData(String jasonName) {
-        GenericModalGson returnGsonData = null;
-        try {
-            InputStream is = new FileInputStream(sdCardPathString+"JsonFiles/"+jasonName + ".json");
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            JSONObject jsonObj = new JSONObject(new String(buffer));
-            Gson gson = new Gson();
-            returnGsonData = gson.fromJson(jsonObj.toString(), GenericModalGson.class);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return returnGsonData;
-    }
-
-    public void showImages(int[] integerArray) {
-        try {
-            readQuestionNo = getRandomNumber(0, 4);
-            String imagePath = sdCardPathString + "PicGameImages/";
-
-            resTextArray.clear();
-            resIdArray.clear();
-            resImageArray.clear();
-            resAudioArray.clear();
-
-            for (int i = 0; i < 4; i++) {
-                resTextArray.add(questionData.get(i).getResourceText());
-                resImageArray.add(questionData.get(i).getResourceImage());
-                resAudioArray.add(questionData.get(i).getResourceImage());
-                resIdArray.add(questionData.get(i).getResourceId());
-            }
-            Bitmap[] bitmap = {BitmapFactory.decodeFile(imagePath + resImageArray.get(0))};
-            iv_image1.setImageBitmap(bitmap[0]);
-            bitmap = new Bitmap[]{BitmapFactory.decodeFile(imagePath + resImageArray.get(1))};
-            iv_image2.setImageBitmap(bitmap[0]);
-            bitmap = new Bitmap[]{BitmapFactory.decodeFile(imagePath + resImageArray.get(2))};
-            iv_image3.setImageBitmap(bitmap[0]);
-            bitmap = new Bitmap[]{BitmapFactory.decodeFile(imagePath + resImageArray.get(3))};
-            iv_image4.setImageBitmap(bitmap[0]);
-
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    readQuestion(readQuestionNo);
-                }
-            }, 1500);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void readQuestion(int questionToRead) {
-        ttsQuestion = resTextArray.get(questionToRead);
-        Log.d("speechRate", "readQuestion: " + speechRate);
-            playTTS.ttsFunction("Where Is "+ttsQuestion, "hin", speechRate);
-//            playMusic("StoriesAudio/"+ resAudioArray.get(questionToRead));
-    }
-
-    @Override
-    public void checkAnswer(int imageViewNum) {
-        String imageString = resTextArray.get(imageViewNum - 1);
-
-        if (imageString.equalsIgnoreCase(ttsQuestion)) {
-            playMusic("correct.mp3");
-
-        } else {
-            playMusic("wrong.mp3");
-        }
-
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                showImages(integerArray);
-            }
-        }, 1000);
+    public void setQuestionImages(int readQuesNo, Bitmap... bitmaps) {
+        iv_image1.setImageBitmap(bitmaps[0]);
+        iv_image2.setImageBitmap(bitmaps[1]);
+        iv_image3.setImageBitmap(bitmaps[2]);
+        iv_image4.setImageBitmap(bitmaps[3]);
+        presenter.readQuestion(readQuesNo);
     }
 }
 

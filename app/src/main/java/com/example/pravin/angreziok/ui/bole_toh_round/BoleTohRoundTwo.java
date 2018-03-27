@@ -1,9 +1,6 @@
 package com.example.pravin.angreziok.ui.bole_toh_round;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.speech.RecognizerIntent;
-import android.speech.SpeechRecognizer;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -14,6 +11,7 @@ import android.widget.Toast;
 
 import com.example.pravin.angreziok.BaseFragment;
 import com.example.pravin.angreziok.R;
+import com.example.pravin.angreziok.contentplayer.TextToSpeechCustom;
 import com.example.pravin.angreziok.ui.CustomCountDownTimer;
 import com.example.pravin.angreziok.ui.GifView;
 import com.github.anastr.flattimelib.CountDownTimerView;
@@ -52,28 +50,26 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
         ButterKnife.bind(this, view);
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
-
         setOnClickListeners();
+        presenter = new BoleTohPresenterImpl(getActivity(),this,playTTS);
         gifView.setGifResource(R.drawable.anupam_well_done);
         CustomCountDownTimer customCountDownTimer = new CustomCountDownTimer(mCountDownTimer,getActivity());
         customCountDownTimer.startTimer(30000);
-        text = "What is he/she doing?";
-        startTTS();
+        text = "What is he doing?";
+        presenter.startTTS(text);
     }
 
-    @OnClick(R.id.ib_speaker)
+    @OnClick(R.id.ib_r1g2_speaker)
     public void startTTS(){
-        playTTS.ttsFunction(text);
+        presenter.startTTS(text);
     }
 
-    @OnClick(R.id.ib_speaker)
+    @OnClick(R.id.ib_r1g2_mic)
     public void startSTT(){
         presenter.startSTT(getActivity());
     }
 
-
     private void setOnClickListeners() {
-
         mCountDownTimer.setOnTimeFinish(new OnTimeFinish() {
             @Override
             public void onFinish() {
@@ -81,13 +77,11 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
                 mCountDownTimer.success();
             }
         });
-
         mCountDownTimer.setOnEndAnimationFinish(new OnTimeFinish() {
             @Override
             public void onFinish() {
             }
         });
-
     }
 }
 
