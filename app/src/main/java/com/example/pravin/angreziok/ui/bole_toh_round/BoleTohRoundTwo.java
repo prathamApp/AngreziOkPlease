@@ -47,8 +47,6 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         setOnClickListeners();
         presenter = new BoleTohPresenterImpl(getActivity(),this,BoleToh.playtts);
         gifView.setGifResource(R.drawable.anupam_well_done);
