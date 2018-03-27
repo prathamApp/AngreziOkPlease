@@ -2,6 +2,7 @@ package com.example.pravin.angreziok.ui.bole_toh_round;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -23,8 +24,6 @@ import com.github.anastr.flattimelib.intf.OnTimeFinish;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static com.example.pravin.angreziok.BaseActivity.playTTS;
 
 
 public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.BoleTohRoundOneView {
@@ -65,7 +64,7 @@ public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.Bol
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        presenter = new BoleTohPresenterImpl(getActivity(), this, playTTS);
+        presenter = new BoleTohPresenterImpl(getActivity(), this, BoleToh.playTTS);
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         setOnClickListeners();
@@ -122,12 +121,20 @@ public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.Bol
     }
 
     @Override
-    public void setQuestionImages(int readQuesNo, Bitmap... bitmaps) {
+    public void setQuestionImages(final int readQuesNo, Bitmap... bitmaps) {
         iv_image1.setImageBitmap(bitmaps[0]);
         iv_image2.setImageBitmap(bitmaps[1]);
         iv_image3.setImageBitmap(bitmaps[2]);
         iv_image4.setImageBitmap(bitmaps[3]);
-        presenter.readQuestion(readQuesNo);
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                presenter.readQuestion(readQuesNo);
+
+            }
+        },1500);
     }
 }
 

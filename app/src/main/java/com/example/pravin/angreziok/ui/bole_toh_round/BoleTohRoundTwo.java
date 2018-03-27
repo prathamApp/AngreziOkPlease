@@ -20,7 +20,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.example.pravin.angreziok.BaseActivity.playTTS;
 
 
 public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.BoleTohRoundTwoView{
@@ -51,7 +50,7 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         setOnClickListeners();
-        presenter = new BoleTohPresenterImpl(getActivity(),this,playTTS);
+        presenter = new BoleTohPresenterImpl(getActivity(),this,BoleToh.playTTS);
         gifView.setGifResource(R.drawable.anupam_well_done);
         CustomCountDownTimer customCountDownTimer = new CustomCountDownTimer(mCountDownTimer,getActivity());
         customCountDownTimer.startTimer(30000);

@@ -127,7 +127,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, R
     public void readQuestion(int questionToRead) {
         ttsQuestion = resTextArray.get(questionToRead);
         Log.d("speechRate", "readQuestion: " + speechRate+","+ttsQuestion);
-        playTTS.ttsFunction("Where Is " + ttsQuestion,"hin");
+        playTTS.ttsFunction("Where is "+ttsQuestion,"hin");
 //            playMusic("StoriesAudio/"+ resAudioArray.get(questionToRead));
     }
 

@@ -12,6 +12,7 @@ import butterknife.ButterKnife;
 public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView {
 
     BoleTohContract.BoleTohPresenter presenter;
+    public static TextToSpeechCustom playTTS;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,8 +21,9 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
         getSupportActionBar().hide();
         ButterKnife.bind(this);
         presenter = new BoleTohPresenterImpl(this);
-        playTTS.ttsFunction("Hello all");
-//        loadFragment(1);
+        playTTS = new TextToSpeechCustom(this, 1.0f);
+        //playTTS.ttsFunction("Hello all");
+        loadFragment(1);
     }
 
     @Override

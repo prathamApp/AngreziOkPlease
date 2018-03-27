@@ -65,12 +65,12 @@ public class TextToSpeechCustom {
         HashMap<String, String> map = new HashMap<>();
         map.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "MessageId");
 
-        if (lang.equals("hin"))
+/*        if (lang.equals("hin"))
             textToSpeech.setLanguage(new Locale("hi", "IN"));
         else
             textToSpeech.setLanguage(new Locale("en", "IN"));
 
-        textToSpeech.setSpeechRate(sprate);
+        textToSpeech.setSpeechRate(sprate);*/
         textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, map);
     }
 
@@ -78,12 +78,12 @@ public class TextToSpeechCustom {
     private void ttsGreater21(String text, String lang, float sprate) {
         String utteranceId = this.hashCode() + "";
 
-        if (lang.equals("hin"))
+/*        if (lang.equals("hin"))
             textToSpeech.setLanguage(new Locale("hi", "IN"));
         else
             textToSpeech.setLanguage(new Locale("en", "IN"));
 
-        textToSpeech.setSpeechRate(sprate);
+        textToSpeech.setSpeechRate(sprate);*/
         textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null, utteranceId);
     }
 

@@ -12,12 +12,10 @@ import com.example.pravin.angreziok.contentplayer.TextToSpeechCustom;
 
 public class BaseActivity extends AppCompatActivity {
 
-    public static TextToSpeechCustom playTTS;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        playTTS = new TextToSpeechCustom(this, 1.0f);
     }
 
     @Override
