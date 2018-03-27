@@ -1,6 +1,8 @@
 package com.example.pravin.angreziok.ui.bole_toh_round;
 
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.WindowManager;
 
 import com.example.pravin.angreziok.BaseActivity;
 import com.example.pravin.angreziok.R;
