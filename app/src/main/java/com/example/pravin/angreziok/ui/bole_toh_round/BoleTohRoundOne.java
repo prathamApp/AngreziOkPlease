@@ -117,71 +117,9 @@ public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.Bol
         presenter.checkAnswer(3, path);
     }
 
-<<<<<<< HEAD
     @OnClick(R.id.iv_image4)
     public void setIv_image4() {
         presenter.checkAnswer(4, path);
-=======
-    public GenericModalGson fetchJsonData(String jasonName) {
-        GenericModalGson returnGsonData = null;
-        try {
-            InputStream is = new FileInputStream(sdCardPathString+"JsonFiles/"+jasonName + ".json");
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            JSONObject jsonObj = new JSONObject(new String(buffer));
-            Gson gson = new Gson();
-            returnGsonData = gson.fromJson(jsonObj.toString(), GenericModalGson.class);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return returnGsonData;
-    }
-
-    public void showImages(int[] integerArray) {
-        try {
-            readQuestionNo = getRandomNumber(0, 4);
-            String imagePath = sdCardPathString + "PicGameImages/";
-
-            resTextArray.clear();
-            resIdArray.clear();
-            resImageArray.clear();
-            resAudioArray.clear();
-
-            for (int i = 0; i < 4; i++) {
-                resTextArray.add(questionData.get(integerArray[i]).getResourceText());
-                resImageArray.add(questionData.get(integerArray[i]).getResourceImage());
-                resAudioArray.add(questionData.get(integerArray[i]).getResourceImage());
-                resIdArray.add(questionData.get(integerArray[i]).getResourceId());
-            }
-            Bitmap[] bitmap = {BitmapFactory.decodeFile(imagePath + resImageArray.get(0))};
-            iv_image1.setImageBitmap(bitmap[0]);
-            bitmap = new Bitmap[]{BitmapFactory.decodeFile(imagePath + resImageArray.get(1))};
-            iv_image2.setImageBitmap(bitmap[0]);
-            bitmap = new Bitmap[]{BitmapFactory.decodeFile(imagePath + resImageArray.get(2))};
-            iv_image3.setImageBitmap(bitmap[0]);
-            bitmap = new Bitmap[]{BitmapFactory.decodeFile(imagePath + resImageArray.get(3))};
-            iv_image4.setImageBitmap(bitmap[0]);
-
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    readQuestion(readQuestionNo);
-                }
-            }, 1500);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void readQuestion(int questionToRead) {
-        ttsQuestion = resTextArray.get(questionToRead);
-        Log.d("speechRate", "readQuestion: " + speechRate);
-            playTTS.ttsFunction("Where Is "+ttsQuestion, "hin", speechRate);
-//            playMusic("StoriesAudio/"+ resAudioArray.get(questionToRead));
->>>>>>> 30e2479a7ff9716156053e8b3c8262868382f07a
     }
 
     @Override
