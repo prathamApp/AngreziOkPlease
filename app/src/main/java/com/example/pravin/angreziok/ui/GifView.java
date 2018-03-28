@@ -15,6 +15,8 @@ import android.view.View;
 
 import com.example.pravin.angreziok.R;
 
+import java.io.InputStream;
+
 
 public class GifView extends View {
 
@@ -89,6 +91,11 @@ public class GifView extends View {
     public void setGifResource(int movieResourceId) {
         this.mMovieResourceId = movieResourceId;
         movie = Movie.decodeStream(getResources().openRawResource(mMovieResourceId));
+        requestLayout();
+    }
+
+    public void setGifResource(InputStream is) {
+        movie = Movie.decodeStream(is);
         requestLayout();
     }
 

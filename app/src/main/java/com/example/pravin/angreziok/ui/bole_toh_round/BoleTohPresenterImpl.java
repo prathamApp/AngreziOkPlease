@@ -2,15 +2,10 @@ package com.example.pravin.angreziok.ui.bole_toh_round;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
-import android.os.Bundle;
 import android.os.Handler;
-import android.speech.RecognitionListener;
-import android.speech.RecognizerIntent;
-import android.speech.SpeechRecognizer;
 import android.util.Log;
 
 import com.example.pravin.angreziok.SDCardUtil;
@@ -37,14 +32,14 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
     Context mContext;
     BoleTohContract.BoleTohRoundTwoView boleTohRoundTwoView;
     BoleTohContract.BoleTohRoundOneView boleTohRoundOneView;
-    List<GenericModalGson> questionData;
-    GenericModalGson gsonPicGameData;
+    List<GenericModalGson> r1g1QuestionData,r1g2QuestionData;
+    GenericModalGson gsonPicGameData,gsonActGameData;
 
     ArrayList<String> resTextArray = new ArrayList<String>();
     ArrayList<String> resImageArray = new ArrayList<String>();
     ArrayList<String> resAudioArray = new ArrayList<String>();
     ArrayList<String> resIdArray = new ArrayList<String>();
-    int readQuestionNo;
+    int readQuestionNo,r1g2RandomNo;
     String sdCardPathString;
 
     public BoleTohPresenterImpl(Context mContext) {
@@ -79,9 +74,9 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
     public void doInitialWork(String path) {
         sdCardPathString = path;
         gsonPicGameData = fetchJsonData("RoundOneGameOne", path);
-        questionData = gsonPicGameData.getNodelist();
-        Log.d("SIZE", "doInitialWork: " + questionData.size());
-        int[] integerArray = getUniqueRandomNumber(0, questionData.size(), 4);
+        r1g1QuestionData = gsonPicGameData.getNodelist();
+        Log.d("SIZE", "doInitialWork: " + r1g1QuestionData.size());
+        int[] integerArray = getUniqueRandomNumber(0, r1g1QuestionData.size(), 4);
         showImages(integerArray, sdCardPathString);
     }
 
@@ -94,10 +89,10 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
             resImageArray.clear();
             resAudioArray.clear();
             for (int i = 0; i < 4; i++) {
-                resTextArray.add(questionData.get(integerArray[i]).getResourceText());
-                resImageArray.add(questionData.get(integerArray[i]).getResourceImage());
-                resAudioArray.add(questionData.get(integerArray[i]).getResourceImage());
-                resIdArray.add(questionData.get(integerArray[i]).getResourceId());
+                resTextArray.add(r1g1QuestionData.get(integerArray[i]).getResourceText());
+                resImageArray.add(r1g1QuestionData.get(integerArray[i]).getResourceImage());
+                resAudioArray.add(r1g1QuestionData.get(integerArray[i]).getResourceImage());
+                resIdArray.add(r1g1QuestionData.get(integerArray[i]).getResourceId());
             }
             Bitmap[] bitmap = new Bitmap[]{BitmapFactory.decodeFile(imagePath + resImageArray.get(0)),
                     BitmapFactory.decodeFile(imagePath + resImageArray.get(1)),
@@ -134,6 +129,20 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
     }
 
     @Override
+    public void setr1g2_data(String path) {
+        gsonActGameData = fetchJsonData("RoundOneGameTwo", path);
+        r1g2QuestionData = gsonActGameData.getNodelist();
+        Log.d("SIZE", "doInitialWork: " + r1g2QuestionData.size());
+        setImage_r1g2(path);
+    }
+
+    private void setImage_r1g2(String path) {
+        r1g2RandomNo = getRandomNumber(0, r1g2QuestionData.size());
+        String imagePath = path+ "PicGameImages/"+r1g2QuestionData.get(r1g2RandomNo).getResourceImage();
+        boleTohRoundTwoView.setActionGif(imagePath);
+    }
+
+    @Override
     public void r1g1_checkAnswer(int imageViewNum, final String path) {
         String imageString = resTextArray.get(imageViewNum - 1);
         if (imageString.equalsIgnoreCase(ttsQuestion)) {
@@ -146,7 +155,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                int[] integerArray = getUniqueRandomNumber(0, questionData.size(), 4);
+                int[] integerArray = getUniqueRandomNumber(0, r1g1QuestionData.size(), 4);
                 showImages(integerArray, path);
             }
         }, 1000);

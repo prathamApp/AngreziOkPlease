@@ -1,7 +1,6 @@
 package com.example.pravin.angreziok.ui.bole_toh_round;
 
 
-import android.content.Context;
 import android.graphics.Bitmap;
 
 public interface BoleTohContract {
@@ -28,6 +27,8 @@ public interface BoleTohContract {
         void startTTS(String text);
 
         void r1g2_checkAnswer(String ans);
+
+        void setr1g2_data(String path);
     }
 
     interface BoleTohRoundOneView {
@@ -35,6 +36,7 @@ public interface BoleTohContract {
     }
 
     interface BoleTohRoundTwoView {
+        void setActionGif(String path);
     }
 
 }
