@@ -1,6 +1,5 @@
 package com.example.pravin.angreziok.ui.bole_toh_round;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognitionListener;
@@ -78,12 +77,17 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
     }
 
     @OnClick(R.id.ib_r1g2_speaker)
-    public void startTTS() {
+    public void soundClicked() {
         presenter.startTTS(text);
     }
 
-    public void startSTT(Context context) {
-        speech = SpeechRecognizer.createSpeechRecognizer(context);
+    @OnClick(R.id.ib_r1g2_mic)
+    public void micClicked() {
+        startSTT();
+    }
+
+    public void startSTT() {
+        speech = SpeechRecognizer.createSpeechRecognizer(getActivity());
         speech.setRecognitionListener(this);
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, language);
