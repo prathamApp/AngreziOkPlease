@@ -81,6 +81,9 @@ dependencies {
 
 // Timer library
     compile 'com.github.anastr:flattimelib:1.0.3'
+
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+
 }
 
 

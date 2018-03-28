@@ -1,21 +1,20 @@
 package com.example.pravin.angreziok.ui.bole_toh_round;
 
 
-import android.content.Context;
 import android.graphics.Bitmap;
 
 public interface BoleTohContract {
 
-    public interface BoleTohView {
+    interface BoleTohView {
         void loadFragment(int no);
     }
 
-    public interface BoleTohPresenter {
+    interface BoleTohPresenter {
         String getSdcardPath();
 
         void doInitialWork(String path);
 
-        void checkAnswer(int imageViewNum,String path);
+        void r1g1_checkAnswer(int imageViewNum, String path);
 
         int[] getUniqueRandomNumber(int min, int max, int numSize);
 
@@ -26,13 +25,18 @@ public interface BoleTohContract {
         void readQuestion(int questionToRead);
 
         void startTTS(String text);
+
+        void r1g2_checkAnswer(String ans);
+
+        void setr1g2_data(String path);
     }
 
-    public interface BoleTohRoundOneView {
+    interface BoleTohRoundOneView {
         void setQuestionImages(int readQuesNo, Bitmap... bitmaps);
     }
 
-    public interface BoleTohRoundTwoView {
+    interface BoleTohRoundTwoView {
+        void setActionGif(String path);
     }
 
 }

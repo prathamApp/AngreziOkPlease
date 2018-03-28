@@ -1,7 +1,10 @@
 package com.example.pravin.angreziok.ui.bole_toh_round;
 
-import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
@@ -11,8 +14,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.pravin.angreziok.BaseFragment;
 import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.ui.CustomCountDownTimer;
@@ -20,6 +26,10 @@ import com.example.pravin.angreziok.ui.GifView;
 import com.github.anastr.flattimelib.CountDownTimerView;
 import com.github.anastr.flattimelib.intf.OnTimeFinish;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -33,6 +43,8 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
     CountDownTimerView mCountDownTimer;
     @BindView(R.id.iv_character_dialog_gif)
     GifView gifView;
+    @BindView(R.id.tv_r1g2_answer)
+    TextView answer;
 
     String text;
     BoleTohContract.BoleTohPresenter presenter;
@@ -56,9 +68,14 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
         ButterKnife.bind(this, view);
         presenter = new BoleTohPresenterImpl(getActivity(), this, BoleToh.playtts);
 
+        setDataForGame();
         playTTS();
         startTimer();
-        setActionGif();
+    }
+
+    private void setDataForGame() {
+        String path = presenter.getSdcardPath();
+        presenter.setr1g2_data(path);
     }
 
     private void playTTS() {
@@ -73,17 +90,18 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
         BoleToh.animateView(mCountDownTimer, getActivity());
     }
 
-    private void setActionGif() {
-        gifView.setGifResource(R.drawable.anupam_well_done);
-    }
-
     @OnClick(R.id.ib_r1g2_speaker)
-    public void startTTS() {
+    public void soundClicked() {
         presenter.startTTS(text);
     }
 
-    public void startSTT(Context context) {
-        speech = SpeechRecognizer.createSpeechRecognizer(context);
+    @OnClick(R.id.ib_r1g2_mic)
+    public void micClicked() {
+        startSTT();
+    }
+
+    public void startSTT() {
+        speech = SpeechRecognizer.createSpeechRecognizer(getActivity());
         speech.setRecognitionListener(this);
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, language);
@@ -136,6 +154,7 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
         ArrayList<String> matches = results
                 .getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
         Log.d(":::" + getActivity(), "onResults: " + matches.get(0));
+        presenter.r1g2_checkAnswer(matches.get(0));
     }
 
     @Override
@@ -146,6 +165,17 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
     @Override
     public void onEvent(int eventType, Bundle params) {
 
+    }
+
+    @Override
+    public void setActionGif(String path) {
+
+        try {
+            InputStream gif = new FileInputStream(path);
+            gifView.setGifResource(gif);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }
 
