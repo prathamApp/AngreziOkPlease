@@ -13,17 +13,18 @@ public interface BoleTohContract {
     public interface BoleTohPresenter {
         String getSdcardPath();
 
-        void startSTT(Context context);
-
         void doInitialWork(String path);
 
         void checkAnswer(int imageViewNum,String path);
 
-        public int[] getUniqueRandomNumber(int min, int max, int numSize);
+        int[] getUniqueRandomNumber(int min, int max, int numSize);
 
         void playMusic(String filename,String path);
+
         void replayQuestionroundone();
+
         void readQuestion(int questionToRead);
+
         void startTTS(String text);
     }
 

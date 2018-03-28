@@ -34,8 +34,6 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
     String ttsQuestion;
     float speechRate = 1.0f;
     public TextToSpeechCustom playTTS;
-    private SpeechRecognizer speech = null;
-    String language = "en-IN";
     Context mContext;
     BoleTohContract.BoleTohRoundTwoView boleTohRoundTwoView;
     BoleTohContract.BoleTohRoundOneView boleTohRoundOneView;
@@ -76,16 +74,6 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
             }
         }
         return sdCardPathString;
-    }
-
-    @Override
-    public void startSTT(Context context) {
-        speech = SpeechRecognizer.createSpeechRecognizer(context);
-        speech.setRecognitionListener(this);
-        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, language);
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-        speech.startListening(intent);
     }
 
     @Override
