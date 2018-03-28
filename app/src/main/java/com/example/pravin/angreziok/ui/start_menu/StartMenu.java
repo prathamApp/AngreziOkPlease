@@ -5,22 +5,26 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.migration.Migration;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.pravin.angreziok.BaseActivity;
 import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.database.AppDatabase;
 import com.example.pravin.angreziok.database.BackupDatabase;
+import com.example.pravin.angreziok.modalclasses.PlayerModal;
 import com.example.pravin.angreziok.ui.bole_toh_round.BoleToh;
+import com.example.pravin.angreziok.ui.start_data_confirmation.DataConfirmation;
 import com.google.zxing.Result;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
@@ -28,10 +32,24 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 public class StartMenu extends BaseActivity implements StartMenuContract.StartMenuView,
         ZXingScannerView.ResultHandler {
 
+    @BindView(R.id.content_frame)
+    ViewGroup content_frame;
+
+
     private AppDatabase appDatabase;
     StartMenuContract.StartMenuPresenter presenter;
     public ZXingScannerView startCameraScan;
-    int totalStudents=0;
+    PlayerModal playerModal;
+    List<PlayerModal> playerModalList;
+    int totalStudents = 0;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initCamera();
+        startCameraScan.startCamera();
+        startCameraScan.resumeCameraPreview(this);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +58,7 @@ public class StartMenu extends BaseActivity implements StartMenuContract.StartMe
         getSupportActionBar().hide();
         ButterKnife.bind(this);
         presenter = new StartMenuPresenterImpl(this, this);
+        playerModalList = new ArrayList<>();
         /* 1) In case migration needed and no problem with data loss then this would work
 
         appDatabase =  Room.databaseBuilder(this,
@@ -63,6 +82,13 @@ public class StartMenu extends BaseActivity implements StartMenuContract.StartMe
         presenter.displayToast();
     }
 
+    public void initCamera() {
+        startCameraScan = new ZXingScannerView(this);
+        startCameraScan.setResultHandler(this);
+        content_frame.addView((startCameraScan));
+    }
+
+
     static final Migration MIGRATION_1_2 = new Migration(1, 2) {
         @Override
         public void migrate(@NonNull SupportSQLiteDatabase database) {
@@ -83,19 +109,13 @@ public class StartMenu extends BaseActivity implements StartMenuContract.StartMe
     public void startQrScan() {
         startCameraScan.startCamera();
         startCameraScan.resumeCameraPreview(this);
-        startCameraScan.setVisibility(View.GONE);
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                startCameraScan.setVisibility(View.VISIBLE);
-            }
-        }, 500);
-
     }
 
     @OnClick(R.id.btn_start_game)
     public void gotoGame() {
+        Intent dataConfirmationIntent = new Intent(this, DataConfirmation.class);
+        dataConfirmationIntent.putExtra("totalStudents", totalStudents);
+        startActivity(dataConfirmationIntent);
         startActivity(new Intent(StartMenu.this, BoleToh.class));
     }
 
@@ -122,19 +142,36 @@ public class StartMenu extends BaseActivity implements StartMenuContract.StartMe
 
             //"vivek.mitra@gmail.com"
             if (mat.matches()) {
-                if(totalStudents<3) {
-                    totalStudents++;
-                    //Valid pattern
-                    String[] id = decodeStudentId(result.getText(), "-");
+                for (int i = 0; i < playerModalList.size(); i++) {
+                    if (playerModalList.get(i).getStudentID().equalsIgnoreCase(decodeStudentId(result.getText(), "-").toString()))
+                        Toast.makeText(this, "Already Scaned", Toast.LENGTH_SHORT).show();
+                    else {
+                        totalStudents++;
+                        Toast.makeText(this, "" + totalStudents, Toast.LENGTH_SHORT).show();
+                        if (totalStudents < 5) {
+                            //Valid pattern
+                            String[] id = decodeStudentId(result.getText(), "-");
 
-                    String stdId = id[0];
-                    //String stdFirstName = id[1];
-                    String[] name = decodeStudentId(id[1], "_");
-                    String stdFirstName = name[0];
-                    String stdLastName = "";
-                    if (name.length > 1)
-                        stdLastName = name[1];
+                            String stdId = id[0];
+                            //String stdFirstName = id[1];
+                            String[] name = decodeStudentId(id[1], "_");
+                            String stdFirstName = name[0];
+                            String stdLastName = "";
+                            if (name.length > 1)
+                                stdLastName = name[1];
+
+                            if (totalStudents == 4) {
+
+                                Intent dataConfirmationIntent = new Intent(this, DataConfirmation.class);
+                                dataConfirmationIntent.putExtra("totalStudents", totalStudents);
+                                startActivity(dataConfirmationIntent);
+                                startActivity(new Intent(StartMenu.this, BoleToh.class));
+                            }
+                        }
+                    }
                 }
+                startCameraScan.startCamera();
+                startCameraScan.resumeCameraPreview(this);
 
             } else {
                 BackupDatabase.backup(this);
