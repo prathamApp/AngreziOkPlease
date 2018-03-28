@@ -99,22 +99,22 @@ public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.Bol
                 MyBounceInterpolator interpolator = new MyBounceInterpolator(0.2, 10);
                 pop.setInterpolator(interpolator);
                 iv_image1.startAnimation(pop);*/
-        presenter.checkAnswer(1, path);
+        presenter.r1g1_checkAnswer(1, path);
     }
 
     @OnClick(R.id.iv_image2)
     public void setIv_image2() {
-        presenter.checkAnswer(2, path);
+        presenter.r1g1_checkAnswer(2, path);
     }
 
     @OnClick(R.id.iv_image3)
     public void setIv_image3() {
-        presenter.checkAnswer(3, path);
+        presenter.r1g1_checkAnswer(3, path);
     }
 
     @OnClick(R.id.iv_image4)
     public void setIv_image4() {
-        presenter.checkAnswer(4, path);
+        presenter.r1g1_checkAnswer(4, path);
     }
 
     @OnClick(R.id.ib_r1g1_speaker)

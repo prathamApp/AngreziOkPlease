@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pravin.angreziok.BaseFragment;
@@ -32,6 +33,8 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
     CountDownTimerView mCountDownTimer;
     @BindView(R.id.iv_character_dialog_gif)
     GifView gifView;
+    @BindView(R.id.tv_r1g2_answer)
+    TextView answer;
 
     String text;
     BoleTohContract.BoleTohPresenter presenter;
@@ -140,6 +143,7 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
         ArrayList<String> matches = results
                 .getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
         Log.d(":::" + getActivity(), "onResults: " + matches.get(0));
+        presenter.r1g2_checkAnswer(matches.get(0));
     }
 
     @Override

@@ -68,7 +68,6 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
         String sdCardPathString = null;
         ArrayList<String> sdcard_path = SDCardUtil.getExtSdCardPaths(mContext);
         for (String path : sdcard_path) {
-//            final_sd_path = path;
             if (new File(path + "/.AOP_External").exists()) {
                 sdCardPathString = path + "/.AOP_External/";
             }
@@ -130,7 +129,12 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
     }
 
     @Override
-    public void checkAnswer(int imageViewNum, final String path) {
+    public void r1g2_checkAnswer(String ans) {
+        
+    }
+
+    @Override
+    public void r1g1_checkAnswer(int imageViewNum, final String path) {
         String imageString = resTextArray.get(imageViewNum - 1);
         if (imageString.equalsIgnoreCase(ttsQuestion)) {
             playMusic("Sounds/correct.mp3", path);

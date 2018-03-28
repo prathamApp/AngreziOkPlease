@@ -275,6 +275,7 @@
                                 android:layout_weight="1.2">
 
                                 <TextView
+                                    android:id="@+id/tv_r1g2_answer"
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
                                     android:text="Ans"
