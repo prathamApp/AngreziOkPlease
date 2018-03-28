@@ -169,7 +169,6 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
 
     @Override
     public void setActionGif(String path) {
-
         try {
             InputStream gif = new FileInputStream(path);
             gifView.setGifResource(gif);
@@ -178,5 +177,3 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
         }
     }
 }
-
-
