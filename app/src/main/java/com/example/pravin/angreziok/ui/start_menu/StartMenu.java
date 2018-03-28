@@ -46,7 +46,7 @@ public class StartMenu extends BaseActivity implements StartMenuContract.StartMe
     @Override
     protected void onResume() {
         super.onResume();
-        initCamera();
+
         startCameraScan.startCamera();
         startCameraScan.resumeCameraPreview(this);
     }
@@ -59,6 +59,9 @@ public class StartMenu extends BaseActivity implements StartMenuContract.StartMe
         ButterKnife.bind(this);
         presenter = new StartMenuPresenterImpl(this, this);
         playerModalList = new ArrayList<>();
+        initCamera();
+        startCameraScan.startCamera();
+        startCameraScan.resumeCameraPreview(this);
         /* 1) In case migration needed and no problem with data loss then this would work
 
         appDatabase =  Room.databaseBuilder(this,
@@ -159,6 +162,13 @@ public class StartMenu extends BaseActivity implements StartMenuContract.StartMe
                             String stdLastName = "";
                             if (name.length > 1)
                                 stdLastName = name[1];
+
+                            playerModal.setStudentID(stdId);
+                            playerModal.setStudentName(stdFirstName);
+                            playerModal.setStudentAlias("");
+                            playerModal.setStudentScore("");
+
+                            playerModalList.add(playerModal);
 
                             if (totalStudents == 4) {
 
