@@ -31,7 +31,7 @@
                 android:layout_marginVertical="10dp"
                 android:background="@drawable/round_icon_selector"
                 android:gravity="center"
-                android:text="QR SCAN"
+                android:text="Student"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -95,12 +95,13 @@
                 android:gravity="center">
 
                 <Button
-                    android:id="@+id/btn_scanqr"
+                    android:id="@+id/btn_nextqr"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingVertical="5dp"
+                    android:visibility="gone"
                     android:background="@drawable/round_icon_selector"
-                    android:text="scan qr"
+                    android:text="Next qr"
                     android:textSize="20sp" />
 
                 <Button

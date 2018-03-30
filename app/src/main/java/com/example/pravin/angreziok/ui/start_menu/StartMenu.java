@@ -1,5 +1,6 @@
 package com.example.pravin.angreziok.ui.start_menu;
 
+import android.app.Dialog;
 import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.migration.Migration;
@@ -7,7 +8,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pravin.angreziok.BaseActivity;
@@ -34,7 +39,8 @@ public class StartMenu extends BaseActivity implements StartMenuContract.StartMe
 
     @BindView(R.id.content_frame)
     ViewGroup content_frame;
-
+    @BindView(R.id.btn_nextqr)
+    Button btn_nextqr;
 
     private AppDatabase appDatabase;
     StartMenuContract.StartMenuPresenter presenter;
@@ -108,12 +114,6 @@ public class StartMenu extends BaseActivity implements StartMenuContract.StartMe
     public void gotoNext() {
     }
 
-    @OnClick(R.id.btn_scanqr)
-    public void startQrScan() {
-        startCameraScan.startCamera();
-        startCameraScan.resumeCameraPreview(this);
-    }
-
     @OnClick(R.id.btn_start_game)
     public void gotoGame() {
         Intent dataConfirmationIntent = new Intent(this, DataConfirmation.class);
@@ -131,63 +131,107 @@ public class StartMenu extends BaseActivity implements StartMenuContract.StartMe
         return text.split(s);
     }
 
+    @OnClick(R.id.btn_nextqr)
+    public void scanNextQRCode() {
+        if(startCameraScan!= null) {
+            startCameraScan.stopCamera();
+        }
+        startCameraScan.startCamera();
+        startCameraScan.resumeCameraPreview(this);
+    }
+
+    public void showQrDialog(String studentName) {
+
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.custom_dialog_for_qrscan);
+        dialog.setCanceledOnTouchOutside(false);
+        TextView text = (TextView) dialog.findViewById(R.id.dialog_tv_student_name);
+        text.setText("Hi " + studentName);
+
+        dialog.show();
+
+        Button scanNextQR = (Button) dialog.findViewById(R.id.dialog_btn_scan_qr);
+        Button startGame = (Button) dialog.findViewById(R.id.dialog_btn_play_game);
+
+        scanNextQR.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                btn_nextqr.performClick();
+            }
+        });
+
+    }
+
     @Override
     public void handleResult(Result result) {
         try {
+
+            btn_nextqr.setVisibility(View.VISIBLE);
+
             startCameraScan.stopCamera();
             Log.d("RawResult:::", "****" + result.getText());
 
 //        Pattern pattern = Pattern.compile("[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}");
-            Pattern pattern = Pattern.compile("[A-Za-z0-9]+-[A-Za-z._]{2,50}");
-
 //        Matcher mat = pattern2.matcher("04@-09-vale ketan 009");
+            Pattern pattern = Pattern.compile("[A-Za-z0-9]+-[A-Za-z._]{2,50}");
             Matcher mat = pattern.matcher(result.getText());
 
-            //"vivek.mitra@gmail.com"
             if (mat.matches()) {
-                for (int i = 0; i < playerModalList.size(); i++) {
-                    if (playerModalList.get(i).getStudentID().equalsIgnoreCase(decodeStudentId(result.getText(), "-").toString()))
-                        Toast.makeText(this, "Already Scaned", Toast.LENGTH_SHORT).show();
-                    else {
-                        totalStudents++;
-                        Toast.makeText(this, "" + totalStudents, Toast.LENGTH_SHORT).show();
-                        if (totalStudents < 5) {
-                            //Valid pattern
-                            String[] id = decodeStudentId(result.getText(), "-");
 
-                            String stdId = id[0];
-                            //String stdFirstName = id[1];
-                            String[] name = decodeStudentId(id[1], "_");
-                            String stdFirstName = name[0];
-                            String stdLastName = "";
-                            if (name.length > 1)
-                                stdLastName = name[1];
-
-                            playerModal.setStudentID(stdId);
-                            playerModal.setStudentName(stdFirstName);
-                            playerModal.setStudentAlias("");
-                            playerModal.setStudentScore("");
-
-                            playerModalList.add(playerModal);
-
-                            if (totalStudents == 4) {
-
-                                Intent dataConfirmationIntent = new Intent(this, DataConfirmation.class);
-                                dataConfirmationIntent.putExtra("totalStudents", totalStudents);
-                                startActivity(dataConfirmationIntent);
-                                startActivity(new Intent(StartMenu.this, BoleToh.class));
-                            }
+                if (playerModalList.size() <= 0)
+                    qrEntryProcess(result);
+                else {
+                    for (int i = 0; i < playerModalList.size(); i++) {
+                        if (playerModalList.get(i).getStudentID().equalsIgnoreCase(decodeStudentId(result.getText(), "-").toString())) {
+                            Toast.makeText(this, "Already Scaned", Toast.LENGTH_SHORT).show();
+                            showQrDialog("This QR Was Already Scaned");
+                        } else {
+                            qrEntryProcess(result);
                         }
                     }
                 }
+            } else {
                 startCameraScan.startCamera();
                 startCameraScan.resumeCameraPreview(this);
-
-            } else {
                 BackupDatabase.backup(this);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception e) {e.printStackTrace();}
+    }
+
+    private void qrEntryProcess(Result result) {
+        totalStudents++;
+        playerModal = new PlayerModal();
+        Toast.makeText(this, "" + totalStudents, Toast.LENGTH_SHORT).show();
+        if (totalStudents < 5) {
+            //Valid pattern
+            String[] id = decodeStudentId(result.getText(), "-");
+
+            String stdId = id[0];
+            //String stdFirstName = id[1];
+            String[] name = decodeStudentId(id[1], "_");
+            String stdFirstName = name[0];
+            String stdLastName = "";
+            if (name.length > 1)
+                stdLastName = name[1];
+
+            playerModal.setStudentID(stdId);
+            playerModal.setStudentName(stdFirstName);
+            playerModal.setStudentAlias("");
+            playerModal.setStudentScore("");
+
+            playerModalList.add(playerModal);
+
+            if (totalStudents == 4) {
+
+                Intent dataConfirmationIntent = new Intent(this, DataConfirmation.class);
+                dataConfirmationIntent.putExtra("totalStudents", totalStudents);
+                startActivity(dataConfirmationIntent);
+                startActivity(new Intent(StartMenu.this, BoleToh.class));
+            }
+            showQrDialog(stdFirstName);
         }
+
     }
 }
