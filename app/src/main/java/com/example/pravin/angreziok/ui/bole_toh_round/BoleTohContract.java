@@ -29,6 +29,8 @@ public interface BoleTohContract {
         void r1g2_checkAnswer(String ans);
 
         void setr1g2_data(String path);
+
+        String[] getOptions();
     }
 
     interface BoleTohRoundOneView {
@@ -37,6 +39,8 @@ public interface BoleTohContract {
 
     interface BoleTohRoundTwoView {
         void setActionGif(String path);
+        void setAnswer(String ans);
+        void showOptions();
     }
 
 }
