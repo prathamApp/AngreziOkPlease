@@ -5,6 +5,8 @@ import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.migration.Migration;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -12,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,8 +42,14 @@ public class StartMenu extends BaseActivity implements StartMenuContract.StartMe
 
     @BindView(R.id.content_frame)
     ViewGroup content_frame;
-    @BindView(R.id.btn_nextqr)
-    Button btn_nextqr;
+    @BindView(R.id.tv_stud_one)
+    TextView tv_stud_one;
+    @BindView(R.id.tv_stud_two)
+    TextView tv_stud_two;
+    @BindView(R.id.tv_stud_three)
+    TextView tv_stud_three;
+    @BindView(R.id.tv_stud_four)
+    TextView tv_stud_four;
 
     private AppDatabase appDatabase;
     StartMenuContract.StartMenuPresenter presenter;
@@ -50,19 +59,17 @@ public class StartMenu extends BaseActivity implements StartMenuContract.StartMe
     int totalStudents = 0;
 
     @Override
-    protected void onResume() {
-        super.onResume();
-
-        startCameraScan.startCamera();
-        startCameraScan.resumeCameraPreview(this);
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_menu);
         getSupportActionBar().hide();
         ButterKnife.bind(this);
+
+        tv_stud_one.setVisibility(View.GONE);
+        tv_stud_two.setVisibility(View.GONE);
+        tv_stud_three.setVisibility(View.GONE);
+        tv_stud_four.setVisibility(View.GONE);
+
         presenter = new StartMenuPresenterImpl(this, this);
         playerModalList = new ArrayList<>();
         initCamera();
@@ -94,7 +101,6 @@ public class StartMenu extends BaseActivity implements StartMenuContract.StartMe
     public void initCamera() {
         startCameraScan = new ZXingScannerView(this);
         startCameraScan.setResultHandler(this);
-
         content_frame.addView((startCameraScan));
     }
 
@@ -132,44 +138,78 @@ public class StartMenu extends BaseActivity implements StartMenuContract.StartMe
         return text.split(s);
     }
 
-    @OnClick(R.id.btn_nextqr)
     public void scanNextQRCode() {
-        if(startCameraScan!= null) {
+        if (startCameraScan != null) {
             startCameraScan.stopCamera();
         }
         startCameraScan.startCamera();
         startCameraScan.resumeCameraPreview(this);
     }
 
-    public void showQrDialog(String studentName) {
+    public void showQrDialog(String studentName, final String setStud) {
 
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setContentView(R.layout.custom_dialog_for_qrscan);
         dialog.setCanceledOnTouchOutside(false);
         TextView text = (TextView) dialog.findViewById(R.id.dialog_tv_student_name);
+        ImageView iv_close = (ImageView) dialog.findViewById(R.id.dialog_iv_close);
         text.setText("Hi " + studentName);
 
         dialog.show();
 
         Button scanNextQR = (Button) dialog.findViewById(R.id.dialog_btn_scan_qr);
-        Button startGame = (Button) dialog.findViewById(R.id.dialog_btn_play_game);
 
         scanNextQR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                btn_nextqr.performClick();
+                if(setStud.equalsIgnoreCase("true")) {
+                    showStudentName(totalStudents);
+                }
+                scanNextQRCode();
+            }
+        });
+
+        iv_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                if(setStud.equalsIgnoreCase("true")) {
+                    showStudentName(totalStudents);
+                }
+                scanNextQRCode();
             }
         });
 
     }
 
+    private void showStudentName(int totalStudents) {
+
+        switch (totalStudents) {
+            case 1:
+                tv_stud_one.setVisibility(View.VISIBLE);
+                tv_stud_one.setText("" + playerModalList.get(0).getStudentName());
+                break; // break is optional
+            case 2:
+                tv_stud_two.setVisibility(View.VISIBLE);
+                tv_stud_two.setText("" + playerModalList.get(1).getStudentName());
+                break; // break is optional
+            case 3:
+                tv_stud_three.setVisibility(View.VISIBLE);
+                tv_stud_three.setText("" + playerModalList.get(2).getStudentName());
+                break; // break is optional
+            case 4:
+                tv_stud_four.setVisibility(View.VISIBLE);
+                tv_stud_four.setText("" + playerModalList.get(3).getStudentName());
+                break; // break is optional
+        }
+    }
+
     @Override
     public void handleResult(Result result) {
         try {
-
-            btn_nextqr.setVisibility(View.VISIBLE);
 
             startCameraScan.stopCamera();
             Log.d("RawResult:::", "****" + result.getText());
@@ -185,9 +225,12 @@ public class StartMenu extends BaseActivity implements StartMenuContract.StartMe
                     qrEntryProcess(result);
                 else {
                     for (int i = 0; i < playerModalList.size(); i++) {
-                        if (playerModalList.get(i).getStudentID().equalsIgnoreCase(decodeStudentId(result.getText(), "-").toString())) {
+                        String[] currentIdArr = decodeStudentId(result.getText(), "-");
+                        String currId = currentIdArr[0];
+                        if (playerModalList.get(i).getStudentID().equalsIgnoreCase("" + currId)) {
                             Toast.makeText(this, "Already Scaned", Toast.LENGTH_SHORT).show();
-                            showQrDialog("This QR Was Already Scaned");
+                            showQrDialog("This QR Was Already Scaned","false");
+                            break;
                         } else {
                             qrEntryProcess(result);
                         }
@@ -198,7 +241,9 @@ public class StartMenu extends BaseActivity implements StartMenuContract.StartMe
                 startCameraScan.resumeCameraPreview(this);
                 BackupDatabase.backup(this);
             }
-        } catch (Exception e) {e.printStackTrace();}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void qrEntryProcess(Result result) {
@@ -231,7 +276,8 @@ public class StartMenu extends BaseActivity implements StartMenuContract.StartMe
                 startActivity(dataConfirmationIntent);
                 startActivity(new Intent(StartMenu.this, BoleToh.class));
             }
-            showQrDialog(stdFirstName);
+            //scanNextQRCode();
+            showQrDialog(stdFirstName,"true");
         }
 
     }
