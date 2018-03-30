@@ -1,6 +1,5 @@
 package com.example.pravin.angreziok.ui.bole_toh_round;
 
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -32,14 +31,14 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
     Context mContext;
     BoleTohContract.BoleTohRoundTwoView boleTohRoundTwoView;
     BoleTohContract.BoleTohRoundOneView boleTohRoundOneView;
-    List<GenericModalGson> r1g1QuestionData,r1g2QuestionData;
-    GenericModalGson gsonPicGameData,gsonActGameData;
+    List<GenericModalGson> r1g1QuestionData, r1g2QuestionData;
+    GenericModalGson gsonPicGameData, gsonActGameData;
 
     ArrayList<String> resTextArray = new ArrayList<String>();
     ArrayList<String> resImageArray = new ArrayList<String>();
     ArrayList<String> resAudioArray = new ArrayList<String>();
     ArrayList<String> resIdArray = new ArrayList<String>();
-    int readQuestionNo,r1g2RandomNo;
+    int readQuestionNo, r1g2RandomNo;
     String sdCardPathString;
 
     public BoleTohPresenterImpl(Context mContext) {
@@ -114,18 +113,13 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
     }
 
     @Override
-    public void replayQuestionroundone(){
+    public void replayQuestionroundone() {
         readQuestion(readQuestionNo);
     }
 
     @Override
     public void startTTS(String text) {
         playTTS.ttsFunction(text);
-    }
-
-    @Override
-    public void r1g2_checkAnswer(String ans) {
-        
     }
 
     @Override
@@ -136,9 +130,19 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
         setImage_r1g2(path);
     }
 
+    @Override
+    public void r1g2_checkAnswer(String ans) {
+        String actualAns = r1g2QuestionData.get(r1g2RandomNo).getResourceText();
+        if (ans.equalsIgnoreCase(actualAns)) {
+            boleTohRoundTwoView.setAnswer(ans);
+        } else {
+            boleTohRoundTwoView.showOptions();
+        }
+    }
+
     private void setImage_r1g2(String path) {
         r1g2RandomNo = getRandomNumber(0, r1g2QuestionData.size());
-        String imagePath = path+ "PicGameImages/"+r1g2QuestionData.get(r1g2RandomNo).getResourceImage();
+        String imagePath = path + "PicGameImages/" + r1g2QuestionData.get(r1g2RandomNo).getResourceImage();
         boleTohRoundTwoView.setActionGif(imagePath);
     }
 
@@ -159,7 +163,6 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
                 showImages(integerArray, path);
             }
         }, 1000);
-
     }
 
     public GenericModalGson fetchJsonData(String jasonName, String path) {

@@ -37,6 +37,8 @@ public interface BoleTohContract {
 
     interface BoleTohRoundTwoView {
         void setActionGif(String path);
+        void setAnswer(String ans);
+        void showOptions();
     }
 
 }

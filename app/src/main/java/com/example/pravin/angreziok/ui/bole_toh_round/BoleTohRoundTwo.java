@@ -1,24 +1,18 @@
 package com.example.pravin.angreziok.ui.bole_toh_round;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.example.pravin.angreziok.BaseFragment;
 import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.ui.CustomCountDownTimer;
@@ -26,7 +20,6 @@ import com.example.pravin.angreziok.ui.GifView;
 import com.github.anastr.flattimelib.CountDownTimerView;
 import com.github.anastr.flattimelib.intf.OnTimeFinish;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -45,6 +38,8 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
     GifView gifView;
     @BindView(R.id.tv_r1g2_answer)
     TextView answer;
+    @BindView(R.id.ll_r1g2_sttoptions)
+    LinearLayout options;
 
     String text;
     BoleTohContract.BoleTohPresenter presenter;
@@ -153,7 +148,7 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
     public void onResults(Bundle results) {
         ArrayList<String> matches = results
                 .getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
-        Log.d(":::" + getActivity(), "onResults: " + matches.get(0));
+        Toast.makeText(getActivity(), ""+ matches.get(0), Toast.LENGTH_SHORT).show();
         presenter.r1g2_checkAnswer(matches.get(0));
     }
 
@@ -175,5 +170,15 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void setAnswer(String ans) {
+        answer.setText(ans);
+    }
+
+    @Override
+    public void showOptions() {
+        options.setVisibility(View.VISIBLE);
     }
 }
