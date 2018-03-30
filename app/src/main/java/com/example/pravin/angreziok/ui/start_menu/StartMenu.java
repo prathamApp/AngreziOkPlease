@@ -94,6 +94,7 @@ public class StartMenu extends BaseActivity implements StartMenuContract.StartMe
     public void initCamera() {
         startCameraScan = new ZXingScannerView(this);
         startCameraScan.setResultHandler(this);
+
         content_frame.addView((startCameraScan));
     }
 
