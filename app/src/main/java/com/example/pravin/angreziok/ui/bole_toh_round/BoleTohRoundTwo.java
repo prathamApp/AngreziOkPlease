@@ -40,6 +40,12 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
     TextView answer;
     @BindView(R.id.ll_r1g2_sttoptions)
     LinearLayout options;
+    @BindView(R.id.option1)
+    TextView option1;
+    @BindView(R.id.option2)
+    TextView option2;
+    @BindView(R.id.option3)
+    TextView option3;
 
     String text;
     BoleTohContract.BoleTohPresenter presenter;
@@ -93,6 +99,18 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
     @OnClick(R.id.ib_r1g2_mic)
     public void micClicked() {
         startSTT();
+    }
+
+    @OnClick({R.id.option1_speaker, R.id.option2_speaker, R.id.option2_speaker})
+    public void optionsSpeakerClicked(View view){
+            // TTS for the options clicked
+        presenter.startTTS("optionClicked");
+    }
+
+    @OnClick({R.id.option1, R.id.option2, R.id.option3})
+    public void optionsClicked(View view){
+            // TTS for the options clicked
+        presenter.startTTS("optionClicked");
     }
 
     public void startSTT() {
@@ -180,5 +198,9 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
     @Override
     public void showOptions() {
         options.setVisibility(View.VISIBLE);
+        String[] options = presenter.getOptions();
+        option1.setText(options[0]);
+        option2.setText(options[1]);
+        option3.setText(options[2]);
     }
 }

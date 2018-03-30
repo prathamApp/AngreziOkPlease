@@ -131,6 +131,21 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
     }
 
     @Override
+    public String[] getOptions() {
+        int[] optionsIds;
+        int[] randomOptions;
+        do {
+            optionsIds = getUniqueRandomNumber(0,r1g1QuestionData.size(),2);
+        }while(optionsIds[0]==r1g2RandomNo || optionsIds[1]==r1g2RandomNo);
+        String[] optionsText = new String[2];
+        randomOptions = getUniqueRandomNumber(0,3,3);
+        optionsText[randomOptions[0]] = r1g2QuestionData.get(optionsIds[0]).getResourceText();
+        optionsText[randomOptions[1]] = r1g2QuestionData.get(optionsIds[1]).getResourceText();
+        optionsText[randomOptions[2]] = r1g2QuestionData.get(r1g2RandomNo).getResourceText();
+        return optionsText;
+    }
+
+    @Override
     public void r1g2_checkAnswer(String ans) {
         String actualAns = r1g2QuestionData.get(r1g2RandomNo).getResourceText();
         if (ans.equalsIgnoreCase(actualAns)) {
