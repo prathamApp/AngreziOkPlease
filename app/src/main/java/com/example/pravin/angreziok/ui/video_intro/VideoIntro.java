@@ -3,6 +3,7 @@ package com.example.pravin.angreziok.ui.video_intro;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.view.WindowManager;
 import android.widget.VideoView;
 
@@ -41,12 +42,15 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
     @OnClick(R.id.skip_button)
     public void skipVideo() {
         startActivity();
+/*        Intent installIntent = new Intent();
+        installIntent.setAction(TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA);
+        startActivity(installIntent);*/
     }
 
     @Override
     public void startActivity() {
-        startActivity(new Intent(this, StartMenu.class));
         finish();
+        startActivity(new Intent(this, StartMenu.class));
     }
 
 }
