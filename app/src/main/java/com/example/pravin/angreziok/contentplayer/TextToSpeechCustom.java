@@ -71,6 +71,9 @@ public class TextToSpeechCustom {
             textToSpeech.setLanguage(new Locale("en", "IN"));
 
         textToSpeech.setSpeechRate(sprate);*/
+        if (textToSpeech.isSpeaking()){
+            textToSpeech.stop();
+        }
         textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, map);
     }
 
