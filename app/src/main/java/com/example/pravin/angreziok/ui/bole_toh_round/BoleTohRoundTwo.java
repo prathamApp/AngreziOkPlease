@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,6 +47,8 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
     TextView option2;
     @BindView(R.id.option3)
     TextView option3;
+    @BindView(R.id.r1g2_sttOptions)
+    LinearLayout optionsView;
 
     String text;
     BoleTohContract.BoleTohPresenter presenter;
@@ -101,16 +104,12 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
         startSTT();
     }
 
-    @OnClick({R.id.option1_speaker, R.id.option2_speaker, R.id.option2_speaker})
-    public void optionsSpeakerClicked(View view){
-            // TTS for the options clicked
-        presenter.startTTS("optionClicked");
-    }
-
     @OnClick({R.id.option1, R.id.option2, R.id.option3})
     public void optionsClicked(View view){
             // TTS for the options clicked
-        presenter.startTTS("optionClicked");
+        TextView option = (TextView)view;
+        answer.setText(option.getText()+"");
+        presenter.startTTS(option.getText()+"");
     }
 
     public void startSTT() {
@@ -167,6 +166,8 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
         ArrayList<String> matches = results
                 .getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
         Toast.makeText(getActivity(), ""+ matches.get(0), Toast.LENGTH_SHORT).show();
+        optionsView.setVisibility(View.VISIBLE);
+        setAnswer(matches.get(0));
         presenter.r1g2_checkAnswer(matches.get(0));
     }
 
