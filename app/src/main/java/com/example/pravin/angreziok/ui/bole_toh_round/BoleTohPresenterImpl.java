@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.pravin.angreziok.SDCardUtil;
 import com.example.pravin.angreziok.contentplayer.TextToSpeechCustom;
@@ -149,7 +150,6 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
     public void r1g2_checkAnswer(String ans) {
         String actualAns = r1g2QuestionData.get(r1g2RandomNo).getResourceText();
         if (ans.equalsIgnoreCase(actualAns)) {
-
             boleTohRoundTwoView.setAnswer(ans);
         } else {
             boleTohRoundTwoView.showOptions();
@@ -159,6 +159,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
     private void setImage_r1g2(String path) {
         r1g2RandomNo = getRandomNumber(0, r1g2QuestionData.size());
         String imagePath = path + "PicGameImages/" + r1g2QuestionData.get(r1g2RandomNo).getResourceImage();
+        Toast.makeText(mContext, "actual ans:"+r1g2QuestionData.get(r1g2RandomNo).getResourceText(), Toast.LENGTH_SHORT).show();
         boleTohRoundTwoView.setActionGif(imagePath);
     }
 

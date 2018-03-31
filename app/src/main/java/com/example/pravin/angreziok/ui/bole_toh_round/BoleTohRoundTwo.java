@@ -164,7 +164,7 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
     public void onResults(Bundle results) {
         ArrayList<String> matches = results
                 .getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
-        Toast.makeText(getActivity(), ""+ matches.get(0), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "Spoken"+ matches.get(0), Toast.LENGTH_SHORT).show();
         optionsView.setVisibility(View.VISIBLE);
         setAnswer(matches.get(0));
         presenter.r1g2_checkAnswer(matches.get(0));
