@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -111,6 +112,9 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
         presenter.startTTS(option.getText()+"");
     }
 
+    @OnClick(R.id.iv_r1g2_submit_ans)
+    public
+
     public void startSTT() {
         speech = SpeechRecognizer.createSpeechRecognizer(getActivity());
         speech.setRecognitionListener(this);
@@ -192,6 +196,7 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
 
     @Override
     public void setAnswer(String ans) {
+        options.setVisibility(View.GONE);
         answer.setText(ans);
     }
 
