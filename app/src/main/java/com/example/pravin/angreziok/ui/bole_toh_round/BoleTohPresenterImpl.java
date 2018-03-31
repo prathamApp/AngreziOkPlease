@@ -135,9 +135,9 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
         int[] optionsIds;
         int[] randomOptions;
         do {
-            optionsIds = getUniqueRandomNumber(0,r1g1QuestionData.size(),2);
+            optionsIds = getUniqueRandomNumber(0,r1g2QuestionData.size(),2);
         }while(optionsIds[0]==r1g2RandomNo || optionsIds[1]==r1g2RandomNo);
-        String[] optionsText = new String[2];
+        String[] optionsText = new String[3];
         randomOptions = getUniqueRandomNumber(0,3,3);
         optionsText[randomOptions[0]] = r1g2QuestionData.get(optionsIds[0]).getResourceText();
         optionsText[randomOptions[1]] = r1g2QuestionData.get(optionsIds[1]).getResourceText();
@@ -149,6 +149,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
     public void r1g2_checkAnswer(String ans) {
         String actualAns = r1g2QuestionData.get(r1g2RandomNo).getResourceText();
         if (ans.equalsIgnoreCase(actualAns)) {
+
             boleTohRoundTwoView.setAnswer(ans);
         } else {
             boleTohRoundTwoView.showOptions();
@@ -200,7 +201,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
     @Override
     public int[] getUniqueRandomNumber(int min, int max, int numSize) {
         int[] tempArray;
-        if ((max - min) > numSize) {
+        if ((max - min) >= numSize) {
             tempArray = new int[numSize];
             ArrayList<Integer> list = new ArrayList<Integer>();
 
