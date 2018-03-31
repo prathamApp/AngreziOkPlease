@@ -210,7 +210,7 @@ public class StartMenu extends BaseActivity implements StartMenuContract.StartMe
     @Override
     public void handleResult(Result result) {
         try {
-
+            boolean dulicateQR = false;
             startCameraScan.stopCamera();
             Log.d("RawResult:::", "****" + result.getText());
 
@@ -230,10 +230,12 @@ public class StartMenu extends BaseActivity implements StartMenuContract.StartMe
                         if (playerModalList.get(i).getStudentID().equalsIgnoreCase("" + currId)) {
                             Toast.makeText(this, "Already Scaned", Toast.LENGTH_SHORT).show();
                             showQrDialog("This QR Was Already Scaned","false");
+                            dulicateQR=true;
                             break;
-                        } else {
-                            qrEntryProcess(result);
                         }
+                    }
+                    if(!dulicateQR){
+                        qrEntryProcess(result);
                     }
                 }
             } else {

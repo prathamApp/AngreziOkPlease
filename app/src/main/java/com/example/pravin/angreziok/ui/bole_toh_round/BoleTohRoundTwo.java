@@ -104,6 +104,15 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
         startSTT();
     }
 
+<<<<<<< HEAD
+    @OnClick({R.id.option1_speaker, R.id.option2_speaker})
+    public void optionsSpeakerClicked(View view){
+            // TTS for the options clicked
+        presenter.startTTS("optionClicked");
+    }
+
+=======
+>>>>>>> 67dcce6c9ea3dff6f12a4ad7fac1bbbd4eb0ef0f
     @OnClick({R.id.option1, R.id.option2, R.id.option3})
     public void optionsClicked(View view){
             // TTS for the options clicked
