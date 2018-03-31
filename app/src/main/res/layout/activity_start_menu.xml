@@ -1,123 +1,175 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bgaop"
+    android:background="@drawable/loginaop"
+    android:orientation="horizontal"
+    android:weightSum="10"
     tools:context="com.example.pravin.angreziok.ui.start_menu.StartMenu">
 
-    <android.support.constraint.ConstraintLayout
+    <LinearLayout
         android:id="@+id/rl_selector_menu"
-        android:layout_width="200dp"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
+        android:layout_weight="0.5"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteY="112dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <Button
-                android:id="@+id/qr_scan"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginVertical="10dp"
-                android:background="@drawable/round_icon_selector"
-                android:gravity="center"
-                android:text="Student"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <Button
                 android:id="@+id/btn_admin"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_below="@+id/qr_scan"
-                android:layout_centerInParent="true"
-                android:layout_marginHorizontal="10dp"
+                android:layout_alignParentBottom="true"
                 android:layout_marginVertical="10dp"
                 android:background="@drawable/round_icon_selector"
                 android:gravity="center"
-                android:text="ADMIN"
+                android:text="A"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
         </RelativeLayout>
 
-    </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/rl_selector_section"
-        android:layout_width="600dp"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_toRightOf="@id/rl_selector_menu"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/rl_selector_menu"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_weight="9.5"
+        android:orientation="horizontal"
+        android:weightSum="10">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="7"
             android:gravity="center"
-            android:orientation="horizontal"
-            android:weightSum="4">
+            android:orientation="vertical"
+            android:paddingHorizontal="10dp"
+            android:weightSum="10">
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_weight="2.5"
-                android:gravity="center">
-
-                <FrameLayout
-                    android:id="@+id/content_frame"
-                    android:layout_width="300dp"
-                    android:layout_height="300dp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_weight="1.5"
-                android:orientation="vertical"
-                android:paddingHorizontal="15dp"
-                android:gravity="center">
-
-                <Button
-                    android:id="@+id/btn_nextqr"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingVertical="5dp"
-                    android:visibility="gone"
-                    android:background="@drawable/round_icon_selector"
-                    android:text="Next qr"
-                    android:textSize="20sp" />
-
-                <Button
-                    android:id="@+id/btn_start_game"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingVertical="5dp"
-                    android:background="@drawable/round_icon_selector"
-                    android:layout_marginTop="50dp"
-                    android:text="Start"
-                    android:textSize="20sp" />
-            </LinearLayout>
+            <FrameLayout
+                android:id="@+id/content_frame"
+                android:layout_width="350dp"
+                android:layout_height="350dp"
+                android:layout_marginTop="20dp" />
 
         </LinearLayout>
 
-    </RelativeLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="2.99"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingHorizontal="2dp"
+            android:weightSum="10">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginVertical="20dp"
+                android:background="@drawable/round_icon_normal"
+                android:layout_weight="8.5"
+                android:orientation="vertical"
+                android:weightSum="5">
 
-</android.support.constraint.ConstraintLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:background="@color/simple_black"
+                    android:layout_weight="1">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="STUDENTS"
+                        android:textSize="30sp"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:textColor="@color/simple_white"/>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_stud_one"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginVertical="5dp"
+                    android:textStyle="bold|italic"
+                    android:textSize="20sp"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center_vertical"
+                    android:layout_gravity="center"
+                    android:text="Student 1"
+                    android:textColor="@color/simple_black"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/tv_stud_two"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginVertical="5dp"
+                    android:textStyle="bold|italic"
+                    android:textSize="20sp"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center_vertical"
+                    android:layout_gravity="center"
+                    android:text="Student 2"
+                    android:textColor="@color/simple_black"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/tv_stud_three"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginVertical="5dp"
+                    android:textStyle="bold|italic"
+                    android:textSize="20sp"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center_vertical"
+                    android:layout_gravity="center"
+                    android:text="Student 3"
+                    android:textColor="@color/simple_black"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/tv_stud_four"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginVertical="5dp"
+                    android:textStyle="bold|italic"
+                    android:textSize="20sp"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center_vertical"
+                    android:layout_gravity="center"
+                    android:text="Student 4"
+                    android:textColor="@color/simple_black"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_start_game"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:layout_weight="1.2"
+                android:background="@drawable/round_button_selector"
+                android:gravity="center"
+                android:paddingVertical="5dp"
+                android:text="Start"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
