@@ -73,8 +73,14 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
         presenter = new BoleTohPresenterImpl(getActivity(), this, BoleToh.playtts);
 
         setDataForGame();
-        playTTS();
+        initiateQuestion();
+        }
+
+
+    @Override
+    public void initiateQuestion() {
         startTimer();
+        playTTS();
     }
 
     private void setDataForGame() {
@@ -113,7 +119,9 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
     }
 
     @OnClick(R.id.iv_r1g2_submit_ans)
-    public
+    public void submitAns(){
+        presenter.checkAnswerAndDisplayNext(answer.getText().toString());
+    }
 
     public void startSTT() {
         speech = SpeechRecognizer.createSpeechRecognizer(getActivity());
@@ -172,6 +180,11 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
         optionsView.setVisibility(View.VISIBLE);
         setAnswer(matches.get(0));
         presenter.r1g2_checkAnswer(matches.get(0));
+    }
+
+    @Override
+    public void hideOptionView(){
+        optionsView.setVisibility(View.GONE);
     }
 
     @Override

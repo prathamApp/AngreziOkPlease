@@ -136,14 +136,25 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
         int[] optionsIds;
         int[] randomOptions;
         do {
-            optionsIds = getUniqueRandomNumber(0,r1g2QuestionData.size(),2);
-        }while(optionsIds[0]==r1g2RandomNo || optionsIds[1]==r1g2RandomNo);
+            optionsIds = getUniqueRandomNumber(0, r1g2QuestionData.size(), 2);
+        } while (optionsIds[0] == r1g2RandomNo || optionsIds[1] == r1g2RandomNo);
         String[] optionsText = new String[3];
-        randomOptions = getUniqueRandomNumber(0,3,3);
+        randomOptions = getUniqueRandomNumber(0, 3, 3);
         optionsText[randomOptions[0]] = r1g2QuestionData.get(optionsIds[0]).getResourceText();
         optionsText[randomOptions[1]] = r1g2QuestionData.get(optionsIds[1]).getResourceText();
         optionsText[randomOptions[2]] = r1g2QuestionData.get(r1g2RandomNo).getResourceText();
         return optionsText;
+    }
+
+    @Override
+    public void checkAnswerAndDisplayNext(String ans) {
+        if (r1g2QuestionData.get(r1g2RandomNo).getResourceText().equalsIgnoreCase(ans)) {
+            //  TODO correct answer animation + increase score of group
+        } else {
+            //  TODO wrong answer animation
+        }
+        boleTohRoundTwoView.initiateQuestion();
+        setImage_r1g2(getSdcardPath());
     }
 
     @Override
@@ -157,9 +168,10 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
     }
 
     private void setImage_r1g2(String path) {
+        boleTohRoundTwoView.hideOptionView();
         r1g2RandomNo = getRandomNumber(0, r1g2QuestionData.size());
         String imagePath = path + "PicGameImages/" + r1g2QuestionData.get(r1g2RandomNo).getResourceImage();
-        Toast.makeText(mContext, "actual ans:"+r1g2QuestionData.get(r1g2RandomNo).getResourceText(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(mContext, "actual ans:" + r1g2QuestionData.get(r1g2RandomNo).getResourceText(), Toast.LENGTH_SHORT).show();
         boleTohRoundTwoView.setActionGif(imagePath);
     }
 
