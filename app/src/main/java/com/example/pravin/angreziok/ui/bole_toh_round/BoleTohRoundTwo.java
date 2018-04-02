@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -72,8 +73,14 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
         presenter = new BoleTohPresenterImpl(getActivity(), this, BoleToh.playtts);
 
         setDataForGame();
-        playTTS();
+        initiateQuestion();
+        }
+
+
+    @Override
+    public void initiateQuestion() {
         startTimer();
+        playTTS();
     }
 
     private void setDataForGame() {
@@ -109,6 +116,11 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
         TextView option = (TextView)view;
         answer.setText(option.getText()+"");
         presenter.startTTS(option.getText()+"");
+    }
+
+    @OnClick(R.id.iv_r1g2_submit_ans)
+    public void submitAns(){
+        presenter.checkAnswerAndDisplayNext(answer.getText().toString());
     }
 
     public void startSTT() {
@@ -164,10 +176,15 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
     public void onResults(Bundle results) {
         ArrayList<String> matches = results
                 .getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
-        Toast.makeText(getActivity(), ""+ matches.get(0), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "Spoken"+ matches.get(0), Toast.LENGTH_SHORT).show();
         optionsView.setVisibility(View.VISIBLE);
         setAnswer(matches.get(0));
         presenter.r1g2_checkAnswer(matches.get(0));
+    }
+
+    @Override
+    public void hideOptionView(){
+        optionsView.setVisibility(View.GONE);
     }
 
     @Override
@@ -192,6 +209,7 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
 
     @Override
     public void setAnswer(String ans) {
+        options.setVisibility(View.GONE);
         answer.setText(ans);
     }
 
