@@ -171,7 +171,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
         boleTohRoundTwoView.hideOptionView();
         r1g2RandomNo = getRandomNumber(0, r1g2QuestionData.size());
         String imagePath = path + "PicGameImages/" + r1g2QuestionData.get(r1g2RandomNo).getResourceImage();
-        Toast.makeText(mContext, "actual ans:" + r1g2QuestionData.get(r1g2RandomNo).getResourceText(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(mContext, "actual ans: " + r1g2QuestionData.get(r1g2RandomNo).getResourceText(), Toast.LENGTH_SHORT).show();
         boleTohRoundTwoView.setActionGif(imagePath);
     }
 
