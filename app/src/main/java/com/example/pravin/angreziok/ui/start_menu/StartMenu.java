@@ -168,9 +168,10 @@ public class StartMenu extends BaseActivity implements StartMenuContract.StartMe
 
                 dialog.dismiss();
                 if (totalStudents == 4) {
-
                     Intent dataConfirmationIntent = new Intent(StartMenu.this, DataConfirmation.class);
-                    dataConfirmationIntent.putExtra("totalStudents", totalStudents);
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelableArrayList("studentList",playerModalList);
+                    dataConfirmationIntent.putExtras(bundle);
                     startActivity(dataConfirmationIntent);
                 }
                 else {
@@ -186,9 +187,10 @@ public class StartMenu extends BaseActivity implements StartMenuContract.StartMe
             @Override
             public void onClick(View v) {
                 if (totalStudents == 4) {
-
                     Intent dataConfirmationIntent = new Intent(StartMenu.this, DataConfirmation.class);
-                    dataConfirmationIntent.putExtra("totalStudents", totalStudents);
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelableArrayList("studentList",playerModalList);
+                    dataConfirmationIntent.putExtras(bundle);
                     startActivity(dataConfirmationIntent);
                 }else {
                     dialog.dismiss();

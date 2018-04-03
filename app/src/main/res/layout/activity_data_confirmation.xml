@@ -187,18 +187,20 @@
             android:layout_weight="1.5"
             android:orientation="horizontal">
 
-            <ImageButton
-                android:id="@+id/btn_startgame"
-                android:layout_width="150dp"
-                android:layout_height="match_parent"
-                android:scaleType="fitCenter"
-                android:src="@drawable/milestone" />
-
             <Button
                 android:id="@+id/btn_startgm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="skip" />
+
+            <ImageButton
+                android:id="@+id/btn_startgame"
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter"
+                android:background="@color/full_transparent"
+                android:src="@drawable/milestone" />
+
 
         </LinearLayout>
 
