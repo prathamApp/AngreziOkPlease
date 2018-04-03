@@ -46,6 +46,7 @@ public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.Bol
     //    ArrayList <GenericModalGson> gsonPicGameData = new ArrayList<GenericModalGson>();
     BoleTohContract.BoleTohPresenter presenter;
     String path;
+    static int speechCount;
 //    CustomCountDownTimer customCountDownTimer;
 
     @Override

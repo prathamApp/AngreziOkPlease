@@ -1,6 +1,7 @@
 package com.example.pravin.angreziok.ui.bole_toh_round;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
@@ -27,6 +28,9 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import nl.dionsegijn.konfetti.KonfettiView;
+import nl.dionsegijn.konfetti.models.Shape;
+import nl.dionsegijn.konfetti.models.Size;
 
 
 public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.BoleTohRoundTwoView, RecognitionListener {
@@ -47,6 +51,8 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
     TextView option3;
     @BindView(R.id.r1g2_sttOptions)
     LinearLayout optionsView;
+    @BindView(R.id.konfettiView)
+    KonfettiView konfettiView;
 
     String text;
     BoleTohContract.BoleTohPresenter presenter;
@@ -74,8 +80,22 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
 //        customCountDownTimer = new CustomCountDownTimer(mCountDownTimer, getActivity());
         setDataForGame();
         initiateQuestion();
-        }
+    }
 
+    @Override
+    public void setCelebrationView() {
+        konfettiView.setVisibility(View.VISIBLE);
+        konfettiView.build()
+                .addColors(Color.YELLOW, Color.GREEN, Color.MAGENTA)
+                .setDirection(0.0, 359.0)
+                .setSpeed(1f, 5f)
+                .setFadeOutEnabled(true)
+                .setTimeToLive(1500L)
+                .addShapes(Shape.RECT, Shape.CIRCLE)
+                .addSizes(new Size(12, 5f))
+                .setPosition(-50f, konfettiView.getWidth() + 50f, -50f, -50f)
+                .stream(300, 5000L);
+    }
 
     @Override
     public void initiateQuestion() {
@@ -123,15 +143,15 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
     }
 
     @OnClick({R.id.option1, R.id.option2, R.id.option3})
-    public void optionsClicked(View view){
-            // TTS for the options clicked
-        TextView option = (TextView)view;
-        answer.setText(option.getText()+"");
-        presenter.startTTS(option.getText()+"");
+    public void optionsClicked(View view) {
+        // TTS for the options clicked
+        TextView option = (TextView) view;
+        answer.setText(option.getText() + "");
+        presenter.startTTS(option.getText() + "");
     }
 
     @OnClick(R.id.iv_r1g2_submit_ans)
-    public void submitAns(){
+    public void submitAns() {
         presenter.checkAnswerAndDisplayNext(answer.getText().toString());
         startTimer();
     }
@@ -179,14 +199,14 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
     public void onResults(Bundle results) {
         ArrayList<String> matches = results
                 .getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
-        Toast.makeText(getActivity(), "Spoken"+ matches.get(0), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "Spoken" + matches.get(0), Toast.LENGTH_SHORT).show();
         optionsView.setVisibility(View.VISIBLE);
         setAnswer(matches.get(0));
         presenter.r1g2_checkAnswer(matches.get(0));
     }
 
     @Override
-    public void hideOptionView(){
+    public void hideOptionView() {
         optionsView.setVisibility(View.GONE);
     }
 
