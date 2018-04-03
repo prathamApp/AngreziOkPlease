@@ -45,6 +45,7 @@ public interface BoleTohContract {
         void showOptions();
         void initiateQuestion();
         void hideOptionView();
+        void setCelebrationView();
     }
 
 }
