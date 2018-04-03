@@ -155,8 +155,8 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
             //  TODO wrong answer animation
             Toast.makeText(mContext, "Wrong", Toast.LENGTH_SHORT).show();
         }
-        setImage_r1g2(getSdcardPath());
-        boleTohRoundTwoView.initiateQuestion();
+        /*setImage_r1g2(getSdcardPath());
+        boleTohRoundTwoView.initiateQuestion();*/
     }
 
     @Override
