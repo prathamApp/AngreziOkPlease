@@ -87,9 +87,6 @@ dependencies {
 
     implementation 'com.github.bumptech.glide:glide:3.7.0'
 
-// Celebration library
-    implementation 'nl.dionsegijn:konfetti:1.1.0'
-
 }
 
 
