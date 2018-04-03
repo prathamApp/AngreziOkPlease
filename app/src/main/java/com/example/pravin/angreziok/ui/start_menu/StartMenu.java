@@ -265,7 +265,7 @@ public class StartMenu extends BaseActivity implements StartMenuContract.StartMe
         }
     }
 
-    private void qrEntryProcess(Result result) {
+    public void qrEntryProcess(Result result) {
         totalStudents++;
         String sid="",sname="",sscore="",salias="";
         playerModal = new PlayerModal(sid,sname,sscore,salias);

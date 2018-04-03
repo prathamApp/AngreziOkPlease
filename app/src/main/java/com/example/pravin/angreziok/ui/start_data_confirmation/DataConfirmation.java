@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.pravin.angreziok.BaseActivity;
 import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.modalclasses.PlayerModal;
 import com.example.pravin.angreziok.ui.bole_toh_round.BoleToh;
@@ -18,11 +19,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class DataConfirmation extends AppCompatActivity {
+public class DataConfirmation extends BaseActivity implements DataConfirmationContract.DataConfirmationView {
 
-    String totalStudents;
     ArrayList<PlayerModal> playerModalArrayList;
-
     String temp = "LIST \n";
     int playerCount = 0;
     ArrayList<String> teamNames;
@@ -63,15 +62,9 @@ public class DataConfirmation extends AppCompatActivity {
         teamNames.add("Allstars");
 
         playerModalArrayList = extraBundle.getParcelableArrayList("studentList");
-
         playerCount = playerModalArrayList.size();
-        Log.d("DataConfirmationTAG", "playerCount: " + playerCount);
-        for (int x = 0; x < playerModalArrayList.size(); x++) {
-            temp = temp + "" + playerModalArrayList.get(x).studentName + "\n";
-        }
 
     }
-
 
     public void setStudentsAndTeams() {
         Collections.shuffle(teamNames);
