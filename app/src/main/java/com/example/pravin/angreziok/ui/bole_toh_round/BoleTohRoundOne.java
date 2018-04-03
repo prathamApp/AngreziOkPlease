@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import com.example.pravin.angreziok.BaseFragment;
 import com.example.pravin.angreziok.R;
-import com.example.pravin.angreziok.ui.CustomCountDownTimer;
 import com.example.pravin.angreziok.util.PD_Utility;
 import com.github.anastr.flattimelib.CountDownTimerView;
 import com.github.anastr.flattimelib.intf.OnTimeFinish;
@@ -47,7 +46,7 @@ public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.Bol
     //    ArrayList <GenericModalGson> gsonPicGameData = new ArrayList<GenericModalGson>();
     BoleTohContract.BoleTohPresenter presenter;
     String path;
-    CustomCountDownTimer customCountDownTimer;
+//    CustomCountDownTimer customCountDownTimer;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,7 +67,7 @@ public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.Bol
         setOnClickListeners();
         path = presenter.getSdcardPath();
         presenter.doInitialWork(path);
-        customCountDownTimer = new CustomCountDownTimer(mCountDownTimer,getActivity());
+//        customCountDownTimer = new CustomCountDownTimer(mCountDownTimer,getActivity());
     }
 
     private void setOnClickListeners() {
@@ -132,7 +131,7 @@ public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.Bol
             @Override
             public void run() {
                 presenter.readQuestion(readQuesNo);
-                customCountDownTimer.startTimer(20000);
+                mCountDownTimer.start(20000);
                 BoleToh.animateView(mCountDownTimer,getActivity());
             }
         },1500);

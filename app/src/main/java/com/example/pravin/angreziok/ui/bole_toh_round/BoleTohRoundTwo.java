@@ -9,14 +9,12 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pravin.angreziok.BaseFragment;
 import com.example.pravin.angreziok.R;
-import com.example.pravin.angreziok.ui.CustomCountDownTimer;
 import com.example.pravin.angreziok.ui.GifView;
 import com.github.anastr.flattimelib.CountDownTimerView;
 import com.github.anastr.flattimelib.intf.OnTimeFinish;
@@ -54,6 +52,7 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
     BoleTohContract.BoleTohPresenter presenter;
     private SpeechRecognizer speech = null;
     String language = "en-IN";
+//    CustomCountDownTimer customCountDownTimer;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -72,6 +71,7 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
         ButterKnife.bind(this, view);
         presenter = new BoleTohPresenterImpl(getActivity(), this, BoleToh.playtts);
 
+//        customCountDownTimer = new CustomCountDownTimer(mCountDownTimer, getActivity());
         setDataForGame();
         initiateQuestion();
         }
@@ -94,9 +94,21 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
     }
 
     private void startTimer() {
-        CustomCountDownTimer customCountDownTimer = new CustomCountDownTimer(mCountDownTimer, getActivity());
-        customCountDownTimer.startTimer(30000);
-        setTimerCallBack();
+        mCountDownTimer.ready();
+        mCountDownTimer.start(15000);
+//        mCountDownTimer.setOnTimeFinish(new OnTimeFinish() {
+//            @Override
+//            public void onFinish() {
+////                mCountDownTimer.start(15000);
+//            }
+//        });
+        mCountDownTimer.setOnEndAnimationFinish(new OnTimeFinish() {
+            @Override
+            public void onFinish() {
+//                mCountDownTimer.start(15000);
+                submitAns();
+            }
+        });
         BoleToh.animateView(mCountDownTimer, getActivity());
     }
 
@@ -121,6 +133,7 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
     @OnClick(R.id.iv_r1g2_submit_ans)
     public void submitAns(){
         presenter.checkAnswerAndDisplayNext(answer.getText().toString());
+        startTimer();
     }
 
     public void startSTT() {
@@ -130,16 +143,6 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, language);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         speech.startListening(intent);
-    }
-
-    private void setTimerCallBack() {
-        mCountDownTimer.setOnTimeFinish(new OnTimeFinish() {
-            @Override
-            public void onFinish() {
-                Toast.makeText(getActivity(), "finish", Toast.LENGTH_SHORT).show();
-                mCountDownTimer.failure();
-            }
-        });
     }
 
     @Override

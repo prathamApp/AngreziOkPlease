@@ -150,16 +150,19 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
     public void checkAnswerAndDisplayNext(String ans) {
         if (r1g2QuestionData.get(r1g2RandomNo).getResourceText().equalsIgnoreCase(ans)) {
             //  TODO correct answer animation + increase score of group
+            Toast.makeText(mContext, "Correct", Toast.LENGTH_SHORT).show();
         } else {
             //  TODO wrong answer animation
+            Toast.makeText(mContext, "Wrong", Toast.LENGTH_SHORT).show();
         }
-        boleTohRoundTwoView.initiateQuestion();
         setImage_r1g2(getSdcardPath());
+        boleTohRoundTwoView.initiateQuestion();
     }
 
     @Override
     public void r1g2_checkAnswer(String ans) {
         String actualAns = r1g2QuestionData.get(r1g2RandomNo).getResourceText();
+
         if (ans.equalsIgnoreCase(actualAns)) {
             boleTohRoundTwoView.setAnswer(ans);
         } else {
