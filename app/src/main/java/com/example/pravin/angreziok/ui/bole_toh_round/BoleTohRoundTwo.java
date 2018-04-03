@@ -94,7 +94,7 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
                 .addShapes(Shape.RECT, Shape.CIRCLE)
                 .addSizes(new Size(12, 5f))
                 .setPosition(-50f, konfettiView.getWidth() + 50f, -50f, -50f)
-                .stream(100, 2000L);
+                .stream(500, 1000L);
     }
 
     @Override
