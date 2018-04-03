@@ -104,7 +104,6 @@ public class StartMenu extends BaseActivity implements StartMenuContract.StartMe
         content_frame.addView((startCameraScan));
     }
 
-
     static final Migration MIGRATION_1_2 = new Migration(1, 2) {
         @Override
         public void migrate(@NonNull SupportSQLiteDatabase database) {
