@@ -41,6 +41,8 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
 
     @OnClick(R.id.skip_button)
     public void skipVideo() {
+        videoView.pause();
+        videoView.stopPlayback();
         startActivity();
 /*        Intent installIntent = new Intent();
         installIntent.setAction(TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA);

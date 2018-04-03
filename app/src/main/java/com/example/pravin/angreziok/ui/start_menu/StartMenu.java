@@ -55,8 +55,8 @@ public class StartMenu extends BaseActivity implements StartMenuContract.StartMe
     StartMenuContract.StartMenuPresenter presenter;
     public ZXingScannerView startCameraScan;
     PlayerModal playerModal;
-    List<PlayerModal> playerModalList;
     int totalStudents = 0;
+    ArrayList<PlayerModal> playerModalList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,9 +124,10 @@ public class StartMenu extends BaseActivity implements StartMenuContract.StartMe
     @OnClick(R.id.btn_start_game)
     public void gotoGame() {
         Intent dataConfirmationIntent = new Intent(this, DataConfirmation.class);
-        dataConfirmationIntent.putExtra("totalStudents", totalStudents);
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList("studentList",playerModalList);
+        dataConfirmationIntent.putExtras(bundle);
         startActivity(dataConfirmationIntent);
-        startActivity(new Intent(StartMenu.this, BoleToh.class));
     }
 
     @Override
@@ -164,22 +165,38 @@ public class StartMenu extends BaseActivity implements StartMenuContract.StartMe
         scanNextQR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 dialog.dismiss();
-                if(setStud.equalsIgnoreCase("true")) {
-                    showStudentName(totalStudents);
+                if (totalStudents == 4) {
+
+                    Intent dataConfirmationIntent = new Intent(StartMenu.this, DataConfirmation.class);
+                    dataConfirmationIntent.putExtra("totalStudents", totalStudents);
+                    startActivity(dataConfirmationIntent);
                 }
-                scanNextQRCode();
+                else {
+                    if (setStud.equalsIgnoreCase("true")) {
+                        showStudentName(totalStudents);
+                    }
+                    scanNextQRCode();
+                }
             }
         });
 
         iv_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.dismiss();
-                if(setStud.equalsIgnoreCase("true")) {
-                    showStudentName(totalStudents);
+                if (totalStudents == 4) {
+
+                    Intent dataConfirmationIntent = new Intent(StartMenu.this, DataConfirmation.class);
+                    dataConfirmationIntent.putExtra("totalStudents", totalStudents);
+                    startActivity(dataConfirmationIntent);
+                }else {
+                    dialog.dismiss();
+                    if (setStud.equalsIgnoreCase("true")) {
+                        showStudentName(totalStudents);
+                    }
+                    scanNextQRCode();
                 }
-                scanNextQRCode();
             }
         });
 
@@ -250,7 +267,8 @@ public class StartMenu extends BaseActivity implements StartMenuContract.StartMe
 
     private void qrEntryProcess(Result result) {
         totalStudents++;
-        playerModal = new PlayerModal();
+        String sid="",sname="",sscore="",salias="";
+        playerModal = new PlayerModal(sid,sname,sscore,salias);
         Toast.makeText(this, "" + totalStudents, Toast.LENGTH_SHORT).show();
         if (totalStudents < 5) {
             //Valid pattern
@@ -266,18 +284,10 @@ public class StartMenu extends BaseActivity implements StartMenuContract.StartMe
 
             playerModal.setStudentID(stdId);
             playerModal.setStudentName(stdFirstName);
-            playerModal.setStudentAlias("");
             playerModal.setStudentScore("");
+            playerModal.setStudentAlias("");
 
             playerModalList.add(playerModal);
-
-            if (totalStudents == 4) {
-
-                Intent dataConfirmationIntent = new Intent(this, DataConfirmation.class);
-                dataConfirmationIntent.putExtra("totalStudents", totalStudents);
-                startActivity(dataConfirmationIntent);
-                startActivity(new Intent(StartMenu.this, BoleToh.class));
-            }
             //scanNextQRCode();
             showQrDialog(stdFirstName,"true");
         }
