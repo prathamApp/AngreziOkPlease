@@ -3,6 +3,7 @@ package com.example.pravin.angreziok.ui.bole_toh_round;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -15,6 +16,7 @@ import com.example.pravin.angreziok.modalclasses.PlayerModal;
 import com.example.pravin.angreziok.util.PD_Utility;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import butterknife.ButterKnife;
 
@@ -34,6 +36,10 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
         Intent intent = getIntent();
         Bundle extraBundle = intent.getExtras();
         playerModalArrayList = extraBundle.getParcelableArrayList("playerModalArrayList");
+
+        Collections.shuffle(playerModalArrayList);
+        for(int i=0; i<playerModalArrayList.size(); i++)
+            Log.d("BoleTohTAG", "playerModalArrayList: "+playerModalArrayList.get(i).getStudentAlias());
 
         presenter = new BoleTohPresenterImpl(this);
         playtts = new TextToSpeechCustom(this, 1.0f);
