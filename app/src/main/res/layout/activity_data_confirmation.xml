@@ -193,13 +193,26 @@
                 android:layout_height="wrap_content"
                 android:text="skip" />
 
-            <ImageButton
-                android:id="@+id/btn_startgame"
-                android:layout_width="150dp"
+            <LinearLayout
+                android:id="@+id/ll_startgame"
+                android:layout_width="120dp"
                 android:layout_height="match_parent"
-                android:scaleType="fitCenter"
-                android:background="@color/full_transparent"
-                android:src="@drawable/milestone" />
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:background="@drawable/milestone">
+
+                <TextView
+                    android:id="@+id/tv_startgame"
+                    android:layout_marginTop="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/simple_black"
+                    android:layout_marginLeft="5dp"
+                    android:text="GAME\nSTART\n\n0 Km"/>
+
+            </LinearLayout>
 
 
         </LinearLayout>
