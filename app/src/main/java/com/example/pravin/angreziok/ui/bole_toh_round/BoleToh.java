@@ -1,6 +1,7 @@
 package com.example.pravin.angreziok.ui.bole_toh_round;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -10,7 +11,10 @@ import com.example.pravin.angreziok.BaseActivity;
 import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.animations.MyBounceInterpolator;
 import com.example.pravin.angreziok.contentplayer.TextToSpeechCustom;
+import com.example.pravin.angreziok.modalclasses.PlayerModal;
 import com.example.pravin.angreziok.util.PD_Utility;
+
+import java.util.ArrayList;
 
 import butterknife.ButterKnife;
 
@@ -18,6 +22,7 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
 
     BoleTohContract.BoleTohPresenter presenter;
     public static TextToSpeechCustom playtts;
+    ArrayList<PlayerModal> playerModalArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +30,11 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
         setContentView(R.layout.activity_bole_toh);
         getSupportActionBar().hide();
         ButterKnife.bind(this);
+
+        Intent intent = getIntent();
+        Bundle extraBundle = intent.getExtras();
+        playerModalArrayList = extraBundle.getParcelableArrayList("playerModalArrayList");
+
         presenter = new BoleTohPresenterImpl(this);
         playtts = new TextToSpeechCustom(this, 1.0f);
         loadFragment(1);

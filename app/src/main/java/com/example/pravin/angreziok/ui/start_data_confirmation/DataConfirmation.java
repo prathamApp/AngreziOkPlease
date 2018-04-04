@@ -101,8 +101,16 @@ public class DataConfirmation extends BaseActivity implements DataConfirmationCo
     @OnClick({R.id.tv_startgame,R.id.ll_startgame})
     public void startGame(){
         for(int i=0; i<playerCount; i++) {
-            Log.d("DataConfirmationTAG", "TeamNames: "+teamNames.get(i));
+
             playerModalArrayList.get(i).setStudentAlias(""+teamNames.get(i));
+            Log.d("DataConfirmationTAG", "StudNames: "+playerModalArrayList.get(i).getStudentName()+"  TeamName: "+playerModalArrayList.get(i).getStudentAlias());
+
+            Intent intent = new Intent(this, BoleToh.class);
+            Bundle bundle = new Bundle();
+            bundle.putParcelableArrayList("playerModalArrayList", playerModalArrayList);
+            intent.putExtras(bundle);
+            startActivity(intent);
+
         }
     }
 
