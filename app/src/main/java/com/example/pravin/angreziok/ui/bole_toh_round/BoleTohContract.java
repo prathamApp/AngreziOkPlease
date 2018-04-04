@@ -32,7 +32,7 @@ public interface BoleTohContract {
 
         String[] getOptions();
 
-        void checkAnswerAndDisplayNext(String ans);
+        void checkFinalAnswer(String ans);
     }
 
     interface BoleTohRoundOneView {
