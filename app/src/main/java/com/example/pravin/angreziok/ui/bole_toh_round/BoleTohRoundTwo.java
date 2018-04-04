@@ -58,6 +58,7 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
     BoleTohContract.BoleTohPresenter presenter;
     private SpeechRecognizer speech = null;
     String language = "en-IN";
+    int speechCount;
 //    CustomCountDownTimer customCountDownTimer;
 
     @Override
@@ -76,9 +77,14 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
         presenter = new BoleTohPresenterImpl(getActivity(), this, BoleToh.playtts);
-
+        setInitialScores();
         setDataForGame();
+        speechCount = 0;
         initiateQuestion();
+    }
+
+    private void setInitialScores() {
+
     }
 
     @Override
@@ -119,7 +125,6 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
         mCountDownTimer.setOnEndAnimationFinish(new OnTimeFinish() {
             @Override
             public void onFinish() {
-//                mCountDownTimer.failure();
                 submitAns();
             }
         });
@@ -133,7 +138,11 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
 
     @OnClick(R.id.ib_r1g2_mic)
     public void micClicked() {
-        startSTT();
+        speechCount++;
+        if (speechCount<=2)
+            startSTT();
+        else
+            Toast.makeText(getActivity(), "Can be used only 2 Times", Toast.LENGTH_SHORT).show();
     }
 
     @OnClick({R.id.option1, R.id.option2, R.id.option3})

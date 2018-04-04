@@ -96,15 +96,17 @@
                             android:layout_weight="1"
                             android:background="@drawable/team_one"
                             android:orientation="vertical"
+                            android:visibility="gone"
                             android:weightSum="2">
 
                             <TextView
+                                android:id="@+id/r1g2_megastar"
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_gravity="center"
                                 android:layout_weight="1"
                                 android:gravity="center_vertical"
-                                android:text="100"
+                                android:text="0"
                                 android:textColor="@color/simple_black"
                                 android:textSize="27sp"
                                 android:textStyle="bold|italic" />
@@ -129,15 +131,17 @@
                             android:layout_weight="1"
                             android:background="@drawable/team_two"
                             android:orientation="vertical"
+                            android:visibility="gone"
                             android:weightSum="2">
 
                             <TextView
+                                android:id="@+id/r1g2_rockstar"
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_gravity="center"
                                 android:layout_weight="1"
                                 android:gravity="center_vertical"
-                                android:text="100"
+                                android:text="0"
                                 android:textColor="@color/simple_black"
                                 android:textSize="27sp"
                                 android:textStyle="bold|italic" />
@@ -162,15 +166,17 @@
                             android:layout_weight="1"
                             android:background="@drawable/team_three"
                             android:orientation="vertical"
+                            android:visibility="gone"
                             android:weightSum="2">
 
                             <TextView
+                                android:id="@+id/r1g2_superstar"
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_gravity="center"
                                 android:layout_weight="1"
                                 android:gravity="center_vertical"
-                                android:text="100"
+                                android:text="0"
                                 android:textColor="@color/simple_black"
                                 android:textSize="27sp"
                                 android:textStyle="bold|italic" />
@@ -195,15 +201,17 @@
                             android:layout_weight="1"
                             android:background="@drawable/team_four"
                             android:orientation="vertical"
+                            android:visibility="gone"
                             android:weightSum="2">
 
                             <TextView
+                                android:id="@+id/r1g2_allstar"
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_gravity="center"
                                 android:layout_weight="1"
                                 android:gravity="center_vertical"
-                                android:text="100"
+                                android:text="0"
                                 android:textColor="@color/simple_black"
                                 android:textSize="27sp"
                                 android:textStyle="bold|italic" />
@@ -214,7 +222,7 @@
                                 android:layout_gravity="center"
                                 android:layout_weight="1"
                                 android:gravity="center_vertical"
-                                android:text="Monstars"
+                                android:text="Allstars"
                                 android:textColor="@color/simple_black"
                                 android:textSize="21sp"
                                 android:textStyle="bold|italic" />
