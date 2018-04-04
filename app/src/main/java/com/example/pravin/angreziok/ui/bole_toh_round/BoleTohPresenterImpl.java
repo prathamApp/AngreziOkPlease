@@ -147,13 +147,15 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
     }
 
     @Override
-    public void checkAnswerAndDisplayNext(String ans) {
+    public void checkFinalAnswer(String ans) {
         if (r1g2QuestionData.get(r1g2RandomNo).getResourceText().equalsIgnoreCase(ans)) {
             //  TODO correct answer animation + increase score of group
             boleTohRoundTwoView.setCelebrationView();
+            playMusic("Sounds/clap.mp3", getSdcardPath());
         } else {
             //  TODO wrong answer animation
             Toast.makeText(mContext, "Wrong", Toast.LENGTH_SHORT).show();
+            playMusic("Sounds/wrong.mp3", getSdcardPath());
         }
         /*setImage_r1g2(getSdcardPath());
         boleTohRoundTwoView.initiateQuestion();*/
@@ -182,7 +184,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
     public void r1g1_checkAnswer(int imageViewNum, final String path) {
         String imageString = resTextArray.get(imageViewNum - 1);
         if (imageString.equalsIgnoreCase(ttsQuestion)) {
-            playMusic("Sounds/correct.mp3", path);
+            playMusic("Sounds/BilkulSahijawab.mp3", path);
         } else {
             playMusic("Sounds/wrong.mp3", path);
         }

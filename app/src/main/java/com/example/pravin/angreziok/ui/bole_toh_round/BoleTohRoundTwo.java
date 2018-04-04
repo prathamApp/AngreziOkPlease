@@ -77,7 +77,6 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
         ButterKnife.bind(this, view);
         presenter = new BoleTohPresenterImpl(getActivity(), this, BoleToh.playtts);
 
-//        customCountDownTimer = new CustomCountDownTimer(mCountDownTimer, getActivity());
         setDataForGame();
         initiateQuestion();
     }
@@ -85,6 +84,7 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
     @Override
     public void setCelebrationView() {
         konfettiView.setVisibility(View.VISIBLE);
+
         konfettiView.build()
                 .addColors(Color.YELLOW, Color.GREEN, Color.MAGENTA)
                 .setDirection(0.0, 359.0)
@@ -116,16 +116,10 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
     private void startTimer() {
         mCountDownTimer.ready();
         mCountDownTimer.start(15000);
-//        mCountDownTimer.setOnTimeFinish(new OnTimeFinish() {
-//            @Override
-//            public void onFinish() {
-////                mCountDownTimer.start(15000);
-//            }
-//        });
         mCountDownTimer.setOnEndAnimationFinish(new OnTimeFinish() {
             @Override
             public void onFinish() {
-//                mCountDownTimer.start(15000);
+//                mCountDownTimer.failure();
                 submitAns();
             }
         });
@@ -152,8 +146,8 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
 
     @OnClick(R.id.iv_r1g2_submit_ans)
     public void submitAns() {
-        presenter.checkAnswerAndDisplayNext(answer.getText().toString());
-        startTimer();
+        mCountDownTimer.pause();
+        presenter.checkFinalAnswer(answer.getText().toString());
     }
 
     public void startSTT() {
