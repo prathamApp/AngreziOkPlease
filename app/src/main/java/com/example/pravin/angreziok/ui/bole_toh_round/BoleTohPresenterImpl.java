@@ -188,7 +188,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
         } else {
             playMusic("Sounds/wrong.mp3", path);
         }
-        if(questionConter== BoleToh.playerModalArrayList.size()){}
+        if(questionConter == BoleToh.playerModalArrayList.size()){}
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
