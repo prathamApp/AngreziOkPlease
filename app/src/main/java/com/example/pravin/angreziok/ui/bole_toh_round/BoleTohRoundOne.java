@@ -43,6 +43,8 @@ public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.Bol
     @BindView(R.id.bt_temp_skip)
     Button bt_temp_skip;
 
+    int questionConter=0;
+
     //    ArrayList <GenericModalGson> gsonPicGameData = new ArrayList<GenericModalGson>();
     BoleTohContract.BoleTohPresenter presenter;
     String path;
@@ -99,22 +101,22 @@ public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.Bol
                 MyBounceInterpolator interpolator = new MyBounceInterpolator(0.2, 10);
                 pop.setInterpolator(interpolator);
                 iv_image1.startAnimation(pop);*/
-        presenter.r1g1_checkAnswer(1, path);
+        presenter.r1g1_checkAnswer(1, path,questionConter);
     }
 
     @OnClick(R.id.iv_image2)
     public void setIv_image2() {
-        presenter.r1g1_checkAnswer(2, path);
+        presenter.r1g1_checkAnswer(2, path,questionConter);
     }
 
     @OnClick(R.id.iv_image3)
     public void setIv_image3() {
-        presenter.r1g1_checkAnswer(3, path);
+        presenter.r1g1_checkAnswer(3, path,questionConter);
     }
 
     @OnClick(R.id.iv_image4)
     public void setIv_image4() {
-        presenter.r1g1_checkAnswer(4, path);
+        presenter.r1g1_checkAnswer(4, path,questionConter);
     }
 
     @OnClick(R.id.ib_r1g1_speaker)
@@ -122,6 +124,7 @@ public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.Bol
 
     @Override
     public void setQuestionImages(final int readQuesNo, Bitmap... bitmaps) {
+        questionConter++;
         iv_image1.setImageBitmap(bitmaps[0]);
         iv_image2.setImageBitmap(bitmaps[1]);
         iv_image3.setImageBitmap(bitmaps[2]);

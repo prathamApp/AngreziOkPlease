@@ -14,7 +14,7 @@ public interface BoleTohContract {
 
         void doInitialWork(String path);
 
-        void r1g1_checkAnswer(int imageViewNum, String path);
+        void r1g1_checkAnswer(int imageViewNum, String path, int questionConter);
 
         int[] getUniqueRandomNumber(int min, int max, int numSize);
 

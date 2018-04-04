@@ -181,14 +181,14 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
     }
 
     @Override
-    public void r1g1_checkAnswer(int imageViewNum, final String path) {
+    public void r1g1_checkAnswer(int imageViewNum, final String path, int questionConter) {
         String imageString = resTextArray.get(imageViewNum - 1);
         if (imageString.equalsIgnoreCase(ttsQuestion)) {
             playMusic("Sounds/BilkulSahijawab.mp3", path);
         } else {
             playMusic("Sounds/wrong.mp3", path);
         }
-
+        if(questionConter== BoleToh.playerModalArrayList.size()){}
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -197,6 +197,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
                 showImages(integerArray, path);
             }
         }, 1000);
+
     }
 
     public GenericModalGson fetchJsonData(String jasonName, String path) {

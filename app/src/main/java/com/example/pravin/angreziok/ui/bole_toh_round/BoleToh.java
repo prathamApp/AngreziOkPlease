@@ -22,7 +22,7 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
 
     BoleTohContract.BoleTohPresenter presenter;
     public static TextToSpeechCustom playtts;
-    ArrayList<PlayerModal> playerModalArrayList;
+    static ArrayList<PlayerModal> playerModalArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
