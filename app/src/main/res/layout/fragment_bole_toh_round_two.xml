@@ -89,6 +89,7 @@
                         android:weightSum="4">
 
                         <LinearLayout
+                            android:id="@+id/ll_r1g2_megastar"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_marginRight="10dp"
@@ -124,6 +125,7 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/ll_r1g2_rockstar"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_marginRight="10dp"
@@ -159,6 +161,7 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/ll_r1g2_superstar"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_marginRight="10dp"
@@ -194,6 +197,7 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/ll_r1g2_allstar"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_marginRight="10dp"

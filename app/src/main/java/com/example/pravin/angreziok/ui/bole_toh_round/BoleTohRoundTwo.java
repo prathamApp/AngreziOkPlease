@@ -46,6 +46,14 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
     TextView answer;
     @BindView(R.id.ll_r1g2_sttoptions)
     LinearLayout options;
+    @BindView(R.id.ll_r1g2_allstar)
+    LinearLayout allstarLayout;
+    @BindView(R.id.ll_r1g2_megastar)
+    LinearLayout megastarLayout;
+    @BindView(R.id.ll_r1g2_rockstar)
+    LinearLayout rockstarLayout;
+    @BindView(R.id.ll_r1g2_superstar)
+    LinearLayout superstarLayout;
     @BindView(R.id.r1g2_megastar)
     TextView megaScore;
     @BindView(R.id.r1g2_rockstar)
@@ -54,6 +62,7 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
     TextView superScore;
     @BindView(R.id.r1g2_allstar)
     TextView allScore;
+
     @BindView(R.id.option1)
     TextView option1;
     @BindView(R.id.option2)
@@ -99,16 +108,20 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
         for (int i = 0; i < playerModalArrayList.size(); i++) {
             switch (playerModalArrayList.get(i).studentAlias) {
                 case "Rockstars":
-                        
+                        rockstarLayout.setVisibility(View.VISIBLE);
+                        rockScore.setText(playerModalArrayList.get(i).studentScore);
                     break;
                 case "Megastars":
-
+                        megastarLayout.setVisibility(View.VISIBLE);
+                        megaScore.setText(playerModalArrayList.get(i).studentScore);
                     break;
                 case "Superstars":
-
+                        superstarLayout.setVisibility(View.VISIBLE);
+                        superScore.setText(playerModalArrayList.get(i).studentScore);
                     break;
                 case "Allstars":
-
+                        allstarLayout.setVisibility(View.VISIBLE);
+                        allScore.setText(playerModalArrayList.get(i).studentScore);
             }
         }
     }
