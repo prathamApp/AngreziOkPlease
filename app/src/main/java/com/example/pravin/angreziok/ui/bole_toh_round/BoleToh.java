@@ -30,7 +30,6 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bole_toh);
-        getSupportActionBar().hide();
         ButterKnife.bind(this);
 
         Intent intent = getIntent();

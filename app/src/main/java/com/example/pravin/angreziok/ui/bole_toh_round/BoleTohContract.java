@@ -30,6 +30,8 @@ public interface BoleTohContract {
 
         void setr1g2_data(String path);
 
+        void setImage_r1g2();
+
         String[] getOptions();
 
         void checkFinalAnswer(String ans);

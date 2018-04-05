@@ -7,6 +7,7 @@ import android.arch.persistence.room.migration.Migration;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -62,19 +63,12 @@ public class StartMenu extends BaseActivity implements StartMenuContract.StartMe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_menu);
-        getSupportActionBar().hide();
+//        getSupportActionBar().hide();
         ButterKnife.bind(this);
-
-        tv_stud_one.setVisibility(View.GONE);
-        tv_stud_two.setVisibility(View.GONE);
-        tv_stud_three.setVisibility(View.GONE);
-        tv_stud_four.setVisibility(View.GONE);
 
         presenter = new StartMenuPresenterImpl(this, this);
         playerModalList = new ArrayList<>();
         initCamera();
-        startCameraScan.startCamera();
-        startCameraScan.resumeCameraPreview(this);
         /* 1) In case migration needed and no problem with data loss then this would work
 
         appDatabase =  Room.databaseBuilder(this,
@@ -93,7 +87,7 @@ public class StartMenu extends BaseActivity implements StartMenuContract.StartMe
 
         appDatabase = Room.databaseBuilder(this,
                 AppDatabase.class, AppDatabase.DB_NAME)
-                .addMigrations(MIGRATION_1_2)
+//                .addMigrations(MIGRATION_1_2)
                 .build();
         presenter.displayToast();
     }
@@ -102,6 +96,8 @@ public class StartMenu extends BaseActivity implements StartMenuContract.StartMe
         startCameraScan = new ZXingScannerView(this);
         startCameraScan.setResultHandler(this);
         content_frame.addView((startCameraScan));
+        startCameraScan.startCamera();
+        startCameraScan.resumeCameraPreview(this);
     }
 
     static final Migration MIGRATION_1_2 = new Migration(1, 2) {

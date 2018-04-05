@@ -49,7 +49,6 @@ public class DataConfirmation extends BaseActivity implements DataConfirmationCo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data_confirmation);
-        getSupportActionBar().hide();
         ButterKnife.bind(this);
         Intent intent = getIntent();
         Bundle extraBundle = intent.getExtras();

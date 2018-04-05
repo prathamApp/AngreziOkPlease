@@ -28,15 +28,15 @@ public class VideoIntroPresenterImpl implements VideoIntroContract.VideoIntroPre
 
     @Override
     public void playVideo(Uri path) {
-        MediaController mediaController = new MediaController(context);
-        mediaController.setAnchorView(videoView);
+//        MediaController mediaController = new MediaController(context);
+//        mediaController.setAnchorView(videoView);
         try {
             videoView.setVideoURI(path);
         } catch (Exception e) {
             Log.e("Cant Play Video", e.getMessage());
             e.printStackTrace();
         }
-        videoView.setMediaController(mediaController);
+//        videoView.setMediaController(mediaController);
         videoView.requestFocus();
     }
 

@@ -1,8 +1,11 @@
 package com.example.pravin.angreziok.ui.bole_toh_round;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
@@ -11,6 +14,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -62,7 +68,6 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
     TextView superScore;
     @BindView(R.id.r1g2_allstar)
     TextView allScore;
-
     @BindView(R.id.option1)
     TextView option1;
     @BindView(R.id.option2)
@@ -79,7 +84,7 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
     private SpeechRecognizer speech = null;
     String language = "en-IN";
     int speechCount,currentTeam;
-//    CustomCountDownTimer customCountDownTimer;
+    Dialog dialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -100,7 +105,8 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
         setInitialScores();
         setDataForGame();
         speechCount = 0;
-        initiateQuestion();
+        currentTeam = 0;
+        showQrDialog();
     }
 
     private void setInitialScores() {
@@ -124,6 +130,41 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
                     allScore.setText(playerModalArrayList.get(i).studentScore);
             }
         }
+    }
+
+    public void showQrDialog() {
+        speechCount = 0;
+        String teamName = playerModalArrayList.get(currentTeam).getStudentAlias();
+        dialog = new Dialog(getActivity());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.setContentView(R.layout.custom_dialog_for_qrscan);
+        dialog.setCanceledOnTouchOutside(false);
+        TextView text = dialog.findViewById(R.id.dialog_tv_student_name);
+        ImageView iv_close = dialog.findViewById(R.id.dialog_iv_close);
+        text.setText("Next question would be for " + teamName);
+        dialog.show();
+
+        Button scanNextQR = dialog.findViewById(R.id.dialog_btn_scan_qr);
+
+        scanNextQR.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                initiateQuestion();
+                presenter.setImage_r1g2();
+            }
+        });
+
+        iv_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                initiateQuestion();
+                presenter.setImage_r1g2();
+            }
+        });
+
     }
 
     @Override
@@ -196,6 +237,18 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
     public void submitAns() {
         mCountDownTimer.pause();
         presenter.checkFinalAnswer(answer.getText().toString());
+        currentTeam+=1;
+        if(currentTeam<playerModalArrayList.size()) {
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    showQrDialog();
+                }
+            }, 2500);
+        }else {
+            //TODO display Score screen after final round
+        }
     }
 
     public void startSTT() {

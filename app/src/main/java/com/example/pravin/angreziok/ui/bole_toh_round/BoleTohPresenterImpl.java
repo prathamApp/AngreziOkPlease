@@ -127,8 +127,6 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
     public void setr1g2_data(String path) {
         gsonActGameData = fetchJsonData("RoundOneGameTwo", path);
         r1g2QuestionData = gsonActGameData.getNodelist();
-        Log.d("SIZE", "doInitialWork: " + r1g2QuestionData.size());
-        setImage_r1g2(path);
     }
 
     @Override
@@ -172,10 +170,11 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
         }
     }
 
-    private void setImage_r1g2(String path) {
+    @Override
+    public void setImage_r1g2() {
         boleTohRoundTwoView.hideOptionView();
         r1g2RandomNo = getRandomNumber(0, r1g2QuestionData.size());
-        String imagePath = path + "PicGameImages/" + r1g2QuestionData.get(r1g2RandomNo).getResourceImage();
+        String imagePath = getSdcardPath() + "PicGameImages/" + r1g2QuestionData.get(r1g2RandomNo).getResourceImage();
         Toast.makeText(mContext, "actual ans: " + r1g2QuestionData.get(r1g2RandomNo).getResourceText(), Toast.LENGTH_SHORT).show();
         boleTohRoundTwoView.setActionGif(imagePath);
     }
