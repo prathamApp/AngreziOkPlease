@@ -301,7 +301,7 @@ public class StartMenu extends BaseActivity implements StartMenuContract.StartMe
 
             playerModal.setStudentID(stdId);
             playerModal.setStudentName(stdFirstName);
-            playerModal.setStudentScore("");
+            playerModal.setStudentScore("0");
             playerModal.setStudentAlias("");
 
             playerModalList.add(playerModal);

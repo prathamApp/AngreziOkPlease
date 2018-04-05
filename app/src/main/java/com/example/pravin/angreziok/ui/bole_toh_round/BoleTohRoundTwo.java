@@ -7,6 +7,7 @@ import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,8 @@ import nl.dionsegijn.konfetti.KonfettiView;
 import nl.dionsegijn.konfetti.models.Shape;
 import nl.dionsegijn.konfetti.models.Size;
 
+import static com.example.pravin.angreziok.ui.bole_toh_round.BoleToh.playerModalArrayList;
+
 
 public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.BoleTohRoundTwoView, RecognitionListener {
 
@@ -43,6 +46,14 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
     TextView answer;
     @BindView(R.id.ll_r1g2_sttoptions)
     LinearLayout options;
+    @BindView(R.id.r1g2_megastar)
+    TextView megaScore;
+    @BindView(R.id.r1g2_rockstar)
+    TextView rockScore;
+    @BindView(R.id.r1g2_superstar)
+    TextView superScore;
+    @BindView(R.id.r1g2_allstar)
+    TextView allScore;
     @BindView(R.id.option1)
     TextView option1;
     @BindView(R.id.option2)
@@ -84,7 +95,22 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
     }
 
     private void setInitialScores() {
+        Log.d(":::", "setInitialScores: " + playerModalArrayList.toString());
+        for (int i = 0; i < playerModalArrayList.size(); i++) {
+            switch (playerModalArrayList.get(i).studentAlias) {
+                case "Rockstars":
+                        
+                    break;
+                case "Megastars":
 
+                    break;
+                case "Superstars":
+
+                    break;
+                case "Allstars":
+
+            }
+        }
     }
 
     @Override
@@ -139,7 +165,7 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
     @OnClick(R.id.ib_r1g2_mic)
     public void micClicked() {
         speechCount++;
-        if (speechCount<=2)
+        if (speechCount <= 2)
             startSTT();
         else
             Toast.makeText(getActivity(), "Can be used only 2 Times", Toast.LENGTH_SHORT).show();
