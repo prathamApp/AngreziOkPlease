@@ -78,7 +78,7 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
     BoleTohContract.BoleTohPresenter presenter;
     private SpeechRecognizer speech = null;
     String language = "en-IN";
-    int speechCount;
+    int speechCount,currentTeam;
 //    CustomCountDownTimer customCountDownTimer;
 
     @Override
@@ -108,20 +108,20 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
         for (int i = 0; i < playerModalArrayList.size(); i++) {
             switch (playerModalArrayList.get(i).studentAlias) {
                 case "Rockstars":
-                        rockstarLayout.setVisibility(View.VISIBLE);
-                        rockScore.setText(playerModalArrayList.get(i).studentScore);
+                    rockstarLayout.setVisibility(View.VISIBLE);
+                    rockScore.setText(playerModalArrayList.get(i).studentScore);
                     break;
                 case "Megastars":
-                        megastarLayout.setVisibility(View.VISIBLE);
-                        megaScore.setText(playerModalArrayList.get(i).studentScore);
+                    megastarLayout.setVisibility(View.VISIBLE);
+                    megaScore.setText(playerModalArrayList.get(i).studentScore);
                     break;
                 case "Superstars":
-                        superstarLayout.setVisibility(View.VISIBLE);
-                        superScore.setText(playerModalArrayList.get(i).studentScore);
+                    superstarLayout.setVisibility(View.VISIBLE);
+                    superScore.setText(playerModalArrayList.get(i).studentScore);
                     break;
                 case "Allstars":
-                        allstarLayout.setVisibility(View.VISIBLE);
-                        allScore.setText(playerModalArrayList.get(i).studentScore);
+                    allstarLayout.setVisibility(View.VISIBLE);
+                    allScore.setText(playerModalArrayList.get(i).studentScore);
             }
         }
     }

@@ -261,8 +261,8 @@ public class StartMenu extends BaseActivity implements StartMenuContract.StartMe
                         String[] currentIdArr = decodeStudentId(result.getText(), "-");
                         String currId = currentIdArr[0];
                         if (playerModalList.get(i).getStudentID().equalsIgnoreCase("" + currId)) {
-                            Toast.makeText(this, "Already Scaned", Toast.LENGTH_SHORT).show();
-                            showQrDialog(", This QR Was Already Scaned");
+                            Toast.makeText(this, "Already Scanned", Toast.LENGTH_SHORT).show();
+                            showQrDialog(", This QR Was Already Scanned");
                             setStud = false;
                             dulicateQR = true;
                             break;
