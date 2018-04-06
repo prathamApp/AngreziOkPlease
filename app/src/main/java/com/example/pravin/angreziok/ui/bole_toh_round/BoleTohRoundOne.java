@@ -143,7 +143,7 @@ public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.Bol
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                initiateQuestion();
+                //initiateQuestion();
                 presenter.setImage_r1g2();
             }
         });
@@ -152,7 +152,7 @@ public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.Bol
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                initiateQuestion();
+                //initiateQuestion();
                 presenter.setImage_r1g2();
             }
         });
