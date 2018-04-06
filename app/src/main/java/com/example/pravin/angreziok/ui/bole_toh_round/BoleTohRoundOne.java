@@ -1,16 +1,22 @@
 package com.example.pravin.angreziok.ui.bole_toh_round;
 
+import android.app.Dialog;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pravin.angreziok.BaseFragment;
@@ -23,11 +29,32 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.example.pravin.angreziok.ui.bole_toh_round.BoleToh.playerModalArrayList;
+
 
 public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.BoleTohRoundOneView {
 
     @BindView(R.id.mCountDownTimer)
     CountDownTimerView mCountDownTimer;
+
+    @BindView(R.id.ll_r1g1_megastar)
+    LinearLayout megastarLayout;
+    @BindView(R.id.ll_r1g1_rockstars)
+    LinearLayout rockstarLayout;
+    @BindView(R.id.ll_r1g1_superstars)
+    LinearLayout superstarLayout;
+    @BindView(R.id.ll_r1g1_allstar)
+    LinearLayout allstarLayout;
+
+    @BindView(R.id.r1g1_megastar)
+    TextView megaScore;
+    @BindView(R.id.r1g1_rockstars)
+    TextView rockScore;
+    @BindView(R.id.r1g1_superstars)
+    TextView superScore;
+    @BindView(R.id.r1g1_allstar)
+    TextView allScore;
+
     @BindView(R.id.ll_mic)
     LinearLayout layout_mic;
     @BindView(R.id.iv_image1)
@@ -49,6 +76,8 @@ public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.Bol
     BoleTohContract.BoleTohPresenter presenter;
     String path;
     static int speechCount;
+    Dialog dialog;
+    int currentTeam = 0;
 //    CustomCountDownTimer customCountDownTimer;
 
     @Override
@@ -71,6 +100,63 @@ public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.Bol
         path = presenter.getSdcardPath();
         presenter.doInitialWork(path);
 //        customCountDownTimer = new CustomCountDownTimer(mCountDownTimer,getActivity());
+    }
+    private void setInitialScores() {
+        Log.d(":::", "setInitialScores: " + playerModalArrayList.toString());
+        for (int i = 0; i < playerModalArrayList.size(); i++) {
+            switch (playerModalArrayList.get(i).studentAlias) {
+                case "Rockstars":
+                    rockstarLayout.setVisibility(View.VISIBLE);
+                    rockScore.setText(playerModalArrayList.get(i).studentScore);
+                    break;
+                case "Megastars":
+                    megastarLayout.setVisibility(View.VISIBLE);
+                    megaScore.setText(playerModalArrayList.get(i).studentScore);
+                    break;
+                case "Superstars":
+                    superstarLayout.setVisibility(View.VISIBLE);
+                    superScore.setText(playerModalArrayList.get(i).studentScore);
+                    break;
+                case "Allstars":
+                    allstarLayout.setVisibility(View.VISIBLE);
+                    allScore.setText(playerModalArrayList.get(i).studentScore);
+            }
+        }
+    }
+
+    public void showQrDialog() {
+        speechCount = 0;
+        String teamName = playerModalArrayList.get(currentTeam).getStudentAlias();
+        dialog = new Dialog(getActivity());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.setContentView(R.layout.custom_dialog_for_qrscan);
+        dialog.setCanceledOnTouchOutside(false);
+        TextView text = dialog.findViewById(R.id.dialog_tv_student_name);
+        ImageView iv_close = dialog.findViewById(R.id.dialog_iv_close);
+        text.setText("Next question would be for " + teamName);
+        dialog.show();
+
+        Button scanNextQR = dialog.findViewById(R.id.dialog_btn_scan_qr);
+
+        scanNextQR.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                initiateQuestion();
+                presenter.setImage_r1g2();
+            }
+        });
+
+        iv_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                initiateQuestion();
+                presenter.setImage_r1g2();
+            }
+        });
+
     }
 
     private void setOnClickListeners() {
