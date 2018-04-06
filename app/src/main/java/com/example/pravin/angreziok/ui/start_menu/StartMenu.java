@@ -39,8 +39,6 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 public class StartMenu extends BaseActivity implements StartMenuContract.StartMenuView,
         ZXingScannerView.ResultHandler {
 
-    @BindView(R.id.content_frame)
-    ViewGroup content_frame;
     @BindView(R.id.tv_stud_one)
     TextView tv_stud_one;
     @BindView(R.id.tv_stud_two)
@@ -49,10 +47,11 @@ public class StartMenu extends BaseActivity implements StartMenuContract.StartMe
     TextView tv_stud_three;
     @BindView(R.id.tv_stud_four)
     TextView tv_stud_four;
+    @BindView(R.id.scanView)
+    ZXingScannerView scanView;
 
     private AppDatabase appDatabase;
     StartMenuContract.StartMenuPresenter presenter;
-    public ZXingScannerView startCameraScan;
     PlayerModal playerModal;
     int totalStudents = 0;
     Dialog dialog;
@@ -63,7 +62,6 @@ public class StartMenu extends BaseActivity implements StartMenuContract.StartMe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_menu);
-//        getSupportActionBar().hide();
         ButterKnife.bind(this);
 
         presenter = new StartMenuPresenterImpl(this, this);
@@ -89,15 +87,18 @@ public class StartMenu extends BaseActivity implements StartMenuContract.StartMe
                 AppDatabase.class, AppDatabase.DB_NAME)
 //                .addMigrations(MIGRATION_1_2)
                 .build();
-        presenter.displayToast();
     }
 
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+////        scanView.resumeCameraPreview(this);
+//    }
+
     public void initCamera() {
-        startCameraScan = new ZXingScannerView(this);
-        startCameraScan.setResultHandler(this);
-        content_frame.addView((startCameraScan));
-        startCameraScan.startCamera();
-        startCameraScan.resumeCameraPreview(this);
+        scanView.setResultHandler(this);
+        scanView.startCamera();
+        scanView.resumeCameraPreview(this);
     }
 
     static final Migration MIGRATION_1_2 = new Migration(1, 2) {
@@ -154,11 +155,11 @@ public class StartMenu extends BaseActivity implements StartMenuContract.StartMe
     }
 
     public void scanNextQRCode() {
-        if (startCameraScan != null) {
-            startCameraScan.stopCamera();
+        if (scanView != null) {
+            scanView.stopCamera();
+            scanView.startCamera();
+            scanView.resumeCameraPreview(this);
         }
-        startCameraScan.startCamera();
-        startCameraScan.resumeCameraPreview(this);
     }
 
     public void showQrDialog(String studentName) {
@@ -240,7 +241,7 @@ public class StartMenu extends BaseActivity implements StartMenuContract.StartMe
     public void handleResult(Result result) {
         try {
             boolean dulicateQR = false;
-            startCameraScan.stopCamera();
+            scanView.stopCamera();
             Log.d("RawResult:::", "****" + result.getText());
 
 //        Pattern pattern = Pattern.compile("[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}");
@@ -269,8 +270,7 @@ public class StartMenu extends BaseActivity implements StartMenuContract.StartMe
                     }
                 }
             } else {
-                startCameraScan.startCamera();
-                startCameraScan.resumeCameraPreview(this);
+                scanNextQRCode();
                 BackupDatabase.backup(this);
             }
         } catch (Exception e) {

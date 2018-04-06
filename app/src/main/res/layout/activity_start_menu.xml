@@ -63,7 +63,13 @@
                 android:id="@+id/content_frame"
                 android:layout_width="350dp"
                 android:layout_height="350dp"
-                android:layout_marginTop="20dp" />
+                android:layout_marginTop="20dp">
+
+                <me.dm7.barcodescanner.zxing.ZXingScannerView
+                    android:id="@+id/scanView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </FrameLayout>
 
             <Button
                 android:id="@+id/btn_reset_btn"
