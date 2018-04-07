@@ -10,7 +10,6 @@ import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.support.annotation.Nullable;
-import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -197,24 +196,24 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
     }
 
     private void fadeOtherGroups() {
-            megastarLayout.setBackgroundResource(R.drawable.team_faded);
-            rockstarLayout.setBackgroundResource(R.drawable.team_faded);
-            allstarLayout.setBackgroundResource(R.drawable.team_faded);
-            superstarLayout.setBackgroundResource(R.drawable.team_faded);
+        megastarLayout.setBackgroundResource(R.drawable.team_faded);
+        rockstarLayout.setBackgroundResource(R.drawable.team_faded);
+        allstarLayout.setBackgroundResource(R.drawable.team_faded);
+        superstarLayout.setBackgroundResource(R.drawable.team_faded);
 
-            switch (playerModalArrayList.get(currentTeam).getStudentAlias()){
-                case "Megastars":
-                    megastarLayout.setBackgroundResource(R.drawable.team_one);
-                    break;
-                case "Rockstars":
+        switch (playerModalArrayList.get(currentTeam).getStudentAlias()) {
+            case "Megastars":
+                megastarLayout.setBackgroundResource(R.drawable.team_one);
+                break;
+            case "Rockstars":
                 rockstarLayout.setBackgroundResource(R.drawable.team_two);
                 break;
-                case "Superstars":
-                    superstarLayout.setBackgroundResource(R.drawable.team_three);
-                    break;
-                case "Allstars":
-                    allstarLayout.setBackgroundResource(R.drawable.team_four);
-            }
+            case "Superstars":
+                superstarLayout.setBackgroundResource(R.drawable.team_three);
+                break;
+            case "Allstars":
+                allstarLayout.setBackgroundResource(R.drawable.team_four);
+        }
     }
 
     @Override
