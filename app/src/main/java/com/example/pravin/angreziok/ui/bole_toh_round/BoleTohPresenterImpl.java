@@ -77,12 +77,12 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
         gsonPicGameData = fetchJsonData("RoundOneGameOne", path);
         r1g1QuestionData = gsonPicGameData.getNodelist();
         Log.d("SIZE", "doInitialWork: " + r1g1QuestionData.size());
-        int[] integerArray = getUniqueRandomNumber(0, r1g1QuestionData.size(), 4);
-        showImages(integerArray, sdCardPathString);
+        showImages(sdCardPathString);
     }
 
-    public void showImages(int[] integerArray, String sdCardPathString) {
+    public void showImages(String sdCardPathString) {
         try {
+            int[] integerArray = getUniqueRandomNumber(0, r1g1QuestionData.size(), 4);
             readQuestionNo = getRandomNumber(0, 4);
             String imagePath = sdCardPathString + "PicGameImages/";
             resTextArray.clear();
@@ -146,13 +146,13 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
     }
 
     @Override
-    public void checkFinalAnswer(String ans, int currentTeam) {
+    public void checkFinalAnswer_r1g2(String ans, int currentTeam) {
         if (r1g2QuestionData.get(r1g2RandomNo).getResourceText().equalsIgnoreCase(ans)) {
             //  TODO correct answer animation + increase score of group
             boleTohRoundTwoView.setCelebrationView();
             playMusic("Sounds/BilkulSahijawab.mp3", getSdcardPath());
             int currentTeamScore = Integer.parseInt(playerModalArrayList.get(currentTeam).studentScore);
-            playerModalArrayList.get(currentTeam).setStudentScore(String.valueOf(currentTeamScore+10));
+            playerModalArrayList.get(currentTeam).setStudentScore(String.valueOf(currentTeamScore + 10));
             boleTohRoundTwoView.setCurrentScore();
         } else {
             //  TODO wrong answer animation
@@ -184,23 +184,25 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
     }
 
     @Override
-    public void r1g1_checkAnswer(int imageViewNum, final String path, int questionConter) {
-        String imageString = resTextArray.get(imageViewNum - 1);
-        if (imageString.equalsIgnoreCase(ttsQuestion)) {
-            playMusic("Sounds/correct.mp3", path);
-        } else {
-            playMusic("Sounds/wrong.mp3", path);
-        }
-        if(questionConter == BoleToh.playerModalArrayList.size()){}
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                int[] integerArray = getUniqueRandomNumber(0, r1g1QuestionData.size(), 4);
-                showImages(integerArray, path);
+    public void r1g1_checkAnswer(int imageViewNum, int currentTeam, boolean timeOut) {
+        if (!timeOut) {
+            String imageString = resTextArray.get(imageViewNum - 1);
+            if (imageString.equalsIgnoreCase(ttsQuestion)) {
+                boleTohRoundOneView.setCelebrationView();
+                playMusic("Sounds/BilkulSahijawab.mp3", getSdcardPath());
+                int currentTeamScore = Integer.parseInt(playerModalArrayList.get(currentTeam).studentScore);
+                playerModalArrayList.get(currentTeam).setStudentScore(String.valueOf(currentTeamScore + 10));
+                boleTohRoundOneView.setCurrentScore();
+            } else {
+                //  TODO wrong answer animation
+                Toast.makeText(mContext, "Wrong", Toast.LENGTH_SHORT).show();
+                playMusic("Sounds/wrong.mp3", getSdcardPath());
             }
-        }, 1000);
-
+        } else {
+            //  TODO wrong answer animation
+            Toast.makeText(mContext, "Wrong", Toast.LENGTH_SHORT).show();
+            playMusic("Sounds/wrong.mp3", getSdcardPath());
+        }
     }
 
     public GenericModalGson fetchJsonData(String jasonName, String path) {

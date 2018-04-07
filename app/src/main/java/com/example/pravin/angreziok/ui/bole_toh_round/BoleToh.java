@@ -42,7 +42,7 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
 
         presenter = new BoleTohPresenterImpl(this);
         playtts = new TextToSpeechCustom(this, 1.0f);
-        loadFragment(1);
+        //loadFragment(1);
     }
 
     @Override
