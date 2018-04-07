@@ -23,6 +23,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static com.example.pravin.angreziok.AOPApplication.getRandomNumber;
+import static com.example.pravin.angreziok.ui.bole_toh_round.BoleToh.playerModalArrayList;
 
 public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
 
@@ -145,11 +146,14 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
     }
 
     @Override
-    public void checkFinalAnswer(String ans) {
+    public void checkFinalAnswer(String ans, int currentTeam) {
         if (r1g2QuestionData.get(r1g2RandomNo).getResourceText().equalsIgnoreCase(ans)) {
             //  TODO correct answer animation + increase score of group
             boleTohRoundTwoView.setCelebrationView();
             playMusic("Sounds/BilkulSahijawab.mp3", getSdcardPath());
+            int currentTeamScore = Integer.parseInt(playerModalArrayList.get(currentTeam).studentScore);
+            playerModalArrayList.get(currentTeam).setStudentScore(String.valueOf(currentTeamScore+10));
+            boleTohRoundTwoView.setCurrentScore();
         } else {
             //  TODO wrong answer animation
             Toast.makeText(mContext, "Wrong", Toast.LENGTH_SHORT).show();

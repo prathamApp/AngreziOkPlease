@@ -34,7 +34,7 @@ public interface BoleTohContract {
 
         String[] getOptions();
 
-        void checkFinalAnswer(String ans);
+        void checkFinalAnswer(String ans, int currentTeam);
     }
 
     interface BoleTohRoundOneView {
@@ -48,6 +48,7 @@ public interface BoleTohContract {
         void initiateQuestion();
         void hideOptionView();
         void setCelebrationView();
+        void setCurrentScore();
     }
 
 }

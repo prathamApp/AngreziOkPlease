@@ -65,10 +65,10 @@
                 android:layout_height="350dp"
                 android:layout_marginTop="20dp">
 
-                <me.dm7.barcodescanner.zxing.ZXingScannerView
-                    android:id="@+id/scanView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                <!--<me.dm7.barcodescanner.zxing.ZXingScannerView-->
+                    <!--android:id="@+id/scanView"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="match_parent"/>-->
             </FrameLayout>
 
             <Button

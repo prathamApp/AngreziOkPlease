@@ -39,6 +39,8 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 public class StartMenu extends BaseActivity implements StartMenuContract.StartMenuView,
         ZXingScannerView.ResultHandler {
 
+    @BindView(R.id.content_frame)
+    ViewGroup content_frame;
     @BindView(R.id.tv_stud_one)
     TextView tv_stud_one;
     @BindView(R.id.tv_stud_two)
@@ -47,8 +49,7 @@ public class StartMenu extends BaseActivity implements StartMenuContract.StartMe
     TextView tv_stud_three;
     @BindView(R.id.tv_stud_four)
     TextView tv_stud_four;
-    @BindView(R.id.scanView)
-    ZXingScannerView scanView;
+
 
     private AppDatabase appDatabase;
     StartMenuContract.StartMenuPresenter presenter;
@@ -57,6 +58,8 @@ public class StartMenu extends BaseActivity implements StartMenuContract.StartMe
     Dialog dialog;
     Boolean setStud = false;
     ArrayList<PlayerModal> playerModalList;
+    public ZXingScannerView mScannerView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +69,10 @@ public class StartMenu extends BaseActivity implements StartMenuContract.StartMe
 
         presenter = new StartMenuPresenterImpl(this, this);
         playerModalList = new ArrayList<>();
+        mScannerView = new ZXingScannerView(this);
+        mScannerView.setResultHandler(this);
+        content_frame.addView((mScannerView));
+
         initCamera();
         /* 1) In case migration needed and no problem with data loss then this would work
 
@@ -89,16 +96,22 @@ public class StartMenu extends BaseActivity implements StartMenuContract.StartMe
                 .build();
     }
 
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-////        scanView.resumeCameraPreview(this);
-//    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mScannerView.resumeCameraPreview(this);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        mScannerView.stopCamera();
+    }
 
     public void initCamera() {
-        scanView.setResultHandler(this);
-        scanView.startCamera();
-        scanView.resumeCameraPreview(this);
+        mScannerView.startCamera();
+        mScannerView.resumeCameraPreview(this);
     }
 
     static final Migration MIGRATION_1_2 = new Migration(1, 2) {
@@ -155,10 +168,10 @@ public class StartMenu extends BaseActivity implements StartMenuContract.StartMe
     }
 
     public void scanNextQRCode() {
-        if (scanView != null) {
-            scanView.stopCamera();
-            scanView.startCamera();
-            scanView.resumeCameraPreview(this);
+        if (mScannerView != null) {
+            mScannerView.stopCamera();
+            mScannerView.startCamera();
+            mScannerView.resumeCameraPreview(this);
         }
     }
 
@@ -193,9 +206,7 @@ public class StartMenu extends BaseActivity implements StartMenuContract.StartMe
                 dialogClick();
             }
         });
-
     }
-
 
     public void dialogClick() {
 
@@ -241,7 +252,7 @@ public class StartMenu extends BaseActivity implements StartMenuContract.StartMe
     public void handleResult(Result result) {
         try {
             boolean dulicateQR = false;
-            scanView.stopCamera();
+            mScannerView.stopCamera();
             Log.d("RawResult:::", "****" + result.getText());
 
 //        Pattern pattern = Pattern.compile("[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}");
