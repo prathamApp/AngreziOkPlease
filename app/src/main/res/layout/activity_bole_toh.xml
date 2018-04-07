@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cl_bole_toh"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/cl_bole_toh"
+    android:background="@drawable/bole_toh_bg"
     tools:context="com.example.pravin.angreziok.ui.bole_toh_round.BoleToh">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:weightSum="10"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:weightSum="10">
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:gravity="center"
-            android:layout_weight="3">
+            android:layout_weight="3"
+            android:gravity="center">
 
             <com.example.pravin.angreziok.ui.GifView
-                android:layout_gravity="center"
-                android:id="@+id/iv_character_dialog_gif"
+                android:id="@+id/iv_anupam_gif"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:layout_gravity="center" />
 
 
         </LinearLayout>
@@ -32,12 +32,99 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="7">
+            android:layout_weight="7"
+            android:orientation="vertical"
+            android:weightSum="10">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="50dp"
+                android:layout_weight="7.5"
+                android:orientation="vertical"
+                android:weightSum="10">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.7"
+                    android:background="@drawable/bord_frame_bg"></LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginHorizontal="8dp"
+                    android:layout_weight="8.8"
+                    android:background="@drawable/board_background"
+                    android:orientation="vertical"
+                    android:padding="5dp"
+                    android:weightSum="10">
+
+                    <TextView
+                        android:layout_width="400dp"
+                        android:layout_height="0dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="2"
+                        android:text="INSTRUCTIONS"
+                        android:textSize="20sp"
+                        android:textStyle="bold|italic"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:layout_marginTop="20dp"
+                        android:gravity="center" />
+
+                    <TextView
+                        android:id="@+id/tv_instructions"
+                        android:layout_width="400dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="8"
+                        android:textSize="15sp"
+                        android:layout_gravity="center"
+                        android:textColor="@color/simple_black"
+                        android:layout_marginVertical="20dp"
+                        android:gravity="center"
+                        android:text="The" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/bord_frame_bg"></LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/ib_replay_instructions"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="20dp"
+                    android:background="@color/full_transparent"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/sound" />
+
+                <Button
+                    android:id="@+id/btn_skip_instructions"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:background="@drawable/round_button_selector"
+                    android:paddingHorizontal="50dp"
+                    android:text="Skip" />
+
+            </LinearLayout>
         </LinearLayout>
 
     </LinearLayout>
-
 
 
 </RelativeLayout>
