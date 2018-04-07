@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -21,6 +23,7 @@ import android.widget.Toast;
 
 import com.example.pravin.angreziok.BaseFragment;
 import com.example.pravin.angreziok.R;
+import com.example.pravin.angreziok.animations.MyBounceInterpolator;
 import com.example.pravin.angreziok.util.PD_Utility;
 import com.github.anastr.flattimelib.CountDownTimerView;
 import com.github.anastr.flattimelib.intf.OnTimeFinish;
@@ -28,6 +31,9 @@ import com.github.anastr.flattimelib.intf.OnTimeFinish;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import nl.dionsegijn.konfetti.KonfettiView;
+import nl.dionsegijn.konfetti.models.Shape;
+import nl.dionsegijn.konfetti.models.Size;
 
 import static com.example.pravin.angreziok.ui.bole_toh_round.BoleToh.playerModalArrayList;
 
@@ -69,13 +75,15 @@ public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.Bol
     ImageButton ib_speaker;
     @BindView(R.id.bt_temp_skip)
     Button bt_temp_skip;
+    @BindView(R.id.konfettiView_r1g1)
+    KonfettiView konfettiView;
 
-    int questionConter=0;
+
+    int questionConter = 0;
 
     //    ArrayList <GenericModalGson> gsonPicGameData = new ArrayList<GenericModalGson>();
     BoleTohContract.BoleTohPresenter presenter;
     String path;
-    static int speechCount;
     Dialog dialog;
     int currentTeam = 0;
 //    CustomCountDownTimer customCountDownTimer;
@@ -92,6 +100,20 @@ public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.Bol
     }
 
     @Override
+    public void setCurrentScore() {
+        setInitialScores();
+        bounceView(getCurrentView());
+    }
+
+    public void bounceView(View view) {
+        Animation rubber = AnimationUtils.loadAnimation(getActivity(), R.anim.popup);
+        MyBounceInterpolator interpolator = new MyBounceInterpolator(0.2, 15);
+        rubber.setInterpolator(interpolator);
+        view.startAnimation(rubber);
+    }
+
+
+    @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
@@ -99,8 +121,11 @@ public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.Bol
         setOnClickListeners();
         path = presenter.getSdcardPath();
         presenter.doInitialWork(path);
+        setInitialScores();
+        showDialog();
 //        customCountDownTimer = new CustomCountDownTimer(mCountDownTimer,getActivity());
     }
+
     private void setInitialScores() {
         Log.d(":::", "setInitialScores: " + playerModalArrayList.toString());
         for (int i = 0; i < playerModalArrayList.size(); i++) {
@@ -124,8 +149,65 @@ public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.Bol
         }
     }
 
-    public void showQrDialog() {
-        speechCount = 0;
+    @Override
+    public void setCelebrationView() {
+        konfettiView.setVisibility(View.VISIBLE);
+
+        konfettiView.build()
+                .addColors(Color.YELLOW, Color.GREEN, Color.MAGENTA)
+                .setDirection(0.0, 359.0)
+                .setSpeed(1f, 5f)
+                .setFadeOutEnabled(true)
+                .setTimeToLive(1500L)
+                .addShapes(Shape.RECT, Shape.CIRCLE)
+                .addSizes(new Size(12, 5f))
+                .setPosition(-50f, konfettiView.getWidth() + 50f, -50f, -50f)
+                .stream(500, 1000L);
+    }
+
+
+    private View getCurrentView() {
+        View view = null;
+
+        switch (playerModalArrayList.get(currentTeam).studentAlias) {
+            case "Rockstars":
+                view = rockstarLayout;
+                break;
+            case "Megastars":
+                view = megastarLayout;
+                break;
+            case "Superstars":
+                view = superstarLayout;
+                break;
+            case "Allstars":
+                view = allstarLayout;
+        }
+        return view;
+    }
+
+    private void fadeOtherGroups() {
+        megastarLayout.setBackgroundResource(R.drawable.team_faded);
+        rockstarLayout.setBackgroundResource(R.drawable.team_faded);
+        allstarLayout.setBackgroundResource(R.drawable.team_faded);
+        superstarLayout.setBackgroundResource(R.drawable.team_faded);
+
+        switch (playerModalArrayList.get(currentTeam).getStudentAlias()) {
+            case "Megastars":
+                megastarLayout.setBackgroundResource(R.drawable.team_one);
+                break;
+            case "Rockstars":
+                rockstarLayout.setBackgroundResource(R.drawable.team_two);
+                break;
+            case "Superstars":
+                superstarLayout.setBackgroundResource(R.drawable.team_three);
+                break;
+            case "Allstars":
+                allstarLayout.setBackgroundResource(R.drawable.team_four);
+        }
+    }
+
+    public void showDialog() {
+        fadeOtherGroups();
         String teamName = playerModalArrayList.get(currentTeam).getStudentAlias();
         dialog = new Dialog(getActivity());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -134,7 +216,10 @@ public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.Bol
         dialog.setCanceledOnTouchOutside(false);
         TextView text = dialog.findViewById(R.id.dialog_tv_student_name);
         ImageView iv_close = dialog.findViewById(R.id.dialog_iv_close);
+        Button button = dialog.findViewById(R.id.dialog_btn_scan_qr);
         text.setText("Next question would be for " + teamName);
+        button.setText("Ready ??");
+
         dialog.show();
 
         Button scanNextQR = dialog.findViewById(R.id.dialog_btn_scan_qr);
@@ -143,8 +228,11 @@ public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.Bol
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
+                mCountDownTimer.start(15000);
+                BoleToh.animateView(mCountDownTimer, getActivity());
+                presenter.showImages(path);
                 //initiateQuestion();
-                presenter.setImage_r1g2();
+                //presenter.setImage_r1g2();
             }
         });
 
@@ -152,8 +240,11 @@ public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.Bol
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
+                mCountDownTimer.start(15000);
+                BoleToh.animateView(mCountDownTimer, getActivity());
+                presenter.showImages(path);
                 //initiateQuestion();
-                presenter.setImage_r1g2();
+                //presenter.setImage_r1g2();
             }
         });
 
@@ -187,26 +278,66 @@ public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.Bol
                 MyBounceInterpolator interpolator = new MyBounceInterpolator(0.2, 10);
                 pop.setInterpolator(interpolator);
                 iv_image1.startAnimation(pop);*/
-        presenter.r1g1_checkAnswer(1, path,questionConter);
+        presenter.r1g1_checkAnswer(1, currentTeam, false);
+        answerPostProcessing();
     }
 
     @OnClick(R.id.iv_image2)
     public void setIv_image2() {
-        presenter.r1g1_checkAnswer(2, path,questionConter);
+        presenter.r1g1_checkAnswer(2, currentTeam, false);
+        answerPostProcessing();
     }
 
     @OnClick(R.id.iv_image3)
     public void setIv_image3() {
-        presenter.r1g1_checkAnswer(3, path,questionConter);
+        presenter.r1g1_checkAnswer(3, currentTeam, false);
+        answerPostProcessing();
     }
 
     @OnClick(R.id.iv_image4)
     public void setIv_image4() {
-        presenter.r1g1_checkAnswer(4, path,questionConter);
+        presenter.r1g1_checkAnswer(4, currentTeam, false);
+        answerPostProcessing();
+    }
+
+    public void answerPostProcessing(){
+
+        iv_image1.setClickable(false);
+        iv_image2.setClickable(false);
+        iv_image3.setClickable(false);
+        iv_image4.setClickable(false);
+
+        mCountDownTimer.pause();
+        currentTeam += 1;
+        if (currentTeam < playerModalArrayList.size()) {
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    iv_image1.setClickable(true);
+                    iv_image2.setClickable(true);
+                    iv_image3.setClickable(true);
+                    iv_image4.setClickable(true);
+                    showDialog();
+                }
+            }, 2500);
+        } else {
+            currentTeam = 0;
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    //TODO display Score screen after final round
+                }
+            }, 2500);
+
+        }
     }
 
     @OnClick(R.id.ib_r1g1_speaker)
-    public void playQuestion(){presenter.replayQuestionroundone();}
+    public void playQuestion() {
+        presenter.replayQuestionroundone();
+    }
 
     @Override
     public void setQuestionImages(final int readQuesNo, Bitmap... bitmaps) {
@@ -221,10 +352,8 @@ public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.Bol
             @Override
             public void run() {
                 presenter.readQuestion(readQuesNo);
-                mCountDownTimer.start(20000);
-                BoleToh.animateView(mCountDownTimer,getActivity());
             }
-        },1500);
+        }, 1500);
     }
 }
 

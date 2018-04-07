@@ -79,7 +79,7 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
     TextView option3;
     @BindView(R.id.r1g2_sttOptions)
     LinearLayout optionsView;
-    @BindView(R.id.konfettiView)
+    @BindView(R.id.konfettiView_r1g2)
     KonfettiView konfettiView;
     @BindView(R.id.iv_r1g2_submit_ans)
     ImageView submitAnswer;
@@ -232,6 +232,7 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
                 .stream(500, 1000L);
     }
 
+
     @Override
     public void setCurrentScore() {
         setInitialScores();
@@ -299,7 +300,7 @@ public class BoleTohRoundTwo extends BaseFragment implements BoleTohContract.Bol
     public void submitAns() {
         submitAnswer.setClickable(false);
         mCountDownTimer.pause();
-        presenter.checkFinalAnswer(answer.getText().toString(), currentTeam);
+        presenter.checkFinalAnswer_r1g2(answer.getText().toString(), currentTeam);
         currentTeam += 1;
         if (currentTeam < playerModalArrayList.size()) {
             Handler handler = new Handler();
