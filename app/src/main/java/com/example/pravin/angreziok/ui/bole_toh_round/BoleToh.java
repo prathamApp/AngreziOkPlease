@@ -8,17 +8,23 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.pravin.angreziok.BaseActivity;
 import com.example.pravin.angreziok.R;
+import com.example.pravin.angreziok.SDCardUtil;
 import com.example.pravin.angreziok.animations.MyBounceInterpolator;
 import com.example.pravin.angreziok.contentplayer.TextToSpeechCustom;
 import com.example.pravin.angreziok.modalclasses.PlayerModal;
 import com.example.pravin.angreziok.ui.GifView;
 import com.example.pravin.angreziok.util.PD_Utility;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -37,7 +43,7 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
     @BindView(R.id.btn_skip_instructions)
     Button btn_skip;
     @BindView(R.id.ib_replay_instructions)
-    LinearLayout btn_replay;
+    ImageButton btn_replay;
     @BindView(R.id.iv_anupam_gif)
     GifView anupamGif;
 
@@ -73,6 +79,25 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
 
     private void showInstructions() {
 
+        InputStream gif = null;
+        try {
+            gif = new FileInputStream(getSdcardPath()+"charactersGif/Balle-Balle.gif");
+            anupamGif.setGifResource(gif);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public String getSdcardPath() {
+        String sdCardPathString = null;
+        ArrayList<String> sdcard_path = SDCardUtil.getExtSdCardPaths(BoleToh.this);
+        for (String path : sdcard_path) {
+            if (new File(path + "/.AOP_External").exists()) {
+                sdCardPathString = path + "/.AOP_External/";
+            }
+        }
+        return sdCardPathString;
     }
 
     @Override
