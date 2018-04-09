@@ -479,16 +479,26 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:background="@drawable/question_gradiance_bg"
-            android:paddingHorizontal="10dp">
+            android:paddingHorizontal="10dp"
+            android:weightSum="10">
 
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/tv_r1g1_question"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="9"
                 android:layout_gravity="center_vertical"
-                android:text="This is where the question will appear in any desired language.( The question will be played in audio format.)"
+                android:gravity="center"
+                    android:text="This is where the question will appear"
                 android:textColor="@color/simple_white"
-                android:textSize="18sp"
+                android:textSize="25sp"
                 android:textStyle="italic|bold" />
+
+            <Button
+                android:id="@+id/bt_temp_skip"
+                android:text="skip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
         </LinearLayout>
     </LinearLayout>
 

@@ -28,6 +28,7 @@ import com.example.pravin.angreziok.BaseFragment;
 import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.animations.MyBounceInterpolator;
 import com.example.pravin.angreziok.ui.GifView;
+import com.example.pravin.angreziok.util.PD_Utility;
 import com.github.anastr.flattimelib.CountDownTimerView;
 import com.github.anastr.flattimelib.intf.OnTimeFinish;
 
@@ -78,6 +79,8 @@ public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleT
     TextView option2;
     @BindView(R.id.option3)
     TextView option3;
+    @BindView(R.id.tv_r1g1_question)
+    TextView showQuestion;
     @BindView(R.id.g1_l2_sttOptions)
     LinearLayout optionsView;
     @BindView(R.id.konfettiView_g1_l2)
@@ -259,7 +262,8 @@ public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleT
     }
 
     private void playTTS() {
-        text = "What is he doing?";
+        text = "What is This?";
+        showQuestion.setText(text);
         presenter.startTTS(text);
     }
 
@@ -405,8 +409,14 @@ public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleT
         answer.setText(ans);
     }
 
+    @OnClick(R.id.bt_temp_skip)
+    public void setBt_temp_skip() {
+        PD_Utility.showFragment(getActivity(), new BoleToh_G2_L2(), R.id.cl_bole_toh,
+                null, BoleToh_G2_L2.class.getSimpleName());
+    }
+
     @Override
-    public void showOptions() {
+    public void showOptions_g1_l2() {
         options.setVisibility(View.VISIBLE);
         String[] options = presenter.getOptions_g1_l2();
         option1.setText(options[0]);

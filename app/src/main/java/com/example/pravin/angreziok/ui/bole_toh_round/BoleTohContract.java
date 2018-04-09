@@ -60,7 +60,7 @@ public interface BoleTohContract {
     interface BoleToh_G1_L2_View {
         void setAnswer(String ans);
 
-        void showOptions();
+        void showOptions_g1_l2();
 
         void initiateQuestion();
 

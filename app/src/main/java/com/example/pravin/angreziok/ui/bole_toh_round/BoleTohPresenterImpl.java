@@ -202,11 +202,11 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
     public void checkFinalAnswer_g1_l2(String ans, int currentTeam) {
         if (g1l2QuestionData.get(r1g2RandomNo).getResourceText().equalsIgnoreCase(ans)) {
             //  TODO correct answer animation + increase score of group
-            boleTohG2L2View.setCelebrationView();
+            boleTohG1L2View.setCelebrationView();
             playMusic("Sounds/BilkulSahijawab.mp3", getSdcardPath());
             int currentTeamScore = Integer.parseInt(playerModalArrayList.get(currentTeam).studentScore);
             playerModalArrayList.get(currentTeam).setStudentScore(String.valueOf(currentTeamScore + 10));
-            boleTohG2L2View.setCurrentScore();
+            boleTohG1L2View.setCurrentScore();
         } else {
             //  TODO wrong answer animation
             Toast.makeText(mContext, "Wrong", Toast.LENGTH_SHORT).show();
@@ -234,7 +234,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
         if (ans.equalsIgnoreCase(actualAns)) {
             boleTohG1L2View.setAnswer(ans);
         } else {
-            boleTohG1L2View.showOptions();
+            boleTohG1L2View.showOptions_g1_l2();
         }
     }
 
@@ -252,6 +252,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
         boleTohG1L2View.hideOptionView();
         r1g2RandomNo = getRandomNumber(0, g1l2QuestionData.size());
         String imagePath = getSdcardPath() + "PicGameImages/" + g1l2QuestionData.get(r1g2RandomNo).getResourceImage();
+        Log.d("imagePath", "setImage_gl_l2: "+imagePath);
         Toast.makeText(mContext, "actual ans: " + g1l2QuestionData.get(r1g2RandomNo).getResourceText(), Toast.LENGTH_SHORT).show();
         boleTohG1L2View.setQuestionImage(imagePath);
     }
