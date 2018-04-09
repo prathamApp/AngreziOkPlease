@@ -63,4 +63,8 @@ public interface BoleTohContract {
         void setCurrentScore();
     }
 
+    interface BoleToh_G3_L2_View {
+
+    }
+
 }
