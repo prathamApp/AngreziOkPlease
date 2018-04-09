@@ -32,6 +32,7 @@ public class VideoIntroPresenterImpl implements VideoIntroContract.VideoIntroPre
 //        mediaController.setAnchorView(videoView);
         try {
             videoView.setVideoURI(path);
+            videoView.start();
         } catch (Exception e) {
             Log.e("Cant Play Video", e.getMessage());
             e.printStackTrace();
