@@ -100,7 +100,7 @@ public interface BoleTohContract {
 
         void showOptions();
 
-        void initiateQuestion();
+        void initiateQuestion(String toSpeak);
 
         void hideOptionView();
 

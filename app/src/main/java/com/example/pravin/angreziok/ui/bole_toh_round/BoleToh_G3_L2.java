@@ -2,6 +2,8 @@ package com.example.pravin.angreziok.ui.bole_toh_round;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -23,7 +25,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.example.pravin.angreziok.BaseFragment;
 import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.animations.MyBounceInterpolator;
@@ -31,9 +32,6 @@ import com.example.pravin.angreziok.ui.GifView;
 import com.github.anastr.flattimelib.CountDownTimerView;
 import com.github.anastr.flattimelib.intf.OnTimeFinish;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -252,8 +250,9 @@ public class BoleToh_G3_L2 extends BaseFragment implements BoleTohContract.BoleT
     }
 
     @Override
-    public void initiateQuestion() {
+    public void initiateQuestion(String toSpeak) {
         startTimer();
+        text = toSpeak;
         playTTS();
     }
 
@@ -397,8 +396,9 @@ public class BoleToh_G3_L2 extends BaseFragment implements BoleTohContract.BoleT
     @Override
     public void setPairsImages(String hintImagePath, String questionImagePath) {
         try {
-            Glide.with(getActivity()).load(hintImagePath).into(hintImage);
-            Glide.with(getActivity()).load(questionImagePath).into(questionImage);
+            Bitmap[] bitmap = {BitmapFactory.decodeFile("" + hintImagePath), BitmapFactory.decodeFile("" + questionImagePath)};
+            hintImage.setImageBitmap(bitmap[0]);
+            questionImage.setImageBitmap(bitmap[1]);
         } catch (Exception e) {
             e.printStackTrace();
         }

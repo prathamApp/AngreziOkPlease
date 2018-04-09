@@ -399,7 +399,6 @@ public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleT
     @Override
     public void setQuestionImage(String path) {
         try {
-            
             Bitmap[] bitmap = {BitmapFactory.decodeFile(""+path)};
             iv_ques_img_g1_l2.setImageBitmap(bitmap[0]);
         } catch (Exception e) {
