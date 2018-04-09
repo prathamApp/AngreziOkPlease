@@ -28,6 +28,10 @@ public class GenericModalGson {
     @Expose
     private String resourceText;
 
+    @SerializedName("resourceQuestion")
+    @Expose
+    private String resourceQuestion;
+
     @SerializedName("resourceAudio")
     @Expose
     private String resourceAudio;
@@ -82,6 +86,14 @@ public class GenericModalGson {
 
     public void setResourceText(String resourceText) {
         this.resourceText = resourceText;
+    }
+
+    public String getResourceQuestion() {
+        return resourceQuestion;
+    }
+
+    public void setResourceQuestion(String resourceQuestion) {
+        this.resourceQuestion = resourceQuestion;
     }
 
     public String getResourceAudio() {
