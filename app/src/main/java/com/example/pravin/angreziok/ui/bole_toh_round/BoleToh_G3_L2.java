@@ -23,6 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.pravin.angreziok.BaseFragment;
 import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.animations.MyBounceInterpolator;
@@ -45,7 +46,7 @@ import nl.dionsegijn.konfetti.models.Size;
 import static com.example.pravin.angreziok.ui.bole_toh_round.BoleToh.playerModalArrayList;
 
 
-public class BoleToh_G3_L2 extends BaseFragment implements BoleTohContract.BoleToh_G2_L2_View, RecognitionListener {
+public class BoleToh_G3_L2 extends BaseFragment implements BoleTohContract.BoleToh_G3_L2_View, RecognitionListener {
 
     @BindView(R.id.mCountDownTimer)
     CountDownTimerView mCountDownTimer;
@@ -394,11 +395,11 @@ public class BoleToh_G3_L2 extends BaseFragment implements BoleTohContract.BoleT
     }
 
     @Override
-    public void setActionGif(String path) {
+    public void setPairsImages(String hintImagePath, String questionImagePath) {
         try {
-            InputStream gif = new FileInputStream(path);
-            gifView.setGifResource(gif);
-        } catch (FileNotFoundException e) {
+            Glide.with(getActivity()).load(hintImagePath).into(hintImage);
+            Glide.with(getActivity()).load(questionImagePath).into(questionImage);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

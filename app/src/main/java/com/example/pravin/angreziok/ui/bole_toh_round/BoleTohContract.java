@@ -64,7 +64,19 @@ public interface BoleTohContract {
     }
 
     interface BoleToh_G3_L2_View {
+        void setPairsImages(String hintImage, String questionImage);
 
+        void setAnswer(String ans);
+
+        void showOptions();
+
+        void initiateQuestion();
+
+        void hideOptionView();
+
+        void setCelebrationView();
+
+        void setCurrentScore();
     }
 
 }
