@@ -34,6 +34,8 @@ public interface BoleTohContract {
 
         void set_g1_l2_data(String path);
 
+        void set_g3_l2_data(String path);
+
         void setImage_g2_l2();
 
         void setImage_gl_l2();

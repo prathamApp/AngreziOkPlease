@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -35,8 +34,8 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
     BoleTohContract.BoleToh_G3_L2_View boleTohG3L2View ;
     BoleTohContract.BoleToh_G2_L2_View boleTohG2L2View;
     BoleTohContract.BoleToh_G1_L1_View boleTohG1L1View;
-    List<GenericModalGson> r1g1QuestionData, r1g2QuestionData,g1l2QuestionData;
-    GenericModalGson gsonPicGameData, gsonActGameData;
+    List<GenericModalGson> g1l1QuestionData, g2l2QuestionData,g1l2QuestionData,g3l2QuestionData;
+    GenericModalGson gsonPicGameData, gsonActGameData, gsonPairGameData;
 
     ArrayList<String> resTextArray = new ArrayList<String>();
     ArrayList<String> resImageArray = new ArrayList<String>();
@@ -89,14 +88,14 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
     public void doInitialWork(String path) {
         sdCardPathString = path;
         gsonPicGameData = fetchJsonData("RoundOneGameOne", path);
-        r1g1QuestionData = gsonPicGameData.getNodelist();
-        Log.d("SIZE", "doInitialWork: " + r1g1QuestionData.size());
+        g1l1QuestionData = gsonPicGameData.getNodelist();
+        Log.d("SIZE", "doInitialWork: " + g1l1QuestionData.size());
         showImages(sdCardPathString);
     }
 
     public void showImages(String sdCardPathString) {
         try {
-            int[] integerArray = getUniqueRandomNumber(0, r1g1QuestionData.size(), 4);
+            int[] integerArray = getUniqueRandomNumber(0, g1l1QuestionData.size(), 4);
             readQuestionNo = getRandomNumber(0, 4);
             String imagePath = sdCardPathString + "PicGameImages/";
             resTextArray.clear();
@@ -104,10 +103,10 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
             resImageArray.clear();
             resAudioArray.clear();
             for (int i = 0; i < 4; i++) {
-                resTextArray.add(r1g1QuestionData.get(integerArray[i]).getResourceText());
-                resImageArray.add(r1g1QuestionData.get(integerArray[i]).getResourceImage());
-                resAudioArray.add(r1g1QuestionData.get(integerArray[i]).getResourceImage());
-                resIdArray.add(r1g1QuestionData.get(integerArray[i]).getResourceId());
+                resTextArray.add(g1l1QuestionData.get(integerArray[i]).getResourceText());
+                resImageArray.add(g1l1QuestionData.get(integerArray[i]).getResourceImage());
+                resAudioArray.add(g1l1QuestionData.get(integerArray[i]).getResourceImage());
+                resIdArray.add(g1l1QuestionData.get(integerArray[i]).getResourceId());
             }
             Bitmap[] bitmap = new Bitmap[]{BitmapFactory.decodeFile(imagePath + resImageArray.get(0)),
                     BitmapFactory.decodeFile(imagePath + resImageArray.get(1)),
@@ -141,7 +140,13 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
     @Override
     public void set_g2_l2_data(String path) {
         gsonActGameData = fetchJsonData("RoundOneGameTwo", path);
-        r1g2QuestionData = gsonActGameData.getNodelist();
+        g2l2QuestionData = gsonActGameData.getNodelist();
+    }
+
+    @Override
+    public void set_g3_l2_data(String path) {
+        gsonPairGameData = fetchJsonData("RoundOneGameThree", path);
+        g3l2QuestionData = gsonPairGameData.getNodelist();
     }
 
     @Override
@@ -155,13 +160,13 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
         int[] optionsIds;
         int[] randomOptions;
         do {
-            optionsIds = getUniqueRandomNumber(0, r1g2QuestionData.size(), 2);
+            optionsIds = getUniqueRandomNumber(0, g2l2QuestionData.size(), 2);
         } while (optionsIds[0] == r1g2RandomNo || optionsIds[1] == r1g2RandomNo);
         String[] optionsText = new String[3];
         randomOptions = getUniqueRandomNumber(0, 3, 3);
-        optionsText[randomOptions[0]] = r1g2QuestionData.get(optionsIds[0]).getResourceText();
-        optionsText[randomOptions[1]] = r1g2QuestionData.get(optionsIds[1]).getResourceText();
-        optionsText[randomOptions[2]] = r1g2QuestionData.get(r1g2RandomNo).getResourceText();
+        optionsText[randomOptions[0]] = g2l2QuestionData.get(optionsIds[0]).getResourceText();
+        optionsText[randomOptions[1]] = g2l2QuestionData.get(optionsIds[1]).getResourceText();
+        optionsText[randomOptions[2]] = g2l2QuestionData.get(r1g2RandomNo).getResourceText();
         return optionsText;
     }
 
@@ -182,7 +187,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
 
     @Override
     public void checkFinalAnswer_g2_l2(String ans, int currentTeam) {
-        if (r1g2QuestionData.get(r1g2RandomNo).getResourceText().equalsIgnoreCase(ans)) {
+        if (g2l2QuestionData.get(r1g2RandomNo).getResourceText().equalsIgnoreCase(ans)) {
             //  TODO correct answer animation + increase score of group
             boleTohG2L2View.setCelebrationView();
             playMusic("Sounds/BilkulSahijawab.mp3", getSdcardPath());
@@ -218,7 +223,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
 
     @Override
     public void g2_l2_checkAnswer(String ans) {
-        String actualAns = r1g2QuestionData.get(r1g2RandomNo).getResourceText();
+        String actualAns = g2l2QuestionData.get(r1g2RandomNo).getResourceText();
 
         if (ans.equalsIgnoreCase(actualAns)) {
             boleTohG2L2View.setAnswer(ans);
@@ -241,9 +246,9 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
     @Override
     public void setImage_g2_l2() {
         boleTohG2L2View.hideOptionView();
-        r1g2RandomNo = getRandomNumber(0, r1g2QuestionData.size());
-        String imagePath = getSdcardPath() + "PicGameImages/" + r1g2QuestionData.get(r1g2RandomNo).getResourceImage();
-        Toast.makeText(mContext, "actual ans: " + r1g2QuestionData.get(r1g2RandomNo).getResourceText(), Toast.LENGTH_SHORT).show();
+        r1g2RandomNo = getRandomNumber(0, g2l2QuestionData.size());
+        String imagePath = getSdcardPath() + "PicGameImages/" + g2l2QuestionData.get(r1g2RandomNo).getResourceImage();
+        Toast.makeText(mContext, "actual ans: " + g2l2QuestionData.get(r1g2RandomNo).getResourceText(), Toast.LENGTH_SHORT).show();
         boleTohG2L2View.setActionGif(imagePath);
     }
 
