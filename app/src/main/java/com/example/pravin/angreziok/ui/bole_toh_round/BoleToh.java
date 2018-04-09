@@ -89,6 +89,7 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
 
     }
 
+
     public String getSdcardPath() {
         String sdCardPathString = null;
         ArrayList<String> sdcard_path = SDCardUtil.getExtSdCardPaths(BoleToh.this);
