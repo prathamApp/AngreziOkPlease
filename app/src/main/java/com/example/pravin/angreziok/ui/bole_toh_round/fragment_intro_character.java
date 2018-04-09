@@ -14,9 +14,6 @@ import com.example.pravin.angreziok.BaseFragment;
 import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.SDCardUtil;
 import com.example.pravin.angreziok.ui.GifView;
-import com.example.pravin.angreziok.ui.bole_toh_round.BoleToh;
-import com.example.pravin.angreziok.ui.bole_toh_round.BoleTohContract;
-import com.example.pravin.angreziok.ui.bole_toh_round.BoleToh_G1_L2;
 import com.example.pravin.angreziok.util.PD_Utility;
 
 import java.io.File;
@@ -44,6 +41,8 @@ public class fragment_intro_character extends BaseFragment {
     String language = "en-IN";
     int speechCount, currentTeam;
     Dialog dialog;
+    int frag = 0;
+    String myFragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,6 +59,18 @@ public class fragment_intro_character extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
+        myFragment = getArguments().getString("frag", "");
+
+        if (myFragment.equalsIgnoreCase("G1L2")) {
+            instructionsTextView.setText("Picture Game");
+            frag = 1;
+        } else if (myFragment.equalsIgnoreCase("G2L2")) {
+            instructionsTextView.setText("Action Game");
+            frag = 2;
+        } else if (myFragment.equalsIgnoreCase("G3L2")) {
+            instructionsTextView.setText("Pairs Game");
+            frag = 3;
+        }
         InputStream gif = null;
         try {
             gif = new FileInputStream(getSdcardPath() + "charactersGif/Balle-Balle.gif");
@@ -72,12 +83,20 @@ public class fragment_intro_character extends BaseFragment {
     @OnClick(R.id.btn_skip_instructions)
     public void gotoNext() {
         //buttontSkip;
-        loadFragment(1);
+        loadFragment(frag);
     }
 
     public void loadFragment(int no) {
-        PD_Utility.showFragment(getActivity(), new BoleToh_G1_L2(), R.id.cl_bole_toh,
-                null, BoleToh_G1_L2.class.getSimpleName());
+        if (no == 1) {
+            PD_Utility.showFragment(getActivity(), new BoleToh_G1_L2(), R.id.cl_bole_toh,
+                    null, BoleToh_G1_L2.class.getSimpleName());
+        }else if( no==2){
+            PD_Utility.showFragment(getActivity(), new BoleToh_G2_L2(), R.id.cl_bole_toh,
+                    null, BoleToh_G2_L2.class.getSimpleName());
+        }else if( no==3){
+            PD_Utility.showFragment(getActivity(), new BoleToh_G3_L2(), R.id.cl_bole_toh,
+                    null, BoleToh_G3_L2.class.getSimpleName());
+        }
     }
 
     public String getSdcardPath() {

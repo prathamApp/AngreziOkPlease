@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -480,25 +479,19 @@
             android:layout_weight="1"
             android:background="@drawable/question_gradiance_bg"
             android:paddingHorizontal="10dp"
-            android:weightSum="10">
+            android:weightSum="3">
 
             <TextView
                 android:id="@+id/tv_r1g1_question"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="9"
+                android:layout_weight="3"
                 android:layout_gravity="center_vertical"
                 android:gravity="center"
-                    android:text="This is where the question will appear"
+                android:text="This is where the question will appear"
                 android:textColor="@color/simple_white"
                 android:textSize="25sp"
                 android:textStyle="italic|bold" />
-
-            <Button
-                android:id="@+id/bt_temp_skip"
-                android:text="skip"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
         </LinearLayout>
     </LinearLayout>
 

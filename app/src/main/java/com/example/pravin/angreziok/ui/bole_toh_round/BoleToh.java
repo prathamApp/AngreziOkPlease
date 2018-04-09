@@ -119,13 +119,15 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
 
     @Override
     public void loadFragment(int no) {
+        Bundle bundle = new Bundle();
+        bundle.putString("frag", "G1L2");
         PD_Utility.showFragment(BoleToh.this, new fragment_intro_character(), R.id.cl_bole_toh,
-                null, fragment_intro_character.class.getSimpleName());
+                bundle, fragment_intro_character.class.getSimpleName());
     }
 
     @Override
     public void onBackPressed() {
-        BoleToh_G1_L1 BoleTohRoundFragmen = (BoleToh_G1_L1) getSupportFragmentManager().findFragmentByTag(BoleToh_G1_L1.class.getSimpleName());
+        fragment_intro_character BoleTohRoundFragmen = (fragment_intro_character) getSupportFragmentManager().findFragmentByTag(fragment_intro_character.class.getSimpleName());
 
         getSupportFragmentManager().popBackStack();
         if (BoleTohRoundFragmen != null && BoleTohRoundFragmen.isVisible()) {

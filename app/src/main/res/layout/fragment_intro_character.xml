@@ -65,7 +65,7 @@
                         android:layout_gravity="center"
                         android:layout_weight="2"
                         android:text="INSTRUCTIONS"
-                        android:textSize="20sp"
+                        android:textSize="28sp"
                         android:textStyle="bold|italic"
                         android:textColor="@color/colorPrimaryDark"
                         android:layout_marginTop="20dp"
@@ -76,12 +76,12 @@
                         android:layout_width="400dp"
                         android:layout_height="0dp"
                         android:layout_weight="8"
-                        android:textSize="15sp"
+                        android:textSize="20sp"
                         android:layout_gravity="center"
                         android:textColor="@color/simple_black"
                         android:layout_marginVertical="20dp"
                         android:gravity="center"
-                        android:text="The" />
+                        android:text="The Game Instructions" />
 
                 </LinearLayout>
 

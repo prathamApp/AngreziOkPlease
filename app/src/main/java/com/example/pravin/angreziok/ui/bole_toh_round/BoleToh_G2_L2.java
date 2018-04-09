@@ -321,8 +321,10 @@ public class BoleToh_G2_L2 extends BaseFragment implements BoleTohContract.BoleT
                 public void run() {
                     //TODO display Score screen after final round
                     getActivity().findViewById(R.id.iv_r1g2_submit_ans).setOnClickListener(null);
-                    PD_Utility.showFragment(getActivity(), new BoleToh_G3_L2(), R.id.cl_bole_toh,
-                            null, BoleToh_G3_L2.class.getSimpleName());
+                    Bundle bundle = new Bundle();
+                    bundle.putString("frag", "G3L2");
+                    PD_Utility.showFragment(getActivity(), new fragment_intro_character(), R.id.cl_bole_toh,
+                            bundle, fragment_intro_character.class.getSimpleName());
                 }
             }, 2500);
 

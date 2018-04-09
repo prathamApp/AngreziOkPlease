@@ -388,6 +388,7 @@
             <LinearLayout
                 android:id="@+id/ll_mic"
                 android:layout_width="match_parent"
+                android:visibility="gone"
                 android:layout_height="0dp"
                 android:layout_weight="1">
 
@@ -437,11 +438,6 @@
             android:textSize="18sp"
             android:textStyle="italic|bold" />
 
-        <Button
-            android:id="@+id/bt_temp_skip"
-            android:text="skip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
     </LinearLayout>
 
 </LinearLayout>
