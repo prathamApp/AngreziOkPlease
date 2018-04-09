@@ -2,6 +2,8 @@ package com.example.pravin.angreziok.ui.bole_toh_round;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -397,7 +399,9 @@ public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleT
     @Override
     public void setQuestionImage(String path) {
         try {
-            Glide.with(getActivity()).load(path).into(iv_ques_img_g1_l2);
+            
+            Bitmap[] bitmap = {BitmapFactory.decodeFile(""+path)};
+            iv_ques_img_g1_l2.setImageBitmap(bitmap[0]);
         } catch (Exception e) {
             e.printStackTrace();
         }
