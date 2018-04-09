@@ -1,0 +1,510 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.pravin.angreziok.ui.bole_toh_round.BoleToh">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="10">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="9"
+            android:background="@drawable/bole_toh_bg"
+            android:orientation="horizontal"
+            android:weightSum="10">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="9"
+                android:orientation="vertical"
+                android:weightSum="10">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1.5"
+                    android:orientation="horizontal"
+                    android:weightSum="10">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2">
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="8"
+                        android:gravity="center">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_marginVertical="2dp"
+                            android:background="@drawable/round_one_background"
+                            android:gravity="center"
+                            android:paddingHorizontal="50dp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:text="Bole Toh Round"
+                                android:textAlignment="center"
+                                android:textColor="@color/simple_black"
+                                android:textSize="30sp"
+                                android:textStyle="bold|italic" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginBottom="0dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="8.5"
+                    android:orientation="horizontal"
+                    android:weightSum="10">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:orientation="vertical"
+                        android:weightSum="4">
+
+                        <LinearLayout
+                            android:id="@+id/ll_r1g2_megastar"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginVertical="5dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/team_one"
+                            android:orientation="vertical"
+                            android:visibility="gone"
+                            android:weightSum="2">
+
+                            <TextView
+                                android:id="@+id/r1g2_megastar"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:text="0"
+                                android:textColor="@color/simple_black"
+                                android:textSize="27sp"
+                                android:textStyle="bold|italic" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:text="Megastars"
+                                android:textColor="@color/simple_black"
+                                android:textSize="21sp"
+                                android:textStyle="bold|italic" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_r1g2_rockstar"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginVertical="5dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/team_two"
+                            android:orientation="vertical"
+                            android:visibility="gone"
+                            android:weightSum="2">
+
+                            <TextView
+                                android:id="@+id/r1g2_rockstar"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:text="0"
+                                android:textColor="@color/simple_black"
+                                android:textSize="27sp"
+                                android:textStyle="bold|italic" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:text="Rockstars"
+                                android:textColor="@color/simple_black"
+                                android:textSize="21sp"
+                                android:textStyle="bold|italic" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_r1g2_superstar"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginVertical="5dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/team_three"
+                            android:orientation="vertical"
+                            android:visibility="gone"
+                            android:weightSum="2">
+
+                            <TextView
+                                android:id="@+id/r1g2_superstar"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:text="0"
+                                android:textColor="@color/simple_black"
+                                android:textSize="27sp"
+                                android:textStyle="bold|italic" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:text="Superstars"
+                                android:textColor="@color/simple_black"
+                                android:textSize="21sp"
+                                android:textStyle="bold|italic" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_r1g2_allstar"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginVertical="5dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/team_four"
+                            android:orientation="vertical"
+                            android:visibility="gone"
+                            android:weightSum="2">
+
+                            <TextView
+                                android:id="@+id/r1g2_allstar"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:text="0"
+                                android:textColor="@color/simple_black"
+                                android:textSize="27sp"
+                                android:textStyle="bold|italic" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:text="Allstars"
+                                android:textColor="@color/simple_black"
+                                android:textSize="21sp"
+                                android:textStyle="bold|italic" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="8"
+                        android:orientation="vertical"
+                        android:weightSum="10">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.7"
+                            android:background="@drawable/bord_frame_bg"></LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_marginHorizontal="8dp"
+                            android:layout_weight="8.8"
+                            android:background="@drawable/board_background"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:padding="5dp"
+                            android:weightSum="2">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:background="@drawable/gameimgbg"
+                                android:gravity="center"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <ImageView
+                                    android:id="@+id/hint"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1" />
+
+                                <ImageView
+                                    android:id="@+id/question"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/r1g2_sttOptions"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:background="@color/colorPrimary"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:visibility="gone"
+                                android:weightSum="4">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_marginHorizontal="5dp"
+                                    android:layout_marginVertical="10dp"
+                                    android:layout_weight="1.2"
+                                    android:orientation="horizontal"
+                                    android:weightSum="5">
+
+                                    <TextView
+                                        android:id="@+id/tv_r1g2_answer"
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="4"
+                                        android:background="@drawable/round_two_top_answer_background"
+                                        android:gravity="center"
+                                        android:text="Ans"
+                                        android:textColor="@color/simple_white"
+                                        android:textSize="25sp" />
+
+                                    <ImageView
+                                        android:id="@+id/iv_r1g2_submit_ans"
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginLeft="5dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/green_answer_background"
+                                        app:srcCompat="@drawable/ic_navigate_next_black" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/ll_r1g2_sttoptions"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="2.8"
+                                    android:orientation="vertical"
+                                    android:visibility="gone"
+                                    android:weightSum="4">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_marginHorizontal="15dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/question_gradiance_bg"
+                                        android:paddingLeft="15dp">
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:gravity="center"
+                                            android:text="Did you mean?"
+                                            android:textColor="@color/simple_white"
+                                            android:textSize="30dp"
+                                            android:textStyle="bold|italic" />
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_marginHorizontal="15dp"
+                                        android:layout_marginVertical="5dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/round_two_option_background"
+                                        android:paddingLeft="15dp">
+
+                                        <TextView
+                                            android:id="@+id/option1"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:gravity="center"
+                                            android:text="opt1"
+                                            android:textSize="25dp" />
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_marginHorizontal="15dp"
+                                        android:layout_marginVertical="5dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/round_two_option_background"
+                                        android:paddingLeft="15dp">
+
+                                        <TextView
+                                            android:id="@+id/option2"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:gravity="center"
+                                            android:text="opt1"
+                                            android:textSize="25dp" />
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_marginHorizontal="15dp"
+                                        android:layout_marginVertical="5dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/round_two_option_background"
+                                        android:paddingLeft="15dp">
+
+                                        <TextView
+                                            android:id="@+id/option3"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:gravity="center"
+                                            android:text="opt1"
+                                            android:textSize="25dp" />
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.5"
+                            android:background="@drawable/bord_frame_bg"></LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:weightSum="3">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <com.github.anastr.flattimelib.CountDownTimerView
+                        android:id="@+id/mCountDownTimer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="5dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                    <ImageButton
+                        android:id="@+id/ib_r1g2_mic"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/full_transparent"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/mike" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                    <ImageButton
+                        android:id="@+id/ib_r1g2_speaker"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/full_transparent"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/sound" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/question_gradiance_bg"
+            android:paddingHorizontal="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="This is where the question will appear in any desired language.( The question will be played in audio format.)"
+                android:textColor="@color/simple_white"
+                android:textSize="18sp"
+                android:textStyle="italic|bold" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <nl.dionsegijn.konfetti.KonfettiView
+        android:id="@+id/konfettiView_r1g2"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" />
+
+</RelativeLayout>
