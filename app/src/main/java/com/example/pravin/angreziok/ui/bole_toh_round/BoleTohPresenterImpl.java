@@ -161,13 +161,13 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
         int[] optionsIds;
         int[] randomOptions;
         do {
-            optionsIds = getUniqueRandomNumber(0, g2l2QuestionData.size(), 2);
+            optionsIds = getUniqueRandomNumber(0, g3l2QuestionData.size(), 2);
         } while (optionsIds[0] == r1g2RandomNo || optionsIds[1] == r1g2RandomNo);
         String[] optionsText = new String[3];
         randomOptions = getUniqueRandomNumber(0, 3, 3);
-        optionsText[randomOptions[0]] = g2l2QuestionData.get(optionsIds[0]).getResourceText();
-        optionsText[randomOptions[1]] = g2l2QuestionData.get(optionsIds[1]).getResourceText();
-        optionsText[randomOptions[2]] = g2l2QuestionData.get(r1g2RandomNo).getResourceText();
+        optionsText[randomOptions[0]] = g3l2QuestionData.get(optionsIds[0]).getNodelist().get(0).getResourceText();
+        optionsText[randomOptions[1]] = g3l2QuestionData.get(optionsIds[1]).getNodelist().get(1).getResourceText();
+        optionsText[randomOptions[2]] = currentPairList.get(1).getResourceText();
         return optionsText;
     }
 
@@ -234,6 +234,17 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
     }
 
     @Override
+    public void g3_l2_checkAnswer(String ans) {
+        String actualAns = currentPairList.get(1).getResourceText();
+
+        if (ans.equalsIgnoreCase(actualAns)) {
+            boleTohG2L2View.setAnswer(ans);
+        } else {
+            boleTohG2L2View.showOptions();
+        }
+    }
+
+    @Override
     public void g1_l2_checkAnswer(String ans) {
         String actualAns = g1l2QuestionData.get(r1g2RandomNo).getResourceText();
 
@@ -256,6 +267,16 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
         Toast.makeText(mContext, "Hint:::"+currentPairList.get(0).getResourceText(), Toast.LENGTH_SHORT).show();
         Toast.makeText(mContext, "Question:::"+currentPairList.get(1).getResourceText(), Toast.LENGTH_SHORT).show();
         boleTohG3L2View.setPairsImages(hintImagePath,questionImagePath);
+    }
+
+    @Override
+    public String getCurrentQuestion(){
+        return currentPairList.get(1).getResourceQuestion()+","+currentPairList.get(1).getResourceText();
+    }
+
+    @Override
+    public String getCurrentHint(){
+        return currentPairList.get(0).getResourceQuestion()+","+currentPairList.get(0).getResourceText();
     }
 
     @Override

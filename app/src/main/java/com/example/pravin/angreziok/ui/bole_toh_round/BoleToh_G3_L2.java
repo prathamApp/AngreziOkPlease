@@ -182,8 +182,8 @@ public class BoleToh_G3_L2 extends BaseFragment implements BoleTohContract.BoleT
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                initiateQuestion();
                 presenter.setImage_g3_l2();
+                initiateQuestion();
             }
         });
 
@@ -191,8 +191,8 @@ public class BoleToh_G3_L2 extends BaseFragment implements BoleTohContract.BoleT
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                initiateQuestion();
                 presenter.setImage_g3_l2();
+                initiateQuestion();
             }
         });
 
@@ -250,10 +250,20 @@ public class BoleToh_G3_L2 extends BaseFragment implements BoleTohContract.BoleT
     }
 
     @Override
-    public void initiateQuestion(String toSpeak) {
+    public void initiateQuestion() {
         startTimer();
-        text = toSpeak;
+        bounceView(hintImage);
+        text = presenter.getCurrentHint();
         playTTS();
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                bounceView(questionImage);
+                text = presenter.getCurrentQuestion();
+                playTTS();
+            }
+        },3000);
     }
 
     private void setDataForGame() {
@@ -262,7 +272,6 @@ public class BoleToh_G3_L2 extends BaseFragment implements BoleTohContract.BoleT
     }
 
     private void playTTS() {
-        text = "What is he doing?";
         presenter.startTTS(text);
     }
 
@@ -375,7 +384,7 @@ public class BoleToh_G3_L2 extends BaseFragment implements BoleTohContract.BoleT
                 .getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
         optionsView.setVisibility(View.VISIBLE);
         setAnswer(matches.get(0));
-        presenter.g2_l2_checkAnswer(matches.get(0));
+        presenter.g3_l2_checkAnswer(matches.get(0));
     }
 
     @Override

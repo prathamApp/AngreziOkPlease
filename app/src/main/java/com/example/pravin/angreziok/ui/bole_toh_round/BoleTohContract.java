@@ -26,6 +26,8 @@ public interface BoleTohContract {
 
         void startTTS(String text);
 
+        void g3_l2_checkAnswer(String ans);
+
         void g2_l2_checkAnswer(String ans);
 
         void g1_l2_checkAnswer(String ans);
@@ -51,6 +53,10 @@ public interface BoleTohContract {
         void checkFinalAnswer_g1_l2(String ans, int currentTeam);
 
         void showImages(String path);
+
+        String getCurrentQuestion();
+
+        String getCurrentHint();
     }
 
     interface BoleToh_G1_L1_View {
@@ -100,7 +106,7 @@ public interface BoleTohContract {
 
         void showOptions();
 
-        void initiateQuestion(String toSpeak);
+        void initiateQuestion();
 
         void hideOptionView();
 
