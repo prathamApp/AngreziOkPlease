@@ -23,6 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.pravin.angreziok.BaseFragment;
 import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.animations.MyBounceInterpolator;
@@ -45,12 +46,12 @@ import nl.dionsegijn.konfetti.models.Size;
 import static com.example.pravin.angreziok.ui.bole_toh_round.BoleToh.playerModalArrayList;
 
 
-public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleToh_G2_L2_View, RecognitionListener {
+public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleToh_G1_L2_View, RecognitionListener {
 
     @BindView(R.id.mCountDownTimer)
     CountDownTimerView mCountDownTimer;
-    @BindView(R.id.iv_character_dialog_gif)
-    GifView gifView;
+    @BindView(R.id.iv_ques_img_g2_l2)
+    ImageView iv_ques_img_g2_l2;
     @BindView(R.id.tv_r1g2_answer)
     TextView answer;
     @BindView(R.id.ll_r1g2_sttoptions)
@@ -99,7 +100,7 @@ public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleT
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_bole_toh_g2_l2, container, false);
+        return inflater.inflate(R.layout.fragment_bole_toh_g1_l2, container, false);
     }
 
     @Override
@@ -390,11 +391,10 @@ public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleT
     }
 
     @Override
-    public void setActionGif(String path) {
+    public void setQuestionImage(String path) {
         try {
-            InputStream gif = new FileInputStream(path);
-            gifView.setGifResource(gif);
-        } catch (FileNotFoundException e) {
+            Glide.with(getActivity()).load(path).into(iv_ques_img_g2_l2);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
