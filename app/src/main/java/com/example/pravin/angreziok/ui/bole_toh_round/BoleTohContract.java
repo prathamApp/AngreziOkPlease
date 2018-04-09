@@ -38,6 +38,8 @@ public interface BoleTohContract {
 
         void setImage_g2_l2();
 
+        void setImage_g3_l2();
+
         void setImage_gl_l2();
 
         String[] getOptions();

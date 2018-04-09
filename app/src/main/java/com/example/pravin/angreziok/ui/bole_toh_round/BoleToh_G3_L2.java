@@ -185,7 +185,7 @@ public class BoleToh_G3_L2 extends BaseFragment implements BoleTohContract.BoleT
             public void onClick(View v) {
                 dialog.dismiss();
                 initiateQuestion();
-                presenter.setImage_g2_l2();
+                presenter.setImage_g3_l2();
             }
         });
 
@@ -194,7 +194,7 @@ public class BoleToh_G3_L2 extends BaseFragment implements BoleTohContract.BoleT
             public void onClick(View v) {
                 dialog.dismiss();
                 initiateQuestion();
-                presenter.setImage_g2_l2();
+                presenter.setImage_g3_l2();
             }
         });
 

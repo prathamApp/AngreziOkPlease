@@ -27,6 +27,7 @@ import com.example.pravin.angreziok.BaseFragment;
 import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.animations.MyBounceInterpolator;
 import com.example.pravin.angreziok.ui.GifView;
+import com.example.pravin.angreziok.util.PD_Utility;
 import com.github.anastr.flattimelib.CountDownTimerView;
 import com.github.anastr.flattimelib.intf.OnTimeFinish;
 
@@ -320,7 +321,8 @@ public class BoleToh_G2_L2 extends BaseFragment implements BoleTohContract.BoleT
                 public void run() {
                     //TODO display Score screen after final round
                     getActivity().findViewById(R.id.iv_r1g2_submit_ans).setOnClickListener(null);
-
+                    PD_Utility.showFragment(getActivity(), new BoleToh_G3_L2(), R.id.cl_bole_toh,
+                            null, BoleToh_G3_L2.class.getSimpleName());
                 }
             }, 2500);
 

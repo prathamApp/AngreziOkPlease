@@ -12,6 +12,7 @@ import com.example.pravin.angreziok.contentplayer.TextToSpeechCustom;
 import com.example.pravin.angreziok.modalclasses.GenericModalGson;
 import com.google.gson.Gson;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -34,7 +35,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
     BoleTohContract.BoleToh_G3_L2_View boleTohG3L2View ;
     BoleTohContract.BoleToh_G2_L2_View boleTohG2L2View;
     BoleTohContract.BoleToh_G1_L1_View boleTohG1L1View;
-    List<GenericModalGson> g1l1QuestionData, g2l2QuestionData,g1l2QuestionData,g3l2QuestionData;
+    List<GenericModalGson> g1l1QuestionData, g2l2QuestionData,g1l2QuestionData,g3l2QuestionData,currentPairList;
     GenericModalGson gsonPicGameData, gsonActGameData, gsonPairGameData;
 
     ArrayList<String> resTextArray = new ArrayList<String>();
@@ -241,6 +242,20 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
         } else {
             boleTohG1L2View.showOptions_g1_l2();
         }
+    }
+
+    @Override
+    public void setImage_g3_l2() {
+        boleTohG3L2View.hideOptionView();
+        r1g2RandomNo = getRandomNumber(0, g3l2QuestionData.size());
+        String path = getSdcardPath();
+        currentPairList = g3l2QuestionData.get(r1g2RandomNo).getNodelist();
+        Collections.shuffle(currentPairList);
+        String hintImagePath = path + "PicGameImages/" + currentPairList.get(0).getResourceImage();
+        String questionImagePath = path + "PicGameImages/" + currentPairList.get(1).getResourceImage();
+        Toast.makeText(mContext, "Hint:::"+currentPairList.get(0).getResourceText(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(mContext, "Question:::"+currentPairList.get(1).getResourceText(), Toast.LENGTH_SHORT).show();
+        boleTohG3L2View.setPairsImages(hintImagePath,questionImagePath);
     }
 
     @Override
