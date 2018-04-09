@@ -88,7 +88,7 @@
                         android:weightSum="4">
 
                         <LinearLayout
-                            android:id="@+id/ll_r1g2_megastar"
+                            android:id="@+id/ll_g1_l2_megastar"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_marginRight="10dp"
@@ -100,7 +100,7 @@
                             android:weightSum="2">
 
                             <TextView
-                                android:id="@+id/r1g2_megastar"
+                                android:id="@+id/g1_l2_megastar"
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_gravity="center"
@@ -124,7 +124,7 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/ll_r1g2_rockstar"
+                            android:id="@+id/ll_g1_l2_rockstar"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_marginRight="10dp"
@@ -136,7 +136,7 @@
                             android:weightSum="2">
 
                             <TextView
-                                android:id="@+id/r1g2_rockstar"
+                                android:id="@+id/g1_l2_rockstar"
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_gravity="center"
@@ -160,7 +160,7 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/ll_r1g2_superstar"
+                            android:id="@+id/ll_g1_l2_superstar"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_marginRight="10dp"
@@ -172,7 +172,7 @@
                             android:weightSum="2">
 
                             <TextView
-                                android:id="@+id/r1g2_superstar"
+                                android:id="@+id/g1_l2_superstar"
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_gravity="center"
@@ -196,7 +196,7 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/ll_r1g2_allstar"
+                            android:id="@+id/ll_g1_l2_allstar"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_marginRight="10dp"
@@ -208,7 +208,7 @@
                             android:weightSum="2">
 
                             <TextView
-                                android:id="@+id/r1g2_allstar"
+                                android:id="@+id/g1_l2_allstar"
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_gravity="center"
@@ -267,13 +267,13 @@
                                 android:gravity="center">
 
                                 <ImageView
-                                    android:id="@+id/iv_ques_img_g2_l2"
+                                    android:id="@+id/iv_ques_img_g1_l2"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent" />
                             </LinearLayout>
 
                             <LinearLayout
-                                android:id="@+id/r1g2_sttOptions"
+                                android:id="@+id/g1_l2_sttOptions"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_gravity="center"
@@ -294,7 +294,7 @@
                                     android:weightSum="5">
 
                                     <TextView
-                                        android:id="@+id/tv_r1g2_answer"
+                                        android:id="@+id/tv_g1_l2_answer"
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="4"
@@ -305,7 +305,7 @@
                                         android:textSize="25sp" />
 
                                     <ImageView
-                                        android:id="@+id/iv_r1g2_submit_ans"
+                                        android:id="@+id/iv_g1_l2_submit_ans"
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_marginLeft="5dp"
@@ -316,7 +316,7 @@
                                 </LinearLayout>
 
                                 <LinearLayout
-                                    android:id="@+id/ll_r1g2_sttoptions"
+                                    android:id="@+id/ll_g1_l2_sttoptions"
                                     android:layout_width="match_parent"
                                     android:layout_height="0dp"
                                     android:layout_weight="2.8"
@@ -448,7 +448,7 @@
                     android:layout_weight="1">
 
                     <ImageButton
-                        android:id="@+id/ib_r1g2_mic"
+                        android:id="@+id/ib_g1_l2_mic"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@color/full_transparent"
@@ -462,7 +462,7 @@
                     android:layout_weight="1">
 
                     <ImageButton
-                        android:id="@+id/ib_r1g2_speaker"
+                        android:id="@+id/ib_g1_l2_speaker"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@color/full_transparent"

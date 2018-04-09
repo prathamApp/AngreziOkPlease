@@ -101,8 +101,8 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
 
     @Override
     public void loadFragment(int no) {
-        PD_Utility.showFragment(BoleToh.this, new BoleToh_G1_L1(), R.id.cl_bole_toh,
-                null, BoleToh_G1_L1.class.getSimpleName());
+        PD_Utility.showFragment(BoleToh.this, new BoleToh_G1_L2(), R.id.cl_bole_toh,
+                null, BoleToh_G1_L2.class.getSimpleName());
     }
 
     @Override

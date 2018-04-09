@@ -28,13 +28,23 @@ public interface BoleTohContract {
 
         void g2_l2_checkAnswer(String ans);
 
+        void g1_l2_checkAnswer(String ans);
+
         void set_g2_l2_data(String path);
+
+        void set_g1_l2_data(String path);
 
         void setImage_g2_l2();
 
+        void setImage_gl_l2();
+
         String[] getOptions();
 
+        String[] getOptions_g1_l2();
+
         void checkFinalAnswer_g2_l2(String ans, int currentTeam);
+
+        void checkFinalAnswer_g1_l2(String ans, int currentTeam);
 
         void showImages(String path);
     }
@@ -45,6 +55,22 @@ public interface BoleTohContract {
         void setCelebrationView();
 
         void setCurrentScore();
+    }
+
+    interface BoleToh_G1_L2_View {
+        void setAnswer(String ans);
+
+        void showOptions();
+
+        void initiateQuestion();
+
+        void hideOptionView();
+
+        void setCelebrationView();
+
+        void setCurrentScore();
+
+        void setQuestionImage(String path);
     }
 
     interface BoleToh_G2_L2_View {

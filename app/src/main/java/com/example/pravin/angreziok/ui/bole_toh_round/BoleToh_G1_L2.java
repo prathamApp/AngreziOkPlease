@@ -50,27 +50,27 @@ public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleT
 
     @BindView(R.id.mCountDownTimer)
     CountDownTimerView mCountDownTimer;
-    @BindView(R.id.iv_ques_img_g2_l2)
-    ImageView iv_ques_img_g2_l2;
-    @BindView(R.id.tv_r1g2_answer)
+    @BindView(R.id.iv_ques_img_g1_l2)
+    ImageView iv_ques_img_g1_l2;
+    @BindView(R.id.tv_g1_l2_answer)
     TextView answer;
-    @BindView(R.id.ll_r1g2_sttoptions)
+    @BindView(R.id.ll_g1_l2_sttoptions)
     LinearLayout options;
-    @BindView(R.id.ll_r1g2_allstar)
+    @BindView(R.id.ll_g1_l2_allstar)
     LinearLayout allstarLayout;
-    @BindView(R.id.ll_r1g2_megastar)
+    @BindView(R.id.ll_g1_l2_megastar)
     LinearLayout megastarLayout;
-    @BindView(R.id.ll_r1g2_rockstar)
+    @BindView(R.id.ll_g1_l2_rockstar)
     LinearLayout rockstarLayout;
-    @BindView(R.id.ll_r1g2_superstar)
+    @BindView(R.id.ll_g1_l2_superstar)
     LinearLayout superstarLayout;
-    @BindView(R.id.r1g2_megastar)
+    @BindView(R.id.g1_l2_megastar)
     TextView megaScore;
-    @BindView(R.id.r1g2_rockstar)
+    @BindView(R.id.g1_l2_rockstar)
     TextView rockScore;
-    @BindView(R.id.r1g2_superstar)
+    @BindView(R.id.g1_l2_superstar)
     TextView superScore;
-    @BindView(R.id.r1g2_allstar)
+    @BindView(R.id.g1_l2_allstar)
     TextView allScore;
     @BindView(R.id.option1)
     TextView option1;
@@ -78,11 +78,11 @@ public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleT
     TextView option2;
     @BindView(R.id.option3)
     TextView option3;
-    @BindView(R.id.r1g2_sttOptions)
+    @BindView(R.id.g1_l2_sttOptions)
     LinearLayout optionsView;
-    @BindView(R.id.konfettiView_r1g2)
+    @BindView(R.id.konfettiView_g1_l2)
     KonfettiView konfettiView;
-    @BindView(R.id.iv_r1g2_submit_ans)
+    @BindView(R.id.iv_g1_l2_submit_ans)
     ImageView submitAnswer;
 
     String text;
@@ -181,7 +181,7 @@ public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleT
             public void onClick(View v) {
                 dialog.dismiss();
                 initiateQuestion();
-                presenter.setImage_g2_l2();
+                presenter.setImage_gl_l2();
             }
         });
 
@@ -190,7 +190,7 @@ public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleT
             public void onClick(View v) {
                 dialog.dismiss();
                 initiateQuestion();
-                presenter.setImage_g2_l2();
+                presenter.setImage_gl_l2();
             }
         });
 
@@ -255,7 +255,7 @@ public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleT
 
     private void setDataForGame() {
         String path = presenter.getSdcardPath();
-        presenter.set_g2_l2_data(path);
+        presenter.set_g1_l2_data(path);
     }
 
     private void playTTS() {
@@ -275,12 +275,12 @@ public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleT
         BoleToh.animateView(mCountDownTimer, getActivity());
     }
 
-    @OnClick(R.id.ib_r1g2_speaker)
+    @OnClick(R.id.ib_g1_l2_speaker)
     public void soundClicked() {
         presenter.startTTS(text);
     }
 
-    @OnClick(R.id.ib_r1g2_mic)
+    @OnClick(R.id.ib_g1_l2_mic)
     public void micClicked() {
         speechCount++;
         if (speechCount <= 2)
@@ -297,11 +297,11 @@ public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleT
         presenter.startTTS(option.getText() + "");
     }
 
-    @OnClick(R.id.iv_r1g2_submit_ans)
+    @OnClick(R.id.iv_g1_l2_submit_ans)
     public void submitAns() {
         submitAnswer.setClickable(false);
         mCountDownTimer.pause();
-        presenter.checkFinalAnswer_g2_l2(answer.getText().toString(), currentTeam);
+        presenter.checkFinalAnswer_g1_l2(answer.getText().toString(), currentTeam);
         currentTeam += 1;
         if (currentTeam < playerModalArrayList.size()) {
             Handler handler = new Handler();
@@ -320,7 +320,7 @@ public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleT
                 @Override
                 public void run() {
                     //TODO display Score screen after final round
-                    getActivity().findViewById(R.id.iv_r1g2_submit_ans).setOnClickListener(null);
+                    getActivity().findViewById(R.id.iv_g1_l2_submit_ans).setOnClickListener(null);
                 }
             }, 2500);
 
@@ -372,7 +372,7 @@ public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleT
                 .getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
         optionsView.setVisibility(View.VISIBLE);
         setAnswer(matches.get(0));
-        presenter.g2_l2_checkAnswer(matches.get(0));
+        presenter.g1_l2_checkAnswer(matches.get(0));
     }
 
     @Override
@@ -393,7 +393,7 @@ public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleT
     @Override
     public void setQuestionImage(String path) {
         try {
-            Glide.with(getActivity()).load(path).into(iv_ques_img_g2_l2);
+            Glide.with(getActivity()).load(path).into(iv_ques_img_g1_l2);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -408,7 +408,7 @@ public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleT
     @Override
     public void showOptions() {
         options.setVisibility(View.VISIBLE);
-        String[] options = presenter.getOptions();
+        String[] options = presenter.getOptions_g1_l2();
         option1.setText(options[0]);
         option2.setText(options[1]);
         option3.setText(options[2]);
