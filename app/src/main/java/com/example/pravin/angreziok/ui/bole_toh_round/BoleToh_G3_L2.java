@@ -2,6 +2,8 @@ package com.example.pravin.angreziok.ui.bole_toh_round;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -23,7 +25,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.example.pravin.angreziok.BaseFragment;
 import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.animations.MyBounceInterpolator;
@@ -31,9 +32,6 @@ import com.example.pravin.angreziok.ui.GifView;
 import com.github.anastr.flattimelib.CountDownTimerView;
 import com.github.anastr.flattimelib.intf.OnTimeFinish;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -50,8 +48,6 @@ public class BoleToh_G3_L2 extends BaseFragment implements BoleTohContract.BoleT
 
     @BindView(R.id.mCountDownTimer)
     CountDownTimerView mCountDownTimer;
-    @BindView(R.id.iv_character_dialog_gif)
-    GifView gifView;
     @BindView(R.id.tv_r1g2_answer)
     TextView answer;
     @BindView(R.id.ll_r1g2_sttoptions)
@@ -184,8 +180,8 @@ public class BoleToh_G3_L2 extends BaseFragment implements BoleTohContract.BoleT
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                initiateQuestion();
                 presenter.setImage_g3_l2();
+                initiateQuestion();
             }
         });
 
@@ -193,8 +189,8 @@ public class BoleToh_G3_L2 extends BaseFragment implements BoleTohContract.BoleT
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                initiateQuestion();
                 presenter.setImage_g3_l2();
+                initiateQuestion();
             }
         });
 
@@ -254,7 +250,18 @@ public class BoleToh_G3_L2 extends BaseFragment implements BoleTohContract.BoleT
     @Override
     public void initiateQuestion() {
         startTimer();
+        bounceView(hintImage);
+        text = presenter.getCurrentHint();
         playTTS();
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                bounceView(questionImage);
+                text = presenter.getCurrentQuestion();
+                playTTS();
+            }
+        },2500);
     }
 
     private void setDataForGame() {
@@ -263,7 +270,6 @@ public class BoleToh_G3_L2 extends BaseFragment implements BoleTohContract.BoleT
     }
 
     private void playTTS() {
-        text = "What is he doing?";
         presenter.startTTS(text);
     }
 
@@ -305,7 +311,7 @@ public class BoleToh_G3_L2 extends BaseFragment implements BoleTohContract.BoleT
     public void submitAns() {
         submitAnswer.setClickable(false);
         mCountDownTimer.pause();
-        presenter.checkFinalAnswer_g2_l2(answer.getText().toString(), currentTeam);
+        presenter.checkFinalAnswer_g3_l2(answer.getText().toString(), currentTeam);
         currentTeam += 1;
         if (currentTeam < playerModalArrayList.size()) {
             Handler handler = new Handler();
@@ -376,7 +382,7 @@ public class BoleToh_G3_L2 extends BaseFragment implements BoleTohContract.BoleT
                 .getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
         optionsView.setVisibility(View.VISIBLE);
         setAnswer(matches.get(0));
-        presenter.g2_l2_checkAnswer(matches.get(0));
+        presenter.g3_l2_checkAnswer(matches.get(0));
     }
 
     @Override
@@ -397,8 +403,9 @@ public class BoleToh_G3_L2 extends BaseFragment implements BoleTohContract.BoleT
     @Override
     public void setPairsImages(String hintImagePath, String questionImagePath) {
         try {
-            Glide.with(getActivity()).load(hintImagePath).into(hintImage);
-            Glide.with(getActivity()).load(questionImagePath).into(questionImage);
+            Bitmap[] bitmap = {BitmapFactory.decodeFile("" + hintImagePath), BitmapFactory.decodeFile("" + questionImagePath)};
+            hintImage.setImageBitmap(bitmap[0]);
+            questionImage.setImageBitmap(bitmap[1]);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -413,7 +420,7 @@ public class BoleToh_G3_L2 extends BaseFragment implements BoleTohContract.BoleT
     @Override
     public void showOptions() {
         options.setVisibility(View.VISIBLE);
-        String[] options = presenter.getOptions();
+        String[] options = presenter.getOptions_g3_l2();
         option1.setText(options[0]);
         option2.setText(options[1]);
         option3.setText(options[2]);
