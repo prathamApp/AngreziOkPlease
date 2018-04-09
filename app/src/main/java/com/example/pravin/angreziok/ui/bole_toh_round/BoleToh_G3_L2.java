@@ -48,8 +48,6 @@ public class BoleToh_G3_L2 extends BaseFragment implements BoleTohContract.BoleT
 
     @BindView(R.id.mCountDownTimer)
     CountDownTimerView mCountDownTimer;
-    @BindView(R.id.iv_character_dialog_gif)
-    GifView gifView;
     @BindView(R.id.tv_r1g2_answer)
     TextView answer;
     @BindView(R.id.ll_r1g2_sttoptions)
@@ -263,7 +261,7 @@ public class BoleToh_G3_L2 extends BaseFragment implements BoleTohContract.BoleT
                 text = presenter.getCurrentQuestion();
                 playTTS();
             }
-        },3000);
+        },2500);
     }
 
     private void setDataForGame() {
@@ -313,7 +311,7 @@ public class BoleToh_G3_L2 extends BaseFragment implements BoleTohContract.BoleT
     public void submitAns() {
         submitAnswer.setClickable(false);
         mCountDownTimer.pause();
-        presenter.checkFinalAnswer_g2_l2(answer.getText().toString(), currentTeam);
+        presenter.checkFinalAnswer_g3_l2(answer.getText().toString(), currentTeam);
         currentTeam += 1;
         if (currentTeam < playerModalArrayList.size()) {
             Handler handler = new Handler();
@@ -422,7 +420,7 @@ public class BoleToh_G3_L2 extends BaseFragment implements BoleTohContract.BoleT
     @Override
     public void showOptions() {
         options.setVisibility(View.VISIBLE);
-        String[] options = presenter.getOptions();
+        String[] options = presenter.getOptions_g3_l2();
         option1.setText(options[0]);
         option2.setText(options[1]);
         option3.setText(options[2]);

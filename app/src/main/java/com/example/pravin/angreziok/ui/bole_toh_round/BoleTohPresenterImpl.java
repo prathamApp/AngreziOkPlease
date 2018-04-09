@@ -12,7 +12,6 @@ import com.example.pravin.angreziok.contentplayer.TextToSpeechCustom;
 import com.example.pravin.angreziok.modalclasses.GenericModalGson;
 import com.google.gson.Gson;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -31,11 +30,11 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
     float speechRate = 1.0f;
     public TextToSpeechCustom playTTS;
     Context mContext;
-    BoleTohContract.BoleToh_G1_L2_View boleTohG1L2View ;
-    BoleTohContract.BoleToh_G3_L2_View boleTohG3L2View ;
+    BoleTohContract.BoleToh_G1_L2_View boleTohG1L2View;
+    BoleTohContract.BoleToh_G3_L2_View boleTohG3L2View;
     BoleTohContract.BoleToh_G2_L2_View boleTohG2L2View;
     BoleTohContract.BoleToh_G1_L1_View boleTohG1L1View;
-    List<GenericModalGson> g1l1QuestionData, g2l2QuestionData,g1l2QuestionData,g3l2QuestionData,currentPairList;
+    List<GenericModalGson> g1l1QuestionData, g2l2QuestionData, g1l2QuestionData, g3l2QuestionData, currentPairList;
     GenericModalGson gsonPicGameData, gsonActGameData, gsonPairGameData;
 
     ArrayList<String> resTextArray = new ArrayList<String>();
@@ -161,6 +160,21 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
         int[] optionsIds;
         int[] randomOptions;
         do {
+            optionsIds = getUniqueRandomNumber(0, g2l2QuestionData.size(), 2);
+        } while (optionsIds[0] == r1g2RandomNo || optionsIds[1] == r1g2RandomNo);
+        String[] optionsText = new String[3];
+        randomOptions = getUniqueRandomNumber(0, 3, 3);
+        optionsText[randomOptions[0]] = g2l2QuestionData.get(optionsIds[0]).getResourceText();
+        optionsText[randomOptions[1]] = g2l2QuestionData.get(optionsIds[1]).getResourceText();
+        optionsText[randomOptions[2]] = g2l2QuestionData.get(r1g2RandomNo).getResourceText();
+        return optionsText;
+    }
+
+    @Override
+    public String[] getOptions_g3_l2() {
+        int[] optionsIds;
+        int[] randomOptions;
+        do {
             optionsIds = getUniqueRandomNumber(0, g3l2QuestionData.size(), 2);
         } while (optionsIds[0] == r1g2RandomNo || optionsIds[1] == r1g2RandomNo);
         String[] optionsText = new String[3];
@@ -223,6 +237,22 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
     }
 
     @Override
+    public void checkFinalAnswer_g3_l2(String ans, int currentTeam) {
+        if (currentPairList.get(1).getResourceText().equalsIgnoreCase(ans)) {
+            //  TODO correct answer animation + increase score of group
+            boleTohG3L2View.setCelebrationView();
+            playMusic("Sounds/BilkulSahijawab.mp3", getSdcardPath());
+            int currentTeamScore = Integer.parseInt(playerModalArrayList.get(currentTeam).studentScore);
+            playerModalArrayList.get(currentTeam).setStudentScore(String.valueOf(currentTeamScore + 10));
+            boleTohG3L2View.setCurrentScore();
+        } else {
+            //  TODO wrong answer animation
+            Toast.makeText(mContext, "Wrong", Toast.LENGTH_SHORT).show();
+            playMusic("Sounds/wrong.mp3", getSdcardPath());
+        }
+    }
+
+    @Override
     public void g2_l2_checkAnswer(String ans) {
         String actualAns = g2l2QuestionData.get(r1g2RandomNo).getResourceText();
 
@@ -238,9 +268,9 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
         String actualAns = currentPairList.get(1).getResourceText();
 
         if (ans.equalsIgnoreCase(actualAns)) {
-            boleTohG2L2View.setAnswer(ans);
+            boleTohG3L2View.setAnswer(ans);
         } else {
-            boleTohG2L2View.showOptions();
+            boleTohG3L2View.showOptions();
         }
     }
 
@@ -264,19 +294,19 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
         Collections.shuffle(currentPairList);
         String hintImagePath = path + "PicGameImages/" + currentPairList.get(0).getResourceImage();
         String questionImagePath = path + "PicGameImages/" + currentPairList.get(1).getResourceImage();
-        Toast.makeText(mContext, "Hint:::"+currentPairList.get(0).getResourceText(), Toast.LENGTH_SHORT).show();
-        Toast.makeText(mContext, "Question:::"+currentPairList.get(1).getResourceText(), Toast.LENGTH_SHORT).show();
-        boleTohG3L2View.setPairsImages(hintImagePath,questionImagePath);
+        Toast.makeText(mContext, "Hint:::" + currentPairList.get(0).getResourceText(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(mContext, "Question:::" + currentPairList.get(1).getResourceText(), Toast.LENGTH_SHORT).show();
+        boleTohG3L2View.setPairsImages(hintImagePath, questionImagePath);
     }
 
     @Override
-    public String getCurrentQuestion(){
-        return currentPairList.get(1).getResourceQuestion()+","+currentPairList.get(1).getResourceText();
+    public String getCurrentQuestion() {
+        return currentPairList.get(1).getResourceQuestion();
     }
 
     @Override
-    public String getCurrentHint(){
-        return currentPairList.get(0).getResourceQuestion()+","+currentPairList.get(0).getResourceText();
+    public String getCurrentHint() {
+        return currentPairList.get(0).getResourceQuestion() + "," + currentPairList.get(0).getResourceText();
     }
 
     @Override
@@ -293,7 +323,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
         boleTohG1L2View.hideOptionView();
         r1g2RandomNo = getRandomNumber(0, g1l2QuestionData.size());
         String imagePath = getSdcardPath() + "PicGameImages/" + g1l2QuestionData.get(r1g2RandomNo).getResourceImage();
-        Log.d("imagePath", "setImage_gl_l2: "+imagePath);
+        Log.d("imagePath", "setImage_gl_l2: " + imagePath);
         Toast.makeText(mContext, "actual ans: " + g1l2QuestionData.get(r1g2RandomNo).getResourceText(), Toast.LENGTH_SHORT).show();
         boleTohG1L2View.setQuestionImage(imagePath);
     }

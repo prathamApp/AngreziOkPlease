@@ -48,9 +48,13 @@ public interface BoleTohContract {
 
         String[] getOptions_g1_l2();
 
+        String[] getOptions_g3_l2();
+
         void checkFinalAnswer_g2_l2(String ans, int currentTeam);
 
         void checkFinalAnswer_g1_l2(String ans, int currentTeam);
+
+        void checkFinalAnswer_g3_l2(String s, int currentTeam);
 
         void showImages(String path);
 
