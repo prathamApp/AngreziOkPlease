@@ -45,7 +45,7 @@ import nl.dionsegijn.konfetti.models.Size;
 import static com.example.pravin.angreziok.ui.bole_toh_round.BoleToh.playerModalArrayList;
 
 
-public class BoleTohRoundOneLevelTwo extends BaseFragment implements BoleTohContract.BoleTohRoundTwoView, RecognitionListener {
+public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleToh_G2_L2_View, RecognitionListener {
 
     @BindView(R.id.mCountDownTimer)
     CountDownTimerView mCountDownTimer;
@@ -99,7 +99,7 @@ public class BoleTohRoundOneLevelTwo extends BaseFragment implements BoleTohCont
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_bole_toh_round_two, container, false);
+        return inflater.inflate(R.layout.fragment_bole_toh_g2_l2, container, false);
     }
 
     @Override
@@ -180,7 +180,7 @@ public class BoleTohRoundOneLevelTwo extends BaseFragment implements BoleTohCont
             public void onClick(View v) {
                 dialog.dismiss();
                 initiateQuestion();
-                presenter.setImage_r1g2();
+                presenter.setImage_g2_l2();
             }
         });
 
@@ -189,7 +189,7 @@ public class BoleTohRoundOneLevelTwo extends BaseFragment implements BoleTohCont
             public void onClick(View v) {
                 dialog.dismiss();
                 initiateQuestion();
-                presenter.setImage_r1g2();
+                presenter.setImage_g2_l2();
             }
         });
 
@@ -254,7 +254,7 @@ public class BoleTohRoundOneLevelTwo extends BaseFragment implements BoleTohCont
 
     private void setDataForGame() {
         String path = presenter.getSdcardPath();
-        presenter.setr1g2_data(path);
+        presenter.set_g2_l2_data(path);
     }
 
     private void playTTS() {
@@ -300,7 +300,7 @@ public class BoleTohRoundOneLevelTwo extends BaseFragment implements BoleTohCont
     public void submitAns() {
         submitAnswer.setClickable(false);
         mCountDownTimer.pause();
-        presenter.checkFinalAnswer_r1g2(answer.getText().toString(), currentTeam);
+        presenter.checkFinalAnswer_g2_l2(answer.getText().toString(), currentTeam);
         currentTeam += 1;
         if (currentTeam < playerModalArrayList.size()) {
             Handler handler = new Handler();
@@ -371,7 +371,7 @@ public class BoleTohRoundOneLevelTwo extends BaseFragment implements BoleTohCont
                 .getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
         optionsView.setVisibility(View.VISIBLE);
         setAnswer(matches.get(0));
-        presenter.r1g2_checkAnswer(matches.get(0));
+        presenter.g2_l2_checkAnswer(matches.get(0));
     }
 
     @Override

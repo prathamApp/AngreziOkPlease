@@ -38,7 +38,7 @@ import nl.dionsegijn.konfetti.models.Size;
 import static com.example.pravin.angreziok.ui.bole_toh_round.BoleToh.playerModalArrayList;
 
 
-public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.BoleTohRoundOneView {
+public class BoleToh_G1_L1 extends BaseFragment implements BoleTohContract.BoleToh_G1_L1_View {
 
     @BindView(R.id.mCountDownTimer)
     CountDownTimerView mCountDownTimer;
@@ -96,7 +96,7 @@ public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.Bol
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_bole_toh_round_one, container, false);
+        return inflater.inflate(R.layout.fragment_bole_toh_g1_l1, container, false);
     }
 
     @Override
@@ -232,7 +232,7 @@ public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.Bol
                 BoleToh.animateView(mCountDownTimer, getActivity());
                 presenter.showImages(path);
                 //initiateQuestion();
-                //presenter.setImage_r1g2();
+                //presenter.setImage_g2_l2();
             }
         });
 
@@ -244,7 +244,7 @@ public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.Bol
                 BoleToh.animateView(mCountDownTimer, getActivity());
                 presenter.showImages(path);
                 //initiateQuestion();
-                //presenter.setImage_r1g2();
+                //presenter.setImage_g2_l2();
             }
         });
 
@@ -268,8 +268,8 @@ public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.Bol
 
     @OnClick(R.id.bt_temp_skip)
     public void setBt_temp_skip() {
-        PD_Utility.showFragment(getActivity(), new BoleTohRoundTwo(), R.id.cl_bole_toh,
-                null, BoleTohRoundTwo.class.getSimpleName());
+        PD_Utility.showFragment(getActivity(), new BoleToh_G2_L2(), R.id.cl_bole_toh,
+                null, BoleToh_G2_L2.class.getSimpleName());
     }
 
     @OnClick(R.id.iv_image1)
@@ -278,25 +278,25 @@ public class BoleTohRoundOne extends BaseFragment implements BoleTohContract.Bol
                 MyBounceInterpolator interpolator = new MyBounceInterpolator(0.2, 10);
                 pop.setInterpolator(interpolator);
                 iv_image1.startAnimation(pop);*/
-        presenter.r1g1_checkAnswer(1, currentTeam, false);
+        presenter.g1_l1_checkAnswer(1, currentTeam, false);
         answerPostProcessing();
     }
 
     @OnClick(R.id.iv_image2)
     public void setIv_image2() {
-        presenter.r1g1_checkAnswer(2, currentTeam, false);
+        presenter.g1_l1_checkAnswer(2, currentTeam, false);
         answerPostProcessing();
     }
 
     @OnClick(R.id.iv_image3)
     public void setIv_image3() {
-        presenter.r1g1_checkAnswer(3, currentTeam, false);
+        presenter.g1_l1_checkAnswer(3, currentTeam, false);
         answerPostProcessing();
     }
 
     @OnClick(R.id.iv_image4)
     public void setIv_image4() {
-        presenter.r1g1_checkAnswer(4, currentTeam, false);
+        presenter.g1_l1_checkAnswer(4, currentTeam, false);
         answerPostProcessing();
     }
 

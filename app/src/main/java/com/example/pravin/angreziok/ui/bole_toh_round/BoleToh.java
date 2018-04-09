@@ -9,7 +9,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.pravin.angreziok.BaseActivity;
@@ -23,7 +22,6 @@ import com.example.pravin.angreziok.util.PD_Utility;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -103,13 +101,13 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
 
     @Override
     public void loadFragment(int no) {
-        PD_Utility.showFragment(BoleToh.this, new BoleTohRoundOne(), R.id.cl_bole_toh,
-                null, BoleTohRoundOne.class.getSimpleName());
+        PD_Utility.showFragment(BoleToh.this, new BoleToh_G1_L1(), R.id.cl_bole_toh,
+                null, BoleToh_G1_L1.class.getSimpleName());
     }
 
     @Override
     public void onBackPressed() {
-        BoleTohRoundOne BoleTohRoundFragmen = (BoleTohRoundOne) getSupportFragmentManager().findFragmentByTag(BoleTohRoundOne.class.getSimpleName());
+        BoleToh_G1_L1 BoleTohRoundFragmen = (BoleToh_G1_L1) getSupportFragmentManager().findFragmentByTag(BoleToh_G1_L1.class.getSimpleName());
 
         getSupportFragmentManager().popBackStack();
         if (BoleTohRoundFragmen != null && BoleTohRoundFragmen.isVisible()) {
