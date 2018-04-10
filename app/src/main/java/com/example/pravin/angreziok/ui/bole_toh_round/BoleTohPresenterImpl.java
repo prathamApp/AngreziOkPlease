@@ -7,7 +7,6 @@ import android.media.MediaPlayer;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.pravin.angreziok.SDCardUtil;
 import com.example.pravin.angreziok.contentplayer.TextToSpeechCustom;
 import com.example.pravin.angreziok.modalclasses.GenericModalGson;
 import com.example.pravin.angreziok.util.SDCardUtil;
