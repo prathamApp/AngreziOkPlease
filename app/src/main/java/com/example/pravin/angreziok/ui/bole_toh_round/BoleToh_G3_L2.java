@@ -40,6 +40,8 @@ import butterknife.OnClick;
 import nl.dionsegijn.konfetti.KonfettiView;
 import nl.dionsegijn.konfetti.models.Shape;
 import nl.dionsegijn.konfetti.models.Size;
+import com.example.pravin.angreziok.ui.jod_tod_round.JodTod;
+
 
 import static com.example.pravin.angreziok.ui.bole_toh_round.BoleToh.playerModalArrayList;
 
@@ -329,8 +331,15 @@ public class BoleToh_G3_L2 extends BaseFragment implements BoleTohContract.BoleT
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    //TODO display Score screen after final round
+
                     getActivity().findViewById(R.id.iv_r1g2_submit_ans).setOnClickListener(null);
+
+                    Intent intent = new Intent(getActivity(), JodTod.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelableArrayList("playerModalArrayList", playerModalArrayList);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+
                 }
             }, 2500);
 
