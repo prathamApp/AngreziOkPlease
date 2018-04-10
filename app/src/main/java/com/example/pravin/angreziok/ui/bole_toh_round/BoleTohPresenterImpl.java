@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.example.pravin.angreziok.SDCardUtil;
 import com.example.pravin.angreziok.contentplayer.TextToSpeechCustom;
 import com.example.pravin.angreziok.modalclasses.GenericModalGson;
+import com.example.pravin.angreziok.util.SDCardUtil;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;
