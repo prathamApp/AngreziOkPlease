@@ -56,7 +56,7 @@ public class JodTod extends BaseActivity implements JodTodContract.JodTodView {
         Log.d("videoPath", "onCreate: "+videoPath);
         playVideo(Uri.parse(videoPath));
         presenter = new JodTodPresenterImpl(this);
-        BoleToh.playtts = new TextToSpeechCustom(this, 1.0f);
+//        BoleToh.playtts = new TextToSpeechCustom(this, 1.0f);
     }
 
     private void playVideo(Uri videoPath) {

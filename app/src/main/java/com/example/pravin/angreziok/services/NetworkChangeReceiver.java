@@ -1,4 +1,4 @@
-package com.example.pravin.angreziok.syncoperations;
+package com.example.pravin.angreziok.services;
 
 /**
  * Created by Pravin on 03/02/2018.

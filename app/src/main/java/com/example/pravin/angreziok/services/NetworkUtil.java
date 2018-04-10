@@ -1,4 +1,4 @@
-package com.example.pravin.angreziok.syncoperations;
+package com.example.pravin.angreziok.services;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

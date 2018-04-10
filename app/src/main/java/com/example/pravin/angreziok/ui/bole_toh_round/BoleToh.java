@@ -15,6 +15,7 @@ import android.widget.VideoView;
 
 import com.example.pravin.angreziok.BaseActivity;
 import com.example.pravin.angreziok.R;
+import com.example.pravin.angreziok.services.TTSService;
 import com.example.pravin.angreziok.util.SDCardUtil;
 import com.example.pravin.angreziok.animations.MyBounceInterpolator;
 import com.example.pravin.angreziok.contentplayer.TextToSpeechCustom;
@@ -32,7 +33,7 @@ import butterknife.OnClick;
 public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView, MediaPlayer.OnCompletionListener {
 
     BoleTohContract.BoleTohPresenter presenter;
-    public static TextToSpeechCustom playtts;
+//    public static TextToSpeechCustom playtts;
     static ArrayList<PlayerModal> playerModalArrayList;
     String videoPath;
 
@@ -70,7 +71,6 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
         Log.d("videoPath", "onCreate: "+videoPath);
         playVideo(Uri.parse(videoPath));
         presenter = new BoleTohPresenterImpl(this);
-        playtts = new TextToSpeechCustom(this, 1.0f);
         //showInstructions();
         //loadFragment(1);
     }

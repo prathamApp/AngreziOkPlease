@@ -23,7 +23,6 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
 
     String videoPath;
 
-
     VideoIntroContract.VideoIntroPresenter presenter;
 
     @Override

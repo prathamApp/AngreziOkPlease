@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.example.pravin.angreziok.contentplayer.TextToSpeechCustom;
 import com.example.pravin.angreziok.modalclasses.GenericModalGson;
+import com.example.pravin.angreziok.services.TTSService;
 import com.example.pravin.angreziok.util.MediaPlayerUtil;
 import com.example.pravin.angreziok.util.SDCardUtil;
 import com.google.gson.Gson;
@@ -21,6 +22,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import static com.example.pravin.angreziok.AOPApplication.getRandomNumber;
 import static com.example.pravin.angreziok.ui.bole_toh_round.BoleToh.playerModalArrayList;
@@ -29,7 +31,8 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
 
     String ttsQuestion;
     float speechRate = 1.0f;
-    public TextToSpeechCustom playTTS;
+//    public TextToSpeechCustom playTTS;
+    public TTSService ttsService;
     Context mContext;
     MediaPlayerUtil mediaPlayerUtil;
     BoleTohContract.BoleToh_G1_L2_View boleTohG1L2View;
@@ -50,28 +53,36 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
         this.mContext = mContext;
     }
 
-    BoleTohPresenterImpl(Context context, BoleTohContract.BoleToh_G1_L1_View boleTohG1L1View, TextToSpeechCustom playTTS) {
+    BoleTohPresenterImpl(Context context, BoleTohContract.BoleToh_G1_L1_View boleTohG1L1View,
+                         TTSService ttsService/*TextToSpeechCustom playTTS*/) {
         mContext = context;
         this.boleTohG1L1View = boleTohG1L1View;
-        this.playTTS = playTTS;
+//        this.playTTS = playTTS;
+        this.ttsService= ttsService;
     }
 
-    BoleTohPresenterImpl(Context context, BoleTohContract.BoleToh_G2_L2_View boleTohG2L2View, TextToSpeechCustom playTTS) {
+    BoleTohPresenterImpl(Context context, BoleTohContract.BoleToh_G2_L2_View boleTohG2L2View,
+                         TTSService ttsService/*TextToSpeechCustom playTTS*/) {
         mContext = context;
         this.boleTohG2L2View = boleTohG2L2View;
-        this.playTTS = playTTS;
+        this.ttsService= ttsService;
+//        this.playTTS = playTTS;
     }
 
-    public BoleTohPresenterImpl(Context context, BoleTohContract.BoleToh_G1_L2_View boleTohG1L2View, TextToSpeechCustom playTTS) {
+    public BoleTohPresenterImpl(Context context, BoleTohContract.BoleToh_G1_L2_View boleTohG1L2View,
+                                TTSService ttsService/*TextToSpeechCustom playTTS*/) {
         mContext = context;
         this.boleTohG1L2View = boleTohG1L2View;
-        this.playTTS = playTTS;
+        this.ttsService= ttsService;
+//        this.playTTS = playTTS;
     }
 
-    public BoleTohPresenterImpl(Context context, BoleTohContract.BoleToh_G3_L2_View boleTohG3L2View, TextToSpeechCustom playTTS) {
+    public BoleTohPresenterImpl(Context context, BoleTohContract.BoleToh_G3_L2_View boleTohG3L2View,
+                                TTSService ttsService/*TextToSpeechCustom playTTS*/) {
         mContext = context;
         this.boleTohG3L2View = boleTohG3L2View;
-        this.playTTS = playTTS;
+        this.ttsService= ttsService;
+//        this.playTTS = playTTS;
     }
 
     @Override
@@ -125,7 +136,9 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
     public void readQuestion(int questionToRead) {
         ttsQuestion = resTextArray.get(questionToRead);
         Log.d("speechRate", "readQuestion: " + speechRate + "," + ttsQuestion);
-        playTTS.ttsFunction("Where is " + ttsQuestion, "hin");
+//        ttsService.setLanguage(new Locale("hi","IN"));
+        ttsService.play("Where is " + ttsQuestion/*, "hin"*/);
+//        playTTS.ttsFunction("Where is " + ttsQuestion, "hin");
 //            playMusic("StoriesAudio/"+ resAudioArray.get(questionToRead));
     }
 
@@ -136,7 +149,9 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
 
     @Override
     public void startTTS(String text) {
-        playTTS.ttsFunction(text);
+//        playTTS.ttsFunction(text);
+//        ttsService.setLanguage(new Locale("hi","IN"));
+        ttsService.play(text);
     }
 
     @Override

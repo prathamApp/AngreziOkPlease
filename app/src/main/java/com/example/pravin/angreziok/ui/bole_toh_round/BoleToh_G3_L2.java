@@ -42,6 +42,7 @@ import nl.dionsegijn.konfetti.models.Size;
 import com.example.pravin.angreziok.ui.jod_tod_round.JodTod;
 
 
+import static com.example.pravin.angreziok.BaseActivity.ttsService;
 import static com.example.pravin.angreziok.ui.bole_toh_round.BoleToh.playerModalArrayList;
 
 
@@ -108,7 +109,7 @@ public class BoleToh_G3_L2 extends BaseFragment implements BoleTohContract.BoleT
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        presenter = new BoleTohPresenterImpl(getActivity(), this, BoleToh.playtts);
+        presenter = new BoleTohPresenterImpl(getActivity(), this, ttsService);
         setInitialScores();
         setDataForGame();
         speechCount = 0;
