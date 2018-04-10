@@ -6,19 +6,11 @@ package com.example.pravin.angreziok.ui.jod_tod_round;
 
 public interface JodTodContract {
 
-    public interface JodTodView {
+    interface JodTodView {
 
     }
 
-    public interface JodTodPresenter {
-
-    }
-
-    public interface JodTodRoundOneView {
-
-    }
-
-    public interface JodTodRoundOnePresenter {
+    interface JodTodPresenter {
 
     }
 }
