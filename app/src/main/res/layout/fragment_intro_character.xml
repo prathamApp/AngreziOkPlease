@@ -19,7 +19,7 @@
             android:layout_weight="3"
             android:gravity="center">
 
-            <com.example.pravin.angreziok.ui.GifView
+            <com.example.pravin.angreziok.custom.GifView
                 android:id="@+id/iv_char_gif"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

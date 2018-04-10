@@ -28,7 +28,6 @@ import android.widget.Toast;
 import com.example.pravin.angreziok.BaseFragment;
 import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.animations.MyBounceInterpolator;
-import com.example.pravin.angreziok.ui.GifView;
 import com.github.anastr.flattimelib.CountDownTimerView;
 import com.github.anastr.flattimelib.intf.OnTimeFinish;
 

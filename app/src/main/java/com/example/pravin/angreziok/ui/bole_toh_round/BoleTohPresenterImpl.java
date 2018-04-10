@@ -398,16 +398,6 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
                 mediaPlayerUtil = new MediaPlayerUtil(mContext,BoleTohPresenterImpl.this);
             }
             mediaPlayerUtil.playMedia(path + fileName);
-//            mp.setDataSource(path + fileName);
-////            mp.setDataSource("file:///android_asset/sounds/" + fileName);
-//            mp.prepare();
-//            Thread.sleep(20);
-//            mp.start();
-//            mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-//                public void onCompletion(MediaPlayer mp) {
-//                    mp.stop();
-//                }
-//            });
         } catch (Exception e) {
             e.printStackTrace();
         }

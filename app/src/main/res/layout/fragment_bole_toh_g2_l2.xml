@@ -267,7 +267,7 @@
                                 android:background="@drawable/gameimgbg"
                                 android:gravity="center">
 
-                                <com.example.pravin.angreziok.ui.GifView
+                                <com.example.pravin.angreziok.custom.GifView
                                     android:id="@+id/iv_character_dialog_gif"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent" />
