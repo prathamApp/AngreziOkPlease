@@ -38,8 +38,13 @@
             android:name=".ui.bole_toh_round.BoleToh"
             android:screenOrientation="sensorLandscape" />
 
-        <activity android:name=".ui.start_data_confirmation.DataConfirmation"
-            android:screenOrientation="sensorLandscape"/>
+        <activity
+            android:name=".ui.jod_tod_round.JodTod"
+            android:screenOrientation="sensorLandscape" />
+
+        <activity
+            android:name=".ui.start_data_confirmation.DataConfirmation"
+            android:screenOrientation="sensorLandscape" />
     </application>
 
 </manifest>

@@ -30,6 +30,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
     float speechRate = 1.0f;
     public TextToSpeechCustom playTTS;
     Context mContext;
+    MediaPlayer mp;
     BoleTohContract.BoleToh_G1_L2_View boleTohG1L2View;
     BoleTohContract.BoleToh_G3_L2_View boleTohG3L2View;
     BoleTohContract.BoleToh_G2_L2_View boleTohG2L2View;
@@ -46,28 +47,33 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
 
     public BoleTohPresenterImpl(Context mContext) {
         this.mContext = mContext;
+        mp = new MediaPlayer();
     }
 
     BoleTohPresenterImpl(Context context, BoleTohContract.BoleToh_G1_L1_View boleTohG1L1View, TextToSpeechCustom playTTS) {
         mContext = context;
+        mp = new MediaPlayer();
         this.boleTohG1L1View = boleTohG1L1View;
         this.playTTS = playTTS;
     }
 
     BoleTohPresenterImpl(Context context, BoleTohContract.BoleToh_G2_L2_View boleTohG2L2View, TextToSpeechCustom playTTS) {
         mContext = context;
+        mp = new MediaPlayer();
         this.boleTohG2L2View = boleTohG2L2View;
         this.playTTS = playTTS;
     }
 
     public BoleTohPresenterImpl(Context context, BoleTohContract.BoleToh_G1_L2_View boleTohG1L2View, TextToSpeechCustom playTTS) {
         mContext = context;
+        mp = new MediaPlayer();
         this.boleTohG1L2View = boleTohG1L2View;
         this.playTTS = playTTS;
     }
 
     public BoleTohPresenterImpl(Context context, BoleTohContract.BoleToh_G3_L2_View boleTohG3L2View, TextToSpeechCustom playTTS) {
         mContext = context;
+        mp = new MediaPlayer();
         this.boleTohG3L2View = boleTohG3L2View;
         this.playTTS = playTTS;
     }
@@ -391,18 +397,17 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
     @Override
     public void playMusic(String fileName, String path) {
         try {
-            MediaPlayer mp;
-            mp = new MediaPlayer();
             Log.d("SoundPth", "playMusic: " + path + fileName);
             mp.setDataSource(path + fileName);
 //            mp.setDataSource("file:///android_asset/sounds/" + fileName);
+            Thread.sleep(20);
             mp.prepare();
             mp.start();
-            mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                public void onCompletion(MediaPlayer mp) {
-                    mp.stop();
-                }
-            });
+//            mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+//                public void onCompletion(MediaPlayer mp) {
+//                    mp.stop();
+//                }
+//            });
         } catch (Exception e) {
             e.printStackTrace();
         }
