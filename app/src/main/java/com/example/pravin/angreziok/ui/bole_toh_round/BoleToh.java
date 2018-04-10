@@ -15,7 +15,7 @@ import android.widget.VideoView;
 
 import com.example.pravin.angreziok.BaseActivity;
 import com.example.pravin.angreziok.R;
-import com.example.pravin.angreziok.SDCardUtil;
+import com.example.pravin.angreziok.util.SDCardUtil;
 import com.example.pravin.angreziok.animations.MyBounceInterpolator;
 import com.example.pravin.angreziok.contentplayer.TextToSpeechCustom;
 import com.example.pravin.angreziok.modalclasses.PlayerModal;

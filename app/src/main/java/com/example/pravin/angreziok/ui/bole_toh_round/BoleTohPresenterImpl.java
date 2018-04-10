@@ -7,7 +7,8 @@ import android.media.MediaPlayer;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.pravin.angreziok.SDCardUtil;
+import com.example.pravin.angreziok.util.MediaPlayerUtil;
+import com.example.pravin.angreziok.util.SDCardUtil;
 import com.example.pravin.angreziok.contentplayer.TextToSpeechCustom;
 import com.example.pravin.angreziok.modalclasses.GenericModalGson;
 import com.google.gson.Gson;
@@ -43,6 +44,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
     ArrayList<String> resIdArray = new ArrayList<String>();
     int readQuestionNo, r1g2RandomNo;
     String sdCardPathString;
+    MediaPlayerUtil mediaPlayerUtil;
 
     public BoleTohPresenterImpl(Context mContext) {
         this.mContext = mContext;
@@ -391,18 +393,10 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
     @Override
     public void playMusic(String fileName, String path) {
         try {
-            MediaPlayer mp;
-            mp = new MediaPlayer();
             Log.d("SoundPth", "playMusic: " + path + fileName);
-            mp.setDataSource(path + fileName);
-//            mp.setDataSource("file:///android_asset/sounds/" + fileName);
-            mp.prepare();
-            mp.start();
-            mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                public void onCompletion(MediaPlayer mp) {
-                    mp.stop();
-                }
-            });
+            if (mediaPlayerUtil == null)
+                mediaPlayerUtil = new MediaPlayerUtil(mContext, BoleTohPresenterImpl.this);
+            mediaPlayerUtil.playMedia(path + fileName);
         } catch (Exception e) {
             e.printStackTrace();
         }

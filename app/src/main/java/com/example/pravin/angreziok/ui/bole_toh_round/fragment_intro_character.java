@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.example.pravin.angreziok.BaseFragment;
 import com.example.pravin.angreziok.R;
-import com.example.pravin.angreziok.SDCardUtil;
+import com.example.pravin.angreziok.util.SDCardUtil;
 import com.example.pravin.angreziok.ui.GifView;
 import com.example.pravin.angreziok.util.PD_Utility;
 
