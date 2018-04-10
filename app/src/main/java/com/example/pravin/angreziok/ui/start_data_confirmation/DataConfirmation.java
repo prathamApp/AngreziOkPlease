@@ -113,12 +113,6 @@ public class DataConfirmation extends BaseActivity implements DataConfirmationCo
         }
     }
 
-
-    @OnClick(R.id.btn_startgm)
-    public void skipGame() {
-        startActivity(new Intent(DataConfirmation.this, BoleToh.class));
-    }
-
     @OnClick(R.id.btn_change_team)
     public void shuffleTeams() {
         setStudentsAndTeams();

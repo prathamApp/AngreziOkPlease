@@ -486,7 +486,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="This is where the question will appear in any desired language.( The question will be played in audio format.)"
+                android:gravity="center"
+                android:text="This is where the question will appear"
                 android:textColor="@color/simple_white"
                 android:textSize="18sp"
                 android:textStyle="italic|bold" />

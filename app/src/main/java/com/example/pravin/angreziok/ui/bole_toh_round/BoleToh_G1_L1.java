@@ -73,8 +73,6 @@ public class BoleToh_G1_L1 extends BaseFragment implements BoleTohContract.BoleT
     ImageView iv_image4;
     @BindView(R.id.ib_r1g1_speaker)
     ImageButton ib_speaker;
-    @BindView(R.id.bt_temp_skip)
-    Button bt_temp_skip;
     @BindView(R.id.konfettiView_r1g1)
     KonfettiView konfettiView;
 
@@ -264,12 +262,6 @@ public class BoleToh_G1_L1 extends BaseFragment implements BoleTohContract.BoleT
             public void onFinish() {
             }
         });
-    }
-
-    @OnClick(R.id.bt_temp_skip)
-    public void setBt_temp_skip() {
-        PD_Utility.showFragment(getActivity(), new BoleToh_G2_L2(), R.id.cl_bole_toh,
-                null, BoleToh_G2_L2.class.getSimpleName());
     }
 
     @OnClick(R.id.iv_image1)

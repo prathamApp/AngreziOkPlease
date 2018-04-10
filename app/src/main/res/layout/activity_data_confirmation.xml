@@ -187,11 +187,6 @@
             android:layout_weight="1.5"
             android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/btn_startgm"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="skip" />
 
             <LinearLayout
                 android:id="@+id/ll_startgame"

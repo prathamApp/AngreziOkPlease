@@ -322,6 +322,12 @@ public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleT
                 public void run() {
                     //TODO display Score screen after final round
                     getActivity().findViewById(R.id.iv_g1_l2_submit_ans).setOnClickListener(null);
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString("frag", "G2L2");
+                    PD_Utility.showFragment(getActivity(), new fragment_intro_character(), R.id.cl_bole_toh,
+                            bundle, fragment_intro_character.class.getSimpleName());
+
                 }
             }, 2500);
 
@@ -394,7 +400,11 @@ public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleT
     @Override
     public void setQuestionImage(String path) {
         try {
+<<<<<<< HEAD
             Bitmap[] bitmap = {BitmapFactory.decodeFile("" + path)};
+=======
+            Bitmap[] bitmap = {BitmapFactory.decodeFile(""+path)};
+>>>>>>> 11a172dcf3b41715d5eb635852eb047c59ce7cbf
             iv_ques_img_g1_l2.setImageBitmap(bitmap[0]);
         } catch (Exception e) {
             e.printStackTrace();
@@ -407,11 +417,6 @@ public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleT
         answer.setText(ans);
     }
 
-    @OnClick(R.id.bt_temp_skip)
-    public void setBt_temp_skip() {
-        PD_Utility.showFragment(getActivity(), new BoleToh_G2_L2(), R.id.cl_bole_toh,
-                null, BoleToh_G2_L2.class.getSimpleName());
-    }
 
     @Override
     public void showOptions_g1_l2() {
