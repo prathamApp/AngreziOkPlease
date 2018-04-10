@@ -25,18 +25,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.example.pravin.angreziok.BaseFragment;
 import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.animations.MyBounceInterpolator;
-import com.example.pravin.angreziok.ui.GifView;
 import com.example.pravin.angreziok.util.PD_Utility;
 import com.github.anastr.flattimelib.CountDownTimerView;
 import com.github.anastr.flattimelib.intf.OnTimeFinish;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -399,11 +394,7 @@ public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleT
     @Override
     public void setQuestionImage(String path) {
         try {
-<<<<<<< HEAD
-
-=======
->>>>>>> 3b971e7b921f8fbec91a3895f99a8141dca96710
-            Bitmap[] bitmap = {BitmapFactory.decodeFile(""+path)};
+            Bitmap[] bitmap = {BitmapFactory.decodeFile("" + path)};
             iv_ques_img_g1_l2.setImageBitmap(bitmap[0]);
         } catch (Exception e) {
             e.printStackTrace();
