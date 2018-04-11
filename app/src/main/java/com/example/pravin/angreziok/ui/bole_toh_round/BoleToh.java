@@ -15,12 +15,11 @@ import android.widget.VideoView;
 
 import com.example.pravin.angreziok.BaseActivity;
 import com.example.pravin.angreziok.R;
-import com.example.pravin.angreziok.services.TTSService;
-import com.example.pravin.angreziok.util.SDCardUtil;
 import com.example.pravin.angreziok.animations.MyBounceInterpolator;
-import com.example.pravin.angreziok.contentplayer.TextToSpeechCustom;
 import com.example.pravin.angreziok.modalclasses.PlayerModal;
+import com.example.pravin.angreziok.services.STTService;
 import com.example.pravin.angreziok.util.PD_Utility;
+import com.example.pravin.angreziok.util.SDCardUtil;
 
 import java.io.File;
 import java.util.ArrayList;
