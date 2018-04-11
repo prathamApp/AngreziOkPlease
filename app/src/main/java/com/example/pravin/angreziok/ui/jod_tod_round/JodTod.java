@@ -1,18 +1,21 @@
 package com.example.pravin.angreziok.ui.jod_tod_round;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.VideoView;
 
 import com.example.pravin.angreziok.BaseActivity;
 import com.example.pravin.angreziok.R;
-import com.example.pravin.angreziok.contentplayer.TextToSpeechCustom;
+import com.example.pravin.angreziok.animations.MyBounceInterpolator;
 import com.example.pravin.angreziok.modalclasses.PlayerModal;
-import com.example.pravin.angreziok.ui.bole_toh_round.BoleToh;
 import com.example.pravin.angreziok.util.PD_Utility;
 
 import java.util.ArrayList;
@@ -70,4 +73,10 @@ public class JodTod extends BaseActivity implements JodTodContract.JodTodView {
         introVideo.requestFocus();
     }
 
+    public static void animateView(View view, Context context) {
+        Animation rubber = AnimationUtils.loadAnimation(context, R.anim.popup);
+        MyBounceInterpolator interpolator = new MyBounceInterpolator(0.2, 15);
+        rubber.setInterpolator(interpolator);
+        view.startAnimation(rubber);
+    }
 }

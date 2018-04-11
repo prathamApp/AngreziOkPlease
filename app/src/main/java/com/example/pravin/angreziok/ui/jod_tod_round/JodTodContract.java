@@ -12,5 +12,16 @@ public interface JodTodContract {
 
     interface JodTodPresenter {
 
+        void startTTS(String text);
+    }
+
+    interface JodTod_G3_L2_View {
+
+        void setCelebrationView();
+
+        void setCurrentScore();
+
+        void initiateQuestion();
+
     }
 }
