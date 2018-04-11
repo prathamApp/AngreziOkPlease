@@ -3,11 +3,9 @@ package com.example.pravin.angreziok.ui.bole_toh_round;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.MediaPlayer;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.pravin.angreziok.contentplayer.TextToSpeechCustom;
 import com.example.pravin.angreziok.modalclasses.GenericModalGson;
 import com.example.pravin.angreziok.services.TTSService;
 import com.example.pravin.angreziok.util.MediaPlayerUtil;
@@ -22,7 +20,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
 import static com.example.pravin.angreziok.AOPApplication.getRandomNumber;
 import static com.example.pravin.angreziok.ui.bole_toh_round.BoleToh.playerModalArrayList;
@@ -31,7 +28,6 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
 
     String ttsQuestion;
     float speechRate = 1.0f;
-//    public TextToSpeechCustom playTTS;
     public TTSService ttsService;
     Context mContext;
     MediaPlayerUtil mediaPlayerUtil;
