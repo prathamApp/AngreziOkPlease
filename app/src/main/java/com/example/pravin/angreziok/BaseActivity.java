@@ -32,6 +32,12 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        sttService.shutdown();
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
     }
