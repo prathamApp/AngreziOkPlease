@@ -313,7 +313,7 @@
                                         android:gravity="center"
                                         android:text="A"
                                         android:textColor="@color/simple_white"
-                                        android:textSize="25sp"></TextView>
+                                        android:textSize="25sp" />
 
                                     <TextView
                                         android:layout_width="0dp"
@@ -323,7 +323,7 @@
                                         android:gravity="center"
                                         android:text="B"
                                         android:textColor="@color/simple_white"
-                                        android:textSize="25sp"></TextView>
+                                        android:textSize="25sp" />
 
                                     <TextView
                                         android:layout_width="0dp"
@@ -333,7 +333,7 @@
                                         android:gravity="center"
                                         android:text="C"
                                         android:textColor="@color/simple_white"
-                                        android:textSize="25sp"></TextView>
+                                        android:textSize="25sp" />
 
                                     <TextView
                                         android:layout_width="0dp"
@@ -343,7 +343,7 @@
                                         android:gravity="center"
                                         android:text="D"
                                         android:textColor="@color/simple_white"
-                                        android:textSize="25sp"></TextView>
+                                        android:textSize="25sp" />
 
                                     <TextView
                                         android:layout_width="0dp"
@@ -353,7 +353,7 @@
                                         android:gravity="center"
                                         android:text="E"
                                         android:textColor="@color/simple_white"
-                                        android:textSize="25sp"></TextView>
+                                        android:textSize="25sp" />
 
                                     <TextView
                                         android:layout_width="0dp"
@@ -363,7 +363,7 @@
                                         android:gravity="center"
                                         android:text="F"
                                         android:textColor="@color/simple_white"
-                                        android:textSize="25sp"></TextView>
+                                        android:textSize="25sp" />
 
                                     <TextView
                                         android:layout_width="0dp"
@@ -373,7 +373,7 @@
                                         android:gravity="center"
                                         android:text="G"
                                         android:textColor="@color/simple_white"
-                                        android:textSize="25sp"></TextView>
+                                        android:textSize="25sp" />
 
                                     <TextView
                                         android:layout_width="0dp"
@@ -383,7 +383,7 @@
                                         android:gravity="center"
                                         android:text="H"
                                         android:textColor="@color/simple_white"
-                                        android:textSize="25sp"></TextView>
+                                        android:textSize="25sp" />
 
                                     <TextView
                                         android:layout_width="0dp"
@@ -393,7 +393,7 @@
                                         android:gravity="center"
                                         android:text="I"
                                         android:textColor="@color/simple_white"
-                                        android:textSize="25sp"></TextView>
+                                        android:textSize="25sp" />
 
                                     <TextView
                                         android:layout_width="0dp"
@@ -403,7 +403,7 @@
                                         android:gravity="center"
                                         android:text="J"
                                         android:textColor="@color/simple_white"
-                                        android:textSize="25sp"></TextView>
+                                        android:textSize="25sp" />
 
                                 </LinearLayout>
 
@@ -423,7 +423,7 @@
                                         android:gravity="center"
                                         android:text="K"
                                         android:textColor="@color/simple_white"
-                                        android:textSize="25sp"></TextView>
+                                        android:textSize="25sp" />
 
                                     <TextView
                                         android:layout_width="0dp"
@@ -433,7 +433,7 @@
                                         android:gravity="center"
                                         android:text="L"
                                         android:textColor="@color/simple_white"
-                                        android:textSize="25sp"></TextView>
+                                        android:textSize="25sp" />
 
                                     <TextView
                                         android:layout_width="0dp"
@@ -443,7 +443,7 @@
                                         android:gravity="center"
                                         android:text="M"
                                         android:textColor="@color/simple_white"
-                                        android:textSize="25sp"></TextView>
+                                        android:textSize="25sp" />
 
                                     <TextView
                                         android:layout_width="0dp"
@@ -453,7 +453,7 @@
                                         android:gravity="center"
                                         android:text="N"
                                         android:textColor="@color/simple_white"
-                                        android:textSize="25sp"></TextView>
+                                        android:textSize="25sp" />
 
                                     <TextView
                                         android:layout_width="0dp"
@@ -463,7 +463,7 @@
                                         android:gravity="center"
                                         android:text="O"
                                         android:textColor="@color/simple_white"
-                                        android:textSize="25sp"></TextView>
+                                        android:textSize="25sp" />
 
                                     <TextView
                                         android:layout_width="0dp"
@@ -473,7 +473,7 @@
                                         android:gravity="center"
                                         android:text="P"
                                         android:textColor="@color/simple_white"
-                                        android:textSize="25sp"></TextView>
+                                        android:textSize="25sp" />
 
                                     <TextView
                                         android:layout_width="0dp"
@@ -483,7 +483,7 @@
                                         android:gravity="center"
                                         android:text="Q"
                                         android:textColor="@color/simple_white"
-                                        android:textSize="25sp"></TextView>
+                                        android:textSize="25sp" />
 
                                     <TextView
                                         android:layout_width="0dp"
@@ -493,7 +493,7 @@
                                         android:gravity="center"
                                         android:text="R"
                                         android:textColor="@color/simple_white"
-                                        android:textSize="25sp"></TextView>
+                                        android:textSize="25sp" />
 
                                     <TextView
                                         android:layout_width="0dp"
@@ -503,7 +503,7 @@
                                         android:gravity="center"
                                         android:text="S"
                                         android:textColor="@color/simple_white"
-                                        android:textSize="25sp"></TextView>
+                                        android:textSize="25sp" />
 
                                     <TextView
                                         android:layout_width="0dp"
@@ -513,7 +513,7 @@
                                         android:gravity="center"
                                         android:text="T"
                                         android:textColor="@color/simple_white"
-                                        android:textSize="25sp"></TextView>
+                                        android:textSize="25sp" />
 
                                 </LinearLayout>
 
@@ -534,7 +534,7 @@
                                         android:gravity="center"
                                         android:text="U"
                                         android:textColor="@color/simple_white"
-                                        android:textSize="25sp"></TextView>
+                                        android:textSize="25sp" />
 
                                     <TextView
                                         android:layout_width="0dp"
@@ -544,7 +544,7 @@
                                         android:gravity="center"
                                         android:text="V"
                                         android:textColor="@color/simple_white"
-                                        android:textSize="25sp"></TextView>
+                                        android:textSize="25sp" />
 
                                     <TextView
                                         android:layout_width="0dp"
@@ -554,7 +554,7 @@
                                         android:gravity="center"
                                         android:text="W"
                                         android:textColor="@color/simple_white"
-                                        android:textSize="25sp"></TextView>
+                                        android:textSize="25sp" />
 
                                     <TextView
                                         android:layout_width="0dp"
@@ -564,7 +564,7 @@
                                         android:gravity="center"
                                         android:text="X"
                                         android:textColor="@color/simple_white"
-                                        android:textSize="25sp"></TextView>
+                                        android:textSize="25sp" />
 
                                     <TextView
                                         android:layout_width="0dp"
@@ -574,7 +574,7 @@
                                         android:gravity="center"
                                         android:text="Y"
                                         android:textColor="@color/simple_white"
-                                        android:textSize="25sp"></TextView>
+                                        android:textSize="25sp" />
 
                                     <TextView
                                         android:layout_width="0dp"
@@ -584,18 +584,19 @@
                                         android:gravity="center"
                                         android:text="Z"
                                         android:textColor="@color/simple_white"
-                                        android:textSize="25sp"></TextView>
+                                        android:textSize="25sp" />
 
                                 </LinearLayout>
 
                             </LinearLayout>
+
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="0.5"
-                            android:background="@drawable/bord_frame_bg"></LinearLayout>
+                            android:background="@drawable/bord_frame_bg" />
 
                     </LinearLayout>
 
@@ -606,10 +607,10 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
-                android:layout_gravity="center_vertical"
                 android:gravity="center_vertical"
                 android:orientation="vertical"
                 android:weightSum="2">
@@ -652,7 +653,6 @@
     <nl.dionsegijn.konfetti.KonfettiView
         android:id="@+id/konfettiView_g1_l2"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:visibility="gone" />
+        android:layout_height="match_parent" />
 
 </RelativeLayout>
