@@ -13,6 +13,12 @@ public interface JodTodContract {
     interface JodTodPresenter {
 
         void startTTS(String text);
+
+        String getSdcardPath();
+
+        void set_g3_l2_data();
+
+        String g3_l2_getQuestionText();
     }
 
     interface JodTod_G3_L2_View {
@@ -21,7 +27,7 @@ public interface JodTodContract {
 
         void setCurrentScore();
 
-        void initiateQuestion();
+        void initiateQuestion(String question);
 
     }
 }

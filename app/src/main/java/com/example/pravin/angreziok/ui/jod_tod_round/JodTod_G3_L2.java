@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -54,10 +55,12 @@ public class JodTod_G3_L2 extends BaseFragment implements JodTodContract.JodTod_
     TextView superScore;
     @BindView(R.id.g1_l2_allstar)
     TextView allScore;
-    @BindView(R.id.tv_r1g1_question)
+    @BindView(R.id.tv_question)
     TextView showQuestion;
     @BindView(R.id.konfettiView_g1_l2)
     KonfettiView konfettiView;
+    @BindView(R.id.iv_submit_ans)
+    ImageView submitAnswer;
 
     String text;
     JodTodContract.JodTodPresenter presenter;
@@ -150,9 +153,9 @@ public class JodTod_G3_L2 extends BaseFragment implements JodTodContract.JodTod_
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                initiateQuestion();
-                // TODO
-                //presenter.setImage_gl_l2();
+                String question = presenter.g3_l2_getQuestionText();
+                initiateQuestion(question);
+                setQuestionDynamically(question);
             }
         });
 
@@ -160,12 +163,16 @@ public class JodTod_G3_L2 extends BaseFragment implements JodTodContract.JodTod_
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                initiateQuestion();
-                // TODO
-//                presenter.setImage_gl_l2();
+                String question = presenter.g3_l2_getQuestionText();
+                initiateQuestion(question);
+                setQuestionDynamically(presenter.g3_l2_getQuestionText());
             }
         });
 
+    }
+
+    private void setQuestionDynamically(String questionText) {
+        // TODO Create views for setting question by extracting vowels from it
     }
 
     private void fadeOtherGroups() {
@@ -220,23 +227,19 @@ public class JodTod_G3_L2 extends BaseFragment implements JodTodContract.JodTod_
     }
 
     @Override
-    public void initiateQuestion() {
-        // TODO
-//        startTimer();
-//        playTTS();
+    public void initiateQuestion(String question) {
+        startTimer();
+        text = question;
+        playTTS();
     }
 
     private void setDataForGame() {
-//        TODO
-//        String path = presenter.getSdcardPath();
-//        presenter.set_g1_l2_data(path);
+        presenter.set_g3_l2_data();
+        showQuestion.setText("Listen and Spell the word correctly");
     }
 
     private void playTTS() {
-//        TODO
-//        text = "What is This?";
-//        showQuestion.setText(text);
-//        presenter.startTTS(text);
+        presenter.startTTS(text);
     }
 
     private void startTimer() {
@@ -245,12 +248,48 @@ public class JodTod_G3_L2 extends BaseFragment implements JodTodContract.JodTod_
         mCountDownTimer.setOnEndAnimationFinish(new OnTimeFinish() {
             @Override
             public void onFinish() {
-//                TODO
-//                submitAns();
+                submitAns();
             }
         });
         JodTod.animateView(mCountDownTimer, getActivity());
     }
+
+    @OnClick(R.id.iv_submit_ans)
+    public void submitAns() {
+        submitAnswer.setClickable(false);
+        mCountDownTimer.pause();
+//       TODO Check answer  presenter.checkFinalAnswer_g3_l2(answer.getText().toString(), currentTeam);
+        currentTeam += 1;
+        if (currentTeam < jodTodPlayerList.size()) {
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    submitAnswer.setClickable(true);
+                    showDialog();
+                }
+            }, 2500);
+        } else {
+            currentTeam = 0;
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+
+                    getActivity().findViewById(R.id.iv_submit_ans).setOnClickListener(null);
+// TODO  Next Round start process  SamajhKeBolo
+                    /*Intent intent = new Intent(getActivity(), SamajhKeBolo.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelableArrayList("PlayerList", jodTodPlayerList);
+                    intent.putExtras(bundle);
+                    startActivity(intent);*/
+
+                }
+            }, 2500);
+
+        }
+    }
+
 
     @OnClick(R.id.ib_g1_l2_speaker)
     public void soundClicked() {

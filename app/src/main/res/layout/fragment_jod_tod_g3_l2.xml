@@ -276,7 +276,7 @@
                                     android:orientation="horizontal"></LinearLayout>
 
                                 <ImageView
-                                    android:id="@+id/iv_r1g2_submit_ans"
+                                    android:id="@+id/iv_submit_ans"
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
                                     android:layout_margin="30dp"
@@ -650,7 +650,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/tv_r1g1_question"
+            android:id="@+id/tv_question"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_gravity="center_vertical"
