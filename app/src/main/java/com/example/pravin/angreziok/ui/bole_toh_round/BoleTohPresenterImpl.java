@@ -387,8 +387,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
         } else
             return null;
     }
-
-
+    
     @Override
     public void playMusic(String fileName, String path) {
         try {
