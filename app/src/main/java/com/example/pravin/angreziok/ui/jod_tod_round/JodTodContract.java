@@ -7,7 +7,7 @@ package com.example.pravin.angreziok.ui.jod_tod_round;
 public interface JodTodContract {
 
     interface JodTodView {
-
+        void loadFragment();
     }
 
     interface JodTodPresenter {

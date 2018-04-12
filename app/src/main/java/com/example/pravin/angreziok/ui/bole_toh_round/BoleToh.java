@@ -124,16 +124,6 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
                 bundle, fragment_intro_character.class.getSimpleName());
     }
 
-    @Override
-    public void onBackPressed() {
-        fragment_intro_character BoleTohRoundFragmen = (fragment_intro_character) getSupportFragmentManager().findFragmentByTag(fragment_intro_character.class.getSimpleName());
-
-        getSupportFragmentManager().popBackStack();
-        if (BoleTohRoundFragmen != null && BoleTohRoundFragmen.isVisible()) {
-            super.onBackPressed();
-        }
-    }
-
     public static void animateView(View view,Context context) {
         Animation rubber = AnimationUtils.loadAnimation(context, R.anim.popup);
         MyBounceInterpolator interpolator = new MyBounceInterpolator(0.2, 15);

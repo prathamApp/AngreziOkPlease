@@ -16,6 +16,9 @@ import com.example.pravin.angreziok.BaseActivity;
 import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.animations.MyBounceInterpolator;
 import com.example.pravin.angreziok.modalclasses.PlayerModal;
+import com.example.pravin.angreziok.ui.bole_toh_round.BoleToh;
+import com.example.pravin.angreziok.ui.bole_toh_round.fragment_intro_character;
+import com.example.pravin.angreziok.ui.start_data_confirmation.DataConfirmation;
 import com.example.pravin.angreziok.util.PD_Utility;
 
 import java.util.ArrayList;
@@ -78,5 +81,13 @@ public class JodTod extends BaseActivity implements JodTodContract.JodTodView {
         MyBounceInterpolator interpolator = new MyBounceInterpolator(0.2, 15);
         rubber.setInterpolator(interpolator);
         view.startAnimation(rubber);
+    }
+
+    @Override
+    public void loadFragment() {
+        Bundle bundle = new Bundle();
+        bundle.putString("frag", "G3L2");
+        PD_Utility.showFragment(JodTod.this, new fragment_intro_character(), R.id.cl_bole_toh,
+                bundle, fragment_intro_character.class.getSimpleName());
     }
 }

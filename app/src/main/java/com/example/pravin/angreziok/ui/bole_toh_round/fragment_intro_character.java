@@ -71,9 +71,8 @@ public class fragment_intro_character extends BaseFragment {
             instructionsTextView.setText("Pairs Game");
             frag = 3;
         }
-        InputStream gif = null;
         try {
-            gif = new FileInputStream(getSdcardPath() + "charactersGif/Balle-Balle.gif");
+            InputStream gif = new FileInputStream(getSdcardPath() + "charactersGif/Balle-Balle.gif");
             charGif.setGifResource(gif);
         } catch (Exception e) {
             e.printStackTrace();
