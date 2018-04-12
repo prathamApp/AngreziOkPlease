@@ -1,4 +1,4 @@
-package com.example.pravin.angreziok.ui.bole_toh_round;
+package com.example.pravin.angreziok.ui;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,6 +11,9 @@ import android.widget.TextView;
 import com.example.pravin.angreziok.BaseFragment;
 import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.custom.GifView;
+import com.example.pravin.angreziok.ui.bole_toh_round.BoleToh_G1_L2;
+import com.example.pravin.angreziok.ui.bole_toh_round.BoleToh_G2_L2;
+import com.example.pravin.angreziok.ui.bole_toh_round.BoleToh_G3_L2;
 import com.example.pravin.angreziok.ui.jod_tod_round.JodTod_G3_L2;
 import com.example.pravin.angreziok.util.PD_Utility;
 import com.example.pravin.angreziok.util.SDCardUtil;

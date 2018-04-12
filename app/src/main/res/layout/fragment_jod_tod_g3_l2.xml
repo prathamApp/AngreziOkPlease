@@ -303,6 +303,9 @@
                                     android:layout_height="0dp"
                                     android:layout_weight="1"
                                     android:orientation="horizontal"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginRight="5dp"
+                                    android:layout_marginTop="5dp"
                                     android:weightSum="10">
 
                                     <TextView
@@ -524,6 +527,7 @@
                                     android:layout_weight="1"
                                     android:gravity="center"
                                     android:orientation="horizontal"
+                                    android:layout_marginBottom="5dp"
                                     android:weightSum="10">
 
                                     <TextView
@@ -613,15 +617,24 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:orientation="vertical"
-                android:weightSum="2">
+                android:weightSum="3">
 
                 <com.github.anastr.flattimelib.CountDownTimerView
                     android:id="@+id/mCountDownTimer"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_gravity="center"
-                    android:layout_marginRight="5dp"
                     android:layout_weight="1" />
+
+                <ImageButton
+                    android:id="@+id/ib_r1g2_mic"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@color/full_transparent"
+                    android:scaleType="fitCenter"
+                    android:visibility="invisible"
+                    android:src="@drawable/mike" />
 
                 <ImageButton
                     android:id="@+id/ib_g1_l2_speaker"
