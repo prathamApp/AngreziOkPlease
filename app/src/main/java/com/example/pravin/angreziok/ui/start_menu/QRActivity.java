@@ -7,7 +7,6 @@ import android.arch.persistence.room.migration.Migration;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -36,7 +35,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
-public class StartMenu extends BaseActivity implements StartMenuContract.StartMenuView,
+public class QRActivity extends BaseActivity implements QRContract.StartMenuView,
         ZXingScannerView.ResultHandler {
 
     @BindView(R.id.content_frame)
@@ -52,7 +51,7 @@ public class StartMenu extends BaseActivity implements StartMenuContract.StartMe
 
 
     private AppDatabase appDatabase;
-    StartMenuContract.StartMenuPresenter presenter;
+    QRContract.StartMenuPresenter presenter;
     PlayerModal playerModal;
     int totalStudents = 0;
     Dialog dialog;
@@ -64,12 +63,12 @@ public class StartMenu extends BaseActivity implements StartMenuContract.StartMe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mScannerView = new ZXingScannerView(this);
         setContentView(R.layout.activity_start_menu);
         ButterKnife.bind(this);
 
-        presenter = new StartMenuPresenterImpl(this, this);
+        presenter = new QRPresenterImpl(this, this);
         playerModalList = new ArrayList<>();
-        mScannerView = new ZXingScannerView(this);
         mScannerView.setResultHandler(this);
         content_frame.addView((mScannerView));
 
@@ -212,7 +211,7 @@ public class StartMenu extends BaseActivity implements StartMenuContract.StartMe
 
         if (totalStudents == 4) {
             showStudentName(totalStudents);
-/*                    Intent dataConfirmationIntent = new Intent(StartMenu.this, DataConfirmation.class);
+/*                    Intent dataConfirmationIntent = new Intent(QRActivity.this, DataConfirmation.class);
                     Bundle bundle = new Bundle();
                     bundle.putParcelableArrayList("studentList", playerModalList);
                     dataConfirmationIntent.putExtras(bundle);

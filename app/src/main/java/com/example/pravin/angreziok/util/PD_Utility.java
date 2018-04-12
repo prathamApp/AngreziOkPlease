@@ -51,7 +51,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.example.pravin.angreziok.ui.bole_toh_round.BoleToh;
-import com.example.pravin.angreziok.ui.start_menu.StartMenu;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;

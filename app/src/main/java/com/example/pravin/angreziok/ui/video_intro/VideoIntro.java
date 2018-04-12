@@ -3,13 +3,12 @@ package com.example.pravin.angreziok.ui.video_intro;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.speech.tts.TextToSpeech;
 import android.view.WindowManager;
 import android.widget.VideoView;
 
 import com.example.pravin.angreziok.BaseActivity;
 import com.example.pravin.angreziok.R;
-import com.example.pravin.angreziok.ui.start_menu.StartMenu;
+import com.example.pravin.angreziok.ui.start_menu.QRActivity;
 import com.example.pravin.angreziok.util.PD_Utility;
 
 import butterknife.BindView;
@@ -49,7 +48,7 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
 
     @Override
     public void startActivity() {
-        startActivity(new Intent(this, StartMenu.class));
+        startActivity(new Intent(this, QRActivity.class));
         finish();
     }
 

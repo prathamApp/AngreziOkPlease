@@ -7,7 +7,7 @@
     android:background="@drawable/loginaop"
     android:orientation="horizontal"
     android:weightSum="10"
-    tools:context="com.example.pravin.angreziok.ui.start_menu.StartMenu">
+    tools:context="com.example.pravin.angreziok.ui.start_menu.QRActivity">
 
     <LinearLayout
         android:id="@+id/rl_selector_menu"

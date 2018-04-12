@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.pravin.angreziok.interfaces.MediaCallbacks;
 import com.example.pravin.angreziok.modalclasses.GenericModalGson;
 import com.example.pravin.angreziok.services.TTSService;
 import com.example.pravin.angreziok.util.MediaPlayerUtil;
@@ -24,7 +25,7 @@ import java.util.List;
 import static com.example.pravin.angreziok.AOPApplication.getRandomNumber;
 import static com.example.pravin.angreziok.ui.bole_toh_round.BoleToh.playerModalArrayList;
 
-public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
+public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, MediaCallbacks {
 
     String ttsQuestion;
     float speechRate = 1.0f;
@@ -394,6 +395,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
             Log.d("SoundPth", "playMusic: " + path + fileName);
             if (mediaPlayerUtil == null) {
                 mediaPlayerUtil = new MediaPlayerUtil(mContext);
+                mediaPlayerUtil.initCallback(BoleTohPresenterImpl.this);
             }
             mediaPlayerUtil.playMedia(path + fileName);
         } catch (Exception e) {
@@ -401,4 +403,8 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter {
         }
     }
 
+    @Override
+    public void onComplete() {
+
+    }
 }

@@ -8,12 +8,12 @@ import android.widget.Toast;
  * Created by Pravin on 19/03/2018.
  */
 
-public class StartMenuPresenterImpl implements StartMenuContract.StartMenuPresenter {
+public class QRPresenterImpl implements QRContract.StartMenuPresenter {
 
     Context mContext;
-    StartMenuContract.StartMenuView startMenuView;
+    QRContract.StartMenuView startMenuView;
 
-    public StartMenuPresenterImpl(Context context, StartMenuContract.StartMenuView startMenu) {
+    public QRPresenterImpl(Context context, QRContract.StartMenuView startMenu) {
         mContext = context;
         startMenuView = startMenu;
     }
