@@ -1,10 +1,9 @@
 package com.example.pravin.angreziok.util;
 
 import android.content.Context;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.os.Handler;
-import android.util.Log;
+
+import com.example.pravin.angreziok.interfaces.MediaCallbacks;
 
 import java.io.IOException;
 
@@ -17,17 +16,24 @@ public class MediaPlayerUtil implements MediaPlayer.OnCompletionListener,
         MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, MediaPlayer.OnSeekCompleteListener,
         MediaPlayer.OnInfoListener, MediaPlayer.OnBufferingUpdateListener {
 
-    Object presenter;
     Context context;
     private MediaPlayer mediaPlayer;
+    private MediaCallbacks mCallbacks;
 
-    public MediaPlayerUtil(Context context, Object presenter) {
+
+    public MediaPlayerUtil(Context context) {
         this.context = context;
-        this.presenter = presenter;
-        initMedaPlayer();
+        initMediaPlayer();
     }
 
-    private void initMedaPlayer() {
+    /**
+     * Initializes speech interface callback.
+     */
+    public void initCallback(final MediaCallbacks callbacks) {
+        this.mCallbacks = callbacks;
+    }
+
+    private void initMediaPlayer() {
         if (mediaPlayer == null)
             mediaPlayer = new MediaPlayer();//new MediaPlayer instance
 
@@ -43,7 +49,7 @@ public class MediaPlayerUtil implements MediaPlayer.OnCompletionListener,
 
     public void playMedia(String path) {
         try {
-            if (mediaPlayer==null)
+            if (mediaPlayer == null)
                 mediaPlayer = new MediaPlayer();//new MediaPlayer instance
             else
                 mediaPlayer.reset();
@@ -54,23 +60,14 @@ public class MediaPlayerUtil implements MediaPlayer.OnCompletionListener,
         } catch (IOException e) {
             e.printStackTrace();
         }
-//        mediaPlayer.prepareAsync();
-//        if (!mediaPlayer.isPlaying()) {
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//            }
-//        }, 10);
-//        }
     }
 
     public void stopMedia() {
         if (mediaPlayer == null) return;
         if (mediaPlayer.isPlaying()) {
             mediaPlayer.stop();
-//            mediaPlayer.release();
-//            mediaPlayer.reset();
         }
+        mCallbacks.onComplete();
     }
 
     public void pauseMedia() {
@@ -87,7 +84,6 @@ public class MediaPlayerUtil implements MediaPlayer.OnCompletionListener,
 
     @Override
     public void onBufferingUpdate(MediaPlayer mediaPlayer, int i) {
-
     }
 
     @Override
@@ -112,6 +108,5 @@ public class MediaPlayerUtil implements MediaPlayer.OnCompletionListener,
 
     @Override
     public void onSeekComplete(MediaPlayer mediaPlayer) {
-
     }
 }

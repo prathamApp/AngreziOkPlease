@@ -30,6 +30,7 @@ import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.animations.MyBounceInterpolator;
 import com.example.pravin.angreziok.interfaces.SpeechResult;
 import com.example.pravin.angreziok.services.STTService;
+import com.example.pravin.angreziok.util.MediaPlayerUtil;
 import com.example.pravin.angreziok.util.PD_Utility;
 import com.github.anastr.flattimelib.CountDownTimerView;
 import com.github.anastr.flattimelib.intf.OnTimeFinish;
@@ -92,8 +93,6 @@ public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleT
 
     String text;
     BoleTohContract.BoleTohPresenter presenter;
-    //    private SpeechRecognizer speech = null;
-    String language = "en-IN";
     int speechCount, currentTeam;
     Dialog dialog;
 
@@ -327,7 +326,7 @@ public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleT
                     getActivity().findViewById(R.id.iv_g1_l2_submit_ans).setOnClickListener(null);
 
                     Bundle bundle = new Bundle();
-                    bundle.putString("frag", "G2L2");
+                    bundle.putString("frag", "R1G2L2");
                     PD_Utility.showFragment(getActivity(), new fragment_intro_character(), R.id.cl_bole_toh,
                             bundle, fragment_intro_character.class.getSimpleName());
 

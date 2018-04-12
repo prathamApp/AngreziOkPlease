@@ -61,7 +61,6 @@ public class JodTod_G3_L2 extends BaseFragment implements JodTodContract.JodTod_
 
     String text;
     JodTodContract.JodTodPresenter presenter;
-    String language = "en-IN";
     int currentTeam;
     Dialog dialog;
 

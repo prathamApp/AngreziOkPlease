@@ -6,7 +6,7 @@ import android.graphics.Bitmap;
 public interface BoleTohContract {
 
     interface BoleTohView {
-        void loadFragment(int no);
+        void loadFragment();
     }
 
     interface BoleTohPresenter {

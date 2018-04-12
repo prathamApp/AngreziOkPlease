@@ -80,12 +80,10 @@ public class BoleToh_G1_L1 extends BaseFragment implements BoleTohContract.BoleT
 
     int questionConter = 0;
 
-    //    ArrayList <GenericModalGson> gsonPicGameData = new ArrayList<GenericModalGson>();
     BoleTohContract.BoleTohPresenter presenter;
     String path;
     Dialog dialog;
     int currentTeam = 0;
-//    CustomCountDownTimer customCountDownTimer;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -230,8 +228,6 @@ public class BoleToh_G1_L1 extends BaseFragment implements BoleTohContract.BoleT
                 mCountDownTimer.start(15000);
                 BoleToh.animateView(mCountDownTimer, getActivity());
                 presenter.showImages(path);
-                //initiateQuestion();
-                //presenter.setImage_g2_l2();
             }
         });
 
@@ -242,8 +238,6 @@ public class BoleToh_G1_L1 extends BaseFragment implements BoleTohContract.BoleT
                 mCountDownTimer.start(15000);
                 BoleToh.animateView(mCountDownTimer, getActivity());
                 presenter.showImages(path);
-                //initiateQuestion();
-                //presenter.setImage_g2_l2();
             }
         });
 
@@ -267,10 +261,6 @@ public class BoleToh_G1_L1 extends BaseFragment implements BoleTohContract.BoleT
 
     @OnClick(R.id.iv_image1)
     public void setIv_image1() {
-/*                Animation pop = AnimationUtils.loadAnimation(getActivity(), R.anim.popup);
-                MyBounceInterpolator interpolator = new MyBounceInterpolator(0.2, 10);
-                pop.setInterpolator(interpolator);
-                iv_image1.startAnimation(pop);*/
         presenter.g1_l1_checkAnswer(1, currentTeam, false);
         answerPostProcessing();
     }

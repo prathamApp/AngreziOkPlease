@@ -27,6 +27,7 @@ import com.example.pravin.angreziok.BaseFragment;
 import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.animations.MyBounceInterpolator;
 import com.example.pravin.angreziok.custom.GifView;
+import com.example.pravin.angreziok.interfaces.SpeechResult;
 import com.example.pravin.angreziok.util.PD_Utility;
 import com.github.anastr.flattimelib.CountDownTimerView;
 import com.github.anastr.flattimelib.intf.OnTimeFinish;
@@ -43,11 +44,12 @@ import nl.dionsegijn.konfetti.KonfettiView;
 import nl.dionsegijn.konfetti.models.Shape;
 import nl.dionsegijn.konfetti.models.Size;
 
+import static com.example.pravin.angreziok.BaseActivity.sttService;
 import static com.example.pravin.angreziok.BaseActivity.ttsService;
 import static com.example.pravin.angreziok.ui.bole_toh_round.BoleToh.playerModalArrayList;
 
 
-public class BoleToh_G2_L2 extends BaseFragment implements BoleTohContract.BoleToh_G2_L2_View, RecognitionListener {
+public class BoleToh_G2_L2 extends BaseFragment implements BoleTohContract.BoleToh_G2_L2_View, SpeechResult {
 
     @BindView(R.id.mCountDownTimer)
     CountDownTimerView mCountDownTimer;
@@ -88,8 +90,6 @@ public class BoleToh_G2_L2 extends BaseFragment implements BoleTohContract.BoleT
 
     String text;
     BoleTohContract.BoleTohPresenter presenter;
-    private SpeechRecognizer speech = null;
-    String language = "en-IN";
     int speechCount, currentTeam;
     Dialog dialog;
 
@@ -323,7 +323,7 @@ public class BoleToh_G2_L2 extends BaseFragment implements BoleTohContract.BoleT
                     //TODO display Score screen after final round
                     getActivity().findViewById(R.id.iv_r1g2_submit_ans).setOnClickListener(null);
                     Bundle bundle = new Bundle();
-                    bundle.putString("frag", "G3L2");
+                    bundle.putString("frag", "R1G3L2");
                     PD_Utility.showFragment(getActivity(), new fragment_intro_character(), R.id.cl_bole_toh,
                             bundle, fragment_intro_character.class.getSimpleName());
                 }
@@ -333,66 +333,20 @@ public class BoleToh_G2_L2 extends BaseFragment implements BoleTohContract.BoleT
     }
 
     public void startSTT() {
-        speech = SpeechRecognizer.createSpeechRecognizer(getActivity());
-        speech.setRecognitionListener(this);
-        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, language);
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-        speech.startListening(intent);
+        sttService.initCallback(BoleToh_G2_L2.this);
+        sttService.startListening();
     }
 
     @Override
-    public void onReadyForSpeech(Bundle params) {
-
-    }
-
-    @Override
-    public void onBeginningOfSpeech() {
-
-    }
-
-    @Override
-    public void onRmsChanged(float rmsdB) {
-
-    }
-
-    @Override
-    public void onBufferReceived(byte[] buffer) {
-
-    }
-
-    @Override
-    public void onEndOfSpeech() {
-
-    }
-
-    @Override
-    public void onError(int error) {
-
-    }
-
-    @Override
-    public void onResults(Bundle results) {
-        ArrayList<String> matches = results
-                .getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
+    public void onResult(String result) {
         optionsView.setVisibility(View.VISIBLE);
-        setAnswer(matches.get(0));
-        presenter.g2_l2_checkAnswer(matches.get(0));
+        setAnswer(result);
+        presenter.g2_l2_checkAnswer(result);
     }
 
     @Override
     public void hideOptionView() {
         optionsView.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void onPartialResults(Bundle partialResults) {
-
-    }
-
-    @Override
-    public void onEvent(int eventType, Bundle params) {
-
     }
 
     @Override

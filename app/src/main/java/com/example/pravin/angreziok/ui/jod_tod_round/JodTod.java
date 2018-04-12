@@ -2,6 +2,7 @@ package com.example.pravin.angreziok.ui.jod_tod_round;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,9 +17,7 @@ import com.example.pravin.angreziok.BaseActivity;
 import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.animations.MyBounceInterpolator;
 import com.example.pravin.angreziok.modalclasses.PlayerModal;
-import com.example.pravin.angreziok.ui.bole_toh_round.BoleToh;
 import com.example.pravin.angreziok.ui.bole_toh_round.fragment_intro_character;
-import com.example.pravin.angreziok.ui.start_data_confirmation.DataConfirmation;
 import com.example.pravin.angreziok.util.PD_Utility;
 
 import java.util.ArrayList;
@@ -26,13 +25,13 @@ import java.util.Collections;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by Pravin on 20/03/2018.
  */
 
-public class JodTod extends BaseActivity implements JodTodContract.JodTodView {
-
+public class JodTod extends BaseActivity implements JodTodContract.JodTodView, MediaPlayer.OnCompletionListener {
 
     @BindView(R.id.round_intro_videoView)
     VideoView introVideo;
@@ -54,15 +53,14 @@ public class JodTod extends BaseActivity implements JodTodContract.JodTodView {
         jodTodPlayerList = extraBundle.getParcelableArrayList("playerModalArrayList");
 
         Collections.shuffle(jodTodPlayerList);
-        for(int i=0; i<jodTodPlayerList.size(); i++)
-            Log.d("JodTodTAG", "jodTodPlayerList: "+jodTodPlayerList.get(i).getStudentAlias());
+        for (int i = 0; i < jodTodPlayerList.size(); i++)
+            Log.d("JodTodTAG", "jodTodPlayerList: " + jodTodPlayerList.get(i).getStudentAlias());
 
         videoPath = PD_Utility.getExternalPath(this) + "Videos/Bole_to_round.mp4";
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        Log.d("videoPath", "onCreate: "+videoPath);
+        Log.d("videoPath", "onCreate: " + videoPath);
         playVideo(Uri.parse(videoPath));
         presenter = new JodTodPresenterImpl(this);
-//        BoleToh.playtts = new TextToSpeechCustom(this, 1.0f);
     }
 
     private void playVideo(Uri videoPath) {
@@ -76,6 +74,12 @@ public class JodTod extends BaseActivity implements JodTodContract.JodTodView {
         introVideo.requestFocus();
     }
 
+
+    @OnClick(R.id.skip_button_intro)
+    public void startGame() {
+        loadFragment();
+    }
+
     public static void animateView(View view, Context context) {
         Animation rubber = AnimationUtils.loadAnimation(context, R.anim.popup);
         MyBounceInterpolator interpolator = new MyBounceInterpolator(0.2, 15);
@@ -86,8 +90,14 @@ public class JodTod extends BaseActivity implements JodTodContract.JodTodView {
     @Override
     public void loadFragment() {
         Bundle bundle = new Bundle();
-        bundle.putString("frag", "G3L2");
-        PD_Utility.showFragment(JodTod.this, new fragment_intro_character(), R.id.cl_bole_toh,
+        bundle.putString("frag", "R2G3L2");
+        PD_Utility.showFragment(JodTod.this, new fragment_intro_character(), R.id.cl_jod_tod,
                 bundle, fragment_intro_character.class.getSimpleName());
     }
+
+    @Override
+    public void onCompletion(MediaPlayer mp) {
+        loadFragment();
+    }
+
 }

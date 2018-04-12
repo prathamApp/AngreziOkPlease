@@ -8,9 +8,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.speech.RecognitionListener;
-import android.speech.RecognizerIntent;
-import android.speech.SpeechRecognizer;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,10 +25,10 @@ import android.widget.Toast;
 import com.example.pravin.angreziok.BaseFragment;
 import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.animations.MyBounceInterpolator;
+import com.example.pravin.angreziok.interfaces.SpeechResult;
+import com.example.pravin.angreziok.ui.jod_tod_round.JodTod;
 import com.github.anastr.flattimelib.CountDownTimerView;
 import com.github.anastr.flattimelib.intf.OnTimeFinish;
-
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,14 +36,13 @@ import butterknife.OnClick;
 import nl.dionsegijn.konfetti.KonfettiView;
 import nl.dionsegijn.konfetti.models.Shape;
 import nl.dionsegijn.konfetti.models.Size;
-import com.example.pravin.angreziok.ui.jod_tod_round.JodTod;
 
-
+import static com.example.pravin.angreziok.BaseActivity.sttService;
 import static com.example.pravin.angreziok.BaseActivity.ttsService;
 import static com.example.pravin.angreziok.ui.bole_toh_round.BoleToh.playerModalArrayList;
 
 
-public class BoleToh_G3_L2 extends BaseFragment implements BoleTohContract.BoleToh_G3_L2_View, RecognitionListener {
+public class BoleToh_G3_L2 extends BaseFragment implements BoleTohContract.BoleToh_G3_L2_View, SpeechResult {
 
     @BindView(R.id.mCountDownTimer)
     CountDownTimerView mCountDownTimer;
@@ -89,8 +85,6 @@ public class BoleToh_G3_L2 extends BaseFragment implements BoleTohContract.BoleT
 
     String text;
     BoleTohContract.BoleTohPresenter presenter;
-    private SpeechRecognizer speech = null;
-    String language = "en-IN";
     int speechCount, currentTeam;
     Dialog dialog;
 
@@ -263,7 +257,7 @@ public class BoleToh_G3_L2 extends BaseFragment implements BoleTohContract.BoleT
                 text = presenter.getCurrentQuestion();
                 playTTS();
             }
-        },2500);
+        }, 2500);
     }
 
     private void setDataForGame() {
@@ -347,66 +341,20 @@ public class BoleToh_G3_L2 extends BaseFragment implements BoleTohContract.BoleT
     }
 
     public void startSTT() {
-        speech = SpeechRecognizer.createSpeechRecognizer(getActivity());
-        speech.setRecognitionListener(this);
-        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, language);
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-        speech.startListening(intent);
+        sttService.initCallback(BoleToh_G3_L2.this);
+        sttService.startListening();
     }
 
     @Override
-    public void onReadyForSpeech(Bundle params) {
-
-    }
-
-    @Override
-    public void onBeginningOfSpeech() {
-
-    }
-
-    @Override
-    public void onRmsChanged(float rmsdB) {
-
-    }
-
-    @Override
-    public void onBufferReceived(byte[] buffer) {
-
-    }
-
-    @Override
-    public void onEndOfSpeech() {
-
-    }
-
-    @Override
-    public void onError(int error) {
-
-    }
-
-    @Override
-    public void onResults(Bundle results) {
-        ArrayList<String> matches = results
-                .getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
+    public void onResult(String result) {
         optionsView.setVisibility(View.VISIBLE);
-        setAnswer(matches.get(0));
-        presenter.g3_l2_checkAnswer(matches.get(0));
+        setAnswer(result);
+        presenter.g3_l2_checkAnswer(result);
     }
 
     @Override
     public void hideOptionView() {
         optionsView.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void onPartialResults(Bundle partialResults) {
-
-    }
-
-    @Override
-    public void onEvent(int eventType, Bundle params) {
-
     }
 
     @Override

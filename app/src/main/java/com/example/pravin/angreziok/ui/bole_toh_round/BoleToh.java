@@ -32,7 +32,6 @@ import butterknife.OnClick;
 public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView, MediaPlayer.OnCompletionListener {
 
     BoleTohContract.BoleTohPresenter presenter;
-//    public static TextToSpeechCustom playtts;
     static ArrayList<PlayerModal> playerModalArrayList;
     String videoPath;
 
@@ -40,16 +39,6 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
     VideoView introVideo;
     @BindView(R.id.skip_button_intro)
     Button btn_skip;
-
-/*
-    @BindView(R.id.tv_instructions)
-    TextView tv_instructions;
-    @BindView(R.id.ib_replay_instructions)
-    ImageButton btn_replay;
-    @BindView(R.id.iv_anupam_gif)
-    GifView anupamGif;
-*/
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,8 +59,6 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
         Log.d("videoPath", "onCreate: "+videoPath);
         playVideo(Uri.parse(videoPath));
         presenter = new BoleTohPresenterImpl(this);
-        //showInstructions();
-        //loadFragment(1);
     }
 
     private void playVideo(Uri videoPath) {
@@ -82,44 +69,19 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
             Log.e("Cant Play Video", e.getMessage());
             e.printStackTrace();
         }
-//        videoView.setMediaController(mediaController);
         introVideo.requestFocus();
     }
 
 
     @OnClick(R.id.skip_button_intro)
     public void startGame(){
-        loadFragment(1);
-    }
-
-    /*private void showInstructions() {
-
-        InputStream gif = null;
-        try {
-            gif = new FileInputStream(getSdcardPath()+"charactersGif/Balle-Balle.gif");
-            anupamGif.setGifResource(gif);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }*/
-
-
-    public String getSdcardPath() {
-        String sdCardPathString = null;
-        ArrayList<String> sdcard_path = SDCardUtil.getExtSdCardPaths(BoleToh.this);
-        for (String path : sdcard_path) {
-            if (new File(path + "/.AOP_External").exists()) {
-                sdCardPathString = path + "/.AOP_External/";
-            }
-        }
-        return sdCardPathString;
+        loadFragment();
     }
 
     @Override
-    public void loadFragment(int no) {
+    public void loadFragment() {
         Bundle bundle = new Bundle();
-        bundle.putString("frag", "G1L2");
+        bundle.putString("frag", "R1G1L2");
         PD_Utility.showFragment(BoleToh.this, new fragment_intro_character(), R.id.cl_bole_toh,
                 bundle, fragment_intro_character.class.getSimpleName());
     }
@@ -133,6 +95,6 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
 
     @Override
     public void onCompletion(MediaPlayer mp) {
-        loadFragment(1);
+        loadFragment();
     }
 }
