@@ -90,7 +90,7 @@ public class JodTod extends BaseActivity implements JodTodContract.JodTodView, M
     @Override
     public void loadFragment() {
         Bundle bundle = new Bundle();
-        bundle.putString("frag", "R2G3L2");
+        bundle.putString("frag", "R2G1L2");
         PD_Utility.showFragment(JodTod.this, new fragment_intro_character(), R.id.cl_jod_tod,
                 bundle, fragment_intro_character.class.getSimpleName());
     }
