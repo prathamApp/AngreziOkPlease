@@ -176,17 +176,26 @@ public class JodTod_G3_L2 extends BaseFragment implements JodTodContract.JodTod_
         // TODO Create views for setting question by extracting vowels from it
         String letters[] = questionText.split("");
         int lettersLength = letters.length;
-        for (int i = 0; i < lettersLength; i++) {
+        questionDiv.removeAllViews();
+        for (int i = 1; i < lettersLength; i++) {
             String currentLetter = letters[i];
             TextView textView = new TextView(getActivity());
-            textView.setTextSize(100);
+            textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            textView.setHeight(questionDiv.getHeight()/2);
+            textView.setWidth(questionDiv.getHeight()/2);
+            textView.setTextSize(50);
             if (!(currentLetter.equalsIgnoreCase("a")
                     || currentLetter.equalsIgnoreCase("e")
                     || currentLetter.equalsIgnoreCase("i")
                     || currentLetter.equalsIgnoreCase("o")
                     || currentLetter.equalsIgnoreCase("u"))) {
                 textView.setText(currentLetter);
+                textView.setBackgroundResource(R.drawable.round_button_normal);
+            }else {
+                textView.setText(" ");
+                textView.setBackgroundResource(R.drawable.round_button_normal);
             }
+
             questionDiv.addView(textView);
         }
     }
