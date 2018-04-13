@@ -312,100 +312,100 @@
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
-                                        android:background="@color/blackTransparent"
+                                        android:background="@drawable/round_button_selector"
                                         android:gravity="center"
                                         android:text="A"
-                                        android:textColor="@color/simple_white"
+                                        android:layout_marginHorizontal="1dp"
                                         android:textSize="25sp" />
 
                                     <TextView
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
-                                        android:background="@color/blackTransparent"
+                                        android:background="@drawable/round_button_selector"
                                         android:gravity="center"
                                         android:text="B"
-                                        android:textColor="@color/simple_white"
+                                        android:layout_marginHorizontal="1dp"
                                         android:textSize="25sp" />
 
                                     <TextView
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
-                                        android:background="@color/blackTransparent"
+                                        android:background="@drawable/round_button_selector"
                                         android:gravity="center"
                                         android:text="C"
-                                        android:textColor="@color/simple_white"
+                                        android:layout_marginHorizontal="1dp"
                                         android:textSize="25sp" />
 
                                     <TextView
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
-                                        android:background="@color/blackTransparent"
+                                        android:background="@drawable/round_button_selector"
                                         android:gravity="center"
                                         android:text="D"
-                                        android:textColor="@color/simple_white"
+                                        android:layout_marginHorizontal="1dp"
                                         android:textSize="25sp" />
 
                                     <TextView
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
-                                        android:background="@color/blackTransparent"
+                                        android:background="@drawable/round_button_selector"
                                         android:gravity="center"
                                         android:text="E"
-                                        android:textColor="@color/simple_white"
+                                        android:layout_marginHorizontal="1dp"
                                         android:textSize="25sp" />
 
                                     <TextView
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
-                                        android:background="@color/blackTransparent"
+                                        android:background="@drawable/round_button_selector"
                                         android:gravity="center"
                                         android:text="F"
-                                        android:textColor="@color/simple_white"
+                                        android:layout_marginHorizontal="1dp"
                                         android:textSize="25sp" />
 
                                     <TextView
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
-                                        android:background="@color/blackTransparent"
+                                        android:background="@drawable/round_button_selector"
                                         android:gravity="center"
                                         android:text="G"
-                                        android:textColor="@color/simple_white"
+                                        android:layout_marginHorizontal="1dp"
                                         android:textSize="25sp" />
 
                                     <TextView
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
-                                        android:background="@color/blackTransparent"
+                                        android:background="@drawable/round_button_selector"
                                         android:gravity="center"
                                         android:text="H"
-                                        android:textColor="@color/simple_white"
+                                        android:layout_marginHorizontal="1dp"
                                         android:textSize="25sp" />
 
                                     <TextView
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
-                                        android:background="@color/blackTransparent"
+                                        android:background="@drawable/round_button_selector"
                                         android:gravity="center"
                                         android:text="I"
-                                        android:textColor="@color/simple_white"
+                                        android:layout_marginHorizontal="1dp"
                                         android:textSize="25sp" />
 
                                     <TextView
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
-                                        android:background="@color/blackTransparent"
+                                        android:background="@drawable/round_button_selector"
                                         android:gravity="center"
                                         android:text="J"
-                                        android:textColor="@color/simple_white"
+                                        android:layout_marginHorizontal="1dp"
                                         android:textSize="25sp" />
 
                                 </LinearLayout>
@@ -422,100 +422,100 @@
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
-                                        android:background="@color/blackTransparent"
+                                        android:background="@drawable/round_button_selector"
                                         android:gravity="center"
                                         android:text="K"
-                                        android:textColor="@color/simple_white"
+                                        android:layout_marginHorizontal="1dp"
                                         android:textSize="25sp" />
 
                                     <TextView
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
-                                        android:background="@color/blackTransparent"
+                                        android:background="@drawable/round_button_selector"
                                         android:gravity="center"
                                         android:text="L"
-                                        android:textColor="@color/simple_white"
+                                        android:layout_marginHorizontal="1dp"
                                         android:textSize="25sp" />
 
                                     <TextView
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
-                                        android:background="@color/blackTransparent"
+                                        android:background="@drawable/round_button_selector"
                                         android:gravity="center"
                                         android:text="M"
-                                        android:textColor="@color/simple_white"
+                                        android:layout_marginHorizontal="1dp"
                                         android:textSize="25sp" />
 
                                     <TextView
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
-                                        android:background="@color/blackTransparent"
+                                        android:background="@drawable/round_button_selector"
                                         android:gravity="center"
                                         android:text="N"
-                                        android:textColor="@color/simple_white"
+                                        android:layout_marginHorizontal="1dp"
                                         android:textSize="25sp" />
 
                                     <TextView
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
-                                        android:background="@color/blackTransparent"
+                                        android:background="@drawable/round_button_selector"
                                         android:gravity="center"
                                         android:text="O"
-                                        android:textColor="@color/simple_white"
+                                        android:layout_marginHorizontal="1dp"
                                         android:textSize="25sp" />
 
                                     <TextView
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
-                                        android:background="@color/blackTransparent"
+                                        android:background="@drawable/round_button_selector"
                                         android:gravity="center"
                                         android:text="P"
-                                        android:textColor="@color/simple_white"
+                                        android:layout_marginHorizontal="1dp"
                                         android:textSize="25sp" />
 
                                     <TextView
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
-                                        android:background="@color/blackTransparent"
+                                        android:background="@drawable/round_button_selector"
                                         android:gravity="center"
                                         android:text="Q"
-                                        android:textColor="@color/simple_white"
+                                        android:layout_marginHorizontal="1dp"
                                         android:textSize="25sp" />
 
                                     <TextView
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
-                                        android:background="@color/blackTransparent"
+                                        android:background="@drawable/round_button_selector"
                                         android:gravity="center"
                                         android:text="R"
-                                        android:textColor="@color/simple_white"
+                                        android:layout_marginHorizontal="1dp"
                                         android:textSize="25sp" />
 
                                     <TextView
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
-                                        android:background="@color/blackTransparent"
+                                        android:background="@drawable/round_button_selector"
                                         android:gravity="center"
                                         android:text="S"
-                                        android:textColor="@color/simple_white"
+                                        android:layout_marginHorizontal="1dp"
                                         android:textSize="25sp" />
 
                                     <TextView
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
-                                        android:background="@color/blackTransparent"
+                                        android:background="@drawable/round_button_selector"
                                         android:gravity="center"
                                         android:text="T"
-                                        android:textColor="@color/simple_white"
+                                        android:layout_marginHorizontal="1dp"
                                         android:textSize="25sp" />
 
                                 </LinearLayout>
@@ -534,60 +534,60 @@
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
-                                        android:background="@color/blackTransparent"
+                                        android:background="@drawable/round_button_selector"
                                         android:gravity="center"
                                         android:text="U"
-                                        android:textColor="@color/simple_white"
+                                        android:layout_marginHorizontal="1dp"
                                         android:textSize="25sp" />
 
                                     <TextView
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
-                                        android:background="@color/blackTransparent"
+                                        android:background="@drawable/round_button_selector"
                                         android:gravity="center"
                                         android:text="V"
-                                        android:textColor="@color/simple_white"
+                                        android:layout_marginHorizontal="1dp"
                                         android:textSize="25sp" />
 
                                     <TextView
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
-                                        android:background="@color/blackTransparent"
+                                        android:background="@drawable/round_button_selector"
                                         android:gravity="center"
                                         android:text="W"
-                                        android:textColor="@color/simple_white"
+                                        android:layout_marginHorizontal="1dp"
                                         android:textSize="25sp" />
 
                                     <TextView
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
-                                        android:background="@color/blackTransparent"
+                                        android:background="@drawable/round_button_selector"
                                         android:gravity="center"
                                         android:text="X"
-                                        android:textColor="@color/simple_white"
+                                        android:layout_marginHorizontal="1dp"
                                         android:textSize="25sp" />
 
                                     <TextView
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
-                                        android:background="@color/blackTransparent"
+                                        android:background="@drawable/round_button_selector"
                                         android:gravity="center"
                                         android:text="Y"
-                                        android:textColor="@color/simple_white"
+                                        android:layout_marginHorizontal="1dp"
                                         android:textSize="25sp" />
 
                                     <TextView
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
-                                        android:background="@color/blackTransparent"
+                                        android:background="@drawable/round_button_selector"
                                         android:gravity="center"
                                         android:text="Z"
-                                        android:textColor="@color/simple_white"
+                                        android:layout_marginHorizontal="1dp"
                                         android:textSize="25sp" />
 
                                 </LinearLayout>
@@ -658,7 +658,7 @@
             android:background="@drawable/question_gradiance_bg"
             android:gravity="center"
             android:text="This is where the question will appear"
-            android:textColor="@color/simple_white"
+            android:layout_marginHorizontal="1dp"
             android:textSize="25sp"
             android:textStyle="italic|bold" />
     </LinearLayout>
