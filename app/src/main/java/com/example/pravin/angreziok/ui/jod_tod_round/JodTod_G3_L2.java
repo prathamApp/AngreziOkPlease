@@ -61,6 +61,8 @@ public class JodTod_G3_L2 extends BaseFragment implements JodTodContract.JodTod_
     KonfettiView konfettiView;
     @BindView(R.id.iv_submit_ans)
     ImageView submitAnswer;
+    @BindView(R.id.questionDiv)
+    LinearLayout questionDiv;
 
     String text;
     JodTodContract.JodTodPresenter presenter;
@@ -168,11 +170,25 @@ public class JodTod_G3_L2 extends BaseFragment implements JodTodContract.JodTod_
                 setQuestionDynamically(presenter.g3_l2_getQuestionText());
             }
         });
-
     }
 
     private void setQuestionDynamically(String questionText) {
         // TODO Create views for setting question by extracting vowels from it
+        String letters[] = questionText.split("");
+        int lettersLength = letters.length;
+        for (int i = 0; i < lettersLength; i++) {
+            String currentLetter = letters[i];
+            TextView textView = new TextView(getActivity());
+            textView.setTextSize(100);
+            if (!(currentLetter.equalsIgnoreCase("a")
+                    || currentLetter.equalsIgnoreCase("e")
+                    || currentLetter.equalsIgnoreCase("i")
+                    || currentLetter.equalsIgnoreCase("o")
+                    || currentLetter.equalsIgnoreCase("u"))) {
+                textView.setText(currentLetter);
+            }
+            questionDiv.addView(textView);
+        }
     }
 
     private void fadeOtherGroups() {
