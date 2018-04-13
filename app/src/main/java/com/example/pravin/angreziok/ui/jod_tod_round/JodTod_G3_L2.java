@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.pravin.angreziok.BaseFragment;
 import com.example.pravin.angreziok.R;
@@ -32,6 +33,7 @@ import nl.dionsegijn.konfetti.models.Shape;
 import nl.dionsegijn.konfetti.models.Size;
 
 import static com.example.pravin.angreziok.BaseActivity.ttsService;
+import static com.example.pravin.angreziok.ui.jod_tod_round.JodTod.animateView;
 import static com.example.pravin.angreziok.ui.jod_tod_round.JodTod.jodTodPlayerList;
 
 
@@ -68,6 +70,7 @@ public class JodTod_G3_L2 extends BaseFragment implements JodTodContract.JodTod_
     JodTodContract.JodTodPresenter presenter;
     int currentTeam;
     Dialog dialog;
+    TextView currentTextView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -173,16 +176,17 @@ public class JodTod_G3_L2 extends BaseFragment implements JodTodContract.JodTod_
     }
 
     private void setQuestionDynamically(String questionText) {
-        // TODO Create views for setting question by extracting vowels from it
         String letters[] = questionText.split("");
         int lettersLength = letters.length;
         questionDiv.removeAllViews();
+        int isFirst = 0;
         for (int i = 1; i < lettersLength; i++) {
             String currentLetter = letters[i];
-            TextView textView = new TextView(getActivity());
+            final TextView textView = new TextView(getActivity());
             textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-            textView.setHeight(questionDiv.getHeight()/2);
-            textView.setWidth(questionDiv.getHeight()/2);
+            textView.setAllCaps(true);
+            textView.setHeight(questionDiv.getHeight() / 2);
+            textView.setWidth(questionDiv.getHeight() / 2);
             textView.setTextSize(50);
             if (!(currentLetter.equalsIgnoreCase("a")
                     || currentLetter.equalsIgnoreCase("e")
@@ -190,12 +194,28 @@ public class JodTod_G3_L2 extends BaseFragment implements JodTodContract.JodTod_
                     || currentLetter.equalsIgnoreCase("o")
                     || currentLetter.equalsIgnoreCase("u"))) {
                 textView.setText(currentLetter);
-                textView.setBackgroundResource(R.drawable.round_button_normal);
-            }else {
+                textView.setBackgroundResource(R.drawable.round_set_bg);
+            } else {
+                isFirst++;
                 textView.setText(" ");
-                textView.setBackgroundResource(R.drawable.round_button_normal);
+                textView.setBackgroundResource(R.drawable.round_identify_bg);
+                if (isFirst == 1) {
+                    textView.setBackgroundResource(0);
+                    textView.setBackgroundResource(R.drawable.square_selected_bg);
+                    currentTextView = textView;
+                }
+                textView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (textView != currentTextView) {
+                            currentTextView.setBackgroundResource(R.drawable.round_identify_bg);
+                        }
+                        textView.setBackgroundResource(0);
+                        textView.setBackgroundResource(R.drawable.square_selected_bg);
+                        currentTextView = textView;
+                    }
+                });
             }
-
             questionDiv.addView(textView);
         }
     }
@@ -283,7 +303,7 @@ public class JodTod_G3_L2 extends BaseFragment implements JodTodContract.JodTod_
     public void submitAns() {
         submitAnswer.setClickable(false);
         mCountDownTimer.pause();
-//       TODO Check answer  presenter.checkFinalAnswer_g3_l2(answer.getText().toString(), currentTeam);
+        presenter.checkFinalAnswer_g3_l2(getFinalAnswer(), currentTeam);
         currentTeam += 1;
         if (currentTeam < jodTodPlayerList.size()) {
             Handler handler = new Handler();
@@ -315,9 +335,27 @@ public class JodTod_G3_L2 extends BaseFragment implements JodTodContract.JodTod_
         }
     }
 
+    private String getFinalAnswer() {
+        String answer="";
+        for( int i = 0; i < questionDiv.getChildCount(); i++ )
+            if( questionDiv.getChildAt( i ) instanceof TextView)
+                answer+= ((TextView) questionDiv.getChildAt( i )).getText();
+        return answer;
+    }
+
 
     @OnClick(R.id.ib_g1_l2_speaker)
     public void soundClicked() {
         presenter.startTTS(text);
+    }
+
+    @OnClick({R.id.A, R.id.B, R.id.C, R.id.D, R.id.E, R.id.F, R.id.G, R.id.H, R.id.I, R.id.J,
+            R.id.K, R.id.L, R.id.M, R.id.N, R.id.O, R.id.P, R.id.Q, R.id.R, R.id.S, R.id.T,
+            R.id.U, R.id.V, R.id.W, R.id.X, R.id.Y, R.id.Z})
+    public void keyClicked(View view) {
+        TextView textView = (TextView) view;
+        animateView(textView,getActivity());
+//        Toast.makeText(getActivity(), "" + textView.getText(), Toast.LENGTH_SHORT).show();
+        currentTextView.setText(textView.getText());
     }
 }

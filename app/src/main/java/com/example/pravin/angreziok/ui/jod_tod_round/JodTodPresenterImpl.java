@@ -1,9 +1,12 @@
 package com.example.pravin.angreziok.ui.jod_tod_round;
 
 import android.content.Context;
+import android.widget.Toast;
 
+import com.example.pravin.angreziok.interfaces.MediaCallbacks;
 import com.example.pravin.angreziok.modalclasses.GenericModalGson;
 import com.example.pravin.angreziok.services.TTSService;
+import com.example.pravin.angreziok.util.MediaPlayerUtil;
 import com.example.pravin.angreziok.util.SDCardUtil;
 import com.google.gson.Gson;
 
@@ -16,11 +19,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import static com.example.pravin.angreziok.ui.jod_tod_round.JodTod.jodTodPlayerList;
+
 /**
  * Created by Pravin on 20/03/2018.
  */
 
-public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter {
+public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, MediaCallbacks {
 
     Context mContext;
     JodTodContract.JodTod_G3_L2_View jodTodG3L2View;
@@ -29,6 +34,8 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter {
     GenericModalGson gsonListenAndSpellGameData;
     List<GenericModalGson> g3l2QuestionData;
     int randomNumber;
+    MediaPlayerUtil mediaPlayerUtil;
+
 
 
     public JodTodPresenterImpl(Context mContext) {
@@ -68,7 +75,7 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter {
     @Override
     public void set_g3_l2_data() {
         // TODO Create json file for game three
-        gsonListenAndSpellGameData = fetchJsonData("RoundOneGameThree", getSdcardPath());
+        gsonListenAndSpellGameData = fetchJsonData("RoundTwoGameThree", getSdcardPath());
         g3l2QuestionData = gsonListenAndSpellGameData.getNodelist();
     }
 
@@ -76,6 +83,20 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter {
     public String g3_l2_getQuestionText() {
         randomNumber = getRandomNumber(0, g3l2QuestionData.size());
         return g3l2QuestionData.get(randomNumber).getResourceText();
+    }
+
+    @Override
+    public void checkFinalAnswer_g3_l2(String ans, int currentTeam) {
+        if (g3l2QuestionData.get(randomNumber).getResourceText().equalsIgnoreCase(ans)) {
+            jodTodG3L2View.setCelebrationView();
+            playMusic("Sounds/BilkulSahijawab.mp3", getSdcardPath());
+            int currentTeamScore = Integer.parseInt(jodTodPlayerList.get(currentTeam).studentScore);
+            jodTodPlayerList.get(currentTeam).setStudentScore(String.valueOf(currentTeamScore + 10));
+            jodTodG3L2View.setCurrentScore();
+        } else {
+            Toast.makeText(mContext, "Wrong", Toast.LENGTH_SHORT).show();
+            playMusic("Sounds/wrong.mp3", getSdcardPath());
+        }
     }
 
     public GenericModalGson fetchJsonData(String jsonName, String path) {
@@ -97,5 +118,23 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter {
 
     public static int getRandomNumber(int min, int max) {
         return min + (new Random().nextInt(max));
+    }
+
+    @Override
+    public void playMusic(String fileName, String path) {
+        try {
+            if (mediaPlayerUtil == null) {
+                mediaPlayerUtil = new MediaPlayerUtil(mContext);
+                mediaPlayerUtil.initCallback(JodTodPresenterImpl.this);
+            }
+            mediaPlayerUtil.playMedia(path + fileName);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onComplete() {
+
     }
 }

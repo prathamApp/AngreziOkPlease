@@ -309,6 +309,7 @@
                                     android:weightSum="10">
 
                                     <TextView
+                                        android:id="@+id/A"
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
@@ -319,6 +320,7 @@
                                         android:textSize="25sp" />
 
                                     <TextView
+                                        android:id="@+id/B"
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
@@ -329,6 +331,7 @@
                                         android:textSize="25sp" />
 
                                     <TextView
+                                        android:id="@+id/C"
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
@@ -339,6 +342,7 @@
                                         android:textSize="25sp" />
 
                                     <TextView
+                                        android:id="@+id/D"
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
@@ -349,6 +353,7 @@
                                         android:textSize="25sp" />
 
                                     <TextView
+                                        android:id="@+id/E"
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
@@ -359,6 +364,7 @@
                                         android:textSize="25sp" />
 
                                     <TextView
+                                        android:id="@+id/F"
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
@@ -369,6 +375,7 @@
                                         android:textSize="25sp" />
 
                                     <TextView
+                                        android:id="@+id/G"
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
@@ -379,6 +386,7 @@
                                         android:textSize="25sp" />
 
                                     <TextView
+                                        android:id="@+id/H"
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
@@ -389,6 +397,7 @@
                                         android:textSize="25sp" />
 
                                     <TextView
+                                        android:id="@+id/I"
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
@@ -399,6 +408,7 @@
                                         android:textSize="25sp" />
 
                                     <TextView
+                                        android:id="@+id/J"
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
@@ -419,6 +429,7 @@
                                     android:weightSum="10">
 
                                     <TextView
+                                        android:id="@+id/K"
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
@@ -429,6 +440,7 @@
                                         android:textSize="25sp" />
 
                                     <TextView
+                                        android:id="@+id/L"
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
@@ -439,6 +451,7 @@
                                         android:textSize="25sp" />
 
                                     <TextView
+                                        android:id="@+id/M"
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
@@ -449,6 +462,7 @@
                                         android:textSize="25sp" />
 
                                     <TextView
+                                        android:id="@+id/N"
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
@@ -459,6 +473,7 @@
                                         android:textSize="25sp" />
 
                                     <TextView
+                                        android:id="@+id/O"
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
@@ -469,6 +484,7 @@
                                         android:textSize="25sp" />
 
                                     <TextView
+                                        android:id="@+id/P"
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
@@ -479,6 +495,7 @@
                                         android:textSize="25sp" />
 
                                     <TextView
+                                        android:id="@+id/Q"
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
@@ -489,6 +506,7 @@
                                         android:textSize="25sp" />
 
                                     <TextView
+                                        android:id="@+id/R"
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
@@ -499,6 +517,7 @@
                                         android:textSize="25sp" />
 
                                     <TextView
+                                        android:id="@+id/S"
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
@@ -509,6 +528,7 @@
                                         android:textSize="25sp" />
 
                                     <TextView
+                                        android:id="@+id/T"
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
@@ -531,6 +551,7 @@
                                     android:weightSum="10">
 
                                     <TextView
+                                        android:id="@+id/U"
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
@@ -541,6 +562,7 @@
                                         android:textSize="25sp" />
 
                                     <TextView
+                                        android:id="@+id/V"
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
@@ -551,6 +573,7 @@
                                         android:textSize="25sp" />
 
                                     <TextView
+                                        android:id="@+id/W"
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
@@ -561,6 +584,7 @@
                                         android:textSize="25sp" />
 
                                     <TextView
+                                        android:id="@+id/X"
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
@@ -571,6 +595,7 @@
                                         android:textSize="25sp" />
 
                                     <TextView
+                                        android:id="@+id/Y"
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
@@ -581,6 +606,7 @@
                                         android:textSize="25sp" />
 
                                     <TextView
+                                        android:id="@+id/Z"
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"

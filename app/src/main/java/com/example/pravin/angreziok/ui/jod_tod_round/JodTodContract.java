@@ -19,6 +19,10 @@ public interface JodTodContract {
         void set_g3_l2_data();
 
         String g3_l2_getQuestionText();
+
+        void checkFinalAnswer_g3_l2(String ans, int currentTeam);
+
+        void playMusic(String fileName, String path);
     }
 
     interface JodTod_G3_L2_View {
