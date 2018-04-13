@@ -30,4 +30,15 @@ public interface JodTodContract {
         void initiateQuestion(String question);
 
     }
+
+    interface JodTod_G1_L2_View {
+
+        void setCelebrationView();
+
+        void setCurrentScore();
+
+        void initiateQuestion(String question);
+
+    }
+
 }

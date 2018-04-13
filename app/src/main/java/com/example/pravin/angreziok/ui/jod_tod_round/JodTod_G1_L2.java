@@ -37,7 +37,7 @@ import static com.example.pravin.angreziok.BaseActivity.ttsService;
 import static com.example.pravin.angreziok.ui.jod_tod_round.JodTod.jodTodPlayerList;
 
 
-public class JodTod_G1_L2 extends BaseFragment implements JodTodContract.JodTod_G3_L2_View {
+public class JodTod_G1_L2 extends BaseFragment implements JodTodContract.JodTod_G1_L2_View {
 
     @BindView(R.id.mCountDownTimer)
     CountDownTimerView mCountDownTimer;
@@ -279,7 +279,7 @@ public class JodTod_G1_L2 extends BaseFragment implements JodTodContract.JodTod_
                 public void run() {
 
                     getActivity().findViewById(R.id.iv_submit_ans).setOnClickListener(null);
-// TODO  Next Round start process  SamajhKeBolo
+                    // TODO  Next Round start process  SamajhKeBolo
                     /*Intent intent = new Intent(getActivity(), SamajhKeBolo.class);
                     Bundle bundle = new Bundle();
                     bundle.putParcelableArrayList("PlayerList", jodTodPlayerList);
