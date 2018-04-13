@@ -14,6 +14,7 @@ import com.example.pravin.angreziok.custom.GifView;
 import com.example.pravin.angreziok.ui.bole_toh_round.BoleToh_G1_L2;
 import com.example.pravin.angreziok.ui.bole_toh_round.BoleToh_G2_L2;
 import com.example.pravin.angreziok.ui.bole_toh_round.BoleToh_G3_L2;
+import com.example.pravin.angreziok.ui.jod_tod_round.JodTod_G1_L2;
 import com.example.pravin.angreziok.ui.jod_tod_round.JodTod_G3_L2;
 import com.example.pravin.angreziok.util.PD_Utility;
 import com.example.pravin.angreziok.util.SDCardUtil;
@@ -123,8 +124,8 @@ public class fragment_intro_character extends BaseFragment {
                         null, BoleToh_G3_L2.class.getSimpleName());
                 break;
             case 4:
-//        TODO        PD_Utility.showFragment(getActivity(), new JodTod_G1_L2(), R.id.cl_jod_tod,
-//                        null, JodTod_G1_L2.class.getSimpleName());
+                PD_Utility.showFragment(getActivity(), new JodTod_G1_L2(), R.id.cl_jod_tod,
+                        null, JodTod_G1_L2.class.getSimpleName());
                 break;
             case 5:
 //         TODO       PD_Utility.showFragment(getActivity(), new JodTod_G2_L2(), R.id.cl_jod_tod,

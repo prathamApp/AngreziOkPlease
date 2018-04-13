@@ -24,6 +24,7 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter {
 
     Context mContext;
     JodTodContract.JodTod_G3_L2_View jodTodG3L2View;
+    JodTodContract.JodTod_G1_L2_View jodTodG1L2View;
     public TTSService ttsService;
     GenericModalGson gsonListenAndSpellGameData;
     List<GenericModalGson> g3l2QuestionData;
@@ -39,6 +40,13 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter {
         this.jodTodG3L2View = jodTod_g3_l2_view;
         this.ttsService= ttsService;
     }
+
+    public JodTodPresenterImpl(Context context, JodTodContract.JodTod_G1_L2_View jodTod_g1_l2_view,TTSService ttsService){
+        mContext = context;
+        this.jodTodG1L2View = jodTod_g1_l2_view;
+        this.ttsService= ttsService;
+    }
+
 
     @Override
     public void startTTS(String text) {
