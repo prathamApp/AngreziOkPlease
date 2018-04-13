@@ -26,8 +26,7 @@ public class BaseActivity extends AppCompatActivity {
         ttsService = new TTSService(getApplication());
         ttsService.setActivity(this);
         ttsService.setSpeechRate(0.6f);
-        ttsService.setLanguage(new Locale("hi", "IN"));
-
+        ttsService.setLanguage(new Locale("en", "IN"));
         sttService = STTService.init(this);
     }
 

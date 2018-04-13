@@ -390,7 +390,7 @@
                                     android:weightSum="4">
 
                                     <ImageView
-                                        android:id="@+id/iv_g1_l2_submit_ans"
+                                        android:id="@+id/iv_submit_ans"
                                         android:layout_width="match_parent"
                                         android:layout_height="0dp"
                                         android:layout_weight="3"
