@@ -52,6 +52,7 @@ import android.widget.Toast;
 
 import com.example.pravin.angreziok.ui.bole_toh_round.BoleToh;
 import com.example.pravin.angreziok.ui.jod_tod_round.JodTod;
+import com.example.pravin.angreziok.ui.samajh_ke_bolo_round.SamajhKeBolo;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -126,7 +127,6 @@ public class PD_Utility {
         if (mBundle != null)
             mFragment.setArguments(mBundle);
 
-        // TODO changes for fragments
         if (mActivity instanceof BoleToh) {
             ((BoleToh) mActivity).getSupportFragmentManager()
                     .beginTransaction()
@@ -141,14 +141,13 @@ public class PD_Utility {
                     .addToBackStack(TAG)
                     .commit();
         }
-        /* TODO 3rd round
         else if (mActivity instanceof SamajhKeBolo) {
             ((SamajhKeBolo) mActivity).getSupportFragmentManager()
                     .beginTransaction()
                     .replace(frame, mFragment, TAG)
                     .addToBackStack(TAG)
                     .commit();
-        }*/
+        }
 //        else if (mActivity instanceof Activity_DietForm) {
 //            ((Activity_DietForm) mActivity).getSupportFragmentManager()
 //                    .beginTransaction()
