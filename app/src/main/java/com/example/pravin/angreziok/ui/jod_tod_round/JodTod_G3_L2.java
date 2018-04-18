@@ -1,6 +1,7 @@
 package com.example.pravin.angreziok.ui.jod_tod_round;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -17,11 +18,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.pravin.angreziok.BaseFragment;
 import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.animations.MyBounceInterpolator;
+import com.example.pravin.angreziok.ui.samajh_ke_bolo_round.SamajhKeBolo;
 import com.github.anastr.flattimelib.CountDownTimerView;
 import com.github.anastr.flattimelib.intf.OnTimeFinish;
 
@@ -170,7 +171,7 @@ public class JodTod_G3_L2 extends BaseFragment implements JodTodContract.JodTod_
                 dialog.dismiss();
                 String question = presenter.g3_l2_getQuestionText();
                 initiateQuestion(question);
-                setQuestionDynamically(presenter.g3_l2_getQuestionText());
+                setQuestionDynamically(question);
             }
         });
     }
@@ -322,12 +323,11 @@ public class JodTod_G3_L2 extends BaseFragment implements JodTodContract.JodTod_
                 public void run() {
 
                     getActivity().findViewById(R.id.iv_submit_ans).setOnClickListener(null);
-// TODO  Next Round start process  SamajhKeBolo
-                    /*Intent intent = new Intent(getActivity(), SamajhKeBolo.class);
+                    Intent intent = new Intent(getActivity(), SamajhKeBolo.class);
                     Bundle bundle = new Bundle();
                     bundle.putParcelableArrayList("PlayerList", jodTodPlayerList);
                     intent.putExtras(bundle);
-                    startActivity(intent);*/
+                    startActivity(intent);
 
                 }
             }, 2500);
@@ -336,10 +336,10 @@ public class JodTod_G3_L2 extends BaseFragment implements JodTodContract.JodTod_
     }
 
     private String getFinalAnswer() {
-        String answer="";
-        for( int i = 0; i < questionDiv.getChildCount(); i++ )
-            if( questionDiv.getChildAt( i ) instanceof TextView)
-                answer+= ((TextView) questionDiv.getChildAt( i )).getText();
+        String answer = "";
+        for (int i = 0; i < questionDiv.getChildCount(); i++)
+            if (questionDiv.getChildAt(i) instanceof TextView)
+                answer += ((TextView) questionDiv.getChildAt(i)).getText();
         return answer;
     }
 
@@ -354,7 +354,7 @@ public class JodTod_G3_L2 extends BaseFragment implements JodTodContract.JodTod_
             R.id.U, R.id.V, R.id.W, R.id.X, R.id.Y, R.id.Z})
     public void keyClicked(View view) {
         TextView textView = (TextView) view;
-        animateView(textView,getActivity());
+        animateView(textView, getActivity());
 //        Toast.makeText(getActivity(), "" + textView.getText(), Toast.LENGTH_SHORT).show();
         currentTextView.setText(textView.getText());
     }

@@ -1,9 +1,12 @@
 package com.example.pravin.angreziok.ui.samajh_ke_bolo_round;
 
 import android.app.Dialog;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,6 +25,8 @@ import com.example.pravin.angreziok.BaseFragment;
 import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.animations.MyBounceInterpolator;
 import com.example.pravin.angreziok.interfaces.SpeechResult;
+import com.example.pravin.angreziok.ui.fragment_intro_character;
+import com.example.pravin.angreziok.util.PD_Utility;
 import com.github.anastr.flattimelib.CountDownTimerView;
 import com.github.anastr.flattimelib.intf.OnTimeFinish;
 
@@ -41,6 +46,10 @@ public class SamajhKeBolo_G1_L2 extends BaseFragment implements SamajhKeBoloCont
 
     @BindView(R.id.mCountDownTimer)
     CountDownTimerView mCountDownTimer;
+    @BindView(R.id.tv_g1_l2_answer)
+    TextView answer;
+    @BindView(R.id.ll_g1_l2_sttoptions)
+    LinearLayout options;
     @BindView(R.id.ll_g1_l2_allstar)
     LinearLayout allstarLayout;
     @BindView(R.id.ll_g1_l2_megastar)
@@ -57,10 +66,20 @@ public class SamajhKeBolo_G1_L2 extends BaseFragment implements SamajhKeBoloCont
     TextView superScore;
     @BindView(R.id.g1_l2_allstar)
     TextView allScore;
-    @BindView(R.id.tv_r1g1_question)
-    TextView showQuestion;
+    @BindView(R.id.option1)
+    TextView option1;
+    @BindView(R.id.option2)
+    TextView option2;
+    @BindView(R.id.option3)
+    TextView option3;
+    @BindView(R.id.g1_l2_sttOptions)
+    LinearLayout optionsView;
     @BindView(R.id.konfettiView_g1_l2)
     KonfettiView konfettiView;
+    @BindView(R.id.iv_g1_l2_submit_ans)
+    ImageView submitAnswer;
+    @BindView(R.id.qusetionImage)
+    ImageView qusetionImage;
 
     String text;
     SamajhKeBoloContract.SamajhKeBoloPresenter presenter;
@@ -153,19 +172,17 @@ public class SamajhKeBolo_G1_L2 extends BaseFragment implements SamajhKeBoloCont
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-//                TODO Onclicks
+                presenter.setImage_gl_l2();
                 initiateQuestion();
-//                presenter.setImage_gl_l2();
             }
         });
 
-        button.setOnClickListener(new View.OnClickListener() {
+        iv_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-//                TODO Onclicks
+                presenter.setImage_gl_l2();
                 initiateQuestion();
-//                presenter.setImage_gl_l2();
             }
         });
 
@@ -222,22 +239,19 @@ public class SamajhKeBolo_G1_L2 extends BaseFragment implements SamajhKeBoloCont
 
     @Override
     public void initiateQuestion() {
-//        TODO Initial work for questions
         startTimer();
+        text = presenter.getCurrentQuestion_g1_l2();
         playTTS();
     }
 
     private void setDataForGame() {
-//        TODO Setting data for game
-//        String path = presenter.getSdcardPath();
-//        presenter.set_g1_l2_data(path);
+        String path = presenter.getSdcardPath();
+        presenter.set_g1_l2_data(path);
+        showQuestion.setText("Listen and Spell the word correctly");
     }
 
     private void playTTS() {
-//        TODO TTS start
-        text = "What is This?";
-        showQuestion.setText(text);
-//        presenter.startTTS(text);
+        presenter.startTTS(text);
     }
 
     private void startTimer() {
@@ -254,8 +268,7 @@ public class SamajhKeBolo_G1_L2 extends BaseFragment implements SamajhKeBoloCont
 
     @OnClick(R.id.ib_g1_l2_speaker)
     public void soundClicked() {
-//        TODO
-//        presenter.startTTS(text);
+        presenter.startTTS(text);
     }
 
     @OnClick(R.id.ib_g1_l2_mic)
@@ -269,17 +282,15 @@ public class SamajhKeBolo_G1_L2 extends BaseFragment implements SamajhKeBoloCont
 
     @OnClick({R.id.option1, R.id.option2, R.id.option3})
     public void optionsClicked(View view) {
-//        TODO STTOptions
         // TTS for the options clicked
-//        TextView option = (TextView) view;
-//        answer.setText(option.getText() + "");
-//        presenter.startTTS(option.getText() + "");
+        TextView option = (TextView) view;
+        answer.setText(option.getText() + "");
+        presenter.startTTS(option.getText() + "");
     }
 
     @OnClick(R.id.iv_g1_l2_submit_ans)
     public void submitAns() {
-//        TODO SubmitAndCheck answer
-        /*submitAnswer.setClickable(false);
+        submitAnswer.setClickable(false);
         mCountDownTimer.pause();
         presenter.checkFinalAnswer_g1_l2(answer.getText().toString(), currentTeam);
         currentTeam += 1;
@@ -299,19 +310,17 @@ public class SamajhKeBolo_G1_L2 extends BaseFragment implements SamajhKeBoloCont
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
+
                     //TODO display Score screen after final round
                     getActivity().findViewById(R.id.iv_g1_l2_submit_ans).setOnClickListener(null);
-
                     Bundle bundle = new Bundle();
-                    bundle.putString("frag", "R1G2L2");
-                    PD_Utility.showFragment(getActivity(), new fragment_intro_character(), R.id.cl_bole_toh,
+                    bundle.putString("frag", "R3G2L2");
+                    PD_Utility.showFragment(getActivity(), new fragment_intro_character(), R.id.cl_samajh_ke_bolo,
                             bundle, fragment_intro_character.class.getSimpleName());
 
                 }
             }, 2500);
-
         }
-*/
     }
 
     public void startSTT() {
@@ -319,7 +328,13 @@ public class SamajhKeBolo_G1_L2 extends BaseFragment implements SamajhKeBoloCont
         sttService.startListening();
     }
 
-    /*  TODO Necessary or not
+    @Override
+    public void onResult(String result) {
+        optionsView.setVisibility(View.VISIBLE);
+        setAnswer(result);
+        presenter.g1_l2_checkAnswer(result);
+    }
+
     @Override
      public void hideOptionView() {
          optionsView.setVisibility(View.GONE);
@@ -329,7 +344,7 @@ public class SamajhKeBolo_G1_L2 extends BaseFragment implements SamajhKeBoloCont
      public void setQuestionImage(String path) {
          try {
              Bitmap[] bitmap = {BitmapFactory.decodeFile("" + path)};
-             iv_ques_img_g1_l2.setImageBitmap(bitmap[0]);
+             qusetionImage.setImageBitmap(bitmap[0]);
          } catch (Exception e) {
              e.printStackTrace();
          }
@@ -341,7 +356,6 @@ public class SamajhKeBolo_G1_L2 extends BaseFragment implements SamajhKeBoloCont
          answer.setText(ans);
      }
 
-
      @Override
      public void showOptions_g1_l2() {
          options.setVisibility(View.VISIBLE);
@@ -350,12 +364,4 @@ public class SamajhKeBolo_G1_L2 extends BaseFragment implements SamajhKeBoloCont
          option2.setText(options[1]);
          option3.setText(options[2]);
      }
- */
-    @Override
-    public void onResult(String result) {
-        /* TODO Override STT onResult
-        optionsView.setVisibility(View.VISIBLE);
-        setAnswer(result);
-        presenter.g1_l2_checkAnswer(result);*/
-    }
 }

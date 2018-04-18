@@ -266,7 +266,7 @@
                                 android:gravity="center">
 
                                 <ImageView
-                                    android:id="@+id/iv_ques_img_g1_l2"
+                                    android:id="@+id/qusetionImage"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent" />
                             </LinearLayout>

@@ -170,9 +170,7 @@ public class BoleToh_G3_L2 extends BaseFragment implements BoleTohContract.BoleT
 
         dialog.show();
 
-        Button scanNextQR = dialog.findViewById(R.id.dialog_btn_scan_qr);
-
-        scanNextQR.setOnClickListener(new View.OnClickListener() {
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();

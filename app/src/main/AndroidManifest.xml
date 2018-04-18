@@ -43,6 +43,10 @@
             android:screenOrientation="sensorLandscape" />
 
         <activity
+            android:name=".ui.samajh_ke_bolo_round.SamajhKeBolo"
+            android:screenOrientation="sensorLandscape" />
+
+        <activity
             android:name=".ui.start_data_confirmation.DataConfirmation"
             android:screenOrientation="sensorLandscape" />
     </application>

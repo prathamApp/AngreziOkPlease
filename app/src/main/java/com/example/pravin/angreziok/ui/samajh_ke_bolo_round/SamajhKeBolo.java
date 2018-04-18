@@ -46,11 +46,11 @@ public class SamajhKeBolo extends BaseActivity implements SamajhKeBoloContract.S
 
         Intent intent = getIntent();
         Bundle extraBundle = intent.getExtras();
-        playerModalArrayList = extraBundle.getParcelableArrayList("playerModalArrayList");
+        playerModalArrayList = extraBundle.getParcelableArrayList("PlayerList");
 
         Collections.shuffle(playerModalArrayList);
         for (int i = 0; i < playerModalArrayList.size(); i++)
-            Log.d("SamajhKeBoloTAG", "playerModalArrayList: " + playerModalArrayList.get(i).getStudentAlias());
+            Log.d("SamajhKeBoloTAG", "PlayerList: " + playerModalArrayList.get(i).getStudentAlias());
 
         // TODO post video in videos folder
         videoPath = PD_Utility.getExternalPath(this) + "Videos/Samajh_ke_bolo_round.mp4";
