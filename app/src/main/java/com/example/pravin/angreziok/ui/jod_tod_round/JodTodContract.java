@@ -18,7 +18,11 @@ public interface JodTodContract {
 
         void set_g3_l2_data();
 
+        void set_g1_l2_data();
+
         String g3_l2_getQuestionText();
+
+        String g1_l2_getQuestionText();
 
         void checkFinalAnswer_g3_l2(String ans, int currentTeam);
 

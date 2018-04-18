@@ -16,6 +16,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.pravin.angreziok.BaseFragment;
@@ -41,6 +42,8 @@ public class JodTod_G1_L2 extends BaseFragment implements JodTodContract.JodTod_
 
     @BindView(R.id.mCountDownTimer)
     CountDownTimerView mCountDownTimer;
+    @BindView(R.id.r1g1l2_scroll_view)
+    ScrollView scroll_view;
     @BindView(R.id.ll_g1_l2_allstar)
     LinearLayout allstarLayout;
     @BindView(R.id.ll_g1_l2_megastar)
@@ -155,7 +158,7 @@ public class JodTod_G1_L2 extends BaseFragment implements JodTodContract.JodTod_
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                String question = presenter.g3_l2_getQuestionText();
+                String question = presenter.g1_l2_getQuestionText();
                 initiateQuestion(question);
                 setQuestionDynamically(question);
             }
@@ -165,9 +168,9 @@ public class JodTod_G1_L2 extends BaseFragment implements JodTodContract.JodTod_
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                String question = presenter.g3_l2_getQuestionText();
+                String question = presenter.g1_l2_getQuestionText();
                 initiateQuestion(question);
-                setQuestionDynamically(presenter.g3_l2_getQuestionText());
+                setQuestionDynamically(presenter.g1_l2_getQuestionText());
             }
         });
 
@@ -175,6 +178,7 @@ public class JodTod_G1_L2 extends BaseFragment implements JodTodContract.JodTod_
 
     private void setQuestionDynamically(String questionText) {
         // TODO Create views for setting question by extracting vowels from it
+
     }
 
     private void fadeOtherGroups() {
@@ -237,7 +241,7 @@ public class JodTod_G1_L2 extends BaseFragment implements JodTodContract.JodTod_
 
     private void setDataForGame() {
         presenter.set_g3_l2_data();
-        showQuestion.setText("Listen and Spell the word correctly");
+        showQuestion.setText("Say The Words Starting With");
     }
 
     private void playTTS() {

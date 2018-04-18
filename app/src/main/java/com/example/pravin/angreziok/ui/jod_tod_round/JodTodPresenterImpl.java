@@ -31,8 +31,8 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
     JodTodContract.JodTod_G3_L2_View jodTodG3L2View;
     JodTodContract.JodTod_G1_L2_View jodTodG1L2View;
     public TTSService ttsService;
-    GenericModalGson gsonListenAndSpellGameData;
-    List<GenericModalGson> g3l2QuestionData;
+    GenericModalGson gsonListenAndSpellGameData,gsonAlphabetGameData;
+    List<GenericModalGson> g3l2QuestionData,g1l2QuestionData;
     int randomNumber;
     MediaPlayerUtil mediaPlayerUtil;
 
@@ -80,9 +80,22 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
     }
 
     @Override
+    public void set_g1_l2_data() {
+        // TODO Create json file for game three
+        gsonAlphabetGameData = fetchJsonData("RoundTwoGameThreeLevelTwo", getSdcardPath());
+        g1l2QuestionData = gsonAlphabetGameData.getNodelist();
+    }
+
+    @Override
     public String g3_l2_getQuestionText() {
         randomNumber = getRandomNumber(0, g3l2QuestionData.size());
         return g3l2QuestionData.get(randomNumber).getResourceText();
+    }
+
+    @Override
+    public String g1_l2_getQuestionText() {
+        randomNumber = getRandomNumber(0, g1l2QuestionData.size());
+        return g1l2QuestionData.get(randomNumber).getResourceText();
     }
 
     @Override
