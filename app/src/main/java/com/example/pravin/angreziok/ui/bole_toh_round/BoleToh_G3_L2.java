@@ -82,6 +82,8 @@ public class BoleToh_G3_L2 extends BaseFragment implements BoleTohContract.BoleT
     ImageView hintImage;
     @BindView(R.id.question)
     ImageView questionImage;
+    @BindView(R.id.questionText)
+    TextView question;
 
     String text;
     BoleTohContract.BoleTohPresenter presenter;
@@ -261,6 +263,7 @@ public class BoleToh_G3_L2 extends BaseFragment implements BoleTohContract.BoleT
     private void setDataForGame() {
         String path = presenter.getSdcardPath();
         presenter.set_g3_l2_data(path);
+        question.setText("Identify the pair");
     }
 
     private void playTTS() {
