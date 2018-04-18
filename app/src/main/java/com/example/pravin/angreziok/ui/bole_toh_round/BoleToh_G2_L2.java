@@ -83,6 +83,8 @@ public class BoleToh_G2_L2 extends BaseFragment implements BoleTohContract.BoleT
     KonfettiView konfettiView;
     @BindView(R.id.iv_r1g2_submit_ans)
     ImageView submitAnswer;
+    @BindView(R.id.question)
+    TextView question;
 
     String text;
     BoleTohContract.BoleTohPresenter presenter;
@@ -253,6 +255,7 @@ public class BoleToh_G2_L2 extends BaseFragment implements BoleTohContract.BoleT
     private void setDataForGame() {
         String path = presenter.getSdcardPath();
         presenter.set_g2_l2_data(path);
+        question.setText("Identify the action?");
     }
 
     private void playTTS() {

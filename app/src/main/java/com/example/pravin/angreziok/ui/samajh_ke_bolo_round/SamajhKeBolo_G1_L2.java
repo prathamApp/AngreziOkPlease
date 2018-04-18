@@ -80,6 +80,9 @@ public class SamajhKeBolo_G1_L2 extends BaseFragment implements SamajhKeBoloCont
     ImageView submitAnswer;
     @BindView(R.id.qusetionImage)
     ImageView qusetionImage;
+    @BindView(R.id.tv_g1_l2_question)
+    TextView questionText;
+
 
     String text;
     SamajhKeBoloContract.SamajhKeBoloPresenter presenter;
@@ -241,13 +244,14 @@ public class SamajhKeBolo_G1_L2 extends BaseFragment implements SamajhKeBoloCont
     public void initiateQuestion() {
         startTimer();
         text = presenter.getCurrentQuestion_g1_l2();
+        questionText.setText(text);
         playTTS();
     }
 
     private void setDataForGame() {
         String path = presenter.getSdcardPath();
         presenter.set_g1_l2_data(path);
-        showQuestion.setText("Listen and Spell the word correctly");
+        questionText.setText("Listen and answer properly");
     }
 
     private void playTTS() {

@@ -482,7 +482,7 @@
             android:weightSum="3">
 
             <TextView
-                android:id="@+id/tv_r1g1_question"
+                android:id="@+id/tv_g1_l2_question"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
