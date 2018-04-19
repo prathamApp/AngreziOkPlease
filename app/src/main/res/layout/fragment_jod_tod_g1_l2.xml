@@ -275,6 +275,7 @@
                                     android:textColor="@color/colorPrimary"
                                     android:textSize="200dp"
                                     android:textStyle="bold" />
+
                             </LinearLayout>
 
                             <LinearLayout

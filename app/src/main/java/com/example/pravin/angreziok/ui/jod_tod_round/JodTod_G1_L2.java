@@ -62,6 +62,8 @@ public class JodTod_G1_L2 extends BaseFragment implements JodTodContract.JodTod_
     TextView allScore;
     @BindView(R.id.tv_question)
     TextView showQuestion;
+    @BindView(R.id.iv_ques_img_r2_g1_l2)
+    TextView tv_ques_img;
     @BindView(R.id.konfettiView_g1_l2)
     KonfettiView konfettiView;
     @BindView(R.id.iv_submit_ans)
@@ -178,7 +180,7 @@ public class JodTod_G1_L2 extends BaseFragment implements JodTodContract.JodTod_
 
     private void setQuestionDynamically(String questionText) {
         // TODO Create views for setting question by extracting vowels from it
-
+        tv_ques_img.setText(questionText);
     }
 
     private void fadeOtherGroups() {
@@ -240,7 +242,7 @@ public class JodTod_G1_L2 extends BaseFragment implements JodTodContract.JodTod_
     }
 
     private void setDataForGame() {
-        presenter.set_g3_l2_data();
+        presenter.set_g1_l2_data();
         showQuestion.setText("Say The Words Starting With");
     }
 
@@ -264,7 +266,7 @@ public class JodTod_G1_L2 extends BaseFragment implements JodTodContract.JodTod_
     public void submitAns() {
         submitAnswer.setClickable(false);
         mCountDownTimer.pause();
-//       TODO Check answer  presenter.checkFinalAnswer_g3_l2(answer.getText().toString(), currentTeam);
+//       TODO Check answer  presenter.checkFinalAnswer_g1_l2(answer.getText().toString(), currentTeam);
         currentTeam += 1;
         if (currentTeam < jodTodPlayerList.size()) {
             Handler handler = new Handler();
