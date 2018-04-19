@@ -20,9 +20,13 @@ public interface JodTodContract {
 
         void set_g1_l2_data();
 
+        void g1_l2_checkAnswer(String ans);
+
         String g3_l2_getQuestionText();
 
         String g1_l2_getQuestionText();
+
+        void checkFinalAnswer_g1_l2(String ans, int currentTeam);
 
         void checkFinalAnswer_g3_l2(String ans, int currentTeam);
 
@@ -46,6 +50,8 @@ public interface JodTodContract {
         void setCurrentScore();
 
         void initiateQuestion(String question);
+
+        void setAnswer(String ans,String sttWord);
 
     }
 

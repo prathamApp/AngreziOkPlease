@@ -31,27 +31,26 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
     JodTodContract.JodTod_G3_L2_View jodTodG3L2View;
     JodTodContract.JodTod_G1_L2_View jodTodG1L2View;
     public TTSService ttsService;
-    GenericModalGson gsonListenAndSpellGameData,gsonAlphabetGameData;
-    List<GenericModalGson> g3l2QuestionData,g1l2QuestionData;
+    GenericModalGson gsonListenAndSpellGameData, gsonAlphabetGameData;
+    List<GenericModalGson> g3l2QuestionData, g1l2QuestionData;
     int randomNumber;
     MediaPlayerUtil mediaPlayerUtil;
-
 
 
     public JodTodPresenterImpl(Context mContext) {
         this.mContext = mContext;
     }
 
-    public JodTodPresenterImpl(Context context, JodTodContract.JodTod_G3_L2_View jodTod_g3_l2_view,TTSService ttsService){
+    public JodTodPresenterImpl(Context context, JodTodContract.JodTod_G3_L2_View jodTod_g3_l2_view, TTSService ttsService) {
         mContext = context;
         this.jodTodG3L2View = jodTod_g3_l2_view;
-        this.ttsService= ttsService;
+        this.ttsService = ttsService;
     }
 
-    public JodTodPresenterImpl(Context context, JodTodContract.JodTod_G1_L2_View jodTod_g1_l2_view,TTSService ttsService){
+    public JodTodPresenterImpl(Context context, JodTodContract.JodTod_G1_L2_View jodTod_g1_l2_view, TTSService ttsService) {
         mContext = context;
         this.jodTodG1L2View = jodTod_g1_l2_view;
-        this.ttsService= ttsService;
+        this.ttsService = ttsService;
     }
 
 
@@ -87,6 +86,14 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
     }
 
     @Override
+    public void g1_l2_checkAnswer(String ans) {
+        if (!ans.equalsIgnoreCase("") && !ans.equalsIgnoreCase(" ")) {
+            String actualAns = "" + ans.charAt(0);
+            jodTodG1L2View.setAnswer(actualAns, ans);
+        }
+    }
+
+    @Override
     public String g3_l2_getQuestionText() {
         randomNumber = getRandomNumber(0, g3l2QuestionData.size());
         return g3l2QuestionData.get(randomNumber).getResourceText();
@@ -97,6 +104,21 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
         randomNumber = getRandomNumber(0, g1l2QuestionData.size());
         return g1l2QuestionData.get(randomNumber).getResourceText();
     }
+
+    @Override
+    public void checkFinalAnswer_g1_l2(String socore, int currentTeam) {
+
+        int currentTeamScore = Integer.parseInt(jodTodPlayerList.get(currentTeam).studentScore);
+        currentTeamScore += Integer.parseInt(socore);
+
+        jodTodPlayerList.get(currentTeam).setStudentScore(""+currentTeamScore);
+        jodTodG1L2View.setCurrentScore();
+
+        //  TODO Correct Answer Animation
+        jodTodG3L2View.setCelebrationView();
+        playMusic("Sounds/BilkulSahijawab.mp3", getSdcardPath());
+}
+
 
     @Override
     public void checkFinalAnswer_g3_l2(String ans, int currentTeam) {
