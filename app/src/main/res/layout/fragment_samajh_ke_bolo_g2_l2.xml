@@ -87,7 +87,7 @@
                         android:weightSum="4">
 
                         <LinearLayout
-                            android:id="@+id/ll_g1_l2_megastar"
+                            android:id="@+id/ll_g2_l2_megastar"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_marginRight="10dp"
@@ -99,7 +99,7 @@
                             android:weightSum="2">
 
                             <TextView
-                                android:id="@+id/g1_l2_megastar"
+                                android:id="@+id/g2_l2_megastar"
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_gravity="center"
@@ -123,7 +123,7 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/ll_g1_l2_rockstar"
+                            android:id="@+id/ll_g2_l2_rockstar"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_marginRight="10dp"
@@ -135,7 +135,7 @@
                             android:weightSum="2">
 
                             <TextView
-                                android:id="@+id/g1_l2_rockstar"
+                                android:id="@+id/g2_l2_rockstar"
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_gravity="center"
@@ -159,7 +159,7 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/ll_g1_l2_superstar"
+                            android:id="@+id/ll_g2_l2_superstar"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_marginRight="10dp"
@@ -171,7 +171,7 @@
                             android:weightSum="2">
 
                             <TextView
-                                android:id="@+id/g1_l2_superstar"
+                                android:id="@+id/g2_l2_superstar"
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_gravity="center"
@@ -195,7 +195,7 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/ll_g1_l2_allstar"
+                            android:id="@+id/ll_g2_l2_allstar"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_marginRight="10dp"
@@ -207,7 +207,7 @@
                             android:weightSum="2">
 
                             <TextView
-                                android:id="@+id/g1_l2_allstar"
+                                android:id="@+id/g2_l2_allstar"
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_gravity="center"
@@ -262,17 +262,44 @@
                                 android:layout_height="match_parent"
                                 android:layout_gravity="center"
                                 android:layout_weight="1"
-                                android:background="@drawable/gameimgbg"
+                                android:weightSum="3"
+                                android:orientation="vertical"
+                                android:background="@drawable/green_answer_background"
                                 android:gravity="center">
 
-                                <ImageView
-                                    android:id="@+id/iv_ques_img_g1_l2"
+                                <TextView
+                                    android:id="@+id/word1"
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent" />
+                                    android:layout_height="0dp"
+                                    android:gravity="center"
+                                    android:textStyle="bold|italic"
+                                    android:text="word1"
+                                    android:textSize="30sp"
+                                    android:layout_weight="1"/>
+
+                                <TextView
+                                    android:id="@+id/word2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:gravity="center"
+                                    android:textStyle="bold|italic"
+                                    android:text="word2"
+                                    android:textSize="30sp"
+                                    android:layout_weight="1"/>
+
+                                <TextView
+                                    android:id="@+id/word3"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:gravity="center"
+                                    android:textStyle="bold|italic"
+                                    android:text="word3"
+                                    android:textSize="30sp"
+                                    android:layout_weight="1"/>
                             </LinearLayout>
 
                             <LinearLayout
-                                android:id="@+id/g1_l2_sttOptions"
+                                android:id="@+id/g2_l2_sttOptions"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_gravity="center"
@@ -293,7 +320,7 @@
                                     android:weightSum="5">
 
                                     <TextView
-                                        android:id="@+id/tv_g1_l2_answer"
+                                        android:id="@+id/tv_g2_l2_answer"
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="4"
@@ -304,7 +331,7 @@
                                         android:textSize="25sp" />
 
                                     <ImageView
-                                        android:id="@+id/iv_g1_l2_submit_ans"
+                                        android:id="@+id/iv_g2_l2_submit_ans"
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_marginLeft="5dp"
@@ -315,7 +342,7 @@
                                 </LinearLayout>
 
                                 <LinearLayout
-                                    android:id="@+id/ll_g1_l2_sttoptions"
+                                    android:id="@+id/ll_g2_l2_sttoptions"
                                     android:layout_width="match_parent"
                                     android:layout_height="0dp"
                                     android:layout_weight="2.8"
@@ -447,7 +474,7 @@
                     android:layout_weight="1">
 
                     <ImageButton
-                        android:id="@+id/ib_g1_l2_mic"
+                        android:id="@+id/ib_g2_l2_mic"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@color/full_transparent"
@@ -461,7 +488,7 @@
                     android:layout_weight="1">
 
                     <ImageButton
-                        android:id="@+id/ib_g1_l2_speaker"
+                        android:id="@+id/ib_g2_l2_speaker"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@color/full_transparent"
@@ -482,7 +509,7 @@
             android:weightSum="3">
 
             <TextView
-                android:id="@+id/tv_r1g1_question"
+                android:id="@+id/tv_r3g2_question"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
@@ -496,8 +523,9 @@
     </LinearLayout>
 
     <nl.dionsegijn.konfetti.KonfettiView
-        android:id="@+id/konfettiView_g1_l2"
+        android:id="@+id/konfettiView_g2_l2"
         android:layout_width="wrap_content"
+        android:visibility="gone"
         android:layout_height="match_parent"/>
 
 </RelativeLayout>
