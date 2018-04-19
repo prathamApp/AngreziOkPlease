@@ -271,9 +271,8 @@
                                     android:layout_height="match_parent"
                                     android:layout_gravity="center"
                                     android:gravity="center"
-                                    android:text="SS"
-                                    android:textColor="@color/colorPrimary"
-                                    android:textSize="200dp"
+                                    android:textColor="@color/whiteTransparentNormal"
+                                    android:textSize="210dp"
                                     android:textStyle="bold" />
 
                             </LinearLayout>
@@ -286,21 +285,56 @@
                                 android:layout_weight="1"
                                 android:background="@color/colorPrimary"
                                 android:gravity="center"
+                                android:visibility="gone"
                                 android:orientation="horizontal"
                                 android:weightSum="4">
 
-                                <ScrollView
-                                    android:id="@+id/r1g1l2_scroll_view"
+                                <LinearLayout
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
-                                    android:layout_gravity="center"
                                     android:layout_weight="3"
-                                    android:background="@color/colorPrimary"
-                                    android:gravity="center"
+                                    android:paddingHorizontal="15dp"
                                     android:orientation="vertical"
-                                    android:weightSum="6">
+                                    android:weightSum="5">
 
-                                </ScrollView>
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_marginBottom="5dp"
+                                        android:layout_weight="0.8"
+                                        android:layout_marginTop="5dp"
+                                        android:background="@drawable/question_gradiance_bg"
+                                        android:gravity="center"
+                                        android:text="Your Answers"
+                                        android:textColor="@color/simple_white"
+                                        android:textSize="30dp"
+                                        android:textStyle="bold|italic" />
+
+                                    <ScrollView
+                                        android:id="@+id/r1g1l2_scroll_view"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="4.1"
+                                        android:background="@color/colorPrimary"
+                                        android:gravity="center"
+                                        android:orientation="vertical"
+                                        android:paddingTop="5dp">
+
+                                        <com.nex3z.flowlayout.FlowLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+                                            android:id="@+id/myflowlayout"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            app:flChildSpacing="10dp"
+                                            android:background="@drawable/round_two_option_background"
+                                            app:flChildSpacingForLastRow="align"
+                                            app:flRowSpacing="10dp">
+
+                                        </com.nex3z.flowlayout.FlowLayout>
+
+                                    </ScrollView>
+
+                                </LinearLayout>
 
                                 <LinearLayout
                                     android:layout_width="0dp"
@@ -358,14 +392,13 @@
                     android:layout_weight="1" />
 
                 <ImageButton
-                    android:id="@+id/ib_r1g2_mic"
+                    android:id="@+id/ib_r2g1_mic"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:background="@color/full_transparent"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/mike"
-                    android:visibility="invisible" />
+                    android:src="@drawable/mike" />
 
                 <ImageButton
                     android:id="@+id/ib_g1_l2_speaker"
@@ -394,8 +427,8 @@
                 android:layout_weight="1"
                 android:background="@drawable/question_gradiance_bg"
                 android:gravity="center"
-                android:textColor="@color/simple_white"
                 android:text="This is where the question will appear"
+                android:textColor="@color/simple_white"
                 android:textSize="25sp"
                 android:textStyle="italic|bold" />
 
@@ -409,37 +442,36 @@
 
     <nl.dionsegijn.konfetti.KonfettiView
         android:id="@+id/konfettiView_g1_l2"
-        android:visibility="gone"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"/>
 
 </RelativeLayout>
 
 
-<!--
-<TextView
-android:layout_width="match_parent"
-android:layout_height="0dp"
-android:layout_marginBottom="5dp"
-android:layout_marginHorizontal="15dp"
-android:layout_weight="1"
-android:background="@drawable/question_gradiance_bg"
-android:gravity="center"
-android:text="Your Answers"
-android:textColor="@color/simple_white"
-android:textSize="30dp"
-android:textStyle="bold|italic" />
+    <!--
+    <TextView
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_marginBottom="5dp"
+    android:layout_marginHorizontal="15dp"
+    android:layout_weight="1"
+    android:background="@drawable/question_gradiance_bg"
+    android:gravity="center"
+    android:text="Your Answers"
+    android:textColor="@color/simple_white"
+    android:textSize="30dp"
+    android:textStyle="bold|italic" />
 
-<TextView
-android:id="@+id/option1"
-android:layout_width="match_parent"
-android:layout_height="0dp"
-android:layout_marginHorizontal="15dp"
-android:layout_marginVertical="5dp"
-android:layout_weight="1"
-android:background="@drawable/round_two_option_background"
-android:gravity="center"
-android:text="opt1"
-android:textSize="25dp"
-android:visibility="gone" />
--->
+    <TextView
+    android:id="@+id/option1"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_marginHorizontal="15dp"
+    android:layout_marginVertical="5dp"
+    android:layout_weight="1"
+    android:background="@drawable/round_two_option_background"
+    android:gravity="center"
+    android:text="opt1"
+    android:textSize="25dp"
+    android:visibility="gone" />
+    -->

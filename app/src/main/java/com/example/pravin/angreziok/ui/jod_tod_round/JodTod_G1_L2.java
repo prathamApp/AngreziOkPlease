@@ -16,16 +16,19 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.pravin.angreziok.BaseFragment;
 import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.animations.MyBounceInterpolator;
+import com.example.pravin.angreziok.interfaces.SpeechResult;
 import com.example.pravin.angreziok.ui.fragment_intro_character;
 import com.example.pravin.angreziok.util.PD_Utility;
 import com.github.anastr.flattimelib.CountDownTimerView;
 import com.github.anastr.flattimelib.intf.OnTimeFinish;
+import com.nex3z.flowlayout.FlowLayout;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,16 +37,17 @@ import nl.dionsegijn.konfetti.KonfettiView;
 import nl.dionsegijn.konfetti.models.Shape;
 import nl.dionsegijn.konfetti.models.Size;
 
+import static com.example.pravin.angreziok.BaseActivity.sttService;
 import static com.example.pravin.angreziok.BaseActivity.ttsService;
 import static com.example.pravin.angreziok.ui.jod_tod_round.JodTod.jodTodPlayerList;
 
 
-public class JodTod_G1_L2 extends BaseFragment implements JodTodContract.JodTod_G1_L2_View {
+public class JodTod_G1_L2 extends BaseFragment implements JodTodContract.JodTod_G1_L2_View, SpeechResult {
 
     @BindView(R.id.mCountDownTimer)
     CountDownTimerView mCountDownTimer;
-    @BindView(R.id.r1g1l2_scroll_view)
-    ScrollView scroll_view;
+    @BindView(R.id.myflowlayout)
+    FlowLayout flowLayout;
     @BindView(R.id.ll_g1_l2_allstar)
     LinearLayout allstarLayout;
     @BindView(R.id.ll_g1_l2_megastar)
@@ -52,6 +56,8 @@ public class JodTod_G1_L2 extends BaseFragment implements JodTodContract.JodTod_
     LinearLayout rockstarLayout;
     @BindView(R.id.ll_g1_l2_superstar)
     LinearLayout superstarLayout;
+    @BindView(R.id.r2_g1_l2_sttOptions)
+    LinearLayout sttOptions;
     @BindView(R.id.g1_l2_megastar)
     TextView megaScore;
     @BindView(R.id.g1_l2_rockstar)
@@ -71,7 +77,7 @@ public class JodTod_G1_L2 extends BaseFragment implements JodTodContract.JodTod_
 
     String text;
     JodTodContract.JodTodPresenter presenter;
-    int currentTeam;
+    int speechCount, currentTeam, score=0;
     Dialog dialog;
 
     @Override
@@ -151,6 +157,8 @@ public class JodTod_G1_L2 extends BaseFragment implements JodTodContract.JodTod_
         Button button = dialog.findViewById(R.id.dialog_btn_scan_qr);
         text.setText("Next question would be for " + teamName);
         button.setText("Ready ??");
+        sttOptions.setVisibility(View.GONE);
+        flowLayout.removeAllViews();
 
         dialog.show();
 
@@ -241,6 +249,28 @@ public class JodTod_G1_L2 extends BaseFragment implements JodTodContract.JodTod_
         playTTS();
     }
 
+    @Override
+    public void setAnswer(String ans, String sttWord) {
+
+        TextView textView = new TextView(getActivity());
+        textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        textView.setHeight(50);
+        textView.setWidth(flowLayout.getWidth());
+        textView.setText(sttWord);
+        Log.d("changeColor", "Ques : " + text + "    setAnswer : " + ans + "    sttWord : " + sttWord);
+
+        if (text.equalsIgnoreCase("" + ans)) {
+            textView.setTextColor(Color.GREEN);
+            score+=5;
+        } else {
+            textView.setTextColor(Color.RED);
+        }
+
+        textView.setTextSize(25);
+
+        flowLayout.addView(textView);
+    }
+
     private void setDataForGame() {
         presenter.set_g1_l2_data();
         showQuestion.setText("Say The Words Starting With");
@@ -274,6 +304,7 @@ public class JodTod_G1_L2 extends BaseFragment implements JodTodContract.JodTod_
                 @Override
                 public void run() {
                     submitAnswer.setClickable(true);
+                    score=0;
                     showDialog();
                 }
             }, 2500);
@@ -298,14 +329,30 @@ public class JodTod_G1_L2 extends BaseFragment implements JodTodContract.JodTod_
         }
     }
 
+    public void startSTT() {
+        sttService.initCallback(JodTod_G1_L2.this);
+        sttService.startListening();
+    }
+
+    @Override
+    public void onResult(String result) {
+        sttOptions.setVisibility(View.VISIBLE);
+        presenter.g1_l2_checkAnswer(result);
+    }
+
     @OnClick(R.id.btn_tempskip)
-    public void skipToNext(){
+    public void skipToNext() {
         Bundle bundle = new Bundle();
         bundle.putString("frag", "R2G3L2");
         PD_Utility.showFragment(getActivity(), new fragment_intro_character(), R.id.cl_jod_tod,
                 bundle, fragment_intro_character.class.getSimpleName());
     }
 
+    @OnClick(R.id.ib_r2g1_mic)
+    public void micClicked() {
+        speechCount++;
+        startSTT();
+    }
 
     @OnClick(R.id.ib_g1_l2_speaker)
     public void soundClicked() {
