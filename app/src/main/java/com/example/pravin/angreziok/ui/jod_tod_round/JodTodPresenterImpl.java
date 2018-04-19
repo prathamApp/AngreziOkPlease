@@ -82,7 +82,7 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
     @Override
     public void set_g1_l2_data() {
         // TODO Create json file for game three
-        gsonAlphabetGameData = fetchJsonData("RoundTwoGameThreeLevelTwo", getSdcardPath());
+        gsonAlphabetGameData = fetchJsonData("RoundTwoGameOne", getSdcardPath());
         g1l2QuestionData = gsonAlphabetGameData.getNodelist();
     }
 
