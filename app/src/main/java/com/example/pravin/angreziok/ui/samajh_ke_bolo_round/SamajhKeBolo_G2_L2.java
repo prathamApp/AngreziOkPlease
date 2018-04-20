@@ -76,8 +76,6 @@ public class SamajhKeBolo_G2_L2 extends BaseFragment implements SamajhKeBoloCont
     KonfettiView konfettiView;
     @BindView(R.id.iv_g2_l2_submit_ans)
     ImageView submitAnswer;
-    @BindView(R.id.qusetionImage)
-    ImageView qusetionImage;
     @BindView(R.id.tv_r3g2_question)
     TextView questionText;
 
@@ -350,7 +348,6 @@ public class SamajhKeBolo_G2_L2 extends BaseFragment implements SamajhKeBoloCont
          answer.setText(ans);
      }
 
-
      @Override
      public void showOptions_g2_l2() {
          options.setVisibility(View.VISIBLE);
@@ -359,6 +356,7 @@ public class SamajhKeBolo_G2_L2 extends BaseFragment implements SamajhKeBoloCont
          option2.setText(options[1]);
          option3.setText(options[2]);
      }
+
     @Override
     public void onResult(String result) {
         optionsView.setVisibility(View.VISIBLE);

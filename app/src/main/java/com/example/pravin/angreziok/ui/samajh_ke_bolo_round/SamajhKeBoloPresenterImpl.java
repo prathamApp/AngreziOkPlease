@@ -195,6 +195,37 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void setWords_g2_l2() {
+
+    }
+
+    @Override
+    public String getCurrentQuestion_g2_l2() {
+        return null;
+    }
+
+    @Override
+    public void set_g2_l2_data(String path) {
+
+    }
+
+    @Override
+    public void checkFinalAnswer_g2_l2(String ans, int currentTeam) {
+
+    }
+
+    @Override
+    public String[] getOptions_g2_l2() {
+        return new String[0];
+    }
+
+    @Override
+    public void g2_l2_checkAnswer(String result) {
+
+    }
+
     @Override
     public void onComplete() {
 
