@@ -40,25 +40,25 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
 
     @BindView(R.id.mCountDownTimer)
     CountDownTimerView mCountDownTimer;
-    @BindView(R.id.ll_g1_l2_allstar)
+    @BindView(R.id.ll_g3_l2_allstar)
     LinearLayout allstarLayout;
-    @BindView(R.id.ll_g1_l2_megastar)
+    @BindView(R.id.ll_g3_l2_megastar)
     LinearLayout megastarLayout;
-    @BindView(R.id.ll_g1_l2_rockstar)
+    @BindView(R.id.ll_g3_l2_rockstar)
     LinearLayout rockstarLayout;
-    @BindView(R.id.ll_g1_l2_superstar)
+    @BindView(R.id.ll_g3_l2_superstar)
     LinearLayout superstarLayout;
-    @BindView(R.id.g1_l2_megastar)
+    @BindView(R.id.g3_l2_megastar)
     TextView megaScore;
-    @BindView(R.id.g1_l2_rockstar)
+    @BindView(R.id.g3_l2_rockstar)
     TextView rockScore;
-    @BindView(R.id.g1_l2_superstar)
+    @BindView(R.id.g3_l2_superstar)
     TextView superScore;
-    @BindView(R.id.g1_l2_allstar)
+    @BindView(R.id.g3_l2_allstar)
     TextView allScore;
-    @BindView(R.id.tv_r1g1_question)
+    @BindView(R.id.tv_r3g3_question)
     TextView showQuestion;
-    @BindView(R.id.konfettiView_g1_l2)
+    @BindView(R.id.konfettiView_g3_l2)
     KonfettiView konfettiView;
 
     String text;
@@ -229,7 +229,7 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
     private void setDataForGame() {
 //        TODO Setting data for game
 //        String path = presenter.getSdcardPath();
-//        presenter.set_g1_l2_data(path);
+//        presenter.set_g3_l2_data(path);
     }
 
     private void playTTS() {
@@ -251,13 +251,13 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
         SamajhKeBolo.animateView(mCountDownTimer, getActivity());
     }
 
-    @OnClick(R.id.ib_g1_l2_speaker)
+    @OnClick(R.id.ib_g3_l2_speaker)
     public void soundClicked() {
 //        TODO
 //        presenter.startTTS(text);
     }
 
-    @OnClick(R.id.ib_g1_l2_mic)
+    @OnClick(R.id.ib_g3_l2_mic)
     public void micClicked() {
         speechCount++;
         if (speechCount <= 2)
@@ -275,12 +275,12 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
 //        presenter.startTTS(option.getText() + "");
     }
 
-    @OnClick(R.id.iv_g1_l2_submit_ans)
+    @OnClick(R.id.iv_g3_l2_submit_ans)
     public void submitAns() {
 //        TODO SubmitAndCheck answer
         /*submitAnswer.setClickable(false);
         mCountDownTimer.pause();
-        presenter.checkFinalAnswer_g1_l2(answer.getText().toString(), currentTeam);
+        presenter.checkFinalAnswer_g3_l2(answer.getText().toString(), currentTeam);
         currentTeam += 1;
         if (currentTeam < playerModalArrayList.size()) {
             Handler handler = new Handler();
@@ -299,7 +299,7 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
                 @Override
                 public void run() {
                     //TODO display Score screen after final round
-                    getActivity().findViewById(R.id.iv_g1_l2_submit_ans).setOnClickListener(null);
+                    getActivity().findViewById(R.id.iv_g3_l2_submit_ans).setOnClickListener(null);
 
                     Bundle bundle = new Bundle();
                     bundle.putString("frag", "R1G2L2");
@@ -328,7 +328,7 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
      public void setQuestionImage(String path) {
          try {
              Bitmap[] bitmap = {BitmapFactory.decodeFile("" + path)};
-             iv_ques_img_g1_l2.setImageBitmap(bitmap[0]);
+             iv_ques_img_g3_l2.setImageBitmap(bitmap[0]);
          } catch (Exception e) {
              e.printStackTrace();
          }
@@ -342,9 +342,9 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
 
 
      @Override
-     public void showOptions_g1_l2() {
+     public void showOptions_g3_l2() {
          options.setVisibility(View.VISIBLE);
-         String[] options = presenter.getOptions_g1_l2();
+         String[] options = presenter.getOptions_g3_l2();
          option1.setText(options[0]);
          option2.setText(options[1]);
          option3.setText(options[2]);
@@ -355,6 +355,6 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
         /* TODO Override STT onResult
         optionsView.setVisibility(View.VISIBLE);
         setAnswer(result);
-        presenter.g1_l2_checkAnswer(result);*/
+        presenter.g3_l2_checkAnswer(result);*/
     }
 }

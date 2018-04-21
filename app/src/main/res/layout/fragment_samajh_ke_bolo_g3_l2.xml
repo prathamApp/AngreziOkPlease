@@ -87,7 +87,7 @@
                         android:weightSum="4">
 
                         <LinearLayout
-                            android:id="@+id/ll_g1_l2_megastar"
+                            android:id="@+id/ll_g3_l2_megastar"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_marginRight="10dp"
@@ -99,7 +99,7 @@
                             android:weightSum="2">
 
                             <TextView
-                                android:id="@+id/g1_l2_megastar"
+                                android:id="@+id/g3_l2_megastar"
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_gravity="center"
@@ -123,7 +123,7 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/ll_g1_l2_rockstar"
+                            android:id="@+id/ll_g3_l2_rockstar"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_marginRight="10dp"
@@ -135,7 +135,7 @@
                             android:weightSum="2">
 
                             <TextView
-                                android:id="@+id/g1_l2_rockstar"
+                                android:id="@+id/g3_l2_rockstar"
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_gravity="center"
@@ -159,7 +159,7 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/ll_g1_l2_superstar"
+                            android:id="@+id/ll_g3_l2_superstar"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_marginRight="10dp"
@@ -171,7 +171,7 @@
                             android:weightSum="2">
 
                             <TextView
-                                android:id="@+id/g1_l2_superstar"
+                                android:id="@+id/g3_l2_superstar"
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_gravity="center"
@@ -195,7 +195,7 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/ll_g1_l2_allstar"
+                            android:id="@+id/ll_g3_l2_allstar"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_marginRight="10dp"
@@ -207,7 +207,7 @@
                             android:weightSum="2">
 
                             <TextView
-                                android:id="@+id/g1_l2_allstar"
+                                android:id="@+id/g3_l2_allstar"
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_gravity="center"
@@ -263,16 +263,56 @@
                                 android:layout_gravity="center"
                                 android:layout_weight="1"
                                 android:background="@drawable/gameimgbg"
-                                android:gravity="center">
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:weightSum="10">
 
-                                <ImageView
-                                    android:id="@+id/iv_ques_img_g1_l2"
+                                <TextView
+                                    android:id="@+id/question"
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent" />
+                                    android:layout_height="0dp"
+                                    android:gravity="center"
+                                    android:layout_marginBottom="20dp"
+                                    android:textStyle="italic|bold"
+                                    android:textSize="25sp"
+                                    android:layout_weight="3" />
+
+                                <TextView
+                                    android:id="@+id/option1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:gravity="center"
+                                    android:layout_margin="5dp"
+                                    android:layout_weight="1" />
+
+                                <TextView
+                                    android:id="@+id/option2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:gravity="center"
+                                    android:layout_margin="5dp"
+                                    android:layout_weight="1" />
+
+                                <TextView
+                                    android:id="@+id/option3"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:gravity="center"
+                                    android:layout_margin="5dp"
+                                    android:layout_weight="1" />
+
+                                <TextView
+                                    android:id="@+id/option4"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:gravity="center"
+                                    android:layout_margin="5dp"
+                                    android:layout_weight="1" />
+
                             </LinearLayout>
 
                             <LinearLayout
-                                android:id="@+id/g1_l2_sttOptions"
+                                android:id="@+id/g3_l2_sttOptions"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_gravity="center"
@@ -293,7 +333,7 @@
                                     android:weightSum="5">
 
                                     <TextView
-                                        android:id="@+id/tv_g1_l2_answer"
+                                        android:id="@+id/tv_g3_l2_answer"
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="4"
@@ -304,7 +344,7 @@
                                         android:textSize="25sp" />
 
                                     <ImageView
-                                        android:id="@+id/iv_g1_l2_submit_ans"
+                                        android:id="@+id/iv_g3_l2_submit_ans"
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_marginLeft="5dp"
@@ -313,94 +353,6 @@
                                         app:srcCompat="@drawable/ic_navigate_next_black" />
 
                                 </LinearLayout>
-
-                                <LinearLayout
-                                    android:id="@+id/ll_g1_l2_sttoptions"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="2.8"
-                                    android:orientation="vertical"
-                                    android:visibility="gone"
-                                    android:weightSum="4">
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="0dp"
-                                        android:layout_marginHorizontal="15dp"
-                                        android:layout_weight="1"
-                                        android:background="@drawable/question_gradiance_bg"
-                                        android:paddingLeft="15dp">
-
-                                        <TextView
-                                            android:layout_width="match_parent"
-                                            android:layout_height="match_parent"
-                                            android:gravity="center"
-                                            android:text="Did you mean?"
-                                            android:textColor="@color/simple_white"
-                                            android:textSize="30dp"
-                                            android:textStyle="bold|italic" />
-
-                                    </LinearLayout>
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="0dp"
-                                        android:layout_marginHorizontal="15dp"
-                                        android:layout_marginVertical="5dp"
-                                        android:layout_weight="1"
-                                        android:background="@drawable/round_two_option_background"
-                                        android:paddingLeft="15dp">
-
-                                        <TextView
-                                            android:id="@+id/option1"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="match_parent"
-                                            android:gravity="center"
-                                            android:text="opt1"
-                                            android:textSize="25dp" />
-
-                                    </LinearLayout>
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="0dp"
-                                        android:layout_marginHorizontal="15dp"
-                                        android:layout_marginVertical="5dp"
-                                        android:layout_weight="1"
-                                        android:background="@drawable/round_two_option_background"
-                                        android:paddingLeft="15dp">
-
-                                        <TextView
-                                            android:id="@+id/option2"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="match_parent"
-                                            android:gravity="center"
-                                            android:text="opt1"
-                                            android:textSize="25dp" />
-
-                                    </LinearLayout>
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="0dp"
-                                        android:layout_marginHorizontal="15dp"
-                                        android:layout_marginVertical="5dp"
-                                        android:layout_weight="1"
-                                        android:background="@drawable/round_two_option_background"
-                                        android:paddingLeft="15dp">
-
-                                        <TextView
-                                            android:id="@+id/option3"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="match_parent"
-                                            android:gravity="center"
-                                            android:text="opt1"
-                                            android:textSize="25dp" />
-
-                                    </LinearLayout>
-
-                                </LinearLayout>
-
                             </LinearLayout>
 
                         </LinearLayout>
@@ -447,7 +399,7 @@
                     android:layout_weight="1">
 
                     <ImageButton
-                        android:id="@+id/ib_g1_l2_mic"
+                        android:id="@+id/ib_g3_l2_mic"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@color/full_transparent"
@@ -461,7 +413,7 @@
                     android:layout_weight="1">
 
                     <ImageButton
-                        android:id="@+id/ib_g1_l2_speaker"
+                        android:id="@+id/ib_g3_l2_speaker"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@color/full_transparent"
@@ -482,11 +434,11 @@
             android:weightSum="3">
 
             <TextView
-                android:id="@+id/tv_r1g1_question"
+                android:id="@+id/tv_r3g3_question"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
                 android:layout_gravity="center_vertical"
+                android:layout_weight="3"
                 android:gravity="center"
                 android:text="This is where the question will appear"
                 android:textColor="@color/simple_white"
@@ -496,8 +448,9 @@
     </LinearLayout>
 
     <nl.dionsegijn.konfetti.KonfettiView
-        android:id="@+id/konfettiView_g1_l2"
+        android:id="@+id/konfettiView_g3_l2"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:visibility="gone" />
 
 </RelativeLayout>
