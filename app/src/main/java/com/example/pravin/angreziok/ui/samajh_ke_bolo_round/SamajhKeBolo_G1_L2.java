@@ -333,13 +333,6 @@ public class SamajhKeBolo_G1_L2 extends BaseFragment implements SamajhKeBoloCont
     }
 
     @Override
-    public void onResult(String result) {
-        optionsView.setVisibility(View.VISIBLE);
-        setAnswer(result);
-        presenter.g1_l2_checkAnswer(result);
-    }
-
-    @Override
      public void hideOptionView() {
          optionsView.setVisibility(View.GONE);
      }
@@ -368,4 +361,11 @@ public class SamajhKeBolo_G1_L2 extends BaseFragment implements SamajhKeBoloCont
          option2.setText(options[1]);
          option3.setText(options[2]);
      }
+
+    @Override
+    public void onResult(String result) {
+        optionsView.setVisibility(View.VISIBLE);
+        setAnswer(result);
+        presenter.g1_l2_checkAnswer(result);
+    }
 }

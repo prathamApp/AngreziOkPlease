@@ -18,6 +18,13 @@ public interface SamajhKeBoloContract {
         void g1_l2_checkAnswer(String ans);
         void checkFinalAnswer_g1_l2(String ans, int currentTeam);
         void playMusic(String fileName, String path);
+
+        void setWords_g2_l2();
+        String getCurrentQuestion_g2_l2();
+        void set_g2_l2_data(String path);
+        void checkFinalAnswer_g2_l2(String ans, int currentTeam);
+        String[] getOptions_g2_l2();
+        void g2_l2_checkAnswer(String result);
     }
 
     interface SamajhKeBolo_G1_L2_View {
@@ -34,6 +41,10 @@ public interface SamajhKeBoloContract {
         void setCelebrationView();
         void setCurrentScore();
         void initiateQuestion();
+        void hideOptionView();
+        void setQuestionWords(String[] words);
+        void setAnswer(String ans);
+        void showOptions_g2_l2();
     }
 
     interface SamajhKeBolo_G3_L2_View {

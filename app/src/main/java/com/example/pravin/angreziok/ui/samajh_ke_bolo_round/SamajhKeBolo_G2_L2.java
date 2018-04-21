@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,8 +23,11 @@ import com.example.pravin.angreziok.BaseFragment;
 import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.animations.MyBounceInterpolator;
 import com.example.pravin.angreziok.interfaces.SpeechResult;
+import com.example.pravin.angreziok.ui.fragment_intro_character;
+import com.example.pravin.angreziok.util.PD_Utility;
 import com.github.anastr.flattimelib.CountDownTimerView;
 import com.github.anastr.flattimelib.intf.OnTimeFinish;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -33,32 +37,53 @@ import nl.dionsegijn.konfetti.models.Size;
 
 import static com.example.pravin.angreziok.BaseActivity.sttService;
 import static com.example.pravin.angreziok.BaseActivity.ttsService;
+import static com.example.pravin.angreziok.ui.samajh_ke_bolo_round.SamajhKeBolo.playerModalArrayList;
 
 
 public class SamajhKeBolo_G2_L2 extends BaseFragment implements SamajhKeBoloContract.SamajhKeBolo_G2_L2_View, SpeechResult {
 
     @BindView(R.id.mCountDownTimer)
     CountDownTimerView mCountDownTimer;
-    @BindView(R.id.ll_g1_l2_allstar)
+    @BindView(R.id.tv_g2_l2_answer)
+    TextView answer;
+    @BindView(R.id.ll_g2_l2_sttoptions)
+    LinearLayout options;
+    @BindView(R.id.ll_g2_l2_allstar)
     LinearLayout allstarLayout;
-    @BindView(R.id.ll_g1_l2_megastar)
+    @BindView(R.id.ll_g2_l2_megastar)
     LinearLayout megastarLayout;
-    @BindView(R.id.ll_g1_l2_rockstar)
+    @BindView(R.id.ll_g2_l2_rockstar)
     LinearLayout rockstarLayout;
-    @BindView(R.id.ll_g1_l2_superstar)
+    @BindView(R.id.ll_g2_l2_superstar)
     LinearLayout superstarLayout;
-    @BindView(R.id.g1_l2_megastar)
+    @BindView(R.id.g2_l2_megastar)
     TextView megaScore;
-    @BindView(R.id.g1_l2_rockstar)
+    @BindView(R.id.g2_l2_rockstar)
     TextView rockScore;
-    @BindView(R.id.g1_l2_superstar)
+    @BindView(R.id.g2_l2_superstar)
     TextView superScore;
-    @BindView(R.id.g1_l2_allstar)
+    @BindView(R.id.g2_l2_allstar)
     TextView allScore;
-    @BindView(R.id.tv_r1g1_question)
-    TextView showQuestion;
-    @BindView(R.id.konfettiView_g1_l2)
+    @BindView(R.id.option1)
+    TextView option1;
+    @BindView(R.id.option2)
+    TextView option2;
+    @BindView(R.id.option3)
+    TextView option3;
+    @BindView(R.id.word1)
+    TextView word1;
+    @BindView(R.id.word2)
+    TextView word2;
+    @BindView(R.id.word3)
+    TextView word3;
+    @BindView(R.id.g2_l2_sttOptions)
+    LinearLayout optionsView;
+    @BindView(R.id.konfettiView_g2_l2)
     KonfettiView konfettiView;
+    @BindView(R.id.iv_g2_l2_submit_ans)
+    ImageView submitAnswer;
+    @BindView(R.id.tv_r3g2_question)
+    TextView questionText;
 
     String text;
     SamajhKeBoloContract.SamajhKeBoloPresenter presenter;
@@ -89,24 +114,24 @@ public class SamajhKeBolo_G2_L2 extends BaseFragment implements SamajhKeBoloCont
     }
 
     private void setInitialScores() {
-        Log.d(":::", "setInitialScores: " + SamajhKeBolo.playerModalArrayList.toString());
-        for (int i = 0; i < SamajhKeBolo.playerModalArrayList.size(); i++) {
-            switch (SamajhKeBolo.playerModalArrayList.get(i).studentAlias) {
+        Log.d(":::", "setInitialScores: " + playerModalArrayList.toString());
+        for (int i = 0; i < playerModalArrayList.size(); i++) {
+            switch (playerModalArrayList.get(i).studentAlias) {
                 case "Rockstars":
                     rockstarLayout.setVisibility(View.VISIBLE);
-                    rockScore.setText(SamajhKeBolo.playerModalArrayList.get(i).studentScore);
+                    rockScore.setText(playerModalArrayList.get(i).studentScore);
                     break;
                 case "Megastars":
                     megastarLayout.setVisibility(View.VISIBLE);
-                    megaScore.setText(SamajhKeBolo.playerModalArrayList.get(i).studentScore);
+                    megaScore.setText(playerModalArrayList.get(i).studentScore);
                     break;
                 case "Superstars":
                     superstarLayout.setVisibility(View.VISIBLE);
-                    superScore.setText(SamajhKeBolo.playerModalArrayList.get(i).studentScore);
+                    superScore.setText(playerModalArrayList.get(i).studentScore);
                     break;
                 case "Allstars":
                     allstarLayout.setVisibility(View.VISIBLE);
-                    allScore.setText(SamajhKeBolo.playerModalArrayList.get(i).studentScore);
+                    allScore.setText(playerModalArrayList.get(i).studentScore);
             }
         }
     }
@@ -114,7 +139,7 @@ public class SamajhKeBolo_G2_L2 extends BaseFragment implements SamajhKeBoloCont
     private View getCurrentView() {
         View view = null;
 
-        switch (SamajhKeBolo.playerModalArrayList.get(currentTeam).studentAlias) {
+        switch (playerModalArrayList.get(currentTeam).studentAlias) {
             case "Rockstars":
                 view = rockstarLayout;
                 break;
@@ -130,52 +155,13 @@ public class SamajhKeBolo_G2_L2 extends BaseFragment implements SamajhKeBoloCont
         return view;
     }
 
-    public void showDialog() {
-        fadeOtherGroups();
-        speechCount = 0;
-        String teamName = SamajhKeBolo.playerModalArrayList.get(currentTeam).getStudentAlias();
-        dialog = new Dialog(getActivity());
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.setContentView(R.layout.custom_dialog_for_qrscan);
-        dialog.setCanceledOnTouchOutside(false);
-        TextView text = dialog.findViewById(R.id.dialog_tv_student_name);
-        ImageView iv_close = dialog.findViewById(R.id.dialog_iv_close);
-        Button button = dialog.findViewById(R.id.dialog_btn_scan_qr);
-        text.setText("Next question would be for " + teamName);
-        button.setText("Ready ??");
-
-        dialog.show();
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-//                TODO Onclicks
-                initiateQuestion();
-//                presenter.setImage_gl_l2();
-            }
-        });
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-//                TODO Onclicks
-                initiateQuestion();
-//                presenter.setImage_gl_l2();
-            }
-        });
-
-    }
-
     private void fadeOtherGroups() {
         megastarLayout.setBackgroundResource(R.drawable.team_faded);
         rockstarLayout.setBackgroundResource(R.drawable.team_faded);
         allstarLayout.setBackgroundResource(R.drawable.team_faded);
         superstarLayout.setBackgroundResource(R.drawable.team_faded);
 
-        switch (SamajhKeBolo.playerModalArrayList.get(currentTeam).getStudentAlias()) {
+        switch (playerModalArrayList.get(currentTeam).getStudentAlias()) {
             case "Megastars":
                 megastarLayout.setBackgroundResource(R.drawable.team_one);
                 break;
@@ -218,24 +204,59 @@ public class SamajhKeBolo_G2_L2 extends BaseFragment implements SamajhKeBoloCont
         view.startAnimation(rubber);
     }
 
+    public void showDialog() {
+        fadeOtherGroups();
+        speechCount = 0;
+        String teamName = playerModalArrayList.get(currentTeam).getStudentAlias();
+        dialog = new Dialog(getActivity());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.setContentView(R.layout.custom_dialog_for_qrscan);
+        dialog.setCanceledOnTouchOutside(false);
+        TextView text = dialog.findViewById(R.id.dialog_tv_student_name);
+        ImageView iv_close = dialog.findViewById(R.id.dialog_iv_close);
+        Button button = dialog.findViewById(R.id.dialog_btn_scan_qr);
+        text.setText("Next question would be for " + teamName);
+        button.setText("Ready ??");
+
+        dialog.show();
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                presenter.setWords_g2_l2();
+                initiateQuestion();
+            }
+        });
+
+        iv_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                presenter.setWords_g2_l2();
+                initiateQuestion();
+            }
+        });
+
+    }
+
     @Override
     public void initiateQuestion() {
-//        TODO Initial work for questions
         startTimer();
+        text = presenter.getCurrentQuestion_g2_l2();
+        questionText.setText(text);
         playTTS();
     }
 
     private void setDataForGame() {
-//        TODO Setting data for game
-//        String path = presenter.getSdcardPath();
-//        presenter.set_g1_l2_data(path);
+        String path = presenter.getSdcardPath();
+        presenter.set_g2_l2_data(path);
+        questionText.setText("Listen and answer properly");
     }
 
     private void playTTS() {
-//        TODO TTS start
-        text = "What is This?";
-        showQuestion.setText(text);
-//        presenter.startTTS(text);
+        presenter.startTTS(text);
     }
 
     private void startTimer() {
@@ -250,13 +271,12 @@ public class SamajhKeBolo_G2_L2 extends BaseFragment implements SamajhKeBoloCont
         SamajhKeBolo.animateView(mCountDownTimer, getActivity());
     }
 
-    @OnClick(R.id.ib_g1_l2_speaker)
+    @OnClick(R.id.ib_g2_l2_speaker)
     public void soundClicked() {
-//        TODO
-//        presenter.startTTS(text);
+        presenter.startTTS(text);
     }
 
-    @OnClick(R.id.ib_g1_l2_mic)
+    @OnClick(R.id.ib_g2_l2_mic)
     public void micClicked() {
         speechCount++;
         if (speechCount <= 2)
@@ -267,19 +287,17 @@ public class SamajhKeBolo_G2_L2 extends BaseFragment implements SamajhKeBoloCont
 
     @OnClick({R.id.option1, R.id.option2, R.id.option3})
     public void optionsClicked(View view) {
-//        TODO STTOptions
         // TTS for the options clicked
-//        TextView option = (TextView) view;
-//        answer.setText(option.getText() + "");
-//        presenter.startTTS(option.getText() + "");
+        TextView option = (TextView) view;
+        answer.setText(option.getText() + "");
+        presenter.startTTS(option.getText() + "");
     }
 
-    @OnClick(R.id.iv_g1_l2_submit_ans)
+    @OnClick(R.id.iv_g2_l2_submit_ans)
     public void submitAns() {
-//        TODO SubmitAndCheck answer
-        /*submitAnswer.setClickable(false);
+        submitAnswer.setClickable(false);
         mCountDownTimer.pause();
-        presenter.checkFinalAnswer_g1_l2(answer.getText().toString(), currentTeam);
+        presenter.checkFinalAnswer_g2_l2(answer.getText().toString(), currentTeam);
         currentTeam += 1;
         if (currentTeam < playerModalArrayList.size()) {
             Handler handler = new Handler();
@@ -297,19 +315,17 @@ public class SamajhKeBolo_G2_L2 extends BaseFragment implements SamajhKeBoloCont
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    //TODO display Score screen after final round
-                    getActivity().findViewById(R.id.iv_g1_l2_submit_ans).setOnClickListener(null);
 
+                    //TODO display Score screen after final round
+                    getActivity().findViewById(R.id.iv_g2_l2_submit_ans).setOnClickListener(null);
                     Bundle bundle = new Bundle();
-                    bundle.putString("frag", "R1G2L2");
-                    PD_Utility.showFragment(getActivity(), new fragment_intro_character(), R.id.cl_bole_toh,
+                    bundle.putString("frag", "R3G3L2");
+                    PD_Utility.showFragment(getActivity(), new fragment_intro_character(), R.id.cl_samajh_ke_bolo,
                             bundle, fragment_intro_character.class.getSimpleName());
 
                 }
             }, 2500);
-
         }
-*/
     }
 
     public void startSTT() {
@@ -317,43 +333,41 @@ public class SamajhKeBolo_G2_L2 extends BaseFragment implements SamajhKeBoloCont
         sttService.startListening();
     }
 
-    /*  TODO Necessary or not
     @Override
-     public void hideOptionView() {
-         optionsView.setVisibility(View.GONE);
-     }
+    public void hideOptionView() {
+        optionsView.setVisibility(View.GONE);
+    }
 
-     @Override
-     public void setQuestionImage(String path) {
-         try {
-             Bitmap[] bitmap = {BitmapFactory.decodeFile("" + path)};
-             iv_ques_img_g1_l2.setImageBitmap(bitmap[0]);
-         } catch (Exception e) {
-             e.printStackTrace();
-         }
-     }
+    @Override
+    public void setQuestionWords(String[] words) {
+        try {
+            word1.setText(words[0]);
+            word2.setText(words[1]);
+            word3.setText(words[2]);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-     @Override
-     public void setAnswer(String ans) {
-         options.setVisibility(View.GONE);
-         answer.setText(ans);
-     }
+    @Override
+    public void setAnswer(String ans) {
+        options.setVisibility(View.GONE);
+        answer.setText(ans);
+    }
 
+    @Override
+    public void showOptions_g2_l2() {
+        options.setVisibility(View.VISIBLE);
+        String[] options = presenter.getOptions_g2_l2();
+        option1.setText(options[0]);
+        option2.setText(options[1]);
+        option3.setText(options[2]);
+    }
 
-     @Override
-     public void showOptions_g1_l2() {
-         options.setVisibility(View.VISIBLE);
-         String[] options = presenter.getOptions_g1_l2();
-         option1.setText(options[0]);
-         option2.setText(options[1]);
-         option3.setText(options[2]);
-     }
- */
     @Override
     public void onResult(String result) {
-        /* TODO Override STT onResult
         optionsView.setVisibility(View.VISIBLE);
         setAnswer(result);
-        presenter.g1_l2_checkAnswer(result);*/
+        presenter.g2_l2_checkAnswer(result);
     }
 }
