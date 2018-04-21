@@ -32,6 +32,7 @@ public class STTService {
     private long mStopListeningDelayInMs = 4000;
     private long mTransitionMinimumDelay = 1200;
     private List<String> mLastPartialResults = null;
+    private static Intent intent;
 
     private STTService(final Context context) {
         initSpeechRecognizer(context);
@@ -47,7 +48,18 @@ public class STTService {
         if (instance == null) {
             instance = new STTService(context);
         }
+
+         intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+                .putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1)
+//                .putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true)
+                .putExtra(RecognizerIntent.EXTRA_LANGUAGE, /*mLocale.getLanguage()*/"en-UK")
+                .putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            intent.putExtra(RecognizerIntent.EXTRA_PREFER_OFFLINE, true);
+        }
+
         return instance;
+
     }
 
     /**
@@ -191,15 +203,7 @@ public class STTService {
         if (mIsListening) return;
         if (mSpeechRecognizer == null)
             throw new IllegalStateException("Speech recognition has not been initialized! call init method first!");
-        ;
-        final Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
-                .putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1)
-//                .putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true)
-                .putExtra(RecognizerIntent.EXTRA_LANGUAGE, /*mLocale.getLanguage()*/"en-UK")
-                .putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            intent.putExtra(RecognizerIntent.EXTRA_PREFER_OFFLINE, true);
-        }
+
         try {
             mSpeechRecognizer.startListening(intent);
         } catch (final SecurityException exc) {
