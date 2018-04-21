@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -36,7 +37,7 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
     public TTSService ttsService;
     GenericModalGson gsonListenAndSpellGameData, gsonAlphabetGameData,gsonRhymeGameData;
     List<GenericModalGson> g3l2QuestionData, g1l2QuestionData,g2l2QuestionData, g2l2SubList;
-    int randomNumber;
+    int randomNumber1,randomNumber;
     String rhymeCheckWord, questionWord;
     MediaPlayerUtil mediaPlayerUtil;
 
@@ -84,7 +85,7 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
     @Override
     public void setWord_g2_l2() {
         jodTodG2L2View.hideOptionView();
-        randomNumber = getRandomNumber(0, g2l2QuestionData.size());
+        randomNumber1 = getRandomNumber(0, g2l2QuestionData.size());
         rhymeCheckWord = g2l2QuestionData.get(randomNumber).getResourceText();
         g2l2SubList = g2l2QuestionData.get(randomNumber).getNodelist();
         randomNumber = getRandomNumber(0, g2l2SubList.size());
@@ -132,12 +133,54 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
                 for (int i = rhymeLen; i >= 0; i--) {
                     rhymAns= ans.charAt(i)+""+rhymAns;
                 }
-                Log.d("rhymAns", "g1_l2_checkAnswer: rhymAns : "+rhymAns);
+                Log.d("rhymAns", "rhymeCheckWord: "+rhymeCheckWord+"       g1_l2_checkAnswer: rhymAns : "+rhymAns);
             }
             String actualAns = "" + ans.charAt(0);
-            jodTodG1L2View.setAnswer(actualAns, ans);
         }
     }
+
+    @Override
+    public String[] getOptions() {
+        int[] optionsIds;
+        int[] randomOptions;
+
+/*        randomNumber = getRandomNumber(0, g2l2QuestionData.size());
+        rhymeCheckWord = g2l2QuestionData.get(randomNumber).getResourceText();
+        g2l2SubList = g2l2QuestionData.get(randomNumber).getNodelist();
+        randomNumber = getRandomNumber(0, g2l2SubList.size());
+        questionWord = g2l2SubList.get(randomNumber).getResourceText();*/
+
+        do {
+            optionsIds = getUniqueRandomNumber(0, g2l2QuestionData.size(), 2);
+        } while (optionsIds[0] == randomNumber || optionsIds[1] == randomNumber);
+        String[] optionsText = new String[3];
+        randomOptions = getUniqueRandomNumber(0, 3, 3);
+        optionsText[randomOptions[0]] = g2l2QuestionData.get(optionsIds[0]).getResourceText();
+        optionsText[randomOptions[1]] = g2l2QuestionData.get(optionsIds[1]).getResourceText();
+        optionsText[randomOptions[2]] = g2l2QuestionData.get(randomNumber).getResourceText();
+        return optionsText;
+
+    }
+
+    public int[] getUniqueRandomNumber(int min, int max, int numSize) {
+        int[] tempArray;
+        if ((max - min) >= numSize) {
+            tempArray = new int[numSize];
+            ArrayList<Integer> list = new ArrayList<Integer>();
+
+            for (int i = min; i < max; i++)
+                list.add(new Integer(i));
+
+            Collections.shuffle(list);
+            for (int i = 0; i < numSize; i++) {
+                System.out.println("===== : " + list.get(i));
+                tempArray[i] = list.get(i);
+            }
+            return tempArray;
+        } else
+            return null;
+    }
+
 
     @Override
     public String g3_l2_getQuestionText() {

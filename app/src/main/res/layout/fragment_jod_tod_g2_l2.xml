@@ -59,7 +59,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:gravity="center"
-                                android:text="Bole Toh Round"
+                                android:text="Jod Tod Round G2"
                                 android:textAlignment="center"
                                 android:textColor="@color/simple_black"
                                 android:textSize="30sp"
@@ -286,125 +286,75 @@
                                 android:layout_weight="1"
                                 android:background="@color/colorPrimary"
                                 android:gravity="center"
-                                android:visibility="gone"
-                                android:orientation="vertical"
+                                android:visibility="visible"
+                                android:orientation="horizontal"
                                 android:weightSum="4">
 
                                 <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_marginHorizontal="5dp"
-                                    android:layout_marginVertical="10dp"
-                                    android:layout_weight="1.2"
-                                    android:orientation="horizontal"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="3"
+                                    android:paddingHorizontal="15dp"
+                                    android:orientation="vertical"
                                     android:weightSum="5">
 
                                     <TextView
-                                        android:id="@+id/tv_r2g2_answer"
-                                        android:layout_width="0dp"
-                                        android:layout_height="match_parent"
-                                        android:layout_weight="4"
-                                        android:background="@drawable/round_two_top_answer_background"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_marginBottom="5dp"
+                                        android:layout_weight="0.8"
+                                        android:layout_marginTop="5dp"
+                                        android:background="@drawable/question_gradiance_bg"
                                         android:gravity="center"
-                                        android:text="Ans"
+                                        android:text="Your Answers"
                                         android:textColor="@color/simple_white"
-                                        android:textSize="25sp" />
+                                        android:textSize="30dp"
+                                        android:textStyle="bold|italic" />
 
-                                    <ImageView
-                                        android:id="@+id/iv_r2g2_submit_ans"
-                                        android:layout_width="0dp"
-                                        android:layout_height="match_parent"
-                                        android:layout_marginLeft="5dp"
-                                        android:layout_weight="1"
-                                        android:background="@drawable/green_answer_background"
-                                        app:srcCompat="@drawable/ic_navigate_next_black" />
+                                    <ScrollView
+                                        android:id="@+id/r1g1l2_scroll_view"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="4.1"
+                                        android:background="@color/colorPrimary"
+                                        android:gravity="center"
+                                        android:orientation="vertical"
+                                        android:paddingTop="5dp">
+
+                                        <com.nex3z.flowlayout.FlowLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+                                            android:id="@+id/myflowlayout"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            app:flChildSpacing="10dp"
+                                            android:background="@drawable/round_two_option_background"
+                                            app:flChildSpacingForLastRow="align"
+                                            app:flRowSpacing="10dp">
+
+                                        </com.nex3z.flowlayout.FlowLayout>
+
+                                    </ScrollView>
 
                                 </LinearLayout>
 
                                 <LinearLayout
-                                    android:id="@+id/ll_r1g2_sttoptions"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="2.8"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="center"
+                                    android:layout_marginHorizontal="2dp"
+                                    android:layout_weight="1"
+                                    android:background="@color/colorPrimary"
+                                    android:gravity="center"
                                     android:orientation="vertical"
-                                    android:visibility="gone"
                                     android:weightSum="4">
 
-                                    <LinearLayout
+                                    <ImageView
+                                        android:id="@+id/iv_submit_ans"
                                         android:layout_width="match_parent"
                                         android:layout_height="0dp"
-                                        android:layout_marginHorizontal="15dp"
-                                        android:layout_weight="1"
-                                        android:background="@drawable/question_gradiance_bg"
-                                        android:paddingLeft="15dp">
-
-                                        <TextView
-                                            android:layout_width="match_parent"
-                                            android:layout_height="match_parent"
-                                            android:gravity="center"
-                                            android:text="Did you mean?"
-                                            android:textColor="@color/simple_white"
-                                            android:textSize="30dp"
-                                            android:textStyle="bold|italic" />
-
-                                    </LinearLayout>
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="0dp"
-                                        android:layout_marginHorizontal="15dp"
-                                        android:layout_marginVertical="5dp"
-                                        android:layout_weight="1"
-                                        android:background="@drawable/round_two_option_background"
-                                        android:paddingLeft="15dp">
-
-                                        <TextView
-                                            android:id="@+id/option1"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="match_parent"
-                                            android:gravity="center"
-                                            android:text="opt1"
-                                            android:textSize="25dp" />
-
-                                    </LinearLayout>
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="0dp"
-                                        android:layout_marginHorizontal="15dp"
-                                        android:layout_marginVertical="5dp"
-                                        android:layout_weight="1"
-                                        android:background="@drawable/round_two_option_background"
-                                        android:paddingLeft="15dp">
-
-                                        <TextView
-                                            android:id="@+id/option2"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="match_parent"
-                                            android:gravity="center"
-                                            android:text="opt1"
-                                            android:textSize="25dp" />
-
-                                    </LinearLayout>
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="0dp"
-                                        android:layout_marginHorizontal="15dp"
-                                        android:layout_marginVertical="5dp"
-                                        android:layout_weight="1"
-                                        android:background="@drawable/round_two_option_background"
-                                        android:paddingLeft="15dp">
-
-                                        <TextView
-                                            android:id="@+id/option3"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="match_parent"
-                                            android:gravity="center"
-                                            android:text="opt1"
-                                            android:textSize="25dp" />
-
-                                    </LinearLayout>
+                                        android:layout_weight="3"
+                                        android:background="@drawable/green_answer_background"
+                                        app:srcCompat="@drawable/ic_navigate_next_black" />
 
                                 </LinearLayout>
 
@@ -493,8 +443,7 @@
 
     <nl.dionsegijn.konfetti.KonfettiView
         android:id="@+id/konfettiView_g1_l2"
-        android:layout_width="wrap_content"
-        android:visibility="gone"
+        android:layout_width="10dp"
         android:layout_height="match_parent"/>
 
 </RelativeLayout>

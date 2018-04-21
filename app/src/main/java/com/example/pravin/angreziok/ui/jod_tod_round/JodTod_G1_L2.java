@@ -343,7 +343,7 @@ public class JodTod_G1_L2 extends BaseFragment implements JodTodContract.JodTod_
     @OnClick(R.id.btn_tempskip)
     public void skipToNext() {
         Bundle bundle = new Bundle();
-        bundle.putString("frag", "R2G3L2");
+        bundle.putString("frag", "R2G2L2");
         PD_Utility.showFragment(getActivity(), new fragment_intro_character(), R.id.cl_jod_tod,
                 bundle, fragment_intro_character.class.getSimpleName());
     }

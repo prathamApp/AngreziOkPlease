@@ -32,6 +32,8 @@ public interface JodTodContract {
 
         void g2_l2_checkAnswer(String result);
 
+        String[] getOptions();
+
         String g2_l2_getQuestionText();
 
         void checkFinalAnswer_g1_l2(String ans, int currentTeam);
@@ -72,6 +74,8 @@ public interface JodTodContract {
         void initiateQuestion(String question);
 
         void setAnswer(String ans,String sttWord);
+
+        void showOptions();
 
         void hideOptionView();
 

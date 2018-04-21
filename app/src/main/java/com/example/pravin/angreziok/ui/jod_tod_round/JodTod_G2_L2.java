@@ -44,6 +44,8 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
 
     @BindView(R.id.mCountDownTimer)
     CountDownTimerView mCountDownTimer;
+    @BindView(R.id.myflowlayout)
+    FlowLayout flowLayout;
     @BindView(R.id.ll_g1_l2_allstar)
     LinearLayout allstarLayout;
     @BindView(R.id.ll_g1_l2_megastar)
@@ -64,20 +66,12 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
     TextView allScore;
     @BindView(R.id.tv_question)
     TextView showQuestion;
-    @BindView(R.id.tv_ques_img_r2_g1_l2)
-    TextView tv_ques_text;
+    @BindView(R.id.iv_ques_img_r2_g1_l2)
+    TextView tv_ques_img;
     @BindView(R.id.konfettiView_g1_l2)
     KonfettiView konfettiView;
     @BindView(R.id.iv_submit_ans)
     ImageView submitAnswer;
-    @BindView(R.id.r1g2_sttOptions)
-    LinearLayout optionsView;
-    @BindView(R.id.option1)
-    TextView option1;
-    @BindView(R.id.option2)
-    TextView option2;
-    @BindView(R.id.option3)
-    TextView option3;
 
     String text;
     JodTodContract.JodTodPresenter presenter;
@@ -92,7 +86,7 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_jod_tod_g2_l2, container, false);
+        return inflater.inflate(R.layout.fragment_jod_tod_g1_l2, container, false);
     }
 
     @Override
@@ -162,6 +156,7 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
         text.setText("Next question would be for " + teamName);
         button.setText("Ready ??");
         sttOptions.setVisibility(View.GONE);
+        flowLayout.removeAllViews();
 
         dialog.show();
 
@@ -171,7 +166,19 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                presenter.setWord_g2_l2();
+                String question = presenter.g1_l2_getQuestionText();
+                initiateQuestion(question);
+                setQuestionDynamically(question);
+            }
+        });
+
+        iv_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                String question = presenter.g1_l2_getQuestionText();
+                initiateQuestion(question);
+                setQuestionDynamically(presenter.g1_l2_getQuestionText());
             }
         });
 
@@ -179,7 +186,7 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
 
     private void setQuestionDynamically(String questionText) {
         // TODO Create views for setting question by extracting vowels from it
-        tv_ques_text.setText(questionText);
+        tv_ques_img.setText(questionText);
     }
 
     private void fadeOtherGroups() {
@@ -236,7 +243,6 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
     @Override
     public void initiateQuestion(String question) {
         startTimer();
-        tv_ques_text.setText(question);
         text = question;
         playTTS();
     }
@@ -244,13 +250,24 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
     @Override
     public void setAnswer(String ans, String sttWord) {
 
+        TextView textView = new TextView(getActivity());
+        textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        textView.setHeight(50);
+        textView.setWidth(flowLayout.getWidth());
+        textView.setText(sttWord);
+        Log.d("changeColor", "Ques : " + text + "    setAnswer : " + ans + "    sttWord : " + sttWord);
+
+        if (text.equalsIgnoreCase("" + ans)) {
+            textView.setTextColor(Color.GREEN);
+            score+=5;
+        } else {
+            textView.setTextColor(Color.RED);
+        }
+
+        textView.setTextSize(25);
+
+        flowLayout.addView(textView);
     }
-
-    @Override
-    public void setQuestionText(String setQuestionText){
-
-    }
-
 
     private void setDataForGame() {
         presenter.set_g1_l2_data();
@@ -318,13 +335,13 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
     @Override
     public void onResult(String result) {
         sttOptions.setVisibility(View.VISIBLE);
-        presenter.g2_l2_checkAnswer(result);
+        presenter.g1_l2_checkAnswer(result);
     }
 
     @OnClick(R.id.btn_tempskip)
     public void skipToNext() {
         Bundle bundle = new Bundle();
-        bundle.putString("frag", "R2G3L2");
+        bundle.putString("frag", "R2G2L2");
         PD_Utility.showFragment(getActivity(), new fragment_intro_character(), R.id.cl_jod_tod,
                 bundle, fragment_intro_character.class.getSimpleName());
     }
@@ -339,10 +356,4 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
     public void soundClicked() {
         presenter.startTTS(text);
     }
-
-    @Override
-    public void hideOptionView() {
-        optionsView.setVisibility(View.GONE);
-    }
-
 }
