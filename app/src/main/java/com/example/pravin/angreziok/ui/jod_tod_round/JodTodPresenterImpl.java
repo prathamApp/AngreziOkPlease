@@ -1,6 +1,7 @@
 package com.example.pravin.angreziok.ui.jod_tod_round;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.pravin.angreziok.interfaces.MediaCallbacks;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import static com.example.pravin.angreziok.AOPApplication.getRandomNumber;
 import static com.example.pravin.angreziok.ui.jod_tod_round.JodTod.jodTodPlayerList;
 
 /**
@@ -30,10 +32,12 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
     Context mContext;
     JodTodContract.JodTod_G3_L2_View jodTodG3L2View;
     JodTodContract.JodTod_G1_L2_View jodTodG1L2View;
+    JodTodContract.JodTod_G2_L2_View jodTodG2L2View;
     public TTSService ttsService;
-    GenericModalGson gsonListenAndSpellGameData, gsonAlphabetGameData;
-    List<GenericModalGson> g3l2QuestionData, g1l2QuestionData;
+    GenericModalGson gsonListenAndSpellGameData, gsonAlphabetGameData,gsonRhymeGameData;
+    List<GenericModalGson> g3l2QuestionData, g1l2QuestionData,g2l2QuestionData, g2l2SubList;
     int randomNumber;
+    String rhymeCheckWord, questionWord;
     MediaPlayerUtil mediaPlayerUtil;
 
 
@@ -50,6 +54,12 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
     public JodTodPresenterImpl(Context context, JodTodContract.JodTod_G1_L2_View jodTod_g1_l2_view, TTSService ttsService) {
         mContext = context;
         this.jodTodG1L2View = jodTod_g1_l2_view;
+        this.ttsService = ttsService;
+    }
+
+    public JodTodPresenterImpl(Context context, JodTodContract.JodTod_G2_L2_View jodTod_g2_l2_view, TTSService ttsService) {
+        mContext = context;
+        this.jodTodG2L2View = jodTod_g2_l2_view;
         this.ttsService = ttsService;
     }
 
@@ -72,6 +82,18 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
     }
 
     @Override
+    public void setWord_g2_l2() {
+        jodTodG2L2View.hideOptionView();
+        randomNumber = getRandomNumber(0, g2l2QuestionData.size());
+        rhymeCheckWord = g2l2QuestionData.get(randomNumber).getResourceText();
+        g2l2SubList = g2l2QuestionData.get(randomNumber).getNodelist();
+        randomNumber = getRandomNumber(0, g2l2SubList.size());
+        questionWord = g2l2SubList.get(randomNumber).getResourceText();
+        jodTodG2L2View.initiateQuestion(questionWord);
+    }
+
+
+    @Override
     public void set_g3_l2_data() {
         // TODO Create json file for game three
         gsonListenAndSpellGameData = fetchJsonData("RoundTwoGameThree", getSdcardPath());
@@ -86,7 +108,33 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
     }
 
     @Override
+    public void set_g2_l2_data() {
+        // TODO Create json file for game three
+        gsonRhymeGameData = fetchJsonData("RoundTwoGameTwo", getSdcardPath());
+        g2l2QuestionData = gsonRhymeGameData.getNodelist();
+    }
+
+    @Override
     public void g1_l2_checkAnswer(String ans) {
+
+        String rhymAns="";
+
+        if (!ans.equalsIgnoreCase("") && !ans.equalsIgnoreCase(" ")) {
+            int rhymeLen = rhymeCheckWord.length();
+            if(ans.length()>rhymeLen) {
+                for (int i = rhymeLen; i >= 0; i--) {
+                    rhymAns= ans.charAt(i)+""+rhymAns;
+                }
+                Log.d("rhymAns", "g1_l2_checkAnswer: rhymAns : "+rhymAns);
+            }
+            String actualAns = "" + ans.charAt(0);
+            jodTodG1L2View.setAnswer(actualAns, ans);
+        }
+
+    }
+
+    @Override
+    public void g2_l2_checkAnswer(String ans) {
         if (!ans.equalsIgnoreCase("") && !ans.equalsIgnoreCase(" ")) {
             String actualAns = "" + ans.charAt(0);
             jodTodG1L2View.setAnswer(actualAns, ans);
@@ -101,6 +149,12 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
 
     @Override
     public String g1_l2_getQuestionText() {
+        randomNumber = getRandomNumber(0, g1l2QuestionData.size());
+        return g1l2QuestionData.get(randomNumber).getResourceText();
+    }
+
+    @Override
+    public String g2_l2_getQuestionText() {
         randomNumber = getRandomNumber(0, g1l2QuestionData.size());
         return g1l2QuestionData.get(randomNumber).getResourceText();
     }

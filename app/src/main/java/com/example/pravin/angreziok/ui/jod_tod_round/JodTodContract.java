@@ -20,11 +20,19 @@ public interface JodTodContract {
 
         void set_g1_l2_data();
 
+        void set_g2_l2_data();
+
+        void setWord_g2_l2();
+
         void g1_l2_checkAnswer(String ans);
 
         String g3_l2_getQuestionText();
 
         String g1_l2_getQuestionText();
+
+        void g2_l2_checkAnswer(String result);
+
+        String g2_l2_getQuestionText();
 
         void checkFinalAnswer_g1_l2(String ans, int currentTeam);
 
@@ -52,6 +60,22 @@ public interface JodTodContract {
         void initiateQuestion(String question);
 
         void setAnswer(String ans,String sttWord);
+
+    }
+
+    interface JodTod_G2_L2_View {
+
+        void setCelebrationView();
+
+        void setCurrentScore();
+
+        void initiateQuestion(String question);
+
+        void setAnswer(String ans,String sttWord);
+
+        void hideOptionView();
+
+        void setQuestionText(String setQuestionText);
 
     }
 
