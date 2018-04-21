@@ -152,19 +152,17 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-//                TODO Onclicks
+                presenter.setWords_g3_l2();
                 initiateQuestion();
-//                presenter.setImage_gl_l2();
             }
         });
 
-        button.setOnClickListener(new View.OnClickListener() {
+        iv_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-//                TODO Onclicks
+                presenter.setWords_g3_l2();
                 initiateQuestion();
-//                presenter.setImage_gl_l2();
             }
         });
 
@@ -221,22 +219,20 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
 
     @Override
     public void initiateQuestion() {
-//        TODO Initial work for questions
         startTimer();
+        text = presenter.getCurrentQuestion_g3_l2();
+        questionText.setText(text);
         playTTS();
     }
 
     private void setDataForGame() {
-//        TODO Setting data for game
-//        String path = presenter.getSdcardPath();
-//        presenter.set_g3_l2_data(path);
+        String path = presenter.getSdcardPath();
+        presenter.set_g2_l2_data(path);
+        questionText.setText("Listen and answer properly");
     }
 
     private void playTTS() {
-//        TODO TTS start
-        text = "What is This?";
-        showQuestion.setText(text);
-//        presenter.startTTS(text);
+        presenter.startTTS(text);
     }
 
     private void startTimer() {
@@ -253,8 +249,7 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
 
     @OnClick(R.id.ib_g3_l2_speaker)
     public void soundClicked() {
-//        TODO
-//        presenter.startTTS(text);
+        presenter.startTTS(text);
     }
 
     @OnClick(R.id.ib_g3_l2_mic)
@@ -266,18 +261,17 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
             Toast.makeText(getActivity(), "Can be used only 2 Times", Toast.LENGTH_SHORT).show();
     }
 
-    @OnClick({R.id.option1, R.id.option2, R.id.option3})
+    @OnClick({R.id.option1, R.id.option2, R.id.option3, R.id.option4})
     public void optionsClicked(View view) {
-//        TODO STTOptions
         // TTS for the options clicked
-//        TextView option = (TextView) view;
-//        answer.setText(option.getText() + "");
-//        presenter.startTTS(option.getText() + "");
+        TextView option = (TextView) view;
+        option.setBackgroundResource(R.drawable.team_faded);
+        presenter.startTTS(option.getText() + "");
     }
 
     @OnClick(R.id.iv_g3_l2_submit_ans)
     public void submitAns() {
-//        TODO SubmitAndCheck answer
+        //TODO post processing
         /*submitAnswer.setClickable(false);
         mCountDownTimer.pause();
         presenter.checkFinalAnswer_g3_l2(answer.getText().toString(), currentTeam);
@@ -318,43 +312,36 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
         sttService.startListening();
     }
 
-    /*  TODO Necessary or not
     @Override
-     public void hideOptionView() {
-         optionsView.setVisibility(View.GONE);
-     }
+    public void setQuestionWords(String[] words) {
+        try {
+            word1.setText(words[0]);
+            word2.setText(words[1]);
+            word3.setText(words[2]);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-     @Override
-     public void setQuestionImage(String path) {
-         try {
-             Bitmap[] bitmap = {BitmapFactory.decodeFile("" + path)};
-             iv_ques_img_g3_l2.setImageBitmap(bitmap[0]);
-         } catch (Exception e) {
-             e.printStackTrace();
-         }
-     }
+    @Override
+    public void setAnswer(String ans) {
+        options.setVisibility(View.GONE);
+        answer.setText(ans);
+    }
 
-     @Override
-     public void setAnswer(String ans) {
-         options.setVisibility(View.GONE);
-         answer.setText(ans);
-     }
+    @Override
+    public void showOptions_g2_l2() {
+        options.setVisibility(View.VISIBLE);
+        String[] options = presenter.getOptions_g2_l2();
+        option1.setText(options[0]);
+        option2.setText(options[1]);
+        option3.setText(options[2]);
+    }
 
-
-     @Override
-     public void showOptions_g3_l2() {
-         options.setVisibility(View.VISIBLE);
-         String[] options = presenter.getOptions_g3_l2();
-         option1.setText(options[0]);
-         option2.setText(options[1]);
-         option3.setText(options[2]);
-     }
- */
     @Override
     public void onResult(String result) {
-        /* TODO Override STT onResult
         optionsView.setVisibility(View.VISIBLE);
         setAnswer(result);
-        presenter.g3_l2_checkAnswer(result);*/
+        presenter.g2_l2_checkAnswer(result);
     }
 }
