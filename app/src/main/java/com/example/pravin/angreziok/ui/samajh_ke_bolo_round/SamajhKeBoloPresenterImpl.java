@@ -221,7 +221,10 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
             samajhKeBoloG2L2View.setCelebrationView();
             playMusic("Sounds/BilkulSahijawab.mp3", getSdcardPath());
             int currentTeamScore = Integer.parseInt(playerModalArrayList.get(currentTeam).studentScore);
+            if (ans.split(" ").length>1)
             playerModalArrayList.get(currentTeam).setStudentScore(String.valueOf(currentTeamScore + 10));
+            else
+            playerModalArrayList.get(currentTeam).setStudentScore(String.valueOf(currentTeamScore + 5));
             samajhKeBoloG2L2View.setCurrentScore();
         } else {
             //  TODO wrong answer animation
@@ -248,8 +251,9 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
             }
         } else {
             if (ans.equalsIgnoreCase(actualAns)) {
-
+                samajhKeBoloG2L2View.setAnswer(ans);
             } else {
+                samajhKeBoloG2L2View.showOptions_g2_l2();
             }
         }
     }
