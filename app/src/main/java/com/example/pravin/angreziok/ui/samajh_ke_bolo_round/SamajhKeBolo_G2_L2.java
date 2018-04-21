@@ -70,6 +70,12 @@ public class SamajhKeBolo_G2_L2 extends BaseFragment implements SamajhKeBoloCont
     TextView option2;
     @BindView(R.id.option3)
     TextView option3;
+    @BindView(R.id.word1)
+    TextView word1;
+    @BindView(R.id.word2)
+    TextView word2;
+    @BindView(R.id.word3)
+    TextView word3;
     @BindView(R.id.g2_l2_sttOptions)
     LinearLayout optionsView;
     @BindView(R.id.konfettiView_g2_l2)
@@ -320,7 +326,6 @@ public class SamajhKeBolo_G2_L2 extends BaseFragment implements SamajhKeBoloCont
                 }
             }, 2500);
         }
-
     }
 
     public void startSTT() {
@@ -329,33 +334,35 @@ public class SamajhKeBolo_G2_L2 extends BaseFragment implements SamajhKeBoloCont
     }
 
     @Override
-     public void hideOptionView() {
-         optionsView.setVisibility(View.GONE);
-     }
+    public void hideOptionView() {
+        optionsView.setVisibility(View.GONE);
+    }
 
-     @Override
-     public void setQuestionWords(String[] words) {
-         try {
-             // TODO setWords
-         } catch (Exception e) {
-             e.printStackTrace();
-         }
-     }
+    @Override
+    public void setQuestionWords(String[] words) {
+        try {
+            word1.setText(words[0]);
+            word2.setText(words[1]);
+            word3.setText(words[2]);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-     @Override
-     public void setAnswer(String ans) {
-         options.setVisibility(View.GONE);
-         answer.setText(ans);
-     }
+    @Override
+    public void setAnswer(String ans) {
+        options.setVisibility(View.GONE);
+        answer.setText(ans);
+    }
 
-     @Override
-     public void showOptions_g2_l2() {
-         options.setVisibility(View.VISIBLE);
-         String[] options = presenter.getOptions_g2_l2();
-         option1.setText(options[0]);
-         option2.setText(options[1]);
-         option3.setText(options[2]);
-     }
+    @Override
+    public void showOptions_g2_l2() {
+        options.setVisibility(View.VISIBLE);
+        String[] options = presenter.getOptions_g2_l2();
+        option1.setText(options[0]);
+        option2.setText(options[1]);
+        option3.setText(options[2]);
+    }
 
     @Override
     public void onResult(String result) {

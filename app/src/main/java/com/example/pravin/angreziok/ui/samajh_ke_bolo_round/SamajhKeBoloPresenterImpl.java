@@ -48,21 +48,21 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
                                      TTSService ttsService) {
         mContext = context;
         this.samajhKeBoloG1L2View = samajhKeBoloG1L2View;
-        this.ttsService= ttsService;
+        this.ttsService = ttsService;
     }
 
     SamajhKeBoloPresenterImpl(Context context, SamajhKeBoloContract.SamajhKeBolo_G2_L2_View samajhKeBoloG2L2View,
                               TTSService ttsService) {
         mContext = context;
         this.samajhKeBoloG2L2View = samajhKeBoloG2L2View;
-        this.ttsService= ttsService;
+        this.ttsService = ttsService;
     }
 
     public SamajhKeBoloPresenterImpl(Context context, SamajhKeBoloContract.SamajhKeBolo_G3_L2_View samajhKeBoloG3L2View,
                                      TTSService ttsService) {
         mContext = context;
         this.samajhKeBoloG3L2View = samajhKeBoloG3L2View;
-        this.ttsService= ttsService;
+        this.ttsService = ttsService;
     }
 
     @Override
@@ -198,32 +198,60 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
 
     @Override
     public void setWords_g2_l2() {
-
+        samajhKeBoloG2L2View.hideOptionView();
+        randomNumber = getRandomNumber(0, g2l2QuestionData.size());
+        samajhKeBoloG2L2View.setQuestionWords(getOptions_g2_l2());
     }
 
     @Override
     public String getCurrentQuestion_g2_l2() {
-        return null;
+        return g2l2QuestionData.get(randomNumber).getResourceQuestion();
     }
 
     @Override
     public void set_g2_l2_data(String path) {
-
+        sayItGameData = fetchJsonData("RoundThreeGameTwo", path);
+        g2l2QuestionData = sayItGameData.getNodelist();
     }
 
     @Override
     public void checkFinalAnswer_g2_l2(String ans, int currentTeam) {
-
+        if (ans.contains(g2l2QuestionData.get(randomNumber).getResourceType())) {
+            //  TODO correct answer animation + increase score of group
+            samajhKeBoloG2L2View.setCelebrationView();
+            playMusic("Sounds/BilkulSahijawab.mp3", getSdcardPath());
+            int currentTeamScore = Integer.parseInt(playerModalArrayList.get(currentTeam).studentScore);
+            playerModalArrayList.get(currentTeam).setStudentScore(String.valueOf(currentTeamScore + 10));
+            samajhKeBoloG2L2View.setCurrentScore();
+        } else {
+            //  TODO wrong answer animation
+            Toast.makeText(mContext, "Wrong", Toast.LENGTH_SHORT).show();
+            playMusic("Sounds/wrong.mp3", getSdcardPath());
+        }
     }
 
     @Override
     public String[] getOptions_g2_l2() {
-        return new String[0];
+        return g2l2QuestionData.get(randomNumber).getResourceText().split(",");
     }
 
     @Override
-    public void g2_l2_checkAnswer(String result) {
+    public void g2_l2_checkAnswer(String ans) {
+        String actualAns = g2l2QuestionData.get(randomNumber).getResourceType();
+        String splittedSentence[] = ans.split("");
 
+        if (splittedSentence.length > 1) {
+            if (ans.contains(actualAns)) {
+                samajhKeBoloG2L2View.setAnswer(ans);
+            } else {
+                samajhKeBoloG2L2View.showOptions_g2_l2();
+            }
+        } else {
+            if (ans.equalsIgnoreCase(actualAns)) {
+
+            } else {
+            }
+        }
     }
 
     @Override
