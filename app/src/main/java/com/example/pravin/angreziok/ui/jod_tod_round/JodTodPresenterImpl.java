@@ -116,7 +116,14 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
 
     @Override
     public void g1_l2_checkAnswer(String ans) {
+        if (!ans.equalsIgnoreCase("") && !ans.equalsIgnoreCase(" ")) {
+            String actualAns = "" + ans.charAt(0);
+            jodTodG1L2View.setAnswer(actualAns, ans);
+        }
+    }
 
+    @Override
+    public void g2_l2_checkAnswer(String ans) {
         String rhymAns="";
 
         if (!ans.equalsIgnoreCase("") && !ans.equalsIgnoreCase(" ")) {
@@ -127,15 +134,6 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
                 }
                 Log.d("rhymAns", "g1_l2_checkAnswer: rhymAns : "+rhymAns);
             }
-            String actualAns = "" + ans.charAt(0);
-            jodTodG1L2View.setAnswer(actualAns, ans);
-        }
-
-    }
-
-    @Override
-    public void g2_l2_checkAnswer(String ans) {
-        if (!ans.equalsIgnoreCase("") && !ans.equalsIgnoreCase(" ")) {
             String actualAns = "" + ans.charAt(0);
             jodTodG1L2View.setAnswer(actualAns, ans);
         }
