@@ -227,8 +227,8 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
 
     private void setDataForGame() {
         String path = presenter.getSdcardPath();
-        presenter.set_g2_l2_data(path);
-        questionText.setText("Listen and answer properly");
+        presenter.set_g3_l2_data(path);
+        showQuestion.setText("Listen and answer properly");
     }
 
     private void playTTS() {
