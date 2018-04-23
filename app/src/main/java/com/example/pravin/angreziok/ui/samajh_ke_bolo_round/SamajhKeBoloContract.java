@@ -55,6 +55,10 @@ public interface SamajhKeBoloContract {
         void setCelebrationView();
         void setCurrentScore();
         void initiateQuestion();
+        void hideOptionView();
+        void setQuestionWords(String[] words);
+        void setAnswer(String ans);
+        void showOptions_g2_l2();
     }
 
 }

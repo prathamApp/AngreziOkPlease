@@ -56,6 +56,8 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
     TextView superScore;
     @BindView(R.id.g3_l2_allstar)
     TextView allScore;
+    @BindView(R.id.g3_l2_sttOptions)
+    LinearLayout optionsView;
     @BindView(R.id.tv_r3g3_question)
     TextView showQuestion;
     @BindView(R.id.konfettiView_g3_l2)
@@ -210,6 +212,12 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
         bounceView(getCurrentView());
     }
 
+    @Override
+    public void hideOptionView() {
+        optionsView.setVisibility(View.GONE);
+    }
+
+
     public void bounceView(View view) {
         Animation rubber = AnimationUtils.loadAnimation(getActivity(), R.anim.popup);
         MyBounceInterpolator interpolator = new MyBounceInterpolator(0.2, 15);
@@ -309,11 +317,6 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
     public void startSTT() {
         sttService.initCallback(SamajhKeBolo_G3_L2.this);
         sttService.startListening();
-    }
-
-    @Override
-    public void onResult(String result) {
-        
     }
 
     @Override
