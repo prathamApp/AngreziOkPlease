@@ -75,7 +75,7 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
 
     String text;
     JodTodContract.JodTodPresenter presenter;
-    int speechCount, currentTeam, score=0;
+    int speechCount, currentTeam, score = 0;
     Dialog dialog;
 
     @Override
@@ -166,22 +166,11 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                String question = presenter.g1_l2_getQuestionText();
+                String question = presenter.g2_l2_getQuestionText();
                 initiateQuestion(question);
                 setQuestionDynamically(question);
             }
         });
-
-        iv_close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                String question = presenter.g1_l2_getQuestionText();
-                initiateQuestion(question);
-                setQuestionDynamically(presenter.g1_l2_getQuestionText());
-            }
-        });
-
     }
 
     private void setQuestionDynamically(String questionText) {
@@ -259,7 +248,7 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
 
         if (text.equalsIgnoreCase("" + ans)) {
             textView.setTextColor(Color.GREEN);
-            score+=5;
+            score += 5;
         } else {
             textView.setTextColor(Color.RED);
         }
@@ -267,6 +256,12 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
         textView.setTextSize(25);
 
         flowLayout.addView(textView);
+    }
+
+    @Override
+    public void hideOptionView() {
+        //TODO
+        showQuestion.setVisibility(View.GONE);
     }
 
     private void setDataForGame() {
@@ -295,6 +290,7 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
         submitAnswer.setClickable(false);
         mCountDownTimer.pause();
 //       TODO Check answer  presenter.checkFinalAnswer_g1_l2(answer.getText().toString(), currentTeam);
+
         currentTeam += 1;
         if (currentTeam < jodTodPlayerList.size()) {
             Handler handler = new Handler();
@@ -302,7 +298,7 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
                 @Override
                 public void run() {
                     submitAnswer.setClickable(true);
-                    score=0;
+                    score = 0;
                     showDialog();
                 }
             }, 2500);
@@ -335,7 +331,7 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
     @Override
     public void onResult(String result) {
         sttOptions.setVisibility(View.VISIBLE);
-        presenter.g1_l2_checkAnswer(result);
+        presenter.g2_l2_checkAnswer(result);
     }
 
     @OnClick(R.id.btn_tempskip)

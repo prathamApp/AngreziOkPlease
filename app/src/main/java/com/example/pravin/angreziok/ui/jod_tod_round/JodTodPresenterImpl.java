@@ -196,8 +196,18 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
 
     @Override
     public String g2_l2_getQuestionText() {
-        randomNumber = getRandomNumber(0, g1l2QuestionData.size());
-        return g1l2QuestionData.get(randomNumber).getResourceText();
+
+        jodTodG2L2View.hideOptionView();
+
+        randomNumber1 = getRandomNumber(0, g2l2QuestionData.size());
+        rhymeCheckWord = g2l2QuestionData.get(randomNumber).getResourceText();
+        g2l2SubList = g2l2QuestionData.get(randomNumber).getNodelist();
+        randomNumber = getRandomNumber(0, g2l2SubList.size());
+        questionWord = g2l2SubList.get(randomNumber).getResourceText();
+        return  questionWord;
+        /*jodTodG2L2View.initiateQuestion(questionWord);*/
+/*        randomNumber = getRandomNumber(0, g2l2QuestionData.size());
+        return g2l2QuestionData.get(randomNumber).getResourceText();*/
     }
 
     @Override

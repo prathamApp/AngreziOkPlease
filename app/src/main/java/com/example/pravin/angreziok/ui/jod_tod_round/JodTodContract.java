@@ -75,11 +75,7 @@ public interface JodTodContract {
 
         void setAnswer(String ans,String sttWord);
 
-        void showOptions();
-
         void hideOptionView();
-
-        void setQuestionText(String setQuestionText);
 
     }
 

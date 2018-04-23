@@ -15,6 +15,7 @@ import com.example.pravin.angreziok.ui.bole_toh_round.BoleToh_G1_L2;
 import com.example.pravin.angreziok.ui.bole_toh_round.BoleToh_G2_L2;
 import com.example.pravin.angreziok.ui.bole_toh_round.BoleToh_G3_L2;
 import com.example.pravin.angreziok.ui.jod_tod_round.JodTod_G1_L2;
+import com.example.pravin.angreziok.ui.jod_tod_round.JodTod_G2_L2;
 import com.example.pravin.angreziok.ui.jod_tod_round.JodTod_G3_L2;
 import com.example.pravin.angreziok.ui.samajh_ke_bolo_round.SamajhKeBolo_G1_L2;
 import com.example.pravin.angreziok.ui.samajh_ke_bolo_round.SamajhKeBolo_G2_L2;
