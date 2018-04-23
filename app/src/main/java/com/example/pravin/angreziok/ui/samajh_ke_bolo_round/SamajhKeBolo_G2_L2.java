@@ -214,7 +214,6 @@ public class SamajhKeBolo_G2_L2 extends BaseFragment implements SamajhKeBoloCont
         dialog.setContentView(R.layout.custom_dialog_for_qrscan);
         dialog.setCanceledOnTouchOutside(false);
         TextView text = dialog.findViewById(R.id.dialog_tv_student_name);
-        ImageView iv_close = dialog.findViewById(R.id.dialog_iv_close);
         Button button = dialog.findViewById(R.id.dialog_btn_scan_qr);
         text.setText("Next question would be for " + teamName);
         button.setText("Ready ??");
@@ -229,16 +228,6 @@ public class SamajhKeBolo_G2_L2 extends BaseFragment implements SamajhKeBoloCont
                 initiateQuestion();
             }
         });
-
-        iv_close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                presenter.setWords_g2_l2();
-                initiateQuestion();
-            }
-        });
-
     }
 
     @Override

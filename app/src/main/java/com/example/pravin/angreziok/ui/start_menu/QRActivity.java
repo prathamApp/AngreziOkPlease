@@ -183,7 +183,6 @@ public class QRActivity extends BaseActivity implements QRContract.StartMenuView
         dialog.setCanceledOnTouchOutside(false);
         ButterKnife.bind(this);
         TextView text = (TextView) dialog.findViewById(R.id.dialog_tv_student_name);
-        ImageView iv_close = (ImageView) dialog.findViewById(R.id.dialog_iv_close);
         text.setText("Hi " + studentName);
 
         dialog.show();
@@ -198,13 +197,6 @@ public class QRActivity extends BaseActivity implements QRContract.StartMenuView
             }
         });
 
-        iv_close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                dialogClick();
-            }
-        });
     }
 
     public void dialogClick() {

@@ -59,7 +59,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:gravity="center"
-                                android:text="Jod Tod Round G2"
+                                android:text="Bole Toh Round"
                                 android:textAlignment="center"
                                 android:textColor="@color/simple_black"
                                 android:textSize="30sp"
@@ -266,44 +266,44 @@
                                 android:gravity="center">
 
                                 <TextView
-                                    android:id="@+id/tv_ques_img_r2_g1_l2"
+                                    android:id="@+id/iv_ques_img_r2_g1_l2"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_gravity="center"
                                     android:gravity="center"
                                     android:text="Shirley"
                                     android:textColor="@color/whiteTransparentNormal"
-                                    android:textSize="70dp"
+                                    android:textSize="60dp"
                                     android:textStyle="bold" />
 
                             </LinearLayout>
 
                             <LinearLayout
-                                android:id="@+id/r1g2_sttOptions"
+                                android:id="@+id/r2_g1_l2_sttOptions"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_gravity="center"
                                 android:layout_weight="1"
                                 android:background="@color/colorPrimary"
                                 android:gravity="center"
-                                android:visibility="visible"
                                 android:orientation="horizontal"
+                                android:visibility="gone"
                                 android:weightSum="4">
 
                                 <LinearLayout
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
                                     android:layout_weight="3"
-                                    android:paddingHorizontal="15dp"
                                     android:orientation="vertical"
+                                    android:paddingHorizontal="15dp"
                                     android:weightSum="5">
 
                                     <TextView
                                         android:layout_width="match_parent"
                                         android:layout_height="0dp"
                                         android:layout_marginBottom="5dp"
-                                        android:layout_weight="0.8"
                                         android:layout_marginTop="5dp"
+                                        android:layout_weight="0.8"
                                         android:background="@drawable/question_gradiance_bg"
                                         android:gravity="center"
                                         android:text="Your Answers"
@@ -322,16 +322,14 @@
                                         android:orientation="vertical"
                                         android:paddingTop="5dp">
 
-                                        <com.nex3z.flowlayout.FlowLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+                                        <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
                                             android:id="@+id/myflowlayout"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
-                                            app:flChildSpacing="10dp"
                                             android:background="@drawable/round_two_option_background"
-                                            app:flChildSpacingForLastRow="align"
-                                            app:flRowSpacing="10dp">
+                                            android:orientation="vertical">
 
-                                        </com.nex3z.flowlayout.FlowLayout>
+                                        </LinearLayout>
 
                                     </ScrollView>
 
@@ -444,7 +442,7 @@
     <nl.dionsegijn.konfetti.KonfettiView
         android:id="@+id/konfettiView_g1_l2"
         android:layout_width="10dp"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
 </RelativeLayout>
 

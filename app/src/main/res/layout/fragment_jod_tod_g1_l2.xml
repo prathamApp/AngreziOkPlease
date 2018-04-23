@@ -285,7 +285,7 @@
                                 android:layout_weight="1"
                                 android:background="@color/colorPrimary"
                                 android:gravity="center"
-                                android:visibility="visible"
+                                android:visibility="gone"
                                 android:orientation="horizontal"
                                 android:weightSum="4">
 
@@ -321,16 +321,14 @@
                                         android:orientation="vertical"
                                         android:paddingTop="5dp">
 
-                                        <com.nex3z.flowlayout.FlowLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+                                        <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
                                             android:id="@+id/myflowlayout"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
-                                            app:flChildSpacing="10dp"
-                                            android:background="@drawable/round_two_option_background"
-                                            app:flChildSpacingForLastRow="align"
-                                            app:flRowSpacing="10dp">
+                                            android:orientation="vertical"
+                                            android:background="@drawable/round_two_option_background">
 
-                                        </com.nex3z.flowlayout.FlowLayout>
+                                        </LinearLayout>
 
                                     </ScrollView>
 

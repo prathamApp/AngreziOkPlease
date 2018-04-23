@@ -222,9 +222,9 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
 
     @Override
     public void setWords_g3_l2(){
-        samajhKeBoloG3L2View.hideOptionView();
+/*        samajhKeBoloG3L2View.hideOptionView();
         randomNumber = getRandomNumber(0, g3l2QuestionData.size());
-        samajhKeBoloG3L2View.setQuestionWords(getOptions_g3_l2());
+        samajhKeBoloG3L2View.setQuestionWords(getOptions_g3_l2());*/
     }
 
     @Override

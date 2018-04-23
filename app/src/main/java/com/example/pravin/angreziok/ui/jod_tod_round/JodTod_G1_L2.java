@@ -26,9 +26,6 @@ import com.example.pravin.angreziok.ui.fragment_intro_character;
 import com.example.pravin.angreziok.util.PD_Utility;
 import com.github.anastr.flattimelib.CountDownTimerView;
 import com.github.anastr.flattimelib.intf.OnTimeFinish;
-import com.nex3z.flowlayout.FlowLayout;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,7 +44,7 @@ public class JodTod_G1_L2 extends BaseFragment implements JodTodContract.JodTod_
     @BindView(R.id.mCountDownTimer)
     CountDownTimerView mCountDownTimer;
     @BindView(R.id.myflowlayout)
-    FlowLayout flowLayout;
+    LinearLayout flowLayout;
     @BindView(R.id.ll_g1_l2_allstar)
     LinearLayout allstarLayout;
     @BindView(R.id.ll_g1_l2_megastar)
@@ -77,7 +74,7 @@ public class JodTod_G1_L2 extends BaseFragment implements JodTodContract.JodTod_
 
     String text;
     JodTodContract.JodTodPresenter presenter;
-    int speechCount, currentTeam, score=0;
+    int speechCount, currentTeam, score = 0, correctAnsCounter = 0, totalAnsCounter = 0;
     Dialog dialog;
 
     @Override
@@ -153,11 +150,12 @@ public class JodTod_G1_L2 extends BaseFragment implements JodTodContract.JodTod_
         dialog.setContentView(R.layout.custom_dialog_for_qrscan);
         dialog.setCanceledOnTouchOutside(false);
         TextView text = dialog.findViewById(R.id.dialog_tv_student_name);
-        ImageView iv_close = dialog.findViewById(R.id.dialog_iv_close);
         Button button = dialog.findViewById(R.id.dialog_btn_scan_qr);
         text.setText("Next question would be for " + teamName);
         button.setText("Ready ??");
         sttOptions.setVisibility(View.GONE);
+        correctAnsCounter = 0;
+        totalAnsCounter = 0;
         flowLayout.removeAllViews();
 
         dialog.show();
@@ -171,16 +169,6 @@ public class JodTod_G1_L2 extends BaseFragment implements JodTodContract.JodTod_
                 String question = presenter.g1_l2_getQuestionText();
                 initiateQuestion(question);
                 setQuestionDynamically(question);
-            }
-        });
-
-        iv_close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                String question = presenter.g1_l2_getQuestionText();
-                initiateQuestion(question);
-                setQuestionDynamically(presenter.g1_l2_getQuestionText());
             }
         });
 
@@ -252,21 +240,24 @@ public class JodTod_G1_L2 extends BaseFragment implements JodTodContract.JodTod_
     @Override
     public void setAnswer(String ans, String sttWord) {
 
-        TextView textView = new TextView(getActivity());
+        final TextView textView = new TextView(getActivity());
         textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         textView.setHeight(50);
         textView.setWidth(flowLayout.getWidth());
-        textView.setText(sttWord);
+        textView.setTextSize(25);
+        textView.setText("" + sttWord);
         Log.d("changeColor", "Ques : " + text + "    setAnswer : " + ans + "    sttWord : " + sttWord);
+
+        totalAnsCounter++;
 
         if (text.equalsIgnoreCase("" + ans)) {
             textView.setTextColor(Color.GREEN);
-            score+=5;
+            score += 5;
+            correctAnsCounter++;
         } else {
             textView.setTextColor(Color.RED);
         }
 
-        textView.setTextSize(25);
 
         flowLayout.addView(textView);
     }
@@ -296,7 +287,12 @@ public class JodTod_G1_L2 extends BaseFragment implements JodTodContract.JodTod_
     public void submitAns() {
         submitAnswer.setClickable(false);
         mCountDownTimer.pause();
-//       TODO Check answer  presenter.checkFinalAnswer_g1_l2(answer.getText().toString(), currentTeam);
+//       TODO Check answer
+        float finalPercentage = (correctAnsCounter / totalAnsCounter) * 100;
+        String currScore = "" + score;
+        Log.d("finalPercentage", "finalPercentage: " + finalPercentage);
+        presenter.checkFinalAnswer_g1_l2(finalPercentage, currScore, currentTeam);
+
         currentTeam += 1;
         if (currentTeam < jodTodPlayerList.size()) {
             Handler handler = new Handler();
@@ -304,7 +300,7 @@ public class JodTod_G1_L2 extends BaseFragment implements JodTodContract.JodTod_
                 @Override
                 public void run() {
                     submitAnswer.setClickable(true);
-                    score=0;
+                    score = 0;
                     showDialog();
                 }
             }, 2500);
@@ -316,7 +312,12 @@ public class JodTod_G1_L2 extends BaseFragment implements JodTodContract.JodTod_
                 public void run() {
 
                     getActivity().findViewById(R.id.iv_submit_ans).setOnClickListener(null);
-                    // TODO  Next Round start process  SamajhKeBolo
+                    // TODO  Next Round start process  Game 2
+                    Bundle bundle = new Bundle();
+                    bundle.putString("frag", "R2G2L2");
+                    PD_Utility.showFragment(getActivity(), new fragment_intro_character(), R.id.cl_jod_tod,
+                            bundle, fragment_intro_character.class.getSimpleName());
+
                     /*Intent intent = new Intent(getActivity(), SamajhKeBolo.class);
                     Bundle bundle = new Bundle();
                     bundle.putParcelableArrayList("PlayerList", jodTodPlayerList);
