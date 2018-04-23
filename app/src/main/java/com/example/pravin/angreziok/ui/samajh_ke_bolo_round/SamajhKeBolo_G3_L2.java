@@ -152,7 +152,7 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-/*                presenter.setWords_g3_l2();*/
+                presenter.setWords_g3_l2();
                 initiateQuestion();
             }
         });
@@ -161,7 +161,7 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-/*                presenter.setWords_g3_l2();*/
+                presenter.setWords_g3_l2();
                 initiateQuestion();
             }
         });
@@ -220,15 +220,15 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
     @Override
     public void initiateQuestion() {
         startTimer();
-/*        text = presenter.getCurrentQuestion_g3_l2();
-        questionText.setText(text);*/
+        text = presenter.getCurrentQuestion_g3_l2();
+        questionText.setText(text);
         playTTS();
     }
 
     private void setDataForGame() {
         String path = presenter.getSdcardPath();
-/*        presenter.set_g2_l2_data(path);
-        questionText.setText("Listen and answer properly");*/
+        presenter.set_g2_l2_data(path);
+        questionText.setText("Listen and answer properly");
     }
 
     private void playTTS() {
@@ -272,7 +272,7 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
     @OnClick(R.id.iv_g3_l2_submit_ans)
     public void submitAns() {
         //TODO post processing
-        /*submitAnswer.setClickable(false);
+        submitAnswer.setClickable(false);
         mCountDownTimer.pause();
         presenter.checkFinalAnswer_g3_l2(answer.getText().toString(), currentTeam);
         currentTeam += 1;
@@ -304,7 +304,6 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
             }, 2500);
 
         }
-*/
     }
 
     public void startSTT() {
@@ -317,7 +316,7 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
         
     }
 
-/*    @Override
+    @Override
     public void setQuestionWords(String[] words) {
         try {
             word1.setText(words[0]);
@@ -348,5 +347,5 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
         optionsView.setVisibility(View.VISIBLE);
         setAnswer(result);
         presenter.g2_l2_checkAnswer(result);
-    }*/
+    }
 }
