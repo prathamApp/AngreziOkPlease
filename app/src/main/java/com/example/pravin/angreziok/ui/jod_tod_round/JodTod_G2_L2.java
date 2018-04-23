@@ -45,7 +45,7 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
     @BindView(R.id.mCountDownTimer)
     CountDownTimerView mCountDownTimer;
     @BindView(R.id.myflowlayout)
-    FlowLayout flowLayout;
+    LinearLayout flowLayout;
     @BindView(R.id.ll_g1_l2_allstar)
     LinearLayout allstarLayout;
     @BindView(R.id.ll_g1_l2_megastar)
@@ -75,7 +75,7 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
 
     String text;
     JodTodContract.JodTodPresenter presenter;
-    int speechCount, currentTeam, score = 0;
+    int speechCount, currentTeam, score = 0,totalAnsCounter=0,correctAnsCounter=0;
     Dialog dialog;
 
     @Override
@@ -98,6 +98,8 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
         setInitialScores();
         setDataForGame();
         currentTeam = 0;
+        totalAnsCounter=0;
+        correctAnsCounter=0;
         showDialog();
     }
 
@@ -152,13 +154,13 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
         dialog.setContentView(R.layout.custom_dialog_for_qrscan);
         dialog.setCanceledOnTouchOutside(false);
         TextView text = dialog.findViewById(R.id.dialog_tv_student_name);
-        ImageView iv_close = dialog.findViewById(R.id.dialog_iv_close);
         Button button = dialog.findViewById(R.id.dialog_btn_scan_qr);
         text.setText("Next question would be for " + teamName);
         button.setText("Ready ??");
         sttOptions.setVisibility(View.GONE);
         flowLayout.removeAllViews();
-
+        totalAnsCounter=0;
+        correctAnsCounter=0;
 
         dialog.show();
 
@@ -246,9 +248,11 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
         textView.setHeight(50);
         textView.setWidth(flowLayout.getWidth());
         Log.d("changeColor", "Ques : " + text + "    setAnswer : " + ans + "    sttWord : " + sttWord);
+        totalAnsCounter++;
 
         if (ans.equalsIgnoreCase("true")) {
             textView.setTextColor(Color.GREEN);
+            correctAnsCounter++;
             score += 5;
         } else {
             textView.setTextColor(Color.RED);
@@ -290,6 +294,10 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
         submitAnswer.setClickable(false);
         mCountDownTimer.pause();
 //       TODO Check answer  presenter.checkFinalAnswer_g1_l2(answer.getText().toString(), currentTeam);
+        float finalPercentage = (correctAnsCounter / totalAnsCounter) * 100;
+        String currScore = "" + score;
+        Log.d("finalPercentage", "finalPercentage: " + finalPercentage);
+        presenter.checkFinalAnswer_g2_l2(finalPercentage, currScore, currentTeam);
 
         currentTeam += 1;
         if (currentTeam < jodTodPlayerList.size()) {
@@ -310,7 +318,12 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
                 public void run() {
 
                     getActivity().findViewById(R.id.iv_submit_ans).setOnClickListener(null);
-                    // TODO  Next Round start process  SamajhKeBolo
+                    // TODO  Next Round start process  G3
+                    Bundle bundle = new Bundle();
+                    bundle.putString("frag", "R2G3L2");
+                    PD_Utility.showFragment(getActivity(), new fragment_intro_character(), R.id.cl_jod_tod,
+                            bundle, fragment_intro_character.class.getSimpleName());
+
                     /*Intent intent = new Intent(getActivity(), SamajhKeBolo.class);
                     Bundle bundle = new Bundle();
                     bundle.putParcelableArrayList("PlayerList", jodTodPlayerList);
@@ -338,7 +351,7 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
     @OnClick(R.id.btn_tempskip)
     public void skipToNext() {
         Bundle bundle = new Bundle();
-        bundle.putString("frag", "R2G2L2");
+        bundle.putString("frag", "R2G3L2");
         PD_Utility.showFragment(getActivity(), new fragment_intro_character(), R.id.cl_jod_tod,
                 bundle, fragment_intro_character.class.getSimpleName());
     }

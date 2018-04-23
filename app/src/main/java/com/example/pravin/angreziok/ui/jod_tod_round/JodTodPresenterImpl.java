@@ -203,17 +203,39 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
     }
 
     @Override
-    public void checkFinalAnswer_g1_l2(String socore, int currentTeam) {
+    public void checkFinalAnswer_g1_l2(float scorePercentage, String score, int currentTeam) {
 
         int currentTeamScore = Integer.parseInt(jodTodPlayerList.get(currentTeam).studentScore);
-        currentTeamScore += Integer.parseInt(socore);
+        currentTeamScore += Integer.parseInt(score);
 
         jodTodPlayerList.get(currentTeam).setStudentScore(""+currentTeamScore);
         jodTodG1L2View.setCurrentScore();
 
-        //  TODO Correct Answer Animation
-        jodTodG3L2View.setCelebrationView();
-        playMusic("Sounds/BilkulSahijawab.mp3", getSdcardPath());
+        if(scorePercentage>40) {
+            //  TODO Correct Answer Animation
+            jodTodG1L2View.setCelebrationView();
+            playMusic("Sounds/BilkulSahijawab.mp3", getSdcardPath());
+        } else {
+            playMusic("Sounds/wrong.mp3", getSdcardPath());
+        }
+}
+
+    @Override
+    public void checkFinalAnswer_g2_l2(float scorePercentage, String score, int currentTeam) {
+
+        int currentTeamScore = Integer.parseInt(jodTodPlayerList.get(currentTeam).studentScore);
+        currentTeamScore += Integer.parseInt(score);
+
+        jodTodPlayerList.get(currentTeam).setStudentScore(""+currentTeamScore);
+        jodTodG2L2View.setCurrentScore();
+
+        if(scorePercentage>40) {
+            //  TODO Correct Answer Animation
+            jodTodG2L2View.setCelebrationView();
+            playMusic("Sounds/BilkulSahijawab.mp3", getSdcardPath());
+        } else {
+            playMusic("Sounds/wrong.mp3", getSdcardPath());
+        }
 }
 
 

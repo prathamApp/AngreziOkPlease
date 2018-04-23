@@ -322,16 +322,14 @@
                                         android:orientation="vertical"
                                         android:paddingTop="5dp">
 
-                                        <com.nex3z.flowlayout.FlowLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+                                        <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
                                             android:id="@+id/myflowlayout"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:background="@drawable/round_two_option_background"
-                                            app:flChildSpacing="10dp"
-                                            app:flChildSpacingForLastRow="align"
-                                            app:flRowSpacing="10dp">
+                                            android:orientation="vertical">
 
-                                        </com.nex3z.flowlayout.FlowLayout>
+                                        </LinearLayout>
 
                                     </ScrollView>
 
