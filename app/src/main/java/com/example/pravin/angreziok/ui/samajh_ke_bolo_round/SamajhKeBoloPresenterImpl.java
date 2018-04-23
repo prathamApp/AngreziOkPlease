@@ -215,6 +215,25 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
     }
 
     @Override
+    public void set_g3_l2_data(String path) {
+        askGameData = fetchJsonData("RoundThreeGameThree", path);
+        g3l2QuestionData = askGameData.getNodelist();
+    }
+
+    @Override
+    public void setWords_g3_l2(){
+        samajhKeBoloG3L2View.hideOptionView();
+        randomNumber = getRandomNumber(0, g3l2QuestionData.size());
+        samajhKeBoloG3L2View.setQuestionWords(getOptions_g3_l2());
+    }
+
+    @Override
+    public String getCurrentQuestion_g3_l2(){
+    //TODO
+    return null;
+    }
+
+    @Override
     public void checkFinalAnswer_g2_l2(String ans, int currentTeam) {
         if (ans.contains(g2l2QuestionData.get(randomNumber).getResourceType())) {
             //  TODO correct answer animation + increase score of group
@@ -236,6 +255,11 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
     @Override
     public String[] getOptions_g2_l2() {
         return g2l2QuestionData.get(randomNumber).getResourceText().split(",");
+    }
+
+    @Override
+    public String[] getOptions_g3_l2() {
+        return g3l2QuestionData.get(randomNumber).getResourceText().split(",");
     }
 
     @Override

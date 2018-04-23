@@ -25,6 +25,10 @@ public interface SamajhKeBoloContract {
         void checkFinalAnswer_g2_l2(String ans, int currentTeam);
         String[] getOptions_g2_l2();
         void g2_l2_checkAnswer(String result);
+        void set_g3_l2_data(String path);
+        void setWords_g3_l2();
+        String getCurrentQuestion_g3_l2();
+        String[] getOptions_g3_l2();
     }
 
     interface SamajhKeBolo_G1_L2_View {
