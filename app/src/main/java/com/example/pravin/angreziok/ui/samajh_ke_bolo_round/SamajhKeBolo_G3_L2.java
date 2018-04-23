@@ -218,7 +218,7 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
     public void initiateQuestion() {
         startTimer();
         text = presenter.getCurrentQuestion_g3_l2();
-        questionText.setText(text);
+        //questionText.setText(text);
         playTTS();
     }
 
@@ -269,7 +269,7 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
     @OnClick(R.id.iv_g3_l2_submit_ans)
     public void submitAns() {
         //TODO post processing
-        submitAnswer.setClickable(false);
+  /*      submitAnswer.setClickable(false);
         mCountDownTimer.pause();
         presenter.checkFinalAnswer_g3_l2(answer.getText().toString(), currentTeam);
         currentTeam += 1;
@@ -300,7 +300,7 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
                 }
             }, 2500);
 
-        }
+        }*/
     }
 
     public void startSTT() {
@@ -308,20 +308,16 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
         sttService.startListening();
     }
 
-    @Override
-<<<<<<< HEAD
-=======
+/*    @Override
     public void onResult(String result) {
-
-    }
+    }*/
 
     @Override
->>>>>>> c55d84f330a22d0e2f4ba771c344140a886722df
     public void setQuestionWords(String[] words) {
         try {
-            word1.setText(words[0]);
+/*            word1.setText(words[0]);
             word2.setText(words[1]);
-            word3.setText(words[2]);
+            word3.setText(words[2]);*/
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -329,17 +325,17 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
 
     @Override
     public void setAnswer(String ans) {
-        options.setVisibility(View.GONE);
-        answer.setText(ans);
+/*        options.setVisibility(View.GONE);
+        answer.setText(ans);*/
     }
 
     @Override
     public void showOptions_g2_l2() {
-        options.setVisibility(View.VISIBLE);
+/*        options.setVisibility(View.VISIBLE);
         String[] options = presenter.getOptions_g2_l2();
         option1.setText(options[0]);
         option2.setText(options[1]);
-        option3.setText(options[2]);
+        option3.setText(options[2]);*/
     }
 
     @Override
