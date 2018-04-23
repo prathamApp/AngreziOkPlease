@@ -166,7 +166,6 @@ public class BoleToh_G2_L2 extends BaseFragment implements BoleTohContract.BoleT
         dialog.setContentView(R.layout.custom_dialog_for_qrscan);
         dialog.setCanceledOnTouchOutside(false);
         TextView text = dialog.findViewById(R.id.dialog_tv_student_name);
-        ImageView iv_close = dialog.findViewById(R.id.dialog_iv_close);
         Button button = dialog.findViewById(R.id.dialog_btn_scan_qr);
         text.setText("Next question would be for " + teamName);
         button.setText("Ready ??");
@@ -176,15 +175,6 @@ public class BoleToh_G2_L2 extends BaseFragment implements BoleTohContract.BoleT
         Button scanNextQR = dialog.findViewById(R.id.dialog_btn_scan_qr);
 
         scanNextQR.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                initiateQuestion();
-                presenter.setImage_g2_l2();
-            }
-        });
-
-        iv_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
