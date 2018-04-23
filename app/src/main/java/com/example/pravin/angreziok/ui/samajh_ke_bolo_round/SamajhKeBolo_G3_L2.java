@@ -314,7 +314,7 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
 
     @Override
     public void onResult(String result) {
-        
+
     }
 
 /*    @Override

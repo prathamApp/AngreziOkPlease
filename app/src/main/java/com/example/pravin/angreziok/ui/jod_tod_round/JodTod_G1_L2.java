@@ -252,21 +252,21 @@ public class JodTod_G1_L2 extends BaseFragment implements JodTodContract.JodTod_
     @Override
     public void setAnswer(String ans, String sttWord) {
 
-        TextView textView = new TextView(getActivity());
+        final TextView textView = new TextView(getActivity());
         textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         textView.setHeight(50);
         textView.setWidth(flowLayout.getWidth());
-        textView.setText(sttWord);
+        textView.setTextSize(25);
+        textView.setText("1:"+sttWord);
         Log.d("changeColor", "Ques : " + text + "    setAnswer : " + ans + "    sttWord : " + sttWord);
 
         if (text.equalsIgnoreCase("" + ans)) {
-            textView.setTextColor(Color.GREEN);
+//            textView.setTextColor(Color.GREEN);
             score+=5;
         } else {
-            textView.setTextColor(Color.RED);
+//            textView.setTextColor(Color.RED);
         }
 
-        textView.setTextSize(25);
 
         flowLayout.addView(textView);
     }

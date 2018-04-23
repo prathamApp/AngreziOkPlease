@@ -86,7 +86,7 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_jod_tod_g1_l2, container, false);
+        return inflater.inflate(R.layout.fragment_jod_tod_g2_l2, container, false);
     }
 
     @Override
@@ -94,6 +94,7 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
         presenter = new JodTodPresenterImpl(getActivity(), this, ttsService);
+        presenter.set_g2_l2_data();
         setInitialScores();
         setDataForGame();
         currentTeam = 0;
@@ -157,6 +158,7 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
         button.setText("Ready ??");
         sttOptions.setVisibility(View.GONE);
         flowLayout.removeAllViews();
+
 
         dialog.show();
 
@@ -243,18 +245,16 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
         textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         textView.setHeight(50);
         textView.setWidth(flowLayout.getWidth());
-        textView.setText(sttWord);
         Log.d("changeColor", "Ques : " + text + "    setAnswer : " + ans + "    sttWord : " + sttWord);
 
-        if (text.equalsIgnoreCase("" + ans)) {
+        if (ans.equalsIgnoreCase("true")) {
             textView.setTextColor(Color.GREEN);
             score += 5;
         } else {
             textView.setTextColor(Color.RED);
         }
-
         textView.setTextSize(25);
-
+        textView.setText(sttWord);
         flowLayout.addView(textView);
     }
 
@@ -331,6 +331,7 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
     @Override
     public void onResult(String result) {
         sttOptions.setVisibility(View.VISIBLE);
+        Log.d("JodTod", "STTResult: "+result);
         presenter.g2_l2_checkAnswer(result);
     }
 

@@ -130,35 +130,27 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
         if (!ans.equalsIgnoreCase("") && !ans.equalsIgnoreCase(" ")) {
             int rhymeLen = rhymeCheckWord.length();
             if(ans.length()>rhymeLen) {
-                for (int i = rhymeLen; i >= 0; i--) {
-                    rhymAns= ans.charAt(i)+""+rhymAns;
+                for (int i = ans.length(); i >= rhymeLen; i--) {
+                    rhymAns= ans.charAt(i-1)+""+rhymAns;
                 }
                 Log.d("rhymAns", "rhymeCheckWord: "+rhymeCheckWord+"       g1_l2_checkAnswer: rhymAns : "+rhymAns);
             }
-            String actualAns = "" + ans.charAt(0);
+            if(rhymAns.equalsIgnoreCase(""+rhymeCheckWord))
+                jodTodG2L2View.setAnswer("true",""+ans);
+            else
+                jodTodG2L2View.setAnswer("false",""+ans);
         }
     }
 
     @Override
     public String[] getOptions() {
-        int[] optionsIds;
-        int[] randomOptions;
-
-/*        randomNumber = getRandomNumber(0, g2l2QuestionData.size());
+        randomNumber = getRandomNumber(0, g2l2QuestionData.size());
         rhymeCheckWord = g2l2QuestionData.get(randomNumber).getResourceText();
         g2l2SubList = g2l2QuestionData.get(randomNumber).getNodelist();
         randomNumber = getRandomNumber(0, g2l2SubList.size());
-        questionWord = g2l2SubList.get(randomNumber).getResourceText();*/
+        questionWord = g2l2SubList.get(randomNumber).getResourceText();
 
-        do {
-            optionsIds = getUniqueRandomNumber(0, g2l2QuestionData.size(), 2);
-        } while (optionsIds[0] == randomNumber || optionsIds[1] == randomNumber);
-        String[] optionsText = new String[3];
-        randomOptions = getUniqueRandomNumber(0, 3, 3);
-        optionsText[randomOptions[0]] = g2l2QuestionData.get(optionsIds[0]).getResourceText();
-        optionsText[randomOptions[1]] = g2l2QuestionData.get(optionsIds[1]).getResourceText();
-        optionsText[randomOptions[2]] = g2l2QuestionData.get(randomNumber).getResourceText();
-        return optionsText;
+        return null;
 
     }
 
