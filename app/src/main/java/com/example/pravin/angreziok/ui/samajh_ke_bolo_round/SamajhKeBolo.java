@@ -37,6 +37,8 @@ public class SamajhKeBolo extends BaseActivity implements SamajhKeBoloContract.S
     VideoView introVideo;
     @BindView(R.id.skip_button_intro)
     Button btn_skip;
+    static ArrayList<Integer> list = new ArrayList<Integer>();
+    static int gameCounter = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,12 @@ public class SamajhKeBolo extends BaseActivity implements SamajhKeBoloContract.S
         Intent intent = getIntent();
         Bundle extraBundle = intent.getExtras();
         playerModalArrayList = extraBundle.getParcelableArrayList("PlayerList");
+        for (int i = 0; i < 3; i++)
+            list.add(new Integer(i));
+        Collections.shuffle(list);
+        Log.d("games", "\n\n\nShuffle: \n\n\n");
+        for(int i =0 ; i<list.size(); i++)
+            Log.d("games", "gamesNo: "+list.get(i));
 
         Collections.shuffle(playerModalArrayList);
         for (int i = 0; i < playerModalArrayList.size(); i++)
@@ -80,7 +88,8 @@ public class SamajhKeBolo extends BaseActivity implements SamajhKeBoloContract.S
     @Override
     public void loadFragment() {
         Bundle bundle = new Bundle();
-        bundle.putString("frag", "R3G1L2");
+        bundle.putString("round", "R3");
+        bundle.putInt("count", list.get(gameCounter));
         PD_Utility.showFragment(SamajhKeBolo.this, new fragment_intro_character(), R.id.cl_samajh_ke_bolo,
                 bundle, fragment_intro_character.class.getSimpleName());
     }

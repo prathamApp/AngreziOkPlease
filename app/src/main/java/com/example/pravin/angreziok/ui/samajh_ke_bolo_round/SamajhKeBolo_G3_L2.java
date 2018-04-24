@@ -23,6 +23,8 @@ import com.example.pravin.angreziok.BaseFragment;
 import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.animations.MyBounceInterpolator;
 import com.example.pravin.angreziok.interfaces.SpeechResult;
+import com.example.pravin.angreziok.ui.fragment_intro_character;
+import com.example.pravin.angreziok.util.PD_Utility;
 import com.github.anastr.flattimelib.CountDownTimerView;
 import com.github.anastr.flattimelib.intf.OnTimeFinish;
 
@@ -352,7 +354,19 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
                 public void run() {
                     //TODO display Score screen after final round
                     submitAnswer.setOnClickListener(null);
-                    Toast.makeText(getActivity(), "Tie breaker or Final score screen?", Toast.LENGTH_SHORT).show();
+                    Bundle bundle = new Bundle();
+                    SamajhKeBolo.gameCounter += 1;
+                    if (SamajhKeBolo.gameCounter <= 1) {
+                        bundle.putString("round", "R3");
+                        bundle.putInt("count", SamajhKeBolo.list.get(SamajhKeBolo.gameCounter));
+                        PD_Utility.showFragment(getActivity(), new fragment_intro_character(), R.id.cl_samajh_ke_bolo,
+                                bundle, fragment_intro_character.class.getSimpleName());
+                    } else {
+                        Toast.makeText(getActivity(), "Tie breaker or Final score screen?", Toast.LENGTH_SHORT).show();
+/*                        Intent intent = new Intent(getActivity(), JodTod.class);
+                        intent.putExtras(bundle);
+                        startActivity(intent);*/
+                    }
 /*                  TODO Tie or Not
                     Bundle bundle = new Bundle();
                     bundle.putString("frag", "R1G2L2");
