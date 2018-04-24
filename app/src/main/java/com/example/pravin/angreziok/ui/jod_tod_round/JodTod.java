@@ -56,7 +56,7 @@ public class JodTod extends BaseActivity implements JodTodContract.JodTodView, M
         for (int i = 0; i < jodTodPlayerList.size(); i++)
             Log.d("JodTodTAG", "jodTodPlayerList: " + jodTodPlayerList.get(i).getStudentAlias());
 
-        videoPath = PD_Utility.getExternalPath(this) + "Videos/Bole_to_round.mp4";
+        videoPath = PD_Utility.getExternalPath(this) + "Videos/Jod_Tod_Round.mp4";
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         Log.d("videoPath", "onCreate: " + videoPath);
         playVideo(Uri.parse(videoPath));
