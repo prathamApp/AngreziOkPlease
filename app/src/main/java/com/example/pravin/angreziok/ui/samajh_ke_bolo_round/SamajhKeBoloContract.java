@@ -30,8 +30,8 @@ public interface SamajhKeBoloContract {
         void setQuestion_g3_l2();
         String getCurrentQuestion_g3_l2();
         String[] getOptions_g3_l2();
-        void checkAnswerOfOptions(String answer);
-        void checkAnswerOfStt(String answer);
+        void checkAnswerOfOptions(String answer, int currentTeam);
+        void checkAnswerOfStt(String answer,int currentTeam);
     }
 
     interface SamajhKeBolo_G1_L2_View {
@@ -62,6 +62,7 @@ public interface SamajhKeBoloContract {
         void setQuestion(String question);
         void setQuestionWords(String[] words);
         void setAnswer(String ans);
+        void animateMic();
     }
 
 }
