@@ -22,7 +22,9 @@ import android.widget.TextView;
 import com.example.pravin.angreziok.BaseFragment;
 import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.animations.MyBounceInterpolator;
+import com.example.pravin.angreziok.ui.fragment_intro_character;
 import com.example.pravin.angreziok.ui.samajh_ke_bolo_round.SamajhKeBolo;
+import com.example.pravin.angreziok.util.PD_Utility;
 import com.github.anastr.flattimelib.CountDownTimerView;
 import com.github.anastr.flattimelib.intf.OnTimeFinish;
 
@@ -318,11 +320,20 @@ public class JodTod_G3_L2 extends BaseFragment implements JodTodContract.JodTod_
                 public void run() {
 
                     getActivity().findViewById(R.id.iv_submit_ans).setOnClickListener(null);
-                    Intent intent = new Intent(getActivity(), SamajhKeBolo.class);
+
                     Bundle bundle = new Bundle();
-                    bundle.putParcelableArrayList("PlayerList", jodTodPlayerList);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
+                    JodTod.gameCounter += 1;
+                    if (JodTod.gameCounter <= 1) {
+                        bundle.putString("round", "R2");
+                        bundle.putInt("count", JodTod.list.get(JodTod.gameCounter));
+                        PD_Utility.showFragment(getActivity(), new fragment_intro_character(), R.id.cl_jod_tod,
+                                bundle, fragment_intro_character.class.getSimpleName());
+                    } else {
+                        Intent intent = new Intent(getActivity(), SamajhKeBolo.class);
+                        bundle.putParcelableArrayList("PlayerList", jodTodPlayerList);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                    }
 
                 }
             }, 2500);

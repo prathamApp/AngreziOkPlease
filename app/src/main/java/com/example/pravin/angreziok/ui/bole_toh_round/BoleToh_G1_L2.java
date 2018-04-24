@@ -1,6 +1,7 @@
 package com.example.pravin.angreziok.ui.bole_toh_round;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -26,6 +27,7 @@ import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.animations.MyBounceInterpolator;
 import com.example.pravin.angreziok.interfaces.SpeechResult;
 import com.example.pravin.angreziok.ui.fragment_intro_character;
+import com.example.pravin.angreziok.ui.jod_tod_round.JodTod;
 import com.example.pravin.angreziok.util.PD_Utility;
 import com.github.anastr.flattimelib.CountDownTimerView;
 import com.github.anastr.flattimelib.intf.OnTimeFinish;
@@ -39,6 +41,7 @@ import nl.dionsegijn.konfetti.models.Size;
 
 import static com.example.pravin.angreziok.BaseActivity.sttService;
 import static com.example.pravin.angreziok.BaseActivity.ttsService;
+import static com.example.pravin.angreziok.ui.bole_toh_round.BoleToh.gameCounter;
 import static com.example.pravin.angreziok.ui.bole_toh_round.BoleToh.playerModalArrayList;
 
 
@@ -249,7 +252,7 @@ public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleT
     }
 
     @Override
-    public void setQuestionText(String questionString){
+    public void setQuestionText(String questionString) {
         showQuestion.setText(questionString);
     }
 
@@ -313,10 +316,18 @@ public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleT
                     getActivity().findViewById(R.id.iv_g1_l2_submit_ans).setOnClickListener(null);
 
                     Bundle bundle = new Bundle();
-                    bundle.putString("frag", "R1G2L2");
-                    PD_Utility.showFragment(getActivity(), new fragment_intro_character(), R.id.cl_bole_toh,
-                            bundle, fragment_intro_character.class.getSimpleName());
-
+                    gameCounter += 1;
+                    if (gameCounter <= 1) {
+                        bundle.putString("round", "R1");
+                        bundle.putInt("count", BoleToh.list.get(gameCounter));
+                        PD_Utility.showFragment(getActivity(), new fragment_intro_character(), R.id.cl_bole_toh,
+                                bundle, fragment_intro_character.class.getSimpleName());
+                    } else {
+                        Intent intent = new Intent(getActivity(), JodTod.class);
+                        bundle.putParcelableArrayList("playerModalArrayList", playerModalArrayList);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                    }
                 }
             }, 2500);
 

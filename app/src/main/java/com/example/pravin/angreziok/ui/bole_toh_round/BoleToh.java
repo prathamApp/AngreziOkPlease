@@ -32,11 +32,14 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
     BoleTohContract.BoleTohPresenter presenter;
     static ArrayList<PlayerModal> playerModalArrayList;
     String videoPath;
+    static int gameCounter = 0;
 
     @BindView(R.id.round_intro_videoView)
     VideoView introVideo;
     @BindView(R.id.skip_button_intro)
     Button btn_skip;
+    static ArrayList<Integer> list = new ArrayList<Integer>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +50,14 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
         Intent intent = getIntent();
         Bundle extraBundle = intent.getExtras();
         playerModalArrayList = extraBundle.getParcelableArrayList("playerModalArrayList");
+
+        for (int i = 0; i < 3; i++)
+            list.add(new Integer(i));
+        Collections.shuffle(list);
+        Log.d("games", "\n\n\nShuffle: \n\n\n");
+        for(int i =0 ; i<list.size(); i++)
+            Log.d("games", "gamesNo: "+list.get(i));
+
 
         Collections.shuffle(playerModalArrayList);
         for(int i=0; i<playerModalArrayList.size(); i++)
@@ -79,7 +90,8 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
     @Override
     public void loadFragment() {
         Bundle bundle = new Bundle();
-        bundle.putString("frag", "R1G1L2");
+        bundle.putString("round", "R1");
+        bundle.putInt("count", list.get(gameCounter));
         PD_Utility.showFragment(BoleToh.this, new fragment_intro_character(), R.id.cl_bole_toh,
                 bundle, fragment_intro_character.class.getSimpleName());
     }

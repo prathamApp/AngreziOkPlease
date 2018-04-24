@@ -41,16 +41,26 @@ public class JodTod extends BaseActivity implements JodTodContract.JodTodView, M
     static ArrayList<PlayerModal> jodTodPlayerList;
     String videoPath;
     JodTodContract.JodTodPresenter presenter;
+    static ArrayList<Integer> list = new ArrayList<Integer>();
+    static int gameCounter = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jod_tod);
         ButterKnife.bind(this);
+        gameCounter = 0;
 
         Intent intent = getIntent();
         Bundle extraBundle = intent.getExtras();
         jodTodPlayerList = extraBundle.getParcelableArrayList("playerModalArrayList");
+        for (int i = 0; i < 3; i++)
+            list.add(new Integer(i));
+        Collections.shuffle(list);
+        Log.d("games", "\n\n\nShuffle: \n\n\n");
+        for(int i =0 ; i<list.size(); i++)
+            Log.d("games", "gamesNo: "+list.get(i));
+
 
         Collections.shuffle(jodTodPlayerList);
         for (int i = 0; i < jodTodPlayerList.size(); i++)
@@ -90,7 +100,8 @@ public class JodTod extends BaseActivity implements JodTodContract.JodTodView, M
     @Override
     public void loadFragment() {
         Bundle bundle = new Bundle();
-        bundle.putString("frag", "R2G1L2");
+        bundle.putString("round", "R2");
+        bundle.putInt("count", list.get(gameCounter));
         PD_Utility.showFragment(JodTod.this, new fragment_intro_character(), R.id.cl_jod_tod,
                 bundle, fragment_intro_character.class.getSimpleName());
     }

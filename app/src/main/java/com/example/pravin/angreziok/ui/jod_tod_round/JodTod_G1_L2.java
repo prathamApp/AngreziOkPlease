@@ -1,6 +1,7 @@
 package com.example.pravin.angreziok.ui.jod_tod_round;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.animations.MyBounceInterpolator;
 import com.example.pravin.angreziok.interfaces.SpeechResult;
 import com.example.pravin.angreziok.ui.fragment_intro_character;
+import com.example.pravin.angreziok.ui.samajh_ke_bolo_round.SamajhKeBolo;
 import com.example.pravin.angreziok.util.PD_Utility;
 import com.github.anastr.flattimelib.CountDownTimerView;
 import com.github.anastr.flattimelib.intf.OnTimeFinish;
@@ -322,9 +324,18 @@ public class JodTod_G1_L2 extends BaseFragment implements JodTodContract.JodTod_
                     getActivity().findViewById(R.id.iv_submit_ans).setOnClickListener(null);
                     // TODO  Next Round start process  Game 2
                     Bundle bundle = new Bundle();
-                    bundle.putString("frag", "R2G2L2");
-                    PD_Utility.showFragment(getActivity(), new fragment_intro_character(), R.id.cl_jod_tod,
-                            bundle, fragment_intro_character.class.getSimpleName());
+                    JodTod.gameCounter += 1;
+                    if (JodTod.gameCounter <= 1) {
+                        bundle.putString("round", "R2");
+                        bundle.putInt("count", JodTod.list.get(JodTod.gameCounter));
+                        PD_Utility.showFragment(getActivity(), new fragment_intro_character(), R.id.cl_jod_tod,
+                                bundle, fragment_intro_character.class.getSimpleName());
+                    } else {
+                        Intent intent = new Intent(getActivity(), SamajhKeBolo.class);
+                        bundle.putParcelableArrayList("PlayerList", jodTodPlayerList);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                    }
 
                     /*Intent intent = new Intent(getActivity(), SamajhKeBolo.class);
                     Bundle bundle = new Bundle();
