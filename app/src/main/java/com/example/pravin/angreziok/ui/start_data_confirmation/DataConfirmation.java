@@ -113,7 +113,7 @@ public class DataConfirmation extends BaseActivity implements DataConfirmationCo
         }
     }
 
-    @OnClick(R.id.btn_change_team)
+    @OnClick({R.id.ll_changeTeam, R.id.tv_change_team})
     public void shuffleTeams() {
         setStudentsAndTeams();
     }

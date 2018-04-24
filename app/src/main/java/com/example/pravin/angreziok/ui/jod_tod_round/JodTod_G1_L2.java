@@ -294,7 +294,9 @@ public class JodTod_G1_L2 extends BaseFragment implements JodTodContract.JodTod_
         submitAnswer.setClickable(false);
         mCountDownTimer.pause();
 //       TODO Check answer
-        float finalPercentage = (correctAnsCounter / totalAnsCounter) * 100;
+        float finalPercentage=0;
+        if(correctAnsCounter>0 && totalAnsCounter>0)
+            finalPercentage = (correctAnsCounter / totalAnsCounter) * 100;
         String currScore = "" + score;
         Log.d("finalPercentage", "finalPercentage: " + finalPercentage);
         presenter.checkFinalAnswer_g1_l2(finalPercentage, currScore, currentTeam);

@@ -338,7 +338,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
         Toast.makeText(mContext, "actual ans: " + g2l2QuestionData.get(randomNumber).getResourceText(), Toast.LENGTH_SHORT).show();
         boleTohG2L2View.setActionGif(imagePath);
         String questionString = g2l2QuestionData.get(randomNumber).getResourceQuestion();
-        boleTohG1L2View.setQuestionText(questionString);
+        boleTohG2L2View.setQuestionText(questionString);
     }
 
     @Override
@@ -353,7 +353,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
         Toast.makeText(mContext, "Hint:::" + currentPairList.get(0).getResourceText(), Toast.LENGTH_SHORT).show();
         Toast.makeText(mContext, "Question:::" + currentPairList.get(1).getResourceText(), Toast.LENGTH_SHORT).show();
         boleTohG3L2View.setPairsImages(hintImagePath, questionImagePath);
-        String questionString = g2l2QuestionData.get(randomNumber).getResourceQuestion();
+        String questionString = g3l2QuestionData.get(randomNumber).getResourceQuestion();
         boleTohG3L2View.setQuestionText(questionString);
     }
 
