@@ -221,16 +221,16 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
     }
 
     @Override
-    public void setWords_g3_l2(){
-/*        samajhKeBoloG3L2View.hideOptionView();
+    public void setQuestion_g3_l2() {
+        samajhKeBoloG3L2View.hideOptionView();
         randomNumber = getRandomNumber(0, g3l2QuestionData.size());
-        samajhKeBoloG3L2View.setQuestionWords(getOptions_g3_l2());*/
+        samajhKeBoloG3L2View.setQuestion(getCurrentQuestion_g3_l2());
+        samajhKeBoloG3L2View.setQuestionWords(getOptions_g3_l2());
     }
 
     @Override
-    public String getCurrentQuestion_g3_l2(){
-    //TODO
-    return null;
+    public String getCurrentQuestion_g3_l2() {
+        return g3l2QuestionData.get(randomNumber).getResourceQuestion();
     }
 
     @Override
@@ -240,10 +240,10 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
             samajhKeBoloG2L2View.setCelebrationView();
             playMusic("Sounds/BilkulSahijawab.mp3", getSdcardPath());
             int currentTeamScore = Integer.parseInt(playerModalArrayList.get(currentTeam).studentScore);
-            if (ans.split(" ").length>1)
-            playerModalArrayList.get(currentTeam).setStudentScore(String.valueOf(currentTeamScore + 10));
+            if (ans.split(" ").length > 1)
+                playerModalArrayList.get(currentTeam).setStudentScore(String.valueOf(currentTeamScore + 10));
             else
-            playerModalArrayList.get(currentTeam).setStudentScore(String.valueOf(currentTeamScore + 5));
+                playerModalArrayList.get(currentTeam).setStudentScore(String.valueOf(currentTeamScore + 5));
             samajhKeBoloG2L2View.setCurrentScore();
         } else {
             //  TODO wrong answer animation
@@ -260,6 +260,22 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
     @Override
     public String[] getOptions_g3_l2() {
         return g3l2QuestionData.get(randomNumber).getResourceText().split(",");
+    }
+
+    @Override
+    public void checkAnswerOfOptions(String answer) {
+        if (g3l2QuestionData.get(randomNumber).getResourceType().equalsIgnoreCase(answer))
+            Toast.makeText(mContext, "Correct", Toast.LENGTH_SHORT).show();
+        else
+            Toast.makeText(mContext, "Wrong", Toast.LENGTH_SHORT).show();
+
+        //TODO post processing
+    }
+
+    @Override
+    public void checkAnswerOfStt(String answer) {
+        // TODO
+
     }
 
     @Override
