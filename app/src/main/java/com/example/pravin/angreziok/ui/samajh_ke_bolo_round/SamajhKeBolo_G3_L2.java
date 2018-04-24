@@ -285,7 +285,8 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
     public void optionsClicked(View view) {
         // TTS for the options clicked
         TextView option = (TextView) view;
-        option.setBackgroundResource(R.drawable.team_faded);
+        View parent = (View) option.getParent();
+        parent.setBackgroundResource(R.drawable.custom_dialog_bg3);
         presenter.startTTS(option.getText() + "");
     }
 

@@ -262,7 +262,6 @@
                                 android:layout_height="match_parent"
                                 android:layout_gravity="center"
                                 android:layout_weight="1"
-                                android:background="@drawable/gameimgbg"
                                 android:gravity="center"
                                 android:orientation="vertical"
                                 android:weightSum="10">
@@ -271,7 +270,8 @@
                                     android:id="@+id/question"
                                     android:layout_width="match_parent"
                                     android:layout_height="0dp"
-                                    android:layout_marginBottom="20dp"
+                                    android:layout_marginBottom="10dp"
+                                    android:background="@drawable/gameimgbg"
                                     android:layout_weight="3"
                                     android:gravity="center"
                                     android:textSize="25sp"
@@ -280,96 +280,132 @@
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="0dp"
-                                    android:layout_weight="1"
-                                    android:weightSum="5">
+                                    android:layout_weight="7"
+                                    android:orientation="vertical"
+                                    android:paddingHorizontal="10dp"
+                                    android:paddingVertical="2dp"
+                                    android:weightSum="4">
 
-                                    <TextView
-                                        android:id="@+id/option1"
-                                        android:layout_width="0dp"
-                                        android:layout_height="match_parent"
-                                        android:layout_margin="5dp"
-                                        android:layout_weight="4"
-                                        android:gravity="center" />
-                                    <ImageView
-                                        android:id="@+id/iv_option1"
-                                        android:layout_width="0dp"
-                                        android:layout_height="match_parent"
-                                        android:layout_marginLeft="5dp"
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:background="@drawable/custom_dialog_bg2"
+                                        android:layout_marginVertical="2dp"
                                         android:layout_weight="1"
-                                        android:background="@drawable/green_answer_background"
-                                        app:srcCompat="@drawable/ic_navigate_next_black" />
+                                        android:weightSum="5">
 
-                                </LinearLayout>
+                                        <TextView
+                                            android:id="@+id/option1"
+                                            android:layout_width="0dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_margin="2dp"
+                                            android:textSize="20sp"
+                                            android:textStyle="bold"
+                                            android:text="opt4"
+                                            android:layout_weight="4"
+                                            android:gravity="center" />
 
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="1"
-                                    android:weightSum="5">
+                                        <ImageView
+                                            android:id="@+id/iv_option1"
+                                            android:layout_width="0dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_marginLeft="5dp"
+                                            android:layout_weight="1"
+                                            android:background="@drawable/green_answer_background"
+                                            app:srcCompat="@drawable/ic_navigate_next_black" />
 
-                                    <TextView
-                                        android:id="@+id/option2"
-                                        android:layout_width="0dp"
-                                        android:layout_height="match_parent"
-                                        android:layout_margin="5dp"
-                                        android:layout_weight="4"
-                                        android:gravity="center" />
-                                    <ImageView
-                                        android:id="@+id/iv_option2"
-                                        android:layout_width="0dp"
-                                        android:layout_height="match_parent"
-                                        android:layout_marginLeft="5dp"
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_marginVertical="2dp"
+                                        android:background="@drawable/custom_dialog_bg2"
                                         android:layout_weight="1"
-                                        android:background="@drawable/green_answer_background"
-                                        app:srcCompat="@drawable/ic_navigate_next_black" />
+                                        android:weightSum="5">
 
-                                </LinearLayout>
+                                        <TextView
+                                            android:id="@+id/option2"
+                                            android:layout_width="0dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_margin="2dp"
+                                            android:textSize="20sp"
+                                            android:textStyle="bold"
+                                            android:text="opt4"
+                                            android:layout_weight="4"
+                                            android:gravity="center" />
 
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="1"
-                                    android:weightSum="5">
+                                        <ImageView
+                                            android:id="@+id/iv_option2"
+                                            android:layout_width="0dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_marginLeft="5dp"
+                                            android:layout_weight="1"
+                                            android:background="@drawable/green_answer_background"
+                                            app:srcCompat="@drawable/ic_navigate_next_black" />
 
-                                    <TextView
-                                        android:id="@+id/option3"
-                                        android:layout_width="0dp"
-                                        android:layout_height="match_parent"
-                                        android:layout_margin="5dp"
-                                        android:layout_weight="4"
-                                        android:gravity="center" />
-                                    <ImageView
-                                        android:id="@+id/iv_option3"
-                                        android:layout_width="0dp"
-                                        android:layout_height="match_parent"
-                                        android:layout_marginLeft="5dp"
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:background="@drawable/custom_dialog_bg2"
+                                        android:layout_marginVertical="2dp"
                                         android:layout_weight="1"
-                                        android:background="@drawable/green_answer_background"
-                                        app:srcCompat="@drawable/ic_navigate_next_black" />
+                                        android:weightSum="5">
 
-                                </LinearLayout>
+                                        <TextView
+                                            android:id="@+id/option3"
+                                            android:layout_width="0dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_margin="2dp"
+                                            android:textSize="20sp"
+                                            android:textStyle="bold"
+                                            android:text="opt4"
+                                            android:layout_weight="4"
+                                            android:gravity="center" />
 
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="1"
-                                    android:weightSum="5">
+                                        <ImageView
+                                            android:id="@+id/iv_option3"
+                                            android:layout_width="0dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_marginLeft="5dp"
+                                            android:layout_weight="1"
+                                            android:background="@drawable/green_answer_background"
+                                            app:srcCompat="@drawable/ic_navigate_next_black" />
 
-                                    <TextView
-                                        android:id="@+id/option4"
-                                        android:layout_width="0dp"
-                                        android:layout_height="match_parent"
-                                        android:layout_margin="5dp"
-                                        android:layout_weight="4"
-                                        android:gravity="center" />
-                                    <ImageView
-                                        android:id="@+id/iv_option4"
-                                        android:layout_width="0dp"
-                                        android:layout_height="match_parent"
-                                        android:layout_marginLeft="5dp"
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:background="@drawable/custom_dialog_bg2"
+                                        android:layout_marginVertical="2dp"
                                         android:layout_weight="1"
-                                        android:background="@drawable/green_answer_background"
-                                        app:srcCompat="@drawable/ic_navigate_next_black" />
+                                        android:weightSum="5">
+
+                                        <TextView
+                                            android:id="@+id/option4"
+                                            android:layout_width="0dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_margin="2dp"
+                                            android:textSize="20sp"
+                                            android:textStyle="bold"
+                                            android:text="opt4"
+                                            android:layout_weight="4"
+                                            android:gravity="center" />
+
+                                        <ImageView
+                                            android:id="@+id/iv_option4"
+                                            android:layout_width="0dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_marginLeft="5dp"
+                                            android:layout_weight="1"
+                                            android:background="@drawable/green_answer_background"
+                                            app:srcCompat="@drawable/ic_navigate_next_black" />
+
+                                    </LinearLayout>
+
 
                                 </LinearLayout>
 
