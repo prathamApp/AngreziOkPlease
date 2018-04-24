@@ -53,6 +53,8 @@ public interface JodTodContract {
 
         void initiateQuestion(String question);
 
+        void setQuestionText(String questionString);
+
     }
 
     interface JodTod_G1_L2_View {
@@ -65,6 +67,7 @@ public interface JodTodContract {
 
         void setAnswer(String ans,String sttWord);
 
+        void setQuestionText(String questionString);
     }
 
     interface JodTod_G2_L2_View {
@@ -79,6 +82,7 @@ public interface JodTodContract {
 
         void hideOptionView();
 
+        void setQuestionText(String questionString);
     }
 
 }

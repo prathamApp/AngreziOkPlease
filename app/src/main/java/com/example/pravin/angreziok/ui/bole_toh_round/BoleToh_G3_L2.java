@@ -256,6 +256,12 @@ public class BoleToh_G3_L2 extends BaseFragment implements BoleTohContract.BoleT
         question.setText("Identify the pair");
     }
 
+    @Override
+    public void setQuestionText(String questionString){
+        question.setText(questionString);
+    }
+
+
     private void playTTS() {
         presenter.startTTS(text);
     }

@@ -273,6 +273,12 @@ public class JodTod_G3_L2 extends BaseFragment implements JodTodContract.JodTod_
         showQuestion.setText("Fill the missing letters");
     }
 
+    @Override
+    public void setQuestionText(String questionString){
+        showQuestion.setText(questionString);
+    }
+
+
     private void playTTS() {
         presenter.startTTS(text);
     }
