@@ -26,9 +26,7 @@ import com.example.pravin.angreziok.BaseFragment;
 import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.animations.MyBounceInterpolator;
 import com.example.pravin.angreziok.interfaces.SpeechResult;
-import com.example.pravin.angreziok.ui.bole_toh_round.BoleToh;
 import com.example.pravin.angreziok.ui.fragment_intro_character;
-import com.example.pravin.angreziok.ui.jod_tod_round.JodTod;
 import com.example.pravin.angreziok.util.PD_Utility;
 import com.github.anastr.flattimelib.CountDownTimerView;
 import com.github.anastr.flattimelib.intf.OnTimeFinish;
@@ -42,7 +40,6 @@ import nl.dionsegijn.konfetti.models.Size;
 
 import static com.example.pravin.angreziok.BaseActivity.sttService;
 import static com.example.pravin.angreziok.BaseActivity.ttsService;
-import static com.example.pravin.angreziok.ui.bole_toh_round.BoleToh.gameCounter;
 import static com.example.pravin.angreziok.ui.samajh_ke_bolo_round.SamajhKeBolo.playerModalArrayList;
 
 
