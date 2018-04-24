@@ -271,43 +271,107 @@
                                     android:id="@+id/question"
                                     android:layout_width="match_parent"
                                     android:layout_height="0dp"
-                                    android:gravity="center"
                                     android:layout_marginBottom="20dp"
-                                    android:textStyle="italic|bold"
+                                    android:layout_weight="3"
+                                    android:gravity="center"
                                     android:textSize="25sp"
-                                    android:layout_weight="3" />
+                                    android:textStyle="italic|bold" />
 
-                                <TextView
-                                    android:id="@+id/option1"
+                                <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="0dp"
-                                    android:gravity="center"
-                                    android:layout_margin="5dp"
-                                    android:layout_weight="1" />
+                                    android:layout_weight="1"
+                                    android:weightSum="5">
 
-                                <TextView
-                                    android:id="@+id/option2"
+                                    <TextView
+                                        android:id="@+id/option1"
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_margin="5dp"
+                                        android:layout_weight="4"
+                                        android:gravity="center" />
+                                    <ImageView
+                                        android:id="@+id/iv_option1"
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginLeft="5dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/green_answer_background"
+                                        app:srcCompat="@drawable/ic_navigate_next_black" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="0dp"
-                                    android:gravity="center"
-                                    android:layout_margin="5dp"
-                                    android:layout_weight="1" />
+                                    android:layout_weight="1"
+                                    android:weightSum="5">
 
-                                <TextView
-                                    android:id="@+id/option3"
+                                    <TextView
+                                        android:id="@+id/option2"
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_margin="5dp"
+                                        android:layout_weight="4"
+                                        android:gravity="center" />
+                                    <ImageView
+                                        android:id="@+id/iv_option2"
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginLeft="5dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/green_answer_background"
+                                        app:srcCompat="@drawable/ic_navigate_next_black" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="0dp"
-                                    android:gravity="center"
-                                    android:layout_margin="5dp"
-                                    android:layout_weight="1" />
+                                    android:layout_weight="1"
+                                    android:weightSum="5">
 
-                                <TextView
-                                    android:id="@+id/option4"
+                                    <TextView
+                                        android:id="@+id/option3"
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_margin="5dp"
+                                        android:layout_weight="4"
+                                        android:gravity="center" />
+                                    <ImageView
+                                        android:id="@+id/iv_option3"
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginLeft="5dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/green_answer_background"
+                                        app:srcCompat="@drawable/ic_navigate_next_black" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="0dp"
-                                    android:gravity="center"
-                                    android:layout_margin="5dp"
-                                    android:layout_weight="1" />
+                                    android:layout_weight="1"
+                                    android:weightSum="5">
+
+                                    <TextView
+                                        android:id="@+id/option4"
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_margin="5dp"
+                                        android:layout_weight="4"
+                                        android:gravity="center" />
+                                    <ImageView
+                                        android:id="@+id/iv_option4"
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginLeft="5dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/green_answer_background"
+                                        app:srcCompat="@drawable/ic_navigate_next_black" />
+
+                                </LinearLayout>
 
                             </LinearLayout>
 

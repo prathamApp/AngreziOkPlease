@@ -40,6 +40,10 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
 
     @BindView(R.id.mCountDownTimer)
     CountDownTimerView mCountDownTimer;
+    @BindView(R.id.g3_l2_sttOptions)
+    LinearLayout answerView;
+    @BindView(R.id.tv_g3_l2_answer)
+    TextView answer;
     @BindView(R.id.ll_g3_l2_allstar)
     LinearLayout allstarLayout;
     @BindView(R.id.ll_g3_l2_megastar)
@@ -58,6 +62,24 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
     TextView allScore;
     @BindView(R.id.g3_l2_sttOptions)
     LinearLayout optionsView;
+    @BindView(R.id.option1)
+    TextView option1;
+    @BindView(R.id.iv_option1)
+    ImageView iv_option1;
+    @BindView(R.id.option2)
+    TextView option2;
+    @BindView(R.id.iv_option2)
+    ImageView iv_option2;
+    @BindView(R.id.option3)
+    TextView option3;
+    @BindView(R.id.iv_option3)
+    ImageView iv_option3;
+    @BindView(R.id.option4)
+    TextView option4;
+    @BindView(R.id.iv_option4)
+    ImageView iv_option4;
+    @BindView(R.id.question)
+    TextView question;
     @BindView(R.id.tv_r3g3_question)
     TextView showQuestion;
     @BindView(R.id.konfettiView_g3_l2)
@@ -153,7 +175,7 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                presenter.setWords_g3_l2();
+                presenter.setQuestion_g3_l2();
                 initiateQuestion();
             }
         });
@@ -206,6 +228,12 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
         optionsView.setVisibility(View.GONE);
     }
 
+    @Override
+    public void setQuestion(String questionText) {
+        text = questionText;
+        question.setText(questionText);
+    }
+
 
     public void bounceView(View view) {
         Animation rubber = AnimationUtils.loadAnimation(getActivity(), R.anim.popup);
@@ -217,8 +245,6 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
     @Override
     public void initiateQuestion() {
         startTimer();
-        text = presenter.getCurrentQuestion_g3_l2();
-        //questionText.setText(text);
         playTTS();
     }
 
@@ -266,6 +292,24 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
         presenter.startTTS(option.getText() + "");
     }
 
+    @OnClick({R.id.iv_option1, R.id.iv_option2, R.id.iv_option3, R.id.iv_option4})
+    public void options_iv_clicked(View view) {
+        switch (view.getId()) {
+            case R.id.iv_option1:
+                presenter.checkAnswerOfOptions(option1.getText().toString());
+                break;
+            case R.id.iv_option2:
+                presenter.checkAnswerOfOptions(option2.getText().toString());
+                break;
+            case R.id.iv_option3:
+                presenter.checkAnswerOfOptions(option3.getText().toString());
+                break;
+            case R.id.iv_option4:
+                presenter.checkAnswerOfOptions(option4.getText().toString());
+                break;
+        }
+    }
+
     @OnClick(R.id.iv_g3_l2_submit_ans)
     public void submitAns() {
         //TODO post processing
@@ -308,16 +352,13 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
         sttService.startListening();
     }
 
-/*    @Override
-    public void onResult(String result) {
-    }*/
-
     @Override
     public void setQuestionWords(String[] words) {
         try {
-/*            word1.setText(words[0]);
-            word2.setText(words[1]);
-            word3.setText(words[2]);*/
+            option1.setText(words[0]);
+            option2.setText(words[1]);
+            option3.setText(words[2]);
+            option4.setText(words[3]);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -325,23 +366,12 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
 
     @Override
     public void setAnswer(String ans) {
-/*        options.setVisibility(View.GONE);
-        answer.setText(ans);*/
-    }
-
-    @Override
-    public void showOptions_g2_l2() {
-/*        options.setVisibility(View.VISIBLE);
-        String[] options = presenter.getOptions_g2_l2();
-        option1.setText(options[0]);
-        option2.setText(options[1]);
-        option3.setText(options[2]);*/
+        answer.setText(ans);
     }
 
     @Override
     public void onResult(String result) {
-        optionsView.setVisibility(View.VISIBLE);
-        setAnswer(result);
-        presenter.g2_l2_checkAnswer(result);
+        answerView.setVisibility(View.VISIBLE);
+        answer.setText(result);
     }
 }

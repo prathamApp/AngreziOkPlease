@@ -25,10 +25,13 @@ public interface SamajhKeBoloContract {
         void checkFinalAnswer_g2_l2(String ans, int currentTeam);
         String[] getOptions_g2_l2();
         void g2_l2_checkAnswer(String result);
+
         void set_g3_l2_data(String path);
-        void setWords_g3_l2();
+        void setQuestion_g3_l2();
         String getCurrentQuestion_g3_l2();
         String[] getOptions_g3_l2();
+        void checkAnswerOfOptions(String answer);
+        void checkAnswerOfStt(String answer);
     }
 
     interface SamajhKeBolo_G1_L2_View {
@@ -56,9 +59,9 @@ public interface SamajhKeBoloContract {
         void setCurrentScore();
         void initiateQuestion();
         void hideOptionView();
+        void setQuestion(String question);
         void setQuestionWords(String[] words);
         void setAnswer(String ans);
-        void showOptions_g2_l2();
     }
 
 }
