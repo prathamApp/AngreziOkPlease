@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -82,6 +83,11 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
     TextView showQuestion;
     @BindView(R.id.konfettiView_g3_l2)
     KonfettiView konfettiView;
+    @BindView(R.id.iv_g3_l2_submit_ans)
+    ImageView submitAnswer;
+    @BindView(R.id.ib_g3_l2_mic)
+    ImageView mic;
+
 
     String text;
     SamajhKeBoloContract.SamajhKeBoloPresenter presenter;
@@ -285,42 +291,55 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
     public void optionsClicked(View view) {
         // TTS for the options clicked
         TextView option = (TextView) view;
-        View parent = (View) option.getParent();
-        parent.setBackgroundResource(R.drawable.custom_dialog_bg3);
+
+        reinitializeOptions();
+
+        ((View) option.getParent()).setBackgroundResource(R.drawable.custom_dialog_bg3);
+
         presenter.startTTS(option.getText() + "");
     }
 
+    private void reinitializeOptions() {
+        ((View)option1.getParent()).setBackgroundResource(R.drawable.custom_dialog_bg2);
+        ((View)option2.getParent()).setBackgroundResource(R.drawable.custom_dialog_bg2);
+        ((View)option3.getParent()).setBackgroundResource(R.drawable.custom_dialog_bg2);
+        ((View)option4.getParent()).setBackgroundResource(R.drawable.custom_dialog_bg2);
+    }
+
+
     @OnClick({R.id.iv_option1, R.id.iv_option2, R.id.iv_option3, R.id.iv_option4})
     public void options_iv_clicked(View view) {
+        toggleOptionsClicks(false);
         switch (view.getId()) {
             case R.id.iv_option1:
-                presenter.checkAnswerOfOptions(option1.getText().toString());
+                presenter.checkAnswerOfOptions(option1.getText().toString(),currentTeam);
                 break;
             case R.id.iv_option2:
-                presenter.checkAnswerOfOptions(option2.getText().toString());
+                presenter.checkAnswerOfOptions(option2.getText().toString(),currentTeam);
                 break;
             case R.id.iv_option3:
-                presenter.checkAnswerOfOptions(option3.getText().toString());
+                presenter.checkAnswerOfOptions(option3.getText().toString(),currentTeam);
                 break;
             case R.id.iv_option4:
-                presenter.checkAnswerOfOptions(option4.getText().toString());
+                presenter.checkAnswerOfOptions(option4.getText().toString(),currentTeam);
                 break;
         }
     }
 
     @OnClick(R.id.iv_g3_l2_submit_ans)
     public void submitAns() {
-        //TODO post processing
-  /*      submitAnswer.setClickable(false);
+        submitAnswer.setClickable(false);
         mCountDownTimer.pause();
-        presenter.checkFinalAnswer_g3_l2(answer.getText().toString(), currentTeam);
+        presenter.checkAnswerOfStt(answer.getText().toString(), currentTeam);
         currentTeam += 1;
-        if (currentTeam < playerModalArrayList.size()) {
+        if (currentTeam < SamajhKeBolo.playerModalArrayList.size()) {
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     submitAnswer.setClickable(true);
+                    reinitializeOptions();
+                    toggleOptionsClicks(true);
                     showDialog();
                 }
             }, 2500);
@@ -332,17 +351,25 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
                 @Override
                 public void run() {
                     //TODO display Score screen after final round
-                    getActivity().findViewById(R.id.iv_g3_l2_submit_ans).setOnClickListener(null);
-
+                    submitAnswer.setOnClickListener(null);
+                    Toast.makeText(getActivity(), "Tie breaker or Final score screen?", Toast.LENGTH_SHORT).show();
+/*                  TODO Tie or Not
                     Bundle bundle = new Bundle();
                     bundle.putString("frag", "R1G2L2");
                     PD_Utility.showFragment(getActivity(), new fragment_intro_character(), R.id.cl_bole_toh,
-                            bundle, fragment_intro_character.class.getSimpleName());
+                            bundle, fragment_intro_character.class.getSimpleName());*/
 
                 }
             }, 2500);
 
-        }*/
+        }
+    }
+
+    private void toggleOptionsClicks(boolean enable) {
+        iv_option1.setClickable(enable);
+        iv_option2.setClickable(enable);
+        iv_option3.setClickable(enable);
+        iv_option4.setClickable(enable);
     }
 
     public void startSTT() {
@@ -365,6 +392,17 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
     @Override
     public void setAnswer(String ans) {
         answer.setText(ans);
+    }
+
+    @Override
+    public void animateMic() {
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                SamajhKeBolo.animateView(mic, getActivity());
+            }
+        },1000);
     }
 
     @Override

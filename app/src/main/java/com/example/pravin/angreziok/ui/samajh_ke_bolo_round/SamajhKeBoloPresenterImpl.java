@@ -19,6 +19,8 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
 
 import static com.example.pravin.angreziok.AOPApplication.getRandomNumber;
 import static com.example.pravin.angreziok.ui.samajh_ke_bolo_round.SamajhKeBolo.playerModalArrayList;
@@ -263,18 +265,29 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
     }
 
     @Override
-    public void checkAnswerOfOptions(String answer) {
-        if (g3l2QuestionData.get(randomNumber).getResourceType().equalsIgnoreCase(answer))
-            Toast.makeText(mContext, "Correct", Toast.LENGTH_SHORT).show();
-        else
-            Toast.makeText(mContext, "Wrong", Toast.LENGTH_SHORT).show();
-
-        //TODO post processing
+    public void checkAnswerOfOptions(String answer, int currentTeam) {
+        if (g3l2QuestionData.get(randomNumber).getResourceType().equalsIgnoreCase(answer)) {
+            int currentTeamScore = Integer.parseInt(playerModalArrayList.get(currentTeam).studentScore);
+            playerModalArrayList.get(currentTeam).setStudentScore(String.valueOf(currentTeamScore + 5));
+        }
+        samajhKeBoloG3L2View.setCurrentScore();
+        samajhKeBoloG3L2View.animateMic();
     }
 
+
     @Override
-    public void checkAnswerOfStt(String answer) {
-        // TODO
+    public void checkAnswerOfStt(String answer, int currentTeam) {
+        if (answer.equalsIgnoreCase(g3l2QuestionData.get(randomNumber).getResourceType())) {
+            //  TODO correct answer animation + increase score of group
+            samajhKeBoloG3L2View.setCelebrationView();
+            playMusic("Sounds/BilkulSahijawab.mp3", getSdcardPath());
+            int currentTeamScore = Integer.parseInt(playerModalArrayList.get(currentTeam).studentScore);
+            playerModalArrayList.get(currentTeam).setStudentScore(String.valueOf(currentTeamScore + 5));
+            samajhKeBoloG3L2View.setCurrentScore();
+        } else {
+            //  TODO wrong answer animation
+            playMusic("Sounds/wrong.mp3", getSdcardPath());
+        }
 
     }
 

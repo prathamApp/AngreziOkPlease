@@ -306,7 +306,7 @@ public class SamajhKeBolo_G2_L2 extends BaseFragment implements SamajhKeBoloCont
                 public void run() {
 
                     //TODO display Score screen after final round
-                    getActivity().findViewById(R.id.iv_g2_l2_submit_ans).setOnClickListener(null);
+                    submitAnswer.setOnClickListener(null);
                     Bundle bundle = new Bundle();
                     bundle.putString("frag", "R3G3L2");
                     PD_Utility.showFragment(getActivity(), new fragment_intro_character(), R.id.cl_samajh_ke_bolo,
