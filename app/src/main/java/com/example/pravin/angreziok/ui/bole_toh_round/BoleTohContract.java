@@ -84,6 +84,8 @@ public interface BoleTohContract {
 
         void setCurrentScore();
 
+        void setQuestionText(String questionString);
+
         void setQuestionImage(String path);
     }
 
@@ -101,6 +103,9 @@ public interface BoleTohContract {
         void setCelebrationView();
 
         void setCurrentScore();
+
+        void setQuestionText(String questionString);
+
     }
 
     interface BoleToh_G3_L2_View {
@@ -117,6 +122,9 @@ public interface BoleTohContract {
         void setCelebrationView();
 
         void setCurrentScore();
+
+        void setQuestionText(String questionString);
+
     }
 
 }

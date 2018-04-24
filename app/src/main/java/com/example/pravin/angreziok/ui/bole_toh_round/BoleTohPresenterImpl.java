@@ -322,10 +322,12 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
     public void setImage_gl_l2() {
         boleTohG1L2View.hideOptionView();
         randomNumber = getRandomNumber(0, g1l2QuestionData.size());
+        String questionString = g1l2QuestionData.get(randomNumber).getResourceQuestion();
         String imagePath = getSdcardPath() + "PicGameImages/" + g1l2QuestionData.get(randomNumber).getResourceImage();
         Log.d("imagePath", "setImage_gl_l2: " + imagePath);
         Toast.makeText(mContext, "actual ans: " + g1l2QuestionData.get(randomNumber).getResourceText(), Toast.LENGTH_SHORT).show();
         boleTohG1L2View.setQuestionImage(imagePath);
+        boleTohG1L2View.setQuestionText(questionString);
     }
 
     @Override
@@ -335,6 +337,8 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
         String imagePath = getSdcardPath() + "PicGameImages/" + g2l2QuestionData.get(randomNumber).getResourceImage();
         Toast.makeText(mContext, "actual ans: " + g2l2QuestionData.get(randomNumber).getResourceText(), Toast.LENGTH_SHORT).show();
         boleTohG2L2View.setActionGif(imagePath);
+        String questionString = g2l2QuestionData.get(randomNumber).getResourceQuestion();
+        boleTohG1L2View.setQuestionText(questionString);
     }
 
     @Override
@@ -349,6 +353,8 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
         Toast.makeText(mContext, "Hint:::" + currentPairList.get(0).getResourceText(), Toast.LENGTH_SHORT).show();
         Toast.makeText(mContext, "Question:::" + currentPairList.get(1).getResourceText(), Toast.LENGTH_SHORT).show();
         boleTohG3L2View.setPairsImages(hintImagePath, questionImagePath);
+        String questionString = g2l2QuestionData.get(randomNumber).getResourceQuestion();
+        boleTohG3L2View.setQuestionText(questionString);
     }
 
     public GenericModalGson fetchJsonData(String jasonName, String path) {

@@ -74,7 +74,7 @@ public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleT
     TextView option2;
     @BindView(R.id.option3)
     TextView option3;
-    @BindView(R.id.tv_r1g1_question)
+    @BindView(R.id.tv_question)
     TextView showQuestion;
     @BindView(R.id.g1_l2_sttOptions)
     LinearLayout optionsView;
@@ -246,6 +246,11 @@ public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleT
         text = "What is This?";
         showQuestion.setText(text);
         presenter.startTTS(text);
+    }
+
+    @Override
+    public void setQuestionText(String questionString){
+        showQuestion.setText(questionString);
     }
 
     private void startTimer() {

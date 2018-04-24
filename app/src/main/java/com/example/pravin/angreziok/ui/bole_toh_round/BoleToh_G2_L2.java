@@ -253,6 +253,12 @@ public class BoleToh_G2_L2 extends BaseFragment implements BoleTohContract.BoleT
         presenter.startTTS(text);
     }
 
+    @Override
+    public void setQuestionText(String questionString){
+        question.setText(questionString);
+    }
+
+
     private void startTimer() {
         mCountDownTimer.ready();
         mCountDownTimer.start(15000);

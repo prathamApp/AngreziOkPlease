@@ -91,6 +91,8 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
         randomNumber = getRandomNumber(0, g2l2SubList.size());
         questionWord = g2l2SubList.get(randomNumber).getResourceText();
         jodTodG2L2View.initiateQuestion(questionWord);
+        String questionString = g2l2QuestionData.get(randomNumber).getResourceQuestion();
+        jodTodG2L2View.setQuestionText(questionString);
     }
 
 
@@ -177,12 +179,20 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
     @Override
     public String g3_l2_getQuestionText() {
         randomNumber = getRandomNumber(0, g3l2QuestionData.size());
+
+        String questionString = g3l2QuestionData.get(randomNumber).getResourceQuestion();
+        jodTodG3L2View.setQuestionText(questionString);
+
         return g3l2QuestionData.get(randomNumber).getResourceText();
     }
 
     @Override
     public String g1_l2_getQuestionText() {
         randomNumber = getRandomNumber(0, g1l2QuestionData.size());
+
+        String questionString = g1l2QuestionData.get(randomNumber).getResourceQuestion();
+        jodTodG1L2View.setQuestionText(questionString);
+
         return g1l2QuestionData.get(randomNumber).getResourceText();
     }
 
@@ -196,6 +206,10 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
         g2l2SubList = g2l2QuestionData.get(randomNumber).getNodelist();
         randomNumber = getRandomNumber(0, g2l2SubList.size());
         questionWord = g2l2SubList.get(randomNumber).getResourceText();
+
+        String questionString = g2l2QuestionData.get(randomNumber).getResourceQuestion();
+        jodTodG2L2View.setQuestionText(questionString);
+
         return  questionWord;
         /*jodTodG2L2View.initiateQuestion(questionWord);*/
 /*        randomNumber = getRandomNumber(0, g2l2QuestionData.size());

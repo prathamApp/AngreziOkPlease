@@ -267,6 +267,12 @@ public class JodTod_G1_L2 extends BaseFragment implements JodTodContract.JodTod_
         showQuestion.setText("Say The Words Starting With");
     }
 
+    @Override
+    public void setQuestionText(String questionString){
+        showQuestion.setText(questionString);
+    }
+
+
     private void playTTS() {
         presenter.startTTS(text);
     }
