@@ -60,8 +60,6 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
     TextView superScore;
     @BindView(R.id.g3_l2_allstar)
     TextView allScore;
-    @BindView(R.id.g3_l2_sttOptions)
-    LinearLayout optionsView;
     @BindView(R.id.option1)
     TextView option1;
     @BindView(R.id.iv_option1)
@@ -225,7 +223,7 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
 
     @Override
     public void hideOptionView() {
-        optionsView.setVisibility(View.GONE);
+        answerView.setVisibility(View.GONE);
     }
 
     @Override
@@ -233,7 +231,6 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
         text = questionText;
         question.setText(questionText);
     }
-
 
     public void bounceView(View view) {
         Animation rubber = AnimationUtils.loadAnimation(getActivity(), R.anim.popup);
