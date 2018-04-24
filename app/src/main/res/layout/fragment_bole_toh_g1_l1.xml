@@ -419,26 +419,19 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@drawable/question_gradiance_bg"
-        android:paddingHorizontal="10dp"
-        android:weightSum="10">
-
         <TextView
-            android:id="@+id/tv_r1g1_question"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="9"
+            android:id="@+id/tv_question"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_gravity="center_vertical"
-            android:text="This is where the question will appear in any desired language.( The question will be played in audio format.)"
+            android:layout_weight="1"
+            android:background="@drawable/question_gradiance_bg"
+            android:gravity="center"
             android:textColor="@color/simple_white"
-            android:textSize="18sp"
+            android:text="This is where the question will appear"
+            android:layout_marginHorizontal="1dp"
+            android:textSize="25sp"
             android:textStyle="italic|bold" />
-
-    </LinearLayout>
 
 </LinearLayout>
 
