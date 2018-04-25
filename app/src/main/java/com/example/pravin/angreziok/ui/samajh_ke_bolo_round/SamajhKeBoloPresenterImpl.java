@@ -288,7 +288,6 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
             //  TODO wrong answer animation
             playMusic("Sounds/wrong.mp3", getSdcardPath());
         }
-
     }
 
     @Override
