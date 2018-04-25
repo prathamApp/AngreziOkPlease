@@ -76,7 +76,8 @@ public class JodTod_G1_L2 extends BaseFragment implements JodTodContract.JodTod_
 
     String text;
     JodTodContract.JodTodPresenter presenter;
-    int speechCount, currentTeam, score = 0, correctAnsCounter = 0, totalAnsCounter = 0;
+    int speechCount, currentTeam, score = 0;
+    float totalAnsCounter=0f,correctAnsCounter=0f;
     Dialog dialog;
     boolean timerEnd = false;
 
@@ -157,8 +158,6 @@ public class JodTod_G1_L2 extends BaseFragment implements JodTodContract.JodTod_
         text.setText("Next question would be for " + teamName);
         button.setText("Ready ??");
         sttOptions.setVisibility(View.GONE);
-        correctAnsCounter = 0;
-        totalAnsCounter = 0;
         flowLayout.removeAllViews();
 
         dialog.show();
@@ -169,6 +168,8 @@ public class JodTod_G1_L2 extends BaseFragment implements JodTodContract.JodTod_
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
+                correctAnsCounter = 0;
+                totalAnsCounter = 0;
                 timerEnd = false;
                 String question = presenter.g1_l2_getQuestionText();
                 initiateQuestion(question);
@@ -252,12 +253,12 @@ public class JodTod_G1_L2 extends BaseFragment implements JodTodContract.JodTod_
         textView.setText("" + sttWord);
         Log.d("changeColor", "Ques : " + text + "    setAnswer : " + ans + "    sttWord : " + sttWord);
 
-        totalAnsCounter++;
+        totalAnsCounter+=1;
 
         if (text.equalsIgnoreCase("" + ans)) {
             textView.setTextColor(Color.GREEN);
             score += 5;
-            correctAnsCounter++;
+            correctAnsCounter+=1;
         } else {
             textView.setTextColor(Color.RED);
         }
@@ -298,9 +299,12 @@ public class JodTod_G1_L2 extends BaseFragment implements JodTodContract.JodTod_
         submitAnswer.setClickable(false);
         mCountDownTimer.pause();
 //       TODO Check answer
-        float finalPercentage=0;
+        float finalPercentage=0f;
+        Log.d("finalPercentage", "correctAnsCounter: " + correctAnsCounter);
+        Log.d("finalPercentage", "totalAnsCounter: " + totalAnsCounter);
+
         if(correctAnsCounter>0 && totalAnsCounter>0)
-            finalPercentage = (correctAnsCounter / totalAnsCounter) * 100;
+            finalPercentage = (correctAnsCounter / totalAnsCounter) * 100f;
         String currScore = "" + score;
         Log.d("finalPercentage", "finalPercentage: " + finalPercentage);
         presenter.checkFinalAnswer_g1_l2(finalPercentage, currScore, currentTeam);
