@@ -430,7 +430,7 @@
                 android:textColor="@color/simple_white"
                 android:textSize="25sp"
                 android:textStyle="italic|bold" />
-            
+
         </LinearLayout>
     </LinearLayout>
 
