@@ -78,6 +78,7 @@ public class JodTod_G1_L2 extends BaseFragment implements JodTodContract.JodTod_
     JodTodContract.JodTodPresenter presenter;
     int speechCount, currentTeam, score = 0, correctAnsCounter = 0, totalAnsCounter = 0;
     Dialog dialog;
+    boolean timerEnd = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -168,6 +169,7 @@ public class JodTod_G1_L2 extends BaseFragment implements JodTodContract.JodTod_
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
+                timerEnd = false;
                 String question = presenter.g1_l2_getQuestionText();
                 initiateQuestion(question);
                 setQuestionDynamically(question);
@@ -285,7 +287,7 @@ public class JodTod_G1_L2 extends BaseFragment implements JodTodContract.JodTod_
         mCountDownTimer.setOnEndAnimationFinish(new OnTimeFinish() {
             @Override
             public void onFinish() {
-                submitAns();
+                timerEnd=true; submitAns();
             }
         });
         JodTod.animateView(mCountDownTimer, getActivity());
@@ -357,7 +359,8 @@ public class JodTod_G1_L2 extends BaseFragment implements JodTodContract.JodTod_
     @Override
     public void onResult(String result) {
         sttOptions.setVisibility(View.VISIBLE);
-        presenter.g1_l2_checkAnswer(result);
+        if(!timerEnd)
+            presenter.g1_l2_checkAnswer(result);
     }
 
     @OnClick(R.id.btn_tempskip)

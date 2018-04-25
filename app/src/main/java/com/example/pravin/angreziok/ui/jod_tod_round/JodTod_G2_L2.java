@@ -23,13 +23,12 @@ import com.example.pravin.angreziok.BaseFragment;
 import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.animations.MyBounceInterpolator;
 import com.example.pravin.angreziok.interfaces.SpeechResult;
-import com.example.pravin.angreziok.ui.bole_toh_round.BoleToh;
 import com.example.pravin.angreziok.ui.fragment_intro_character;
 import com.example.pravin.angreziok.ui.samajh_ke_bolo_round.SamajhKeBolo;
 import com.example.pravin.angreziok.util.PD_Utility;
 import com.github.anastr.flattimelib.CountDownTimerView;
 import com.github.anastr.flattimelib.intf.OnTimeFinish;
-import com.nex3z.flowlayout.FlowLayout;
+
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -80,6 +79,7 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
     JodTodContract.JodTodPresenter presenter;
     int speechCount, currentTeam, score = 0,totalAnsCounter=0,correctAnsCounter=0;
     Dialog dialog;
+    boolean timerEnd = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -364,7 +364,8 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
     public void onResult(String result) {
         sttOptions.setVisibility(View.VISIBLE);
         Log.d("JodTod", "STTResult: "+result);
-        presenter.g2_l2_checkAnswer(result);
+        if(!timerEnd)
+            presenter.g2_l2_checkAnswer(result);
     }
 
     @OnClick(R.id.btn_tempskip)
