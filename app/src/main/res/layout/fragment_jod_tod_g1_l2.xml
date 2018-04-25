@@ -59,7 +59,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:gravity="center"
-                                android:text="Bole Toh Round"
+                                android:text="Jod Tod Round"
                                 android:textAlignment="center"
                                 android:textColor="@color/simple_black"
                                 android:textSize="30sp"
@@ -429,12 +429,6 @@
                 android:textColor="@color/simple_white"
                 android:textSize="25sp"
                 android:textStyle="italic|bold" />
-
-            <Button
-                android:id="@+id/btn_tempskip"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:text="skip" />
         </LinearLayout>
     </LinearLayout>
 

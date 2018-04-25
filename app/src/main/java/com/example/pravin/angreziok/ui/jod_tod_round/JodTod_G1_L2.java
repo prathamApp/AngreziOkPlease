@@ -367,14 +367,6 @@ public class JodTod_G1_L2 extends BaseFragment implements JodTodContract.JodTod_
             presenter.g1_l2_checkAnswer(result);
     }
 
-    @OnClick(R.id.btn_tempskip)
-    public void skipToNext() {
-        Bundle bundle = new Bundle();
-        bundle.putString("frag", "R2G2L2");
-        PD_Utility.showFragment(getActivity(), new fragment_intro_character(), R.id.cl_jod_tod,
-                bundle, fragment_intro_character.class.getSimpleName());
-    }
-
     @OnClick(R.id.ib_r2g1_mic)
     public void micClicked() {
         speechCount++;
