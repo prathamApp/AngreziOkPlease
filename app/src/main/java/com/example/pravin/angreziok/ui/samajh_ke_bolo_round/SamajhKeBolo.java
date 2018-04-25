@@ -61,7 +61,7 @@ public class SamajhKeBolo extends BaseActivity implements SamajhKeBoloContract.S
             Log.d("SamajhKeBoloTAG", "PlayerList: " + playerModalArrayList.get(i).getStudentAlias());
 
         // TODO post video in videos folder
-        videoPath = PD_Utility.getExternalPath(this) + "Videos/Samaz_ke_bolo_Round_Small_Size.mp";
+        videoPath = PD_Utility.getExternalPath(this) + "Videos/Samaz_ke_bolo_Round_Small_Size.mp4";
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         Log.d("videoPath", "onCreate: " + videoPath);
         playVideo(Uri.parse(videoPath));
