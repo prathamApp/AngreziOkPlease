@@ -53,8 +53,8 @@ public class SamajhKeBolo extends BaseActivity implements SamajhKeBoloContract.S
             list.add(new Integer(i));
         Collections.shuffle(list);
         Log.d("games", "\n\n\nShuffle: \n\n\n");
-        for(int i =0 ; i<list.size(); i++)
-            Log.d("games", "gamesNo: "+list.get(i));
+        for (int i = 0; i < list.size(); i++)
+            Log.d("games", "gamesNo: " + list.get(i));
 
         Collections.shuffle(playerModalArrayList);
         for (int i = 0; i < playerModalArrayList.size(); i++)
@@ -82,6 +82,7 @@ public class SamajhKeBolo extends BaseActivity implements SamajhKeBoloContract.S
 
     @OnClick(R.id.skip_button_intro)
     public void startGame() {
+        introVideo.pause();
         loadFragment();
     }
 

@@ -58,8 +58,8 @@ public class JodTod extends BaseActivity implements JodTodContract.JodTodView, M
             list.add(new Integer(i));
         Collections.shuffle(list);
         Log.d("games", "\n\n\nShuffle: \n\n\n");
-        for(int i =0 ; i<list.size(); i++)
-            Log.d("games", "gamesNo: "+list.get(i));
+        for (int i = 0; i < list.size(); i++)
+            Log.d("games", "gamesNo: " + list.get(i));
 
 
         Collections.shuffle(jodTodPlayerList);
@@ -87,6 +87,7 @@ public class JodTod extends BaseActivity implements JodTodContract.JodTodView, M
 
     @OnClick(R.id.skip_button_intro)
     public void startGame() {
+        introVideo.pause();
         loadFragment();
     }
 

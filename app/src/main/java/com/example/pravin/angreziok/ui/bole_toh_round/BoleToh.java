@@ -55,17 +55,17 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
             list.add(new Integer(i));
         Collections.shuffle(list);
         Log.d("games", "\n\n\nShuffle: \n\n\n");
-        for(int i =0 ; i<list.size(); i++)
-            Log.d("games", "gamesNo: "+list.get(i));
+        for (int i = 0; i < list.size(); i++)
+            Log.d("games", "gamesNo: " + list.get(i));
 
 
         Collections.shuffle(playerModalArrayList);
-        for(int i=0; i<playerModalArrayList.size(); i++)
-            Log.d("BoleTohTAG", "playerModalArrayList: "+playerModalArrayList.get(i).getStudentAlias());
+        for (int i = 0; i < playerModalArrayList.size(); i++)
+            Log.d("BoleTohTAG", "playerModalArrayList: " + playerModalArrayList.get(i).getStudentAlias());
 
         videoPath = PD_Utility.getExternalPath(this) + "Videos/Bole_to_round.mp4";
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        Log.d("videoPath", "onCreate: "+videoPath);
+        Log.d("videoPath", "onCreate: " + videoPath);
         playVideo(Uri.parse(videoPath));
         presenter = new BoleTohPresenterImpl(this);
     }
@@ -83,7 +83,8 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
 
 
     @OnClick(R.id.skip_button_intro)
-    public void startGame(){
+    public void startGame() {
+        introVideo.pause();
         loadFragment();
     }
 
@@ -96,7 +97,7 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
                 bundle, fragment_intro_character.class.getSimpleName());
     }
 
-    public static void animateView(View view,Context context) {
+    public static void animateView(View view, Context context) {
         Animation rubber = AnimationUtils.loadAnimation(context, R.anim.popup);
         MyBounceInterpolator interpolator = new MyBounceInterpolator(0.2, 15);
         rubber.setInterpolator(interpolator);
