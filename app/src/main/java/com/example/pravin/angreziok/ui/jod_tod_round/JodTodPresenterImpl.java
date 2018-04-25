@@ -21,7 +21,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import static com.example.pravin.angreziok.AOPApplication.getRandomNumber;
 import static com.example.pravin.angreziok.ui.jod_tod_round.JodTod.jodTodPlayerList;
 
 /**
@@ -35,9 +34,9 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
     JodTodContract.JodTod_G1_L2_View jodTodG1L2View;
     JodTodContract.JodTod_G2_L2_View jodTodG2L2View;
     public TTSService ttsService;
-    GenericModalGson gsonListenAndSpellGameData, gsonAlphabetGameData,gsonRhymeGameData;
-    List<GenericModalGson> g3l2QuestionData, g1l2QuestionData,g2l2QuestionData, g2l2SubList;
-    int randomNumber1,randomNumber;
+    GenericModalGson gsonListenAndSpellGameData, gsonAlphabetGameData, gsonRhymeGameData;
+    List<GenericModalGson> g3l2QuestionData, g1l2QuestionData, g2l2QuestionData, g2l2SubList;
+    int randomNumber1, randomNumber;
     String rhymeCheckWord, questionWord;
     MediaPlayerUtil mediaPlayerUtil;
 
@@ -127,20 +126,34 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
 
     @Override
     public void g2_l2_checkAnswer(String ans) {
-        String rhymAns="";
+        String rhymAns = "", ansRev = "", rhymeRev = "";
 
         if (!ans.equalsIgnoreCase("") && !ans.equalsIgnoreCase(" ")) {
             int rhymeLen = rhymeCheckWord.length();
-            if(ans.length()>rhymeLen) {
-                for (int i = ans.length(); i >= rhymeLen; i--) {
-                    rhymAns= ans.charAt(i-1)+""+rhymAns;
-                }
+            if (ans.length() > rhymeLen) {
+
+                Log.d("rhymAns", "ans: "+ans+ "      Rhyme : "+rhymeCheckWord);
+                Log.d("rhymAns", "ans.lastIndexOf(rhymeCheckWord): "+ans.lastIndexOf(rhymeCheckWord));
+                //Log.d("rhymAns", "ans.substring(ans.lastIndexOf(rhymeCheckWord)): "+ans.substring(ans.lastIndexOf(rhymeCheckWord)) );
+
+                if ( (ans.lastIndexOf(rhymeCheckWord))!=-1 && (ans.substring(ans.lastIndexOf(rhymeCheckWord))).equalsIgnoreCase(rhymeCheckWord) )
+                    jodTodG2L2View.setAnswer("true", "" + ans);
+                else
+                    jodTodG2L2View.setAnswer("false", "" + ans);
+/*
+                ansRev = new StringBuffer(ans).reverse().toString();
+                rhymeRev = ""+new StringBuffer(rhymeCheckWord).reverse().toString();
                 Log.d("rhymAns", "rhymeCheckWord: "+rhymeCheckWord+"       g1_l2_checkAnswer: rhymAns : "+rhymAns);
+                for(int i=0; i<rhymeRev.length();i++){
+                    if(rhymeRev.charAt(i).)
+                }
+*/
+
             }
-            if(rhymAns.equalsIgnoreCase(""+rhymeCheckWord))
+/*            if(rhymAns.equalsIgnoreCase(""+rhymeCheckWord))
                 jodTodG2L2View.setAnswer("true",""+ans);
             else
-                jodTodG2L2View.setAnswer("false",""+ans);
+                jodTodG2L2View.setAnswer("false",""+ans);*/
         }
     }
 
@@ -210,7 +223,7 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
         String questionString = g2l2QuestionData.get(randomNumber).getResourceQuestion();
         jodTodG2L2View.setQuestionText(questionString);
 
-        return  questionWord;
+        return questionWord;
         /*jodTodG2L2View.initiateQuestion(questionWord);*/
 /*        randomNumber = getRandomNumber(0, g2l2QuestionData.size());
         return g2l2QuestionData.get(randomNumber).getResourceText();*/
@@ -222,17 +235,17 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
         int currentTeamScore = Integer.parseInt(jodTodPlayerList.get(currentTeam).studentScore);
         currentTeamScore += Integer.parseInt(score);
 
-        jodTodPlayerList.get(currentTeam).setStudentScore(""+currentTeamScore);
+        jodTodPlayerList.get(currentTeam).setStudentScore("" + currentTeamScore);
         jodTodG1L2View.setCurrentScore();
 
-        if(scorePercentage>40) {
+        if (scorePercentage > 40) {
             //  TODO Correct Answer Animation
             jodTodG1L2View.setCelebrationView();
             playMusic("Sounds/BilkulSahijawab.mp3", getSdcardPath());
         } else {
             playMusic("Sounds/wrong.mp3", getSdcardPath());
         }
-}
+    }
 
     @Override
     public void checkFinalAnswer_g2_l2(float scorePercentage, String score, int currentTeam) {
@@ -240,17 +253,17 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
         int currentTeamScore = Integer.parseInt(jodTodPlayerList.get(currentTeam).studentScore);
         currentTeamScore += Integer.parseInt(score);
 
-        jodTodPlayerList.get(currentTeam).setStudentScore(""+currentTeamScore);
+        jodTodPlayerList.get(currentTeam).setStudentScore("" + currentTeamScore);
         jodTodG2L2View.setCurrentScore();
 
-        if(scorePercentage>40) {
+        if (scorePercentage > 40) {
             //  TODO Correct Answer Animation
             jodTodG2L2View.setCelebrationView();
             playMusic("Sounds/BilkulSahijawab.mp3", getSdcardPath());
         } else {
             playMusic("Sounds/wrong.mp3", getSdcardPath());
         }
-}
+    }
 
 
     @Override
