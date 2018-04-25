@@ -218,7 +218,7 @@ public class BoleToh_G3_L2 extends BaseFragment implements BoleTohContract.BoleT
                 .setTimeToLive(1500L)
                 .addShapes(Shape.RECT, Shape.CIRCLE)
                 .addSizes(new Size(12, 5f))
-                .setPosition(-50f, konfettiView.getWidth() + 50f, -50f, -50f)
+                .setPosition(-50f, /*konfettiView.getWidth() +*/ 50f, -50f, -50f)
                 .stream(500, 1000L);
     }
 
