@@ -550,7 +550,6 @@
     <nl.dionsegijn.konfetti.KonfettiView
         android:id="@+id/konfettiView_g3_l2"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:visibility="gone" />
+        android:layout_height="match_parent"/>
 
 </RelativeLayout>

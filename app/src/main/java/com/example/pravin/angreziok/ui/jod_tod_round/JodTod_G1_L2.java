@@ -217,7 +217,7 @@ public class JodTod_G1_L2 extends BaseFragment implements JodTodContract.JodTod_
                 .setTimeToLive(1500L)
                 .addShapes(Shape.RECT, Shape.CIRCLE)
                 .addSizes(new Size(12, 5f))
-                .setPosition(-50f, konfettiView.getWidth() + 50f, -50f, -50f)
+                .setPosition(-50f, + 50f, -50f, -50f)
                 .stream(500, 1000L);
     }
 
