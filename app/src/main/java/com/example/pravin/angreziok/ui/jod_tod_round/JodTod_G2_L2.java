@@ -164,6 +164,7 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
         flowLayout.removeAllViews();
         totalAnsCounter=0;
         correctAnsCounter=0;
+        timerEnd=false;
 
         dialog.show();
 
@@ -291,7 +292,7 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
         mCountDownTimer.setOnEndAnimationFinish(new OnTimeFinish() {
             @Override
             public void onFinish() {
-                submitAns();
+                timerEnd=true;submitAns();
             }
         });
         JodTod.animateView(mCountDownTimer, getActivity());
