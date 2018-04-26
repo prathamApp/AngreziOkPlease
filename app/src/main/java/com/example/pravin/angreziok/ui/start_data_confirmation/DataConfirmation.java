@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.example.pravin.angreziok.BaseActivity;
@@ -52,6 +53,7 @@ public class DataConfirmation extends BaseActivity implements DataConfirmationCo
         ButterKnife.bind(this);
         Intent intent = getIntent();
         Bundle extraBundle = intent.getExtras();
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         teamNames = new ArrayList<String>();
 

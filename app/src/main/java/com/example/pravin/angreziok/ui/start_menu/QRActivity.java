@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -66,6 +67,7 @@ public class QRActivity extends BaseActivity implements QRContract.StartMenuView
         mScannerView = new ZXingScannerView(this);
         setContentView(R.layout.activity_start_menu);
         ButterKnife.bind(this);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         presenter = new QRPresenterImpl(this, this);
         playerModalList = new ArrayList<>();
