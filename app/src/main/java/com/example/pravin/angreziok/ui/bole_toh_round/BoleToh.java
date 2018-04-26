@@ -2,7 +2,6 @@ package com.example.pravin.angreziok.ui.bole_toh_round;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -77,13 +76,13 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
             public void run() {
                 showGif(charIntroPath);
             }
-        },500);
+        }, 500);
         presenter = new BoleTohPresenterImpl(this);
     }
 
     private void showGif(String charIntroPath) {
         try {
-            InputStream gif = new FileInputStream(charIntroPath+"Bole-to-round-Intro.gif");
+            InputStream gif = new FileInputStream(charIntroPath + "Bole-to-round-Intro.gif");
             introGifView.setGifResource(gif);
             playSound(charIntroPath);
         } catch (Exception e) {
@@ -102,12 +101,14 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
             mediaPlayerUtil.playMedia(charIntroPath + "Bole-to-round-Intro.wav");
         } catch (Exception e) {
             e.printStackTrace();
-        }    }
+        }
+    }
 
 
     @OnClick(R.id.skip_button_intro)
     public void startGame() {
-        mediaPlayerUtil.pauseMedia();
+        if (mediaPlayerUtil != null)
+            mediaPlayerUtil.pauseMedia();
         loadFragment();
     }
 
@@ -135,6 +136,6 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
             public void run() {
                 loadFragment();
             }
-        },1000);
+        }, 1000);
     }
 }
