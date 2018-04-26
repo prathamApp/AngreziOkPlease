@@ -3,6 +3,7 @@ package com.example.pravin.angreziok.ui.jod_tod_round;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -179,6 +180,7 @@ public class JodTod_G3_L2 extends BaseFragment implements JodTodContract.JodTod_
             textView.setAllCaps(true);
             textView.setHeight(40);
             textView.setWidth(40);
+            textView.setTypeface(textView.getTypeface(), Typeface.BOLD_ITALIC);
             textView.setTextSize(25);
             if (!(currentLetter.equalsIgnoreCase("a")
                     || currentLetter.equalsIgnoreCase("e")
