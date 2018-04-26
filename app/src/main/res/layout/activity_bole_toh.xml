@@ -4,17 +4,17 @@
     android:id="@+id/cl_bole_toh"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bole_toh_bg"
     tools:context="com.example.pravin.angreziok.ui.bole_toh_round.BoleToh">
 
     <FrameLayout
         android:id="@+id/video_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:background="#000">
+        android:layout_gravity="center">
 
-        <VideoView
-            android:id="@+id/round_intro_videoView"
+        <com.example.pravin.angreziok.custom.GifView
+            android:id="@+id/round_intro_gifview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center" />

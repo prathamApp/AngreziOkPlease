@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -16,10 +17,16 @@ import android.widget.VideoView;
 import com.example.pravin.angreziok.BaseActivity;
 import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.animations.MyBounceInterpolator;
+import com.example.pravin.angreziok.custom.GifView;
+import com.example.pravin.angreziok.interfaces.MediaCallbacks;
 import com.example.pravin.angreziok.modalclasses.PlayerModal;
 import com.example.pravin.angreziok.ui.fragment_intro_character;
+import com.example.pravin.angreziok.ui.jod_tod_round.JodTod;
+import com.example.pravin.angreziok.util.MediaPlayerUtil;
 import com.example.pravin.angreziok.util.PD_Utility;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -27,14 +34,15 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class SamajhKeBolo extends BaseActivity implements SamajhKeBoloContract.SamajhKeBoloView, MediaPlayer.OnCompletionListener {
+public class SamajhKeBolo extends BaseActivity implements SamajhKeBoloContract.SamajhKeBoloView, MediaCallbacks{
 
     SamajhKeBoloContract.SamajhKeBoloPresenter presenter;
     static ArrayList<PlayerModal> playerModalArrayList;
-    String videoPath;
+    String charIntroPath;
+    MediaPlayerUtil mediaPlayerUtil;
 
-    @BindView(R.id.round_intro_videoView)
-    VideoView introVideo;
+    @BindView(R.id.round_intro_gifview)
+    GifView introGifView;
     @BindView(R.id.skip_button_intro)
     Button btn_skip;
     static ArrayList<Integer> list = new ArrayList<Integer>();
@@ -61,28 +69,45 @@ public class SamajhKeBolo extends BaseActivity implements SamajhKeBoloContract.S
             Log.d("SamajhKeBoloTAG", "PlayerList: " + playerModalArrayList.get(i).getStudentAlias());
 
         // TODO post video in videos folder
-        videoPath = PD_Utility.getExternalPath(this) + "Videos/Samaz_ke_bolo_Round_Small_Size.mp4";
+        charIntroPath = PD_Utility.getExternalPath(this) + "charactersGif/";
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        Log.d("videoPath", "onCreate: " + videoPath);
-        playVideo(Uri.parse(videoPath));
+        Log.d("videoPath", "onCreate: " + charIntroPath);
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                showGif(charIntroPath);
+            }
+        }, 500);
         presenter = new SamajhKeBoloPresenterImpl(this);
     }
 
-    private void playVideo(Uri videoPath) {
+    private void showGif(String charIntroPath) {
         try {
-            introVideo.setVideoURI(videoPath);
-            introVideo.start();
+            InputStream gif = new FileInputStream(charIntroPath + "Samaz-ke-bolo-Round-Intro.gif");
+            introGifView.setGifResource(gif);
+            playSound(charIntroPath);
         } catch (Exception e) {
-            Log.e("Cant Play Video", e.getMessage());
             e.printStackTrace();
         }
-        introVideo.requestFocus();
+    }
+
+    private void playSound(String charIntroPath) {
+        try {
+            Log.d("SoundPth", "playMusic: " + charIntroPath + "Samaz-ke-bolo-Round-Intro.wav");
+            if (mediaPlayerUtil == null) {
+                mediaPlayerUtil = new MediaPlayerUtil(this);
+                mediaPlayerUtil.initCallback(SamajhKeBolo.this);
+            }
+            mediaPlayerUtil.playMedia(charIntroPath + "Samaz-ke-bolo-Round-Intro.wav");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
     @OnClick(R.id.skip_button_intro)
     public void startGame() {
-        introVideo.pause();
         loadFragment();
     }
 
@@ -103,7 +128,13 @@ public class SamajhKeBolo extends BaseActivity implements SamajhKeBoloContract.S
     }
 
     @Override
-    public void onCompletion(MediaPlayer mp) {
-        loadFragment();
+    public void onComplete() {
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                loadFragment();
+            }
+        },1000);
     }
 }
