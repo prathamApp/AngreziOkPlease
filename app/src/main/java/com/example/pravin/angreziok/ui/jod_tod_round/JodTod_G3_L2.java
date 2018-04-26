@@ -177,9 +177,9 @@ public class JodTod_G3_L2 extends BaseFragment implements JodTodContract.JodTod_
             final TextView textView = new TextView(getActivity());
             textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             textView.setAllCaps(true);
-            textView.setHeight(questionDiv.getHeight() / 2);
-            textView.setWidth(50);
-            textView.setTextSize(50);
+            textView.setHeight(questionDiv.getHeight() / 4);
+            textView.setWidth(questionDiv.getHeight() / 4);
+            textView.setTextSize(40);
             if (!(currentLetter.equalsIgnoreCase("a")
                     || currentLetter.equalsIgnoreCase("e")
                     || currentLetter.equalsIgnoreCase("i")
