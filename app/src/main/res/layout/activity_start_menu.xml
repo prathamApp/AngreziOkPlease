@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/loginaop"
     android:orientation="horizontal"
+    android:paddingHorizontal="5dp"
     android:weightSum="10"
     tools:context="com.example.pravin.angreziok.ui.start_menu.QRActivity">
 
@@ -13,7 +14,9 @@
         android:id="@+id/rl_selector_menu"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="0.5"
+        android:layout_weight="1.2"
+        android:layout_gravity="center"
+        android:gravity="center"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteY="112dp">
@@ -26,15 +29,29 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <Button
-                android:id="@+id/btn_admin"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_alignParentBottom="true"
+            <ImageView
+                android:id="@+id/iv_admin"
+                android:layout_width="95dp"
+                android:layout_height="95dp"
+                android:src="@drawable/ic_admin"
+                android:scaleType="fitXY"
+                android:layout_centerInParent="true"
+                android:layout_alignParentTop="true"
                 android:layout_marginVertical="10dp"
-                android:background="@drawable/round_icon_selector"
                 android:gravity="center"
-                android:text="A"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/btn_stats"
+                android:layout_width="95dp"
+                android:layout_height="95dp"
+                android:src="@drawable/ic_stats"
+                android:scaleType="fitXY"
+                android:layout_centerInParent="true"
+                android:layout_marginVertical="10dp"
+                android:gravity="center"
+                android:visibility="gone"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -46,7 +63,7 @@
         android:id="@+id/rl_selector_section"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="9.5"
+        android:layout_weight="8.8"
         android:orientation="horizontal"
         android:weightSum="10">
 
@@ -61,8 +78,8 @@
 
             <FrameLayout
                 android:id="@+id/content_frame"
-                android:layout_width="350dp"
-                android:layout_height="350dp"
+                android:layout_width="370dp"
+                android:layout_height="370dp"
                 android:layout_marginTop="20dp">
 
                 <!--<me.dm7.barcodescanner.zxing.ZXingScannerView-->

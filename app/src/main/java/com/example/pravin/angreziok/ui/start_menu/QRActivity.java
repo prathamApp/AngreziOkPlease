@@ -24,6 +24,7 @@ import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.database.AppDatabase;
 import com.example.pravin.angreziok.database.BackupDatabase;
 import com.example.pravin.angreziok.modalclasses.PlayerModal;
+import com.example.pravin.angreziok.ui.admin_console.AdminConsole;
 import com.example.pravin.angreziok.ui.start_data_confirmation.DataConfirmation;
 import com.google.zxing.Result;
 
@@ -146,8 +147,9 @@ public class QRActivity extends BaseActivity implements QRContract.StartMenuView
         scanNextQRCode();
     }
 
-    @OnClick(R.id.btn_admin)
+    @OnClick(R.id.iv_admin)
     public void gotoNext() {
+        showCrlDialog();
     }
 
     @OnClick(R.id.btn_start_game)
@@ -199,6 +201,52 @@ public class QRActivity extends BaseActivity implements QRContract.StartMenuView
             }
         });
 
+    }
+
+    public void showCrlDialog() {
+
+        dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.setContentView(R.layout.custom_dialog_crl_login);
+        dialog.setCanceledOnTouchOutside(false);
+        ButterKnife.bind(this);
+
+        final TextView userName = (TextView) dialog.findViewById(R.id.dialog_et_uname);
+        final TextView password = (TextView) dialog.findViewById(R.id.dialog_et_pwd);
+        Button login = (Button) dialog.findViewById(R.id.dialog_btn_login);
+        Button cancle = (Button) dialog.findViewById(R.id.dialog_btn_cancle);
+        ImageView cross = (ImageView) dialog.findViewById(R.id.iv_close_dialog);
+        dialog.show();
+
+        cancle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        cross.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                dialog.dismiss();
+                String userNameString = ""+userName.getText();
+                String passwordString = ""+password.getText();
+
+                if(userNameString.equalsIgnoreCase(passwordString)){
+                    Intent Intent = new Intent(QRActivity.this, AdminConsole.class);
+                    startActivity(Intent);
+                }
+            }
+        });
     }
 
     public void dialogClick() {
