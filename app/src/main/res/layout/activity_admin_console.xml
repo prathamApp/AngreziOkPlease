@@ -7,18 +7,25 @@
     android:layout_height="match_parent"
     android:background="@drawable/loginaop"
     android:layout_gravity="center"
-    android:gravity="center"
+    android:orientation="vertical"
+    android:weightSum="100"
+    android:paddingVertical="10dp"
+    android:paddingHorizontal="20dp"
     tools:context=".ui.admin_console.AdminConsole">
 
-    <TextView
-        android:layout_width="300dp"
-        android:layout_height="60dp"
-        android:paddingHorizontal="20dp"
-        android:paddingVertical="5dp"
-        android:text="Admin Console"
-        android:textSize="30sp"
-        android:textStyle="bold|italic"
-        android:textColor="@color/simple_white"
-        android:background="@drawable/round_one_background"
-        android:gravity="center"/>
+        <TextView
+            android:layout_width="300dp"
+            android:layout_height="0dp"
+            android:layout_weight="10"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="5dp"
+            android:text="Admin Console"
+            android:layout_gravity="center"
+            android:textSize="30sp"
+            android:textStyle="bold|italic"
+            android:textColor="@color/simple_white"
+            android:background="@drawable/round_one_background"
+            android:gravity="center"/>
+
+
 </LinearLayout>
