@@ -31,6 +31,22 @@ public class Score {
     @ColumnInfo(name = "Level")
     private int Level;
 
+    @Override
+    public String toString() {
+        return "Score{" +
+                "SessionID='" + SessionID + '\'' +
+                ", StudentID='" + StudentID + '\'' +
+                ", DeviceID='" + DeviceID + '\'' +
+                ", ResourceID='" + ResourceID + '\'' +
+                ", QuestionId=" + QuestionId +
+                ", ScoredMarks=" + ScoredMarks +
+                ", TotalMarks=" + TotalMarks +
+                ", StartDateTime='" + StartDateTime + '\'' +
+                ", EndDateTime='" + EndDateTime + '\'' +
+                ", Level=" + Level +
+                '}';
+    }
+
     @NonNull
     public String getSessionID() {
         return SessionID;

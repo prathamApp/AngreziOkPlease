@@ -33,6 +33,22 @@ public class Crl {
     @ColumnInfo(name = "newCrl")
     private String newCrl;
 
+    @Override
+    public String toString() {
+        return "Crl{" +
+                "CRLId='" + CRLId + '\'' +
+                ", FirstName='" + FirstName + '\'' +
+                ", LastName='" + LastName + '\'' +
+                ", UserName='" + UserName + '\'' +
+                ", Password='" + Password + '\'' +
+                ", ProgramId=" + ProgramId +
+                ", Mobile='" + Mobile + '\'' +
+                ", State='" + State + '\'' +
+                ", Email='" + Email + '\'' +
+                ", CreatedBy='" + CreatedBy + '\'' +
+                ", newCrl='" + newCrl + '\'' +
+                '}';
+    }
 
     @NonNull
     public String getCRLId() {

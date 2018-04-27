@@ -9,12 +9,16 @@ import android.util.Log;
 import android.view.WindowManager;
 import android.widget.VideoView;
 
+import com.example.pravin.angreziok.AOPApplication;
 import com.example.pravin.angreziok.BaseActivity;
 import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.database.AppDatabase;
 import com.example.pravin.angreziok.database.BackupDatabase;
+import com.example.pravin.angreziok.domain.Session;
 import com.example.pravin.angreziok.ui.start_menu.QRActivity;
 import com.example.pravin.angreziok.util.PD_Utility;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,9 +50,21 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
         new AsyncTask<Object, Void, Object>() {
             @Override
             protected Object doInBackground(Object[] objects) {
-                Log.d(":::",""+appDatabase.getCrlDao().getAllCrls().size());
-                BackupDatabase.backup(VideoIntro.this);
-                return null;
+                try {
+                    Session startSesion = new Session();
+                    startSesion.setSessionID("12345");
+                    startSesion.setFromDate(AOPApplication.getCurrentDateTime());
+                    startSesion.setToDate(AOPApplication.getCurrentDateTime());
+                    appDatabase.getSessionDao().insert(startSesion);
+                    List<Session> sessions = appDatabase.getSessionDao().getAllSessions();
+                    for (int i = 0; i < sessions.size(); i++)
+                        Log.d(":::sessions", "" + sessions.get(i).toString());
+                    BackupDatabase.backup(VideoIntro.this);
+                    return null;
+                }catch (Exception e){
+                    e.printStackTrace();
+                    return null;
+                }
             }
         }.execute();
     }

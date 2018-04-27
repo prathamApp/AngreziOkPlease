@@ -19,6 +19,16 @@ public class Status {
     @ColumnInfo(name = "description")
     private String description;
 
+    @Override
+    public String toString() {
+        return "Status{" +
+                "statusID=" + statusID +
+                ", statusKey='" + statusKey + '\'' +
+                ", value='" + value + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
+
     public int getStatusID() {
         return statusID;
     }

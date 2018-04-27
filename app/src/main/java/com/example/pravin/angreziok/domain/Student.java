@@ -33,6 +33,23 @@ public class Student {
     @ColumnInfo(name = "DeviceId")
     private String DeviceId;
 
+    @Override
+    public String toString() {
+        return "Student{" +
+                "StudentID='" + StudentID + '\'' +
+                ", StudentUID='" + StudentUID + '\'' +
+                ", FirstName='" + FirstName + '\'' +
+                ", MiddleName='" + MiddleName + '\'' +
+                ", LastName='" + LastName + '\'' +
+                ", Gender='" + Gender + '\'' +
+                ", regDate='" + regDate + '\'' +
+                ", Age=" + Age +
+                ", villageName='" + villageName + '\'' +
+                ", newFlag=" + newFlag +
+                ", DeviceId='" + DeviceId + '\'' +
+                '}';
+    }
+
     @NonNull
     public String getStudentID() {
         return StudentID;

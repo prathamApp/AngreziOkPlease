@@ -16,6 +16,15 @@ public class Attendance {
     @ColumnInfo(name = "StudentID")
     private String StudentID;
 
+    @Override
+    public String toString() {
+        return "Attendance{" +
+                "attendanceID=" + attendanceID +
+                ", SessionID='" + SessionID + '\'' +
+                ", StudentID='" + StudentID + '\'' +
+                '}';
+    }
+
     public int getAttendanceID() {
         return attendanceID;
     }

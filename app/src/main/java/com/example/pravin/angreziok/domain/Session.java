@@ -17,6 +17,15 @@ public class Session {
     @ColumnInfo(name = "toDate")
     private String toDate;
 
+    @Override
+    public String toString() {
+        return "Session{" +
+                "SessionID='" + SessionID + '\'' +
+                ", fromDate='" + fromDate + '\'' +
+                ", toDate='" + toDate + '\'' +
+                '}';
+    }
+
     @NonNull
     public String getSessionID() {
         return SessionID;
