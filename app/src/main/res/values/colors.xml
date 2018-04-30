@@ -9,6 +9,8 @@
     <color name="faded_team">#cb767575</color>
     <color name="full_transparent">#00ffffff</color>
     <color name="bole_toh_heading">#8b43ff</color>
+    <color name="admin_btn_normal">#d3b8ff</color>
+    <color name="admin_btn_pressed">#ad7aff</color>
     <color name="simple_white">#ffffff</color>
     <color name="simple_black">#1e1e1e</color>
     <color name="slate_gray_board">#9f9f9f</color>
