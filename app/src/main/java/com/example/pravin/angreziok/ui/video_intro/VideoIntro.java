@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.WindowManager;
 import android.widget.VideoView;
@@ -18,6 +19,7 @@ import com.example.pravin.angreziok.domain.Session;
 import com.example.pravin.angreziok.ui.start_menu.QRActivity;
 import com.example.pravin.angreziok.util.PD_Utility;
 
+import java.io.File;
 import java.util.List;
 
 import butterknife.BindView;
@@ -81,6 +83,23 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
 
     @Override
     public void startActivity() {
+
+        File file = new File(Environment.getExternalStorageDirectory().toString() + "/.AOPInternal");
+        if (!file.exists())
+            file.mkdir();
+
+        file = new File(Environment.getExternalStorageDirectory().toString() + "/.AOPInternal/UsageJsons");
+        if (!file.exists())
+            file.mkdir();
+
+        file = new File(Environment.getExternalStorageDirectory().toString() + "/.AOPInternal/SelfUsageJsons");
+        if (!file.exists())
+            file.mkdir();
+
+        file = new File(Environment.getExternalStorageDirectory().toString() + "/.AOPInternal/JsonsBackup");
+        if (!file.exists())
+            file.mkdir();
+
         startActivity(new Intent(this, QRActivity.class));
         finish();
     }
