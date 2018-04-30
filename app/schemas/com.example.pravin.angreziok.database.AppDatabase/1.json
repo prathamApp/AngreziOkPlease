@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "24e1f837ac7bc372b2d6e8a766340771",
+    "identityHash": "6cc731cca04dd129ed21c1d900d99a74",
     "entities": [
       {
         "tableName": "Crl",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`CRLId` TEXT NOT NULL, `FirstName` TEXT, `LastName` TEXT, `UserName` TEXT, `Password` TEXT, `ProgramId` INTEGER NOT NULL, `Mobile` TEXT, `State` TEXT, `Email` TEXT, `CreatedBy` TEXT, `newCrl` TEXT, PRIMARY KEY(`CRLId`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`CRLId` TEXT NOT NULL, `FirstName` TEXT, `LastName` TEXT, `UserName` TEXT, `Password` TEXT, `ProgramId` INTEGER NOT NULL, `Mobile` TEXT, `State` TEXT, `Email` TEXT, `CreatedBy` TEXT, `newCrl` INTEGER NOT NULL, PRIMARY KEY(`CRLId`))",
         "fields": [
           {
             "fieldPath": "CRLId",
@@ -71,8 +71,8 @@
           {
             "fieldPath": "newCrl",
             "columnName": "newCrl",
-            "affinity": "TEXT",
-            "notNull": false
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -343,7 +343,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"24e1f837ac7bc372b2d6e8a766340771\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"6cc731cca04dd129ed21c1d900d99a74\")"
     ]
   }
 }

@@ -1,5 +1,7 @@
 package com.example.pravin.angreziok.ui.admin_console;
 
+import android.arch.persistence.room.Room;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +17,13 @@ import android.widget.Toast;
 import com.example.pravin.angreziok.R;
 
 import com.example.pravin.angreziok.BaseActivity;
+import com.example.pravin.angreziok.database.AppDatabase;
+import com.example.pravin.angreziok.database.BackupDatabase;
+import com.example.pravin.angreziok.domain.Crl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -61,6 +67,8 @@ public class AdminConsole extends BaseActivity {
 
 
     boolean addAdminFlg = false;
+    private AppDatabase appDatabase;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +77,9 @@ public class AdminConsole extends BaseActivity {
         ButterKnife.bind(this);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         adminTitle.setText("Admin Console");
+        appDatabase = Room.databaseBuilder(this,
+                AppDatabase.class, AppDatabase.DB_NAME)
+                .build();
         addAdminFlg = false;
         addStatesData();
     }
@@ -106,7 +117,7 @@ public class AdminConsole extends BaseActivity {
 
         if ((fName.length() != 0) && (lName.length() != 0) && (mNumber.length() == 10) && (uName.length() != 0) && (password.length() != 0) && (!state.equals("-- Select State --"))) {
             Toast.makeText(AdminConsole.this, "Submitted!!!", Toast.LENGTH_SHORT).show();
-            //TODO insert in DB
+            insertInCrlTable(fName, lName, mNumber, uName, password, state, mailID);
             clearForm(ll_AddAdminForm);
         } else {
             Toast.makeText(AdminConsole.this, "Enter proper details!!!", Toast.LENGTH_SHORT).show();
@@ -152,5 +163,31 @@ public class AdminConsole extends BaseActivity {
         }
     }
 
+    public void insertInCrlTable(String fName, String lName, String mNumber, String uName, String password, String state, String mailID) {
+        try {
+            final Crl crl = new Crl();
+            crl.setCRLId(UUID.randomUUID().toString());
+            crl.setEmail(mailID);
+            crl.setFirstName(fName);
+            crl.setLastName(lName);
+            crl.setMobile(mNumber);
+            crl.setUserName(uName);
+            crl.setPassword(password);
+            crl.setState(state);
+            crl.setProgramId(2);
+            crl.setNewCrl(true);
+            crl.setCreatedBy("");
 
+            new AsyncTask<Object , Void ,Object>(){
+                @Override
+                protected Object doInBackground(Object... objects) {
+                    appDatabase.getCrlDao().insert(crl);
+                    BackupDatabase.backup(AdminConsole.this);
+                    return null;
+                }
+            }.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

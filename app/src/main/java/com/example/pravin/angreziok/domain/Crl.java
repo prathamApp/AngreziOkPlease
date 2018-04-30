@@ -31,7 +31,7 @@ public class Crl {
     @ColumnInfo(name = "CreatedBy")
     private String CreatedBy;
     @ColumnInfo(name = "newCrl")
-    private String newCrl;
+    private boolean newCrl;
 
     @Override
     public String toString() {
@@ -131,11 +131,11 @@ public class Crl {
         CreatedBy = createdBy;
     }
 
-    public String getNewCrl() {
+    public boolean getNewCrl() {
         return newCrl;
     }
 
-    public void setNewCrl(String newCrl) {
+    public void setNewCrl(boolean newCrl) {
         this.newCrl = newCrl;
     }
 }
