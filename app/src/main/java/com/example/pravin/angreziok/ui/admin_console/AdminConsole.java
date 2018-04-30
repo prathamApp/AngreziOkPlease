@@ -29,7 +29,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class AdminConsole extends BaseActivity {
+public class AdminConsole extends BaseActivity implements AdminConsoleContract.AdminConsoleView{
 
     @BindView(R.id.ll_operations)
     LinearLayout ll_Operations;
@@ -67,7 +67,7 @@ public class AdminConsole extends BaseActivity {
 
 
     boolean addAdminFlg = false;
-    private AppDatabase appDatabase;
+    AdminConsolePresenterImpl adminPresenter;
 
 
     @Override
@@ -77,16 +77,13 @@ public class AdminConsole extends BaseActivity {
         ButterKnife.bind(this);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         adminTitle.setText("Admin Console");
-        appDatabase = Room.databaseBuilder(this,
-                AppDatabase.class, AppDatabase.DB_NAME)
-                .build();
         addAdminFlg = false;
+        adminPresenter = new AdminConsolePresenterImpl(AdminConsole.this);
         addStatesData();
     }
 
     @Override
     public void onBackPressed() {
-
         if (addAdminFlg) {
             addAdminFlg=false;
             adminTitle.setText("Admin Console");
@@ -94,6 +91,11 @@ public class AdminConsole extends BaseActivity {
             ll_AddAdminForm.setVisibility(View.GONE);
         } else
             super.onBackPressed();
+    }
+
+    @OnClick(R.id.btn_transfer_data)
+    public void TransferData() {
+
     }
 
     @OnClick(R.id.btn_add_admin)
@@ -117,7 +119,7 @@ public class AdminConsole extends BaseActivity {
 
         if ((fName.length() != 0) && (lName.length() != 0) && (mNumber.length() == 10) && (uName.length() != 0) && (password.length() != 0) && (!state.equals("-- Select State --"))) {
             Toast.makeText(AdminConsole.this, "Submitted!!!", Toast.LENGTH_SHORT).show();
-            insertInCrlTable(fName, lName, mNumber, uName, password, state, mailID);
+            adminPresenter.insertInCrlTable(fName, lName, mNumber, uName, password, state, mailID);
             clearForm(ll_AddAdminForm);
         } else {
             Toast.makeText(AdminConsole.this, "Enter proper details!!!", Toast.LENGTH_SHORT).show();
@@ -140,9 +142,6 @@ public class AdminConsole extends BaseActivity {
         statelist.add("Tamil Nadu");
         statelist.add("Telangana");
 
-/*        for (int i = 0; i < 29; i++)
-            statelist.add(AllGroups.get(i).GroupName);*/
-
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this,
                 R.layout.spinner_layout, statelist);
         dataAdapter.setDropDownViewResource(R.layout.spinner_dropdown_layout);
@@ -160,34 +159,6 @@ public class AdminConsole extends BaseActivity {
             }
             if (view instanceof ViewGroup && (((ViewGroup) view).getChildCount() > 0))
                 clearForm((ViewGroup) view);
-        }
-    }
-
-    public void insertInCrlTable(String fName, String lName, String mNumber, String uName, String password, String state, String mailID) {
-        try {
-            final Crl crl = new Crl();
-            crl.setCRLId(UUID.randomUUID().toString());
-            crl.setEmail(mailID);
-            crl.setFirstName(fName);
-            crl.setLastName(lName);
-            crl.setMobile(mNumber);
-            crl.setUserName(uName);
-            crl.setPassword(password);
-            crl.setState(state);
-            crl.setProgramId(2);
-            crl.setNewCrl(true);
-            crl.setCreatedBy("");
-
-            new AsyncTask<Object , Void ,Object>(){
-                @Override
-                protected Object doInBackground(Object... objects) {
-                    appDatabase.getCrlDao().insert(crl);
-                    BackupDatabase.backup(AdminConsole.this);
-                    return null;
-                }
-            }.execute();
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 }

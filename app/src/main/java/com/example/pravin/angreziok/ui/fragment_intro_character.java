@@ -1,13 +1,16 @@
 package com.example.pravin.angreziok.ui;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import com.example.pravin.angreziok.BaseFragment;
 import com.example.pravin.angreziok.R;
@@ -36,15 +39,15 @@ import butterknife.OnClick;
 
 public class fragment_intro_character extends BaseFragment {
 
-    @BindView(R.id.iv_char_gif)
-    GifView charGif;
+    @BindView(R.id.joker_videoView)
+    VideoView joker_videoView;
     @BindView(R.id.tv_instructions)
     TextView instructionsTextView;
     @BindView(R.id.btn_skip_instructions)
     Button buttontSkip;
 
     int frag = 0, count;
-    String myFragmentRound;
+    String myFragmentRound,videoPath;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,13 +73,22 @@ public class fragment_intro_character extends BaseFragment {
                 frag = 1;
                 switch (count) {
                     case 0:
-                        instructionsTextView.setText("Picture Game");
+                        instructionsTextView.setText("Picture Game\n\nआप पर्दे पर एक चित्र देखेंगे|\n" +
+                                "उसका नाम अंग्रेजी में बताईयें|");
+                        videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/ActionGame_1.mp4";
+                        playVideo(Uri.parse(videoPath));
                         break;
                     case 1:
-                        instructionsTextView.setText("Action Game");
+                        instructionsTextView.setText("Action Game\n\nआप पर्दे पर एक क्रिया देखेंगे|\n" +
+                                "उस क्रिया का नाम अंग्रेजी में बताईयें|");
+                        videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/ActionGame_1.mp4";
+                        playVideo(Uri.parse(videoPath));
                         break;
                     case 2:
-                        instructionsTextView.setText("Pairs Game");
+                        instructionsTextView.setText("Pairs Game\n\n इस गेम में आप पर्दे पर दो चित्र देखेंगे|\n" +
+                                "मैं आपको पहले चित्र के बारें में बताउंगी| आप  मुझे उसी तरह दुसरे चित्र के बारें में बताओ|");
+                        videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/RhymingGame.mp4";
+                        playVideo(Uri.parse(videoPath));
                         break;
                 }
                 break;
@@ -84,13 +96,21 @@ public class fragment_intro_character extends BaseFragment {
                 frag = 2;
                 switch (count) {
                     case 0:
-                        instructionsTextView.setText("Alphabets Game");
+                        instructionsTextView.setText("Alphabets Game\n\nअब आप पर्दे पर एक अक्षर देखेंगे और उसकी आवाज़ सुनेंगे|\n" +
+                                "Timer ख़तम होने से पहले इस अक्षर से शुरू होने वाले ज्यादा से ज्यादा अंग्रेजी शब्द हमें बताईयें|");
+                        videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/RhymingGame.mp4";
+                        playVideo(Uri.parse(videoPath));
                         break;
                     case 1:
-                        instructionsTextView.setText("Rhyming Game");
+                        instructionsTextView.setText("Rhyming Game\n\nआप पर्दे पर एक शब्द देखेंगे जो मैं आपके लिए पढूंगी|\n" +
+                                "Timer ख़तम होने से पहले आपको उस शब्द की तरह आवाज़ करने वाले ज्यादा से ज्यादा अंग्रेजी शब्द हमें बताने है|");
+                        videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/RhymingGame.mp4";
+                        playVideo(Uri.parse(videoPath));
                         break;
                     case 2:
-                        instructionsTextView.setText("Listen and Spell Game");
+                        instructionsTextView.setText("Listen and Spell Game\n\nइस गेम में आपको अक्षर से खाली स्थान भर कर एक शब्द बनाना है| और जानकारी के लिए यह विडियो देखे| ");
+                        videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/RhymingGame.mp4";
+                        playVideo(Uri.parse(videoPath));
                         break;
                 }
                 break;
@@ -98,13 +118,19 @@ public class fragment_intro_character extends BaseFragment {
                 frag = 3;
                 switch (count) {
                     case 0:
-                        instructionsTextView.setText("Where-When Game");
+                        instructionsTextView.setText("Where-When Game\n\nआपको एक चित्र के बारें में सवाल पूछा जायेगा| आपको उस सवाल का सही जवाब देना है|");
+                        videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/WhereGame.mp4";
+                        playVideo(Uri.parse(videoPath));
                         break;
                     case 1:
-                        instructionsTextView.setText("Say-it Game");
+                        instructionsTextView.setText("Say-it Game\n\nइस गेम में आपसे एक सवाल पूछा जायेगा|आपको तीन विकल्प दिए जायेंगे| सही विकल्प चुन कर उस शब्द को बोल कर बताओ|");
+                        videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/CompareGame.mp4";
+                        playVideo(Uri.parse(videoPath));
                         break;
                     case 2:
-                        instructionsTextView.setText("How to Ask Game");
+                        instructionsTextView.setText("How to Ask Game\n\nइस गेम में आप अपनी मातृ भाषा में एक वाक्य सुनेंगे| आपको साथ में 2 अंग्रेजी वाक्य के विकल्प दिए जायेंगे| आपको सही अनुवाद चुनकर उस वाक्य को पढ़ कर सुनना है|");
+                        videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/RhymingGame.mp4";
+                        playVideo(Uri.parse(videoPath));
                         break;
                 }
                 break;
@@ -147,13 +173,22 @@ public class fragment_intro_character extends BaseFragment {
                 instructionsTextView.setText("How to Ask Game");
                 frag = 9;
         }*/
+    }
+
+    public void playVideo(Uri path) {
+//        MediaController mediaController = new MediaController(context);
+//        mediaController.setAnchorView(videoView);
         try {
-            InputStream gif = new FileInputStream(getSdcardPath() + "charactersGif/Balle-Balle.gif");
-            charGif.setGifResource(gif);
+            joker_videoView.setVideoURI(path);
+            joker_videoView.start();
         } catch (Exception e) {
+            Log.e("Cant Play Video", e.getMessage());
             e.printStackTrace();
         }
+//        videoView.setMediaController(mediaController);
+        joker_videoView.requestFocus();
     }
+
 
     @OnClick(R.id.btn_skip_instructions)
     public void gotoNext() {
@@ -224,6 +259,4 @@ public class fragment_intro_character extends BaseFragment {
         }
         return sdCardPathString;
     }
-
-
 }
