@@ -79,6 +79,10 @@ public class AdminConsole extends BaseActivity implements AdminConsoleContract.A
 
     boolean addAdminFlg = false;
     AdminConsolePresenterImpl adminPresenter;
+    ProgressDialog progress;
+    private String filename;
+    BluetoothAdapter btAdapter;
+
 
 
     @Override
@@ -89,7 +93,7 @@ public class AdminConsole extends BaseActivity implements AdminConsoleContract.A
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         adminTitle.setText("Admin Console");
         addAdminFlg = false;
-        adminPresenter = new AdminConsolePresenterImpl(AdminConsole.this);
+        adminPresenter = new AdminConsolePresenterImpl(AdminConsole.this,this);
         addStatesData();
     }
 
@@ -104,85 +108,109 @@ public class AdminConsole extends BaseActivity implements AdminConsoleContract.A
             super.onBackPressed();
     }
 
-//    @OnClick(R.id.btn_transfer_data)
-//    public void transferData() {
-//        // Generate Json file
-//        adminPresenter.createJsonforTransfer();
-//        //************************** integrate push data code here********************/
-//        ProgressDialog progress = new ProgressDialog(AdminConsole.this);
-//        progress.setMessage("Please Wait...");
-//        progress.setCanceledOnTouchOutside(false);
-//        progress.show();
-//        TransferFile(transferFileName);
-//    }
-//
-//    public void TransferFile(String filename) {
-//        // progress.dismiss();
-//        this.filename = filename;
-//        btAdapter = BluetoothAdapter.getDefaultAdapter();
-//        if (btAdapter == null) {
-//            Toast.makeText(getApplicationContext(), "This device doesn't give bluetooth support.", Toast.LENGTH_LONG).show();
-//        } else {
-//            Intent discoveryIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
-//            discoveryIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 2000);
-//            startActivityForResult(discoveryIntent, 1);
-//        }
-//    }
-//
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (resultCode == 2000 && requestCode == 1) {
-//            String packageName = "", className = "";
-//            Boolean found = false;
-//            Intent intent = new Intent();
-//            intent.setAction(Intent.ACTION_SEND);
-//            intent.setType("text/plain");
-//            String f = Environment.getExternalStorageDirectory() + "/.KKSInternal/UsageJsons/" + filename + ".json";
-//            File file = new File(f);
-//            int x = 0;
-//            if (file.exists()) {
-//                PackageManager pm = getPackageManager();
-//                List<ResolveInfo> appsList = pm.queryIntentActivities(intent, 0);
-//                if (appsList.size() > 0) {
-//
-//                    for (ResolveInfo info : appsList) {
-//                        packageName = info.activityInfo.packageName;
-//                        if (packageName.equals("com.android.bluetooth")) {
-//                            className = info.activityInfo.name;
-//                            found = true;
-//                            break;// found
-//                        }
-//                    }
-//                    if (!found) {
-//                        Toast.makeText(this, "Bluetooth not in list", Toast.LENGTH_SHORT).show();
-//                    } else {
-//                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//                            Uri fileURI = FileProvider.getUriForFile(
-//                                    AdminConsole.this,
-//                                    AdminConsole.this.getApplicationContext()
-//                                            .getPackageName() + ".provider", file);
-//                            Log.d("filename::", fileURI + "");
-//                            intent.putExtra(Intent.EXTRA_STREAM, fileURI);
-//                        } else {
-//                            intent.setType("text/plain");
-//                            Log.d("filename::", Uri.fromFile(file) + "");
-//                            intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
-//                        }
-//                        intent.setClassName(packageName, className);
-//                        startActivityForResult(intent, 3);
-//                    }
-//                }
-//            }
-//        } else if (requestCode == 3) {
-//            filename = "";
-//            progress.dismiss();
-//            clearRecordsOrNot();
-//        } else {
-//            progress.dismiss();
-//            Toast.makeText(getApplicationContext(), "File not found in UsageJsons folder", Toast.LENGTH_LONG).show();
-//        }
-//    }
+    @OnClick(R.id.btn_transfer_data)
+    public void transferData() {
+        // Generate Json file
+        adminPresenter.createJsonforTransfer();
+        generateDialog("Please Wait...");
+        TransferFile(adminPresenter.getTransferFilename());
+    }
+
+    @OnClick(R.id.btn_self_push)
+    public void pushCurrentTabData() {
+        adminPresenter.currentPush = true;
+        adminPresenter.createJsonforTransfer();
+    }
+
+    @OnClick(R.id.btn_push)
+    public void pushToServer(){
+        try {
+            pushToServer();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void generateDialog(String msg) {
+        progress = new ProgressDialog(AdminConsole.this);
+        progress.setMessage(msg);
+        progress.setCanceledOnTouchOutside(false);
+        progress.show();
+    }
+
+    @Override
+    public void stopDialog(){
+        progress.dismiss();
+    }
+
+    public void TransferFile(String filename) {
+        // progress.dismiss();
+        this.filename = filename;
+        btAdapter = BluetoothAdapter.getDefaultAdapter();
+        if (btAdapter == null) {
+            Toast.makeText(getApplicationContext(), "This device doesn't give bluetooth support.", Toast.LENGTH_LONG).show();
+        } else {
+            Intent discoveryIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+            discoveryIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 2000);
+            startActivityForResult(discoveryIntent, 1);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == 2000 && requestCode == 1) {
+            String packageName = "", className = "";
+            Boolean found = false;
+            Intent intent = new Intent();
+            intent.setAction(Intent.ACTION_SEND);
+            intent.setType("text/plain");
+            String f = Environment.getExternalStorageDirectory() + "/.KKSInternal/UsageJsons/" + filename + ".json";
+            File file = new File(f);
+            int x = 0;
+            if (file.exists()) {
+                PackageManager pm = getPackageManager();
+                List<ResolveInfo> appsList = pm.queryIntentActivities(intent, 0);
+                if (appsList.size() > 0) {
+
+                    for (ResolveInfo info : appsList) {
+                        packageName = info.activityInfo.packageName;
+                        if (packageName.equals("com.android.bluetooth")) {
+                            className = info.activityInfo.name;
+                            found = true;
+                            break;// found
+                        }
+                    }
+                    if (!found) {
+                        Toast.makeText(this, "Bluetooth not in list", Toast.LENGTH_SHORT).show();
+                    } else {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            Uri fileURI = FileProvider.getUriForFile(
+                                    AdminConsole.this,
+                                    AdminConsole.this.getApplicationContext()
+                                            .getPackageName() + ".provider", file);
+                            Log.d("filename::", fileURI + "");
+                            intent.putExtra(Intent.EXTRA_STREAM, fileURI);
+                        } else {
+                            intent.setType("text/plain");
+                            Log.d("filename::", Uri.fromFile(file) + "");
+                            intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
+                        }
+                        intent.setClassName(packageName, className);
+                        startActivityForResult(intent, 3);
+                    }
+                }
+            }
+        } else if (requestCode == 3) {
+            filename = "";
+            progress.dismiss();
+            adminPresenter.clearRecordsOrNot();
+        } else {
+            progress.dismiss();
+            Toast.makeText(getApplicationContext(), "File not found in UsageJsons folder", Toast.LENGTH_LONG).show();
+        }
+    }
 
     @OnClick(R.id.btn_add_admin)
     public void createAdmin() {
