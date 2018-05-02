@@ -26,6 +26,7 @@ import com.example.pravin.angreziok.BaseFragment;
 import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.animations.MyBounceInterpolator;
 import com.example.pravin.angreziok.interfaces.SpeechResult;
+import com.example.pravin.angreziok.ui.bole_toh_round.BoleToh;
 import com.example.pravin.angreziok.ui.fragment_intro_character;
 import com.example.pravin.angreziok.util.PD_Utility;
 import com.github.anastr.flattimelib.CountDownTimerView;
@@ -159,6 +160,7 @@ public class SamajhKeBolo_G1_L2 extends BaseFragment implements SamajhKeBoloCont
         fadeOtherGroups();
         speechCount = 0;
         String teamName = playerModalArrayList.get(currentTeam).getStudentAlias();
+        final String studentID = playerModalArrayList.get(currentTeam).getStudentID();
         dialog = new Dialog(getActivity());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -175,7 +177,7 @@ public class SamajhKeBolo_G1_L2 extends BaseFragment implements SamajhKeBoloCont
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                presenter.setImage_gl_l2();
+                presenter.setImage_gl_l2(studentID);
                 initiateQuestion();
             }
         });

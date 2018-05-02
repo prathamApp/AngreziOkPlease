@@ -90,7 +90,7 @@ public class BoleToh_G3_L2 extends BaseFragment implements BoleTohContract.BoleT
 
     String text;
     BoleTohContract.BoleTohPresenter presenter;
-    int speechCount, currentTeam;
+    int speechCount, currentTeam,timeOfTimer=20000;
     Dialog dialog;
 
     @Override
@@ -272,7 +272,7 @@ public class BoleToh_G3_L2 extends BaseFragment implements BoleTohContract.BoleT
 
     private void startTimer() {
         mCountDownTimer.ready();
-        mCountDownTimer.start(15000);
+        mCountDownTimer.start(timeOfTimer);
         mCountDownTimer.setOnEndAnimationFinish(new OnTimeFinish() {
             @Override
             public void onFinish() {

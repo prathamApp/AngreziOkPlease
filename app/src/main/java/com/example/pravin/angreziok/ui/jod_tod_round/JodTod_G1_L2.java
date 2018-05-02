@@ -76,7 +76,7 @@ public class JodTod_G1_L2 extends BaseFragment implements JodTodContract.JodTod_
 
     String text;
     JodTodContract.JodTodPresenter presenter;
-    int speechCount, currentTeam, score = 0;
+    int speechCount, currentTeam, score = 0,timeOfTimer=20000;
     float totalAnsCounter=0f,correctAnsCounter=0f;
     Dialog dialog;
     boolean timerEnd = false;
@@ -148,6 +148,7 @@ public class JodTod_G1_L2 extends BaseFragment implements JodTodContract.JodTod_
     public void showDialog() {
         fadeOtherGroups();
         String teamName = jodTodPlayerList.get(currentTeam).getStudentAlias();
+        final String studentID = jodTodPlayerList.get(currentTeam).getStudentID();
         dialog = new Dialog(getActivity());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -171,7 +172,7 @@ public class JodTod_G1_L2 extends BaseFragment implements JodTodContract.JodTod_
                 correctAnsCounter = 0;
                 totalAnsCounter = 0;
                 timerEnd = false;
-                String question = presenter.g1_l2_getQuestionText();
+                String question = presenter.g1_l2_getQuestionText(studentID);
                 initiateQuestion(question);
                 setQuestionDynamically(question);
             }
@@ -259,6 +260,7 @@ public class JodTod_G1_L2 extends BaseFragment implements JodTodContract.JodTod_
             textView.setTextColor(Color.GREEN);
             score += 5;
             correctAnsCounter+=1;
+            presenter.setCurrentScore(5);
         } else {
             textView.setTextColor(Color.RED);
         }
@@ -284,7 +286,7 @@ public class JodTod_G1_L2 extends BaseFragment implements JodTodContract.JodTod_
 
     private void startTimer() {
         mCountDownTimer.ready();
-        mCountDownTimer.start(15000);
+        mCountDownTimer.start(timeOfTimer);
         mCountDownTimer.setOnEndAnimationFinish(new OnTimeFinish() {
             @Override
             public void onFinish() {

@@ -10,7 +10,7 @@ public interface SamajhKeBoloContract {
 
         String getSdcardPath();
         void set_g1_l2_data(String path);
-        void setImage_gl_l2();
+        void setImage_gl_l2(String studentID);
         String getCurrentQuestion_g1_l2();
         void startTTS(String text);
         String[] getOptions_g1_l2();
@@ -19,7 +19,7 @@ public interface SamajhKeBoloContract {
         void checkFinalAnswer_g1_l2(String ans, int currentTeam);
         void playMusic(String fileName, String path);
 
-        void setWords_g2_l2();
+        void setWords_g2_l2(String studentID);
         String getCurrentQuestion_g2_l2();
         void set_g2_l2_data(String path);
         void checkFinalAnswer_g2_l2(String ans, int currentTeam);
@@ -27,11 +27,13 @@ public interface SamajhKeBoloContract {
         void g2_l2_checkAnswer(String result);
 
         void set_g3_l2_data(String path);
-        void setQuestion_g3_l2();
+        void setQuestion_g3_l2(String studentID);
         String getCurrentQuestion_g3_l2();
         String[] getOptions_g3_l2();
         void checkAnswerOfOptions(String answer, int currentTeam);
         void checkAnswerOfStt(String answer,int currentTeam);
+
+        void setCurrentScore(int scoredMarks);
     }
 
     interface SamajhKeBolo_G1_L2_View {

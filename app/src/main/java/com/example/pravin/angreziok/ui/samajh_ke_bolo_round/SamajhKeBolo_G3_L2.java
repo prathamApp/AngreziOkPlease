@@ -37,6 +37,7 @@ import nl.dionsegijn.konfetti.models.Size;
 
 import static com.example.pravin.angreziok.BaseActivity.sttService;
 import static com.example.pravin.angreziok.BaseActivity.ttsService;
+import static com.example.pravin.angreziok.ui.samajh_ke_bolo_round.SamajhKeBolo.playerModalArrayList;
 
 
 public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloContract.SamajhKeBolo_G3_L2_View, SpeechResult {
@@ -165,6 +166,7 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
         fadeOtherGroups();
         speechCount = 0;
         String teamName = SamajhKeBolo.playerModalArrayList.get(currentTeam).getStudentAlias();
+        final String studentID = playerModalArrayList.get(currentTeam).getStudentID();
         dialog = new Dialog(getActivity());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -181,7 +183,7 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                presenter.setQuestion_g3_l2();
+                presenter.setQuestion_g3_l2(studentID);
                 initiateQuestion();
             }
         });

@@ -208,6 +208,7 @@ public class SamajhKeBolo_G2_L2 extends BaseFragment implements SamajhKeBoloCont
         fadeOtherGroups();
         speechCount = 0;
         String teamName = playerModalArrayList.get(currentTeam).getStudentAlias();
+        final String studentID = playerModalArrayList.get(currentTeam).getStudentID();
         dialog = new Dialog(getActivity());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -224,7 +225,7 @@ public class SamajhKeBolo_G2_L2 extends BaseFragment implements SamajhKeBoloCont
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                presenter.setWords_g2_l2();
+                presenter.setWords_g2_l2(studentID);
                 initiateQuestion();
             }
         });

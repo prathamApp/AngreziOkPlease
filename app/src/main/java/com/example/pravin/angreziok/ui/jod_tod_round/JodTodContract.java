@@ -26,15 +26,15 @@ public interface JodTodContract {
 
         void g1_l2_checkAnswer(String ans);
 
-        String g3_l2_getQuestionText();
+        String g3_l2_getQuestionText(String studentId);
 
-        String g1_l2_getQuestionText();
+        String g1_l2_getQuestionText(String studentId);
 
         void g2_l2_checkAnswer(String result);
 
         String[] getOptions();
 
-        String g2_l2_getQuestionText();
+        String g2_l2_getQuestionText(String studentId);
 
         void checkFinalAnswer_g1_l2(float ansPer, String score, int currentTeam);
 
@@ -43,6 +43,8 @@ public interface JodTodContract {
         void checkFinalAnswer_g3_l2(String ans, int currentTeam);
 
         void playMusic(String fileName, String path);
+
+        void setCurrentScore(int scoredMarks);
     }
 
     interface JodTod_G3_L2_View {

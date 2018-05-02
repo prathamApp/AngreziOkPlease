@@ -143,6 +143,7 @@ public class JodTod_G3_L2 extends BaseFragment implements JodTodContract.JodTod_
     public void showDialog() {
         fadeOtherGroups();
         String teamName = jodTodPlayerList.get(currentTeam).getStudentAlias();
+        final String studentID = jodTodPlayerList.get(currentTeam).getStudentID();
         dialog = new Dialog(getActivity());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -161,7 +162,7 @@ public class JodTod_G3_L2 extends BaseFragment implements JodTodContract.JodTod_
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                String question = presenter.g3_l2_getQuestionText();
+                String question = presenter.g3_l2_getQuestionText(studentID);
                 initiateQuestion(question);
                 setQuestionDynamically(question);
             }

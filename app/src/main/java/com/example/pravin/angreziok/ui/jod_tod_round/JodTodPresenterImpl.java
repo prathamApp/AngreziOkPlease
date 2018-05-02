@@ -1,9 +1,15 @@
 package com.example.pravin.angreziok.ui.jod_tod_round;
 
+import android.arch.persistence.room.Room;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.pravin.angreziok.AOPApplication;
+import com.example.pravin.angreziok.database.AppDatabase;
+import com.example.pravin.angreziok.database.BackupDatabase;
+import com.example.pravin.angreziok.domain.Score;
 import com.example.pravin.angreziok.interfaces.MediaCallbacks;
 import com.example.pravin.angreziok.modalclasses.GenericModalGson;
 import com.example.pravin.angreziok.services.TTSService;
@@ -38,31 +44,52 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
     List<GenericModalGson> g3l2QuestionData, g1l2QuestionData, g2l2QuestionData, g2l2SubList;
     int randomNumber1, randomNumber;
     String rhymeCheckWord, questionWord;
+    String sdCardPathString, questionStartTime, studentID, resourceID, questionId;
     MediaPlayerUtil mediaPlayerUtil;
+    private AppDatabase appDatabase;
+    int scoredMarks, totalMarks = 15;
 
 
     public JodTodPresenterImpl(Context mContext) {
         this.mContext = mContext;
+        appDatabase = Room.databaseBuilder(mContext,
+                AppDatabase.class, AppDatabase.DB_NAME)
+                .build();
+
     }
 
     public JodTodPresenterImpl(Context context, JodTodContract.JodTod_G3_L2_View jodTod_g3_l2_view, TTSService ttsService) {
         mContext = context;
         this.jodTodG3L2View = jodTod_g3_l2_view;
         this.ttsService = ttsService;
+        appDatabase = Room.databaseBuilder(mContext,
+                AppDatabase.class, AppDatabase.DB_NAME)
+                .build();
     }
 
     public JodTodPresenterImpl(Context context, JodTodContract.JodTod_G1_L2_View jodTod_g1_l2_view, TTSService ttsService) {
         mContext = context;
         this.jodTodG1L2View = jodTod_g1_l2_view;
         this.ttsService = ttsService;
+        appDatabase = Room.databaseBuilder(mContext,
+                AppDatabase.class, AppDatabase.DB_NAME)
+                .build();
     }
 
     public JodTodPresenterImpl(Context context, JodTodContract.JodTod_G2_L2_View jodTod_g2_l2_view, TTSService ttsService) {
         mContext = context;
         this.jodTodG2L2View = jodTod_g2_l2_view;
         this.ttsService = ttsService;
+        appDatabase = Room.databaseBuilder(mContext,
+                AppDatabase.class, AppDatabase.DB_NAME)
+                .build();
     }
 
+
+    @Override
+    public void setCurrentScore(int currentMarks) {
+        scoredMarks += currentMarks;
+    }
 
     @Override
     public void startTTS(String text) {
@@ -132,11 +159,11 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
             int rhymeLen = rhymeCheckWord.length();
             if (ans.length() > rhymeLen) {
 
-                Log.d("rhymAns", "ans: "+ans+ "      Rhyme : "+rhymeCheckWord);
-                Log.d("rhymAns", "ans.lastIndexOf(rhymeCheckWord): "+ans.lastIndexOf(rhymeCheckWord));
+                Log.d("rhymAns", "ans: " + ans + "      Rhyme : " + rhymeCheckWord);
+                Log.d("rhymAns", "ans.lastIndexOf(rhymeCheckWord): " + ans.lastIndexOf(rhymeCheckWord));
                 //Log.d("rhymAns", "ans.substring(ans.lastIndexOf(rhymeCheckWord)): "+ans.substring(ans.lastIndexOf(rhymeCheckWord)) );
 
-                if ( (ans.lastIndexOf(rhymeCheckWord))!=-1 && (ans.substring(ans.lastIndexOf(rhymeCheckWord))).equalsIgnoreCase(rhymeCheckWord) )
+                if ((ans.lastIndexOf(rhymeCheckWord)) != -1 && (ans.substring(ans.lastIndexOf(rhymeCheckWord))).equalsIgnoreCase(rhymeCheckWord))
                     jodTodG2L2View.setAnswer("true", "" + ans);
                 else
                     jodTodG2L2View.setAnswer("false", "" + ans);
@@ -190,18 +217,27 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
 
 
     @Override
-    public String g3_l2_getQuestionText() {
+    public String g3_l2_getQuestionText(String studId) {
         randomNumber = getRandomNumber(0, g3l2QuestionData.size());
 
         String questionString = g3l2QuestionData.get(randomNumber).getResourceQuestion();
-        jodTodG3L2View.setQuestionText(questionString);
+        questionStartTime = AOPApplication.getCurrentDateTime();
+        studentID = studId;
+        resourceID = g3l2QuestionData.get(randomNumber).getResourceId();
+        questionId = resourceID;
 
+        jodTodG3L2View.setQuestionText(questionString);
         return g3l2QuestionData.get(randomNumber).getResourceText();
     }
 
     @Override
-    public String g1_l2_getQuestionText() {
+    public String g1_l2_getQuestionText(String studId) {
         randomNumber = getRandomNumber(0, g1l2QuestionData.size());
+
+        questionStartTime = AOPApplication.getCurrentDateTime();
+        studentID = studId;
+        resourceID = g1l2QuestionData.get(randomNumber).getResourceId();
+        questionId = resourceID;
 
         String questionString = g1l2QuestionData.get(randomNumber).getResourceQuestion();
         jodTodG1L2View.setQuestionText(questionString);
@@ -210,7 +246,7 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
     }
 
     @Override
-    public String g2_l2_getQuestionText() {
+    public String g2_l2_getQuestionText(String studId) {
 
         jodTodG2L2View.hideOptionView();
 
@@ -223,6 +259,11 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
         String questionString = g2l2QuestionData.get(randomNumber).getResourceQuestion();
         jodTodG2L2View.setQuestionText(questionString);
 
+        questionStartTime = AOPApplication.getCurrentDateTime();
+        studentID = studId;
+        resourceID = g2l2SubList.get(randomNumber).getResourceId();
+        questionId = resourceID;
+
         return questionWord;
         /*jodTodG2L2View.initiateQuestion(questionWord);*/
 /*        randomNumber = getRandomNumber(0, g2l2QuestionData.size());
@@ -234,7 +275,6 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
 
         int currentTeamScore = Integer.parseInt(jodTodPlayerList.get(currentTeam).studentScore);
         currentTeamScore += Integer.parseInt(score);
-
         jodTodPlayerList.get(currentTeam).setStudentScore("" + currentTeamScore);
         jodTodG1L2View.setCurrentScore();
 
@@ -245,6 +285,8 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
         } else {
             playMusic("Sounds/wrong.mp3", getSdcardPath());
         }
+        addScore(studentID, resourceID, 0, scoredMarks, totalMarks, questionStartTime, 0);
+        scoredMarks = 0;
     }
 
     @Override
@@ -263,20 +305,55 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
         } else {
             playMusic("Sounds/wrong.mp3", getSdcardPath());
         }
+        addScore(studentID, resourceID, 0, scoredMarks, totalMarks, questionStartTime, 0);
+        scoredMarks = 0;
     }
 
 
     @Override
     public void checkFinalAnswer_g3_l2(String ans, int currentTeam) {
+
         if (g3l2QuestionData.get(randomNumber).getResourceText().equalsIgnoreCase(ans)) {
             jodTodG3L2View.setCelebrationView();
+            scoredMarks = 15;
             playMusic("Sounds/BilkulSahijawab.mp3", getSdcardPath());
             int currentTeamScore = Integer.parseInt(jodTodPlayerList.get(currentTeam).studentScore);
             jodTodPlayerList.get(currentTeam).setStudentScore(String.valueOf(currentTeamScore + 10));
             jodTodG3L2View.setCurrentScore();
         } else {
+            scoredMarks = 0;
             Toast.makeText(mContext, "Wrong", Toast.LENGTH_SHORT).show();
             playMusic("Sounds/wrong.mp3", getSdcardPath());
+        }
+        addScore(studentID, resourceID, 0, scoredMarks, totalMarks, questionStartTime, 0);
+        scoredMarks = 0;
+    }
+
+    public void addScore(String studentID, String resourceID, int questionId, int scoredMarks, int totalMarks, String startDateTime, int questionLevel) {
+        try {
+            final Score score = new Score();
+
+            score.setSessionID("");
+            score.setStudentID("" + studentID);
+            score.setDeviceID("");
+            score.setResourceID("" + resourceID);
+            score.setQuestionId(questionId);
+            score.setScoredMarks(scoredMarks);
+            score.setTotalMarks(totalMarks);
+            score.setStartDateTime("" + startDateTime);
+            score.setEndDateTime("" + AOPApplication.getCurrentDateTime());
+            score.setLevel(0);
+
+            new AsyncTask<Object, Void, Object>() {
+                @Override
+                protected Object doInBackground(Object... objects) {
+                    appDatabase.getScoreDao().insert(score);
+                    BackupDatabase.backup(mContext);
+                    return null;
+                }
+            }.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
