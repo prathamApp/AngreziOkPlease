@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "6cc731cca04dd129ed21c1d900d99a74",
+    "identityHash": "9f4172d7c13de5d5c6adbd37f2824349",
     "entities": [
       {
         "tableName": "Crl",
@@ -166,13 +166,19 @@
       },
       {
         "tableName": "Score",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`SessionID` TEXT NOT NULL, `StudentID` TEXT, `DeviceID` TEXT, `ResourceID` TEXT, `QuestionId` INTEGER NOT NULL, `ScoredMarks` INTEGER NOT NULL, `TotalMarks` INTEGER NOT NULL, `StartDateTime` TEXT, `EndDateTime` TEXT, `Level` INTEGER NOT NULL, PRIMARY KEY(`SessionID`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ScoreId` TEXT PRIMARY KEY AUTOINCREMENT NOT NULL, `SessionID` TEXT, `StudentID` TEXT, `DeviceID` TEXT, `ResourceID` TEXT, `QuestionId` INTEGER NOT NULL, `ScoredMarks` INTEGER NOT NULL, `TotalMarks` INTEGER NOT NULL, `StartDateTime` TEXT, `EndDateTime` TEXT, `Level` INTEGER NOT NULL)",
         "fields": [
+          {
+            "fieldPath": "ScoreId",
+            "columnName": "ScoreId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
           {
             "fieldPath": "SessionID",
             "columnName": "SessionID",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "StudentID",
@@ -231,9 +237,9 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "SessionID"
+            "ScoreId"
           ],
-          "autoGenerate": false
+          "autoGenerate": true
         },
         "indices": [],
         "foreignKeys": []
@@ -343,7 +349,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"6cc731cca04dd129ed21c1d900d99a74\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"9f4172d7c13de5d5c6adbd37f2824349\")"
     ]
   }
 }
