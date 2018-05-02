@@ -1,13 +1,11 @@
 package com.example.pravin.angreziok.ui.admin_console;
 
 import android.app.ProgressDialog;
-import android.arch.persistence.room.Room;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -27,14 +25,10 @@ import android.widget.Toast;
 import com.example.pravin.angreziok.R;
 
 import com.example.pravin.angreziok.BaseActivity;
-import com.example.pravin.angreziok.database.AppDatabase;
-import com.example.pravin.angreziok.database.BackupDatabase;
-import com.example.pravin.angreziok.domain.Crl;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -112,8 +106,7 @@ public class AdminConsole extends BaseActivity implements AdminConsoleContract.A
     public void transferData() {
         // Generate Json file
         adminPresenter.createJsonforTransfer();
-        generateDialog("Please Wait...");
-        TransferFile(adminPresenter.getTransferFilename());
+        //transferFile(adminPresenter.getTransferFilename());
     }
 
     @OnClick(R.id.btn_self_push)
@@ -125,7 +118,7 @@ public class AdminConsole extends BaseActivity implements AdminConsoleContract.A
     @OnClick(R.id.btn_push)
     public void pushToServer(){
         try {
-            pushToServer();
+            adminPresenter.pushToServer();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -144,8 +137,11 @@ public class AdminConsole extends BaseActivity implements AdminConsoleContract.A
         progress.dismiss();
     }
 
-    public void TransferFile(String filename) {
-        // progress.dismiss();
+    @Override
+    public void transferFile(String filename) {
+
+        generateDialog("Please Wait...");
+
         this.filename = filename;
         btAdapter = BluetoothAdapter.getDefaultAdapter();
         if (btAdapter == null) {
@@ -166,7 +162,7 @@ public class AdminConsole extends BaseActivity implements AdminConsoleContract.A
             Intent intent = new Intent();
             intent.setAction(Intent.ACTION_SEND);
             intent.setType("text/plain");
-            String f = Environment.getExternalStorageDirectory() + "/.KKSInternal/UsageJsons/" + filename + ".json";
+            String f = Environment.getExternalStorageDirectory() + "/.AOPInternal/UsageJsons/" + filename + ".json";
             File file = new File(f);
             int x = 0;
             if (file.exists()) {
