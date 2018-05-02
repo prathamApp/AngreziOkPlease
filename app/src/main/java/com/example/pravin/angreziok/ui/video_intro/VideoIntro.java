@@ -49,7 +49,7 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         presenter.playVideo(Uri.parse(videoPath));
 
-        new AsyncTask<Object, Void, Object>() {
+        /*new AsyncTask<Object, Void, Object>() {
             @Override
             protected Object doInBackground(Object[] objects) {
                 try {
@@ -68,7 +68,7 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
                     return null;
                 }
             }
-        }.execute();
+        }.execute();*/
     }
 
     @OnClick(R.id.skip_button)
