@@ -248,7 +248,7 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
     }
 
     @Override
-    public void setAnswer(String ans, String sttWord) {
+    public void setAnswer(String ans, String sttWord, boolean match) {
 
         TextView textView = new TextView(getActivity());
         textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);

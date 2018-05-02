@@ -48,6 +48,7 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
     MediaPlayerUtil mediaPlayerUtil;
     private AppDatabase appDatabase;
     int scoredMarks, totalMarks = 15;
+    ArrayList<String> g1g2result;
 
 
     public JodTodPresenterImpl(Context mContext) {
@@ -147,7 +148,14 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
     public void g1_l2_checkAnswer(String ans) {
         if (!ans.equalsIgnoreCase("") && !ans.equalsIgnoreCase(" ")) {
             String actualAns = "" + ans.charAt(0);
-            jodTodG1L2View.setAnswer(actualAns, ans);
+            boolean match = false;
+            for(int i=0; i<g1g2result.size();i++){
+                if(g1g2result.get(i).equalsIgnoreCase(ans)) {
+                    match = true;
+                    break;
+                }
+            }
+            jodTodG1L2View.setAnswer(actualAns, ans,match);
         }
     }
 
@@ -159,14 +167,22 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
             int rhymeLen = rhymeCheckWord.length();
             if (ans.length() > rhymeLen) {
 
+                boolean match = false;
+                for(int i=0; i<g1g2result.size();i++){
+                    if(g1g2result.get(i).equalsIgnoreCase(ans)) {
+                        match = true;
+                        break;
+                    }
+                }
+
                 Log.d("rhymAns", "ans: " + ans + "      Rhyme : " + rhymeCheckWord);
                 Log.d("rhymAns", "ans.lastIndexOf(rhymeCheckWord): " + ans.lastIndexOf(rhymeCheckWord));
                 //Log.d("rhymAns", "ans.substring(ans.lastIndexOf(rhymeCheckWord)): "+ans.substring(ans.lastIndexOf(rhymeCheckWord)) );
 
-                if ((ans.lastIndexOf(rhymeCheckWord)) != -1 && (ans.substring(ans.lastIndexOf(rhymeCheckWord))).equalsIgnoreCase(rhymeCheckWord))
-                    jodTodG2L2View.setAnswer("true", "" + ans);
+                if ((ans.lastIndexOf(rhymeCheckWord)) != -1 && (ans.substring(ans.lastIndexOf(rhymeCheckWord))).equalsIgnoreCase(rhymeCheckWord) && !match)
+                    jodTodG2L2View.setAnswer("true", "" + ans, true);
                 else
-                    jodTodG2L2View.setAnswer("false", "" + ans);
+                    jodTodG2L2View.setAnswer("false", "" + ans, false);
 /*
                 ansRev = new StringBuffer(ans).reverse().toString();
                 rhymeRev = ""+new StringBuffer(rhymeCheckWord).reverse().toString();
@@ -242,6 +258,11 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
         String questionString = g1l2QuestionData.get(randomNumber).getResourceQuestion();
         jodTodG1L2View.setQuestionText(questionString);
 
+        if(g1g2result.size()>0) {
+            g1g2result.clear();
+        }
+        g1g2result.add(g1l2QuestionData.get(randomNumber).getResourceText());
+
         return g1l2QuestionData.get(randomNumber).getResourceText();
     }
 
@@ -258,6 +279,11 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
 
         String questionString = g2l2QuestionData.get(randomNumber).getResourceQuestion();
         jodTodG2L2View.setQuestionText(questionString);
+
+        if(g1g2result.size()>0) {
+            g1g2result.clear();
+        }
+        g1g2result.add(questionWord);
 
         questionStartTime = AOPApplication.getCurrentDateTime();
         studentID = studId;
