@@ -258,7 +258,9 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
         String questionString = g1l2QuestionData.get(randomNumber).getResourceQuestion();
         jodTodG1L2View.setQuestionText(questionString);
 
-        g1g2result.clear();
+        if(g1g2result.size()>0) {
+            g1g2result.clear();
+        }
         g1g2result.add(g1l2QuestionData.get(randomNumber).getResourceText());
 
         return g1l2QuestionData.get(randomNumber).getResourceText();
@@ -278,7 +280,9 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
         String questionString = g2l2QuestionData.get(randomNumber).getResourceQuestion();
         jodTodG2L2View.setQuestionText(questionString);
 
-        g1g2result.clear();
+        if(g1g2result.size()>0) {
+            g1g2result.clear();
+        }
         g1g2result.add(questionWord);
 
         questionStartTime = AOPApplication.getCurrentDateTime();
