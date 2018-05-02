@@ -79,6 +79,10 @@ public class AdminConsole extends BaseActivity implements AdminConsoleContract.A
 
     boolean addAdminFlg = false;
     AdminConsolePresenterImpl adminPresenter;
+    ProgressDialog progress;
+    private String filename;
+    BluetoothAdapter btAdapter;
+
 
 
     @Override
@@ -89,7 +93,7 @@ public class AdminConsole extends BaseActivity implements AdminConsoleContract.A
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         adminTitle.setText("Admin Console");
         addAdminFlg = false;
-        adminPresenter = new AdminConsolePresenterImpl(AdminConsole.this);
+        adminPresenter = new AdminConsolePresenterImpl(AdminConsole.this,this);
         addStatesData();
     }
 
@@ -108,12 +112,36 @@ public class AdminConsole extends BaseActivity implements AdminConsoleContract.A
     public void transferData() {
         // Generate Json file
         adminPresenter.createJsonforTransfer();
-        //************************** integrate push data code here********************/
-        ProgressDialog progress = new ProgressDialog(AdminConsole.this);
-        progress.setMessage("Please Wait...");
+        generateDialog("Please Wait...");
+        TransferFile(adminPresenter.getTransferFilename());
+    }
+
+    @OnClick(R.id.btn_self_push)
+    public void pushCurrentTabData() {
+        adminPresenter.currentPush = true;
+        adminPresenter.createJsonforTransfer();
+    }
+
+    @OnClick(R.id.btn_push)
+    public void pushToServer(){
+        try {
+            pushToServer();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void generateDialog(String msg) {
+        progress = new ProgressDialog(AdminConsole.this);
+        progress.setMessage(msg);
         progress.setCanceledOnTouchOutside(false);
         progress.show();
-        TransferFile(transferFileName);
+    }
+
+    @Override
+    public void stopDialog(){
+        progress.dismiss();
     }
 
     public void TransferFile(String filename) {
@@ -177,7 +205,7 @@ public class AdminConsole extends BaseActivity implements AdminConsoleContract.A
         } else if (requestCode == 3) {
             filename = "";
             progress.dismiss();
-            clearRecordsOrNot();
+            adminPresenter.clearRecordsOrNot();
         } else {
             progress.dismiss();
             Toast.makeText(getApplicationContext(), "File not found in UsageJsons folder", Toast.LENGTH_LONG).show();
