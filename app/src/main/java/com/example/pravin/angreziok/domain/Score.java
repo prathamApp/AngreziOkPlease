@@ -8,10 +8,9 @@ import android.support.annotation.NonNull;
 @Entity(tableName = "Score")
 public class Score {
 
-    @NonNull
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "ScoreId")
-    private String ScoreId;
+    private int ScoreId;
     @ColumnInfo(name = "SessionID")
     private String SessionID;
     @ColumnInfo(name = "StudentID")
@@ -51,11 +50,11 @@ public class Score {
     }
 
     @NonNull
-    public String getScoreId() {
+    public int getScoreId() {
         return ScoreId;
     }
 
-    public void setScoreId(@NonNull String scoreId) {
+    public void setScoreId(@NonNull int scoreId) {
         ScoreId = scoreId;
     }
 
