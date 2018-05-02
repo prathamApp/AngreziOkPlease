@@ -70,12 +70,12 @@ public class JodTod_G3_L2 extends BaseFragment implements JodTodContract.JodTod_
     @BindView(R.id.questionDiv)
     LinearLayout questionDiv;
 
-    String text,path;
+    String text, path;
     JodTodContract.JodTodPresenter presenter;
     int currentTeam;
     Dialog dialog;
     TextView currentTextView;
-    boolean playingThroughTts = true;
+    boolean playingThroughTts = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -163,7 +163,9 @@ public class JodTod_G3_L2 extends BaseFragment implements JodTodContract.JodTod_
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                String question = presenter.g3_l2_getQuestionText(studentID,playingThroughTts);
+                String question = presenter.g3_l2_getQuestionText(studentID);
+                if (!playingThroughTts)
+                    path = presenter.g3_l2_getQuestionAudio();
                 initiateQuestion(question);
                 setQuestionDynamically(question);
             }
@@ -249,7 +251,7 @@ public class JodTod_G3_L2 extends BaseFragment implements JodTodContract.JodTod_
                 .setTimeToLive(1500L)
                 .addShapes(Shape.RECT, Shape.CIRCLE)
                 .addSizes(new Size(12, 5f))
-                .setPosition(-50f,  + 50f, -50f, -50f)
+                .setPosition(-50f, +50f, -50f, -50f)
                 .stream(500, 1000L);
     }
 
@@ -272,10 +274,8 @@ public class JodTod_G3_L2 extends BaseFragment implements JodTodContract.JodTod_
         startTimer();
         if (playingThroughTts) {
             text = question;
-        }else {
-            path =
         }
-            playTTS();
+        playTTS();
 
     }
 
@@ -285,13 +285,16 @@ public class JodTod_G3_L2 extends BaseFragment implements JodTodContract.JodTod_
     }
 
     @Override
-    public void setQuestionText(String questionString){
+    public void setQuestionText(String questionString) {
         showQuestion.setText(questionString);
     }
 
 
     private void playTTS() {
-        presenter.startTTS(text);
+        if (playingThroughTts)
+            presenter.startTTS(text);
+        else
+            presenter.playMusic(path, presenter.getSdcardPath() + "Sounds/");
     }
 
     private void startTimer() {

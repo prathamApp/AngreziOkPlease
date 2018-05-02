@@ -27,6 +27,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import butterknife.OnClick;
+
 import static com.example.pravin.angreziok.ui.jod_tod_round.JodTod.jodTodPlayerList;
 
 /**
@@ -235,7 +237,6 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
     @Override
     public String g3_l2_getQuestionText(String studId) {
         randomNumber = getRandomNumber(0, g3l2QuestionData.size());
-
         String questionString = g3l2QuestionData.get(randomNumber).getResourceQuestion();
         questionStartTime = AOPApplication.getCurrentDateTime();
         studentID = studId;
@@ -244,6 +245,11 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
 
         jodTodG3L2View.setQuestionText(questionString);
         return g3l2QuestionData.get(randomNumber).getResourceText();
+    }
+
+    @Override
+    public String g3_l2_getQuestionAudio(){
+        return g3l2QuestionData.get(randomNumber).getResourceAudio();
     }
 
     @Override
