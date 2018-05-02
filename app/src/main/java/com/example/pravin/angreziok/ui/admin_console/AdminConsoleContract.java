@@ -10,5 +10,6 @@ public interface AdminConsoleContract {
 
     interface AdminConsolePresenter {
         void insertInCrlTable(String fName, String lName, String mNumber, String uName, String password, String state, String mailID);
+        void createJsonforTransfer();
     }
 }
