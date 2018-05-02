@@ -70,11 +70,12 @@ public class JodTod_G3_L2 extends BaseFragment implements JodTodContract.JodTod_
     @BindView(R.id.questionDiv)
     LinearLayout questionDiv;
 
-    String text;
+    String text,path;
     JodTodContract.JodTodPresenter presenter;
     int currentTeam;
     Dialog dialog;
     TextView currentTextView;
+    boolean playingThroughTts = true;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -162,7 +163,7 @@ public class JodTod_G3_L2 extends BaseFragment implements JodTodContract.JodTod_
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                String question = presenter.g3_l2_getQuestionText(studentID);
+                String question = presenter.g3_l2_getQuestionText(studentID,playingThroughTts);
                 initiateQuestion(question);
                 setQuestionDynamically(question);
             }
@@ -179,11 +180,11 @@ public class JodTod_G3_L2 extends BaseFragment implements JodTodContract.JodTod_
             final TextView textView = new TextView(getActivity());
             textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             textView.setAllCaps(true);
-            textView.setHeight(40);
-            textView.setWidth(40);
+            textView.setHeight(45);
+            textView.setWidth(45);
             textView.setTypeface(textView.getTypeface(), Typeface.BOLD_ITALIC);
             textView.setTextSize(25);
-            if (!(currentLetter.equalsIgnoreCase("a")
+            if ((currentLetter.equalsIgnoreCase("a")
                     || currentLetter.equalsIgnoreCase("e")
                     || currentLetter.equalsIgnoreCase("i")
                     || currentLetter.equalsIgnoreCase("o")
@@ -269,8 +270,13 @@ public class JodTod_G3_L2 extends BaseFragment implements JodTodContract.JodTod_
     @Override
     public void initiateQuestion(String question) {
         startTimer();
-        text = question;
-        playTTS();
+        if (playingThroughTts) {
+            text = question;
+        }else {
+            path =
+        }
+            playTTS();
+
     }
 
     private void setDataForGame() {
