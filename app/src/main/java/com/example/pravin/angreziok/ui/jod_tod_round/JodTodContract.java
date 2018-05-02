@@ -67,7 +67,7 @@ public interface JodTodContract {
 
         void initiateQuestion(String question);
 
-        void setAnswer(String ans,String sttWord);
+        void setAnswer(String ans,String sttWord,boolean match);
 
         void setQuestionText(String questionString);
     }
@@ -80,7 +80,7 @@ public interface JodTodContract {
 
         void initiateQuestion(String question);
 
-        void setAnswer(String ans,String sttWord);
+        void setAnswer(String ans,String sttWord,boolean match);
 
         void hideOptionView();
 

@@ -244,7 +244,7 @@ public class JodTod_G1_L2 extends BaseFragment implements JodTodContract.JodTod_
     }
 
     @Override
-    public void setAnswer(String ans, String sttWord) {
+    public void setAnswer(String ans, String sttWord, boolean match) {
 
         final TextView textView = new TextView(getActivity());
         textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -256,7 +256,7 @@ public class JodTod_G1_L2 extends BaseFragment implements JodTodContract.JodTod_
 
         totalAnsCounter+=1;
 
-        if (text.equalsIgnoreCase("" + ans)) {
+        if (text.equalsIgnoreCase("" + ans) && !match) {
             textView.setTextColor(Color.GREEN);
             score += 5;
             correctAnsCounter+=1;
@@ -264,7 +264,6 @@ public class JodTod_G1_L2 extends BaseFragment implements JodTodContract.JodTod_
         } else {
             textView.setTextColor(Color.RED);
         }
-
 
         flowLayout.addView(textView);
     }
