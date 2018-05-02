@@ -38,11 +38,11 @@ public interface BoleTohContract {
 
         void set_g3_l2_data(String path);
 
-        void setImage_g2_l2();
+        void setImage_g2_l2(String studentID);
 
-        void setImage_g3_l2();
+        void setImage_g3_l2(String studentID);
 
-        void setImage_gl_l2();
+        void setImage_gl_l2(String studentID);
 
         String[] getOptions();
 
@@ -61,6 +61,7 @@ public interface BoleTohContract {
         String getCurrentQuestion();
 
         String getCurrentHint();
+
     }
 
     interface BoleToh_G1_L1_View {

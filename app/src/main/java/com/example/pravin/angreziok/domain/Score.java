@@ -8,8 +8,10 @@ import android.support.annotation.NonNull;
 @Entity(tableName = "Score")
 public class Score {
 
-    @PrimaryKey
     @NonNull
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "ScoreId")
+    private String ScoreId;
     @ColumnInfo(name = "SessionID")
     private String SessionID;
     @ColumnInfo(name = "StudentID")
@@ -34,7 +36,8 @@ public class Score {
     @Override
     public String toString() {
         return "Score{" +
-                "SessionID='" + SessionID + '\'' +
+                "ScoreId='" + ScoreId + '\'' +
+                ", SessionID='" + SessionID + '\'' +
                 ", StudentID='" + StudentID + '\'' +
                 ", DeviceID='" + DeviceID + '\'' +
                 ", ResourceID='" + ResourceID + '\'' +
@@ -48,11 +51,19 @@ public class Score {
     }
 
     @NonNull
+    public String getScoreId() {
+        return ScoreId;
+    }
+
+    public void setScoreId(@NonNull String scoreId) {
+        ScoreId = scoreId;
+    }
+
     public String getSessionID() {
         return SessionID;
     }
 
-    public void setSessionID(@NonNull String sessionID) {
+    public void setSessionID(String sessionID) {
         SessionID = sessionID;
     }
 

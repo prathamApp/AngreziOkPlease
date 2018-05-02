@@ -1,11 +1,17 @@
 package com.example.pravin.angreziok.ui.bole_toh_round;
 
+import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.pravin.angreziok.AOPApplication;
+import com.example.pravin.angreziok.database.AppDatabase;
+import com.example.pravin.angreziok.database.BackupDatabase;
+import com.example.pravin.angreziok.domain.Score;
 import com.example.pravin.angreziok.interfaces.MediaCallbacks;
 import com.example.pravin.angreziok.modalclasses.GenericModalGson;
 import com.example.pravin.angreziok.services.TTSService;
@@ -44,38 +50,54 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
     ArrayList<String> resAudioArray = new ArrayList<String>();
     ArrayList<String> resIdArray = new ArrayList<String>();
     int readQuestionNo, randomNumber;
-    String sdCardPathString;
+    String sdCardPathString, questionStartTime, studentID, resourceID,questionId;
+    private AppDatabase appDatabase;
 
     public BoleTohPresenterImpl(Context mContext) {
         this.mContext = mContext;
+        appDatabase = Room.databaseBuilder(mContext,
+                AppDatabase.class, AppDatabase.DB_NAME)
+                .build();
     }
 
     BoleTohPresenterImpl(Context context, BoleTohContract.BoleToh_G1_L1_View boleTohG1L1View,
                          TTSService ttsService) {
         mContext = context;
         this.boleTohG1L1View = boleTohG1L1View;
-        this.ttsService= ttsService;
+        this.ttsService = ttsService;
+        appDatabase = Room.databaseBuilder(mContext,
+                AppDatabase.class, AppDatabase.DB_NAME)
+                .build();
     }
 
     BoleTohPresenterImpl(Context context, BoleTohContract.BoleToh_G2_L2_View boleTohG2L2View,
                          TTSService ttsService) {
         mContext = context;
         this.boleTohG2L2View = boleTohG2L2View;
-        this.ttsService= ttsService;
+        this.ttsService = ttsService;
+        appDatabase = Room.databaseBuilder(mContext,
+                AppDatabase.class, AppDatabase.DB_NAME)
+                .build();
     }
 
     public BoleTohPresenterImpl(Context context, BoleTohContract.BoleToh_G1_L2_View boleTohG1L2View,
                                 TTSService ttsService) {
         mContext = context;
         this.boleTohG1L2View = boleTohG1L2View;
-        this.ttsService= ttsService;
+        this.ttsService = ttsService;
+        appDatabase = Room.databaseBuilder(mContext,
+                AppDatabase.class, AppDatabase.DB_NAME)
+                .build();
     }
 
     public BoleTohPresenterImpl(Context context, BoleTohContract.BoleToh_G3_L2_View boleTohG3L2View,
                                 TTSService ttsService) {
         mContext = context;
         this.boleTohG3L2View = boleTohG3L2View;
-        this.ttsService= ttsService;
+        this.ttsService = ttsService;
+        appDatabase = Room.databaseBuilder(mContext,
+                AppDatabase.class, AppDatabase.DB_NAME)
+                .build();
     }
 
     @Override
@@ -229,50 +251,63 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
 
     @Override
     public void checkFinalAnswer_g1_l2(String ans, int currentTeam) {
+        int scoredMarks,  totalMarks=10;
         if (g1l2QuestionData.get(randomNumber).getResourceText().equalsIgnoreCase(ans)) {
             //  TODO correct answer animation + increase score of group
             boleTohG1L2View.setCelebrationView();
+            scoredMarks = 10;
             playMusic("Sounds/BilkulSahijawab.mp3", getSdcardPath());
             int currentTeamScore = Integer.parseInt(playerModalArrayList.get(currentTeam).studentScore);
             playerModalArrayList.get(currentTeam).setStudentScore(String.valueOf(currentTeamScore + 10));
             boleTohG1L2View.setCurrentScore();
         } else {
             //  TODO wrong answer animation
+            scoredMarks = 0;
             Toast.makeText(mContext, "Wrong", Toast.LENGTH_SHORT).show();
             playMusic("Sounds/wrong.mp3", getSdcardPath());
         }
+        addScore(studentID,resourceID,0,scoredMarks,totalMarks,questionStartTime,0);
     }
 
     @Override
     public void checkFinalAnswer_g2_l2(String ans, int currentTeam) {
+        int scoredMarks,  totalMarks=10;
         if (g2l2QuestionData.get(randomNumber).getResourceText().equalsIgnoreCase(ans)) {
             //  TODO correct answer animation + increase score of group
             boleTohG2L2View.setCelebrationView();
+            scoredMarks = 10;
             playMusic("Sounds/BilkulSahijawab.mp3", getSdcardPath());
             int currentTeamScore = Integer.parseInt(playerModalArrayList.get(currentTeam).studentScore);
             playerModalArrayList.get(currentTeam).setStudentScore(String.valueOf(currentTeamScore + 10));
             boleTohG2L2View.setCurrentScore();
         } else {
             //  TODO wrong answer animation
+            scoredMarks = 0;
             Toast.makeText(mContext, "Wrong", Toast.LENGTH_SHORT).show();
             playMusic("Sounds/wrong.mp3", getSdcardPath());
         }
+        addScore(studentID,resourceID,0,scoredMarks,totalMarks,questionStartTime,0);
+
     }
 
     @Override
     public void checkFinalAnswer_g3_l2(String ans, int currentTeam) {
+        int scoredMarks,  totalMarks=10;
         if (currentPairList.get(1).getResourceText().equalsIgnoreCase(ans)) {
             //  TODO correct answer animation + increase score of group
             boleTohG3L2View.setCelebrationView();
+            scoredMarks = 10;
             playMusic("Sounds/BilkulSahijawab.mp3", getSdcardPath());
             int currentTeamScore = Integer.parseInt(playerModalArrayList.get(currentTeam).studentScore);
             playerModalArrayList.get(currentTeam).setStudentScore(String.valueOf(currentTeamScore + 10));
             boleTohG3L2View.setCurrentScore();
         } else {
             //  TODO wrong answer animation
+            scoredMarks = 0;
             Toast.makeText(mContext, "Wrong", Toast.LENGTH_SHORT).show();
             playMusic("Sounds/wrong.mp3", getSdcardPath());
         }
+        addScore(studentID,resourceID,0,scoredMarks,totalMarks,questionStartTime,0);
     }
 
     @Override
@@ -319,30 +354,38 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
     }
 
     @Override
-    public void setImage_gl_l2() {
+    public void setImage_gl_l2(String studId) {
         boleTohG1L2View.hideOptionView();
         randomNumber = getRandomNumber(0, g1l2QuestionData.size());
         String questionString = g1l2QuestionData.get(randomNumber).getResourceQuestion();
         String imagePath = getSdcardPath() + "PicGameImages/" + g1l2QuestionData.get(randomNumber).getResourceImage();
         Log.d("imagePath", "setImage_gl_l2: " + imagePath);
+        questionStartTime = AOPApplication.getCurrentDateTime();
+        studentID = studId;
+        resourceID = g1l2QuestionData.get(randomNumber).getResourceId();
+        questionId = resourceID;
         Toast.makeText(mContext, "actual ans: " + g1l2QuestionData.get(randomNumber).getResourceText(), Toast.LENGTH_SHORT).show();
         boleTohG1L2View.setQuestionImage(imagePath);
         boleTohG1L2View.setQuestionText(questionString);
     }
 
     @Override
-    public void setImage_g2_l2() {
+    public void setImage_g2_l2(String studId) {
         boleTohG2L2View.hideOptionView();
         randomNumber = getRandomNumber(0, g2l2QuestionData.size());
         String imagePath = getSdcardPath() + "PicGameImages/" + g2l2QuestionData.get(randomNumber).getResourceImage();
         Toast.makeText(mContext, "actual ans: " + g2l2QuestionData.get(randomNumber).getResourceText(), Toast.LENGTH_SHORT).show();
+        questionStartTime = AOPApplication.getCurrentDateTime();
+        studentID = studId;
+        resourceID = g2l2QuestionData.get(randomNumber).getResourceId();
+        questionId = resourceID;
         boleTohG2L2View.setActionGif(imagePath);
         String questionString = g2l2QuestionData.get(randomNumber).getResourceQuestion();
         boleTohG2L2View.setQuestionText(questionString);
     }
 
     @Override
-    public void setImage_g3_l2() {
+    public void setImage_g3_l2(String studId) {
         boleTohG3L2View.hideOptionView();
         randomNumber = getRandomNumber(0, g3l2QuestionData.size());
         String path = getSdcardPath();
@@ -352,10 +395,44 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
         String questionImagePath = path + "PicGameImages/" + currentPairList.get(1).getResourceImage();
         Toast.makeText(mContext, "Hint:::" + currentPairList.get(0).getResourceText(), Toast.LENGTH_SHORT).show();
         Toast.makeText(mContext, "Question:::" + currentPairList.get(1).getResourceText(), Toast.LENGTH_SHORT).show();
+        questionStartTime = AOPApplication.getCurrentDateTime();
+        studentID = studId;
+        resourceID = g3l2QuestionData.get(randomNumber).getResourceId();
+        questionId = resourceID;
         boleTohG3L2View.setPairsImages(hintImagePath, questionImagePath);
         String questionString = g3l2QuestionData.get(randomNumber).getResourceQuestion();
         boleTohG3L2View.setQuestionText(questionString);
     }
+
+
+    public void addScore(String studentID, String resourceID, int questionId, int scoredMarks, int totalMarks, String startDateTime, int questionLevel) {
+        try {
+            final Score score = new Score();
+
+            score.setSessionID("");
+            score.setStudentID("" + studentID);
+            score.setDeviceID("");
+            score.setResourceID("" + resourceID);
+            score.setQuestionId(questionId);
+            score.setScoredMarks(scoredMarks);
+            score.setTotalMarks(totalMarks);
+            score.setStartDateTime("" + startDateTime);
+            score.setEndDateTime("" + AOPApplication.getCurrentDateTime());
+            score.setLevel(0);
+
+            new AsyncTask<Object, Void, Object>() {
+                @Override
+                protected Object doInBackground(Object... objects) {
+                    appDatabase.getScoreDao().insert(score);
+                    BackupDatabase.backup(mContext);
+                    return null;
+                }
+            }.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public GenericModalGson fetchJsonData(String jasonName, String path) {
         GenericModalGson returnGsonData = null;
@@ -411,6 +488,5 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
 
     @Override
     public void onComplete() {
-
     }
 }

@@ -160,6 +160,7 @@ public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleT
         fadeOtherGroups();
         speechCount = 0;
         String teamName = playerModalArrayList.get(currentTeam).getStudentAlias();
+        final String studentID = playerModalArrayList.get(currentTeam).getStudentID();
         dialog = new Dialog(getActivity());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -179,7 +180,7 @@ public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleT
             public void onClick(View v) {
                 dialog.dismiss();
                 initiateQuestion();
-                presenter.setImage_gl_l2();
+                presenter.setImage_gl_l2(studentID);
             }
         });
 
