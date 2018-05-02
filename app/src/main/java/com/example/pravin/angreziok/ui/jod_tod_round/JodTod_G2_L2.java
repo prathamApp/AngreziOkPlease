@@ -257,7 +257,7 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
         Log.d("changeColor", "Ques : " + text + "    setAnswer : " + ans + "    sttWord : " + sttWord);
         totalAnsCounter+=1;
 
-        if (ans.equalsIgnoreCase("true")) {
+        if (ans.equalsIgnoreCase("true") && !match) {
             textView.setTextColor(Color.GREEN);
             correctAnsCounter+=1;
             score += 5;

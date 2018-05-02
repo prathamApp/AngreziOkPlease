@@ -75,7 +75,7 @@ public class JodTod_G3_L2 extends BaseFragment implements JodTodContract.JodTod_
     int currentTeam;
     Dialog dialog;
     TextView currentTextView;
-    boolean playingThroughTts = false;
+    boolean playingThroughTts = true;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

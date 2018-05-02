@@ -1,6 +1,7 @@
 package com.example.pravin.angreziok.ui.jod_tod_round;
 
 import android.arch.persistence.room.Room;
+import android.content.ContentProviderOperation;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -77,6 +78,7 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
         appDatabase = Room.databaseBuilder(mContext,
                 AppDatabase.class, AppDatabase.DB_NAME)
                 .build();
+        g1g2result = new ArrayList<String>();
     }
 
     public JodTodPresenterImpl(Context context, JodTodContract.JodTod_G2_L2_View jodTod_g2_l2_view, TTSService ttsService) {
@@ -86,6 +88,7 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
         appDatabase = Room.databaseBuilder(mContext,
                 AppDatabase.class, AppDatabase.DB_NAME)
                 .build();
+        g1g2result = new ArrayList<String>();
     }
 
 
@@ -157,6 +160,8 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
                     break;
                 }
             }
+            if(!match)
+                g1g2result.add(ans);
             jodTodG1L2View.setAnswer(actualAns, ans,match);
         }
     }
@@ -177,28 +182,17 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
                     }
                 }
 
+                if(!match)
+                    g1g2result.add(ans);
+
                 Log.d("rhymAns", "ans: " + ans + "      Rhyme : " + rhymeCheckWord);
                 Log.d("rhymAns", "ans.lastIndexOf(rhymeCheckWord): " + ans.lastIndexOf(rhymeCheckWord));
-                //Log.d("rhymAns", "ans.substring(ans.lastIndexOf(rhymeCheckWord)): "+ans.substring(ans.lastIndexOf(rhymeCheckWord)) );
 
                 if ((ans.lastIndexOf(rhymeCheckWord)) != -1 && (ans.substring(ans.lastIndexOf(rhymeCheckWord))).equalsIgnoreCase(rhymeCheckWord) && !match)
-                    jodTodG2L2View.setAnswer("true", "" + ans, true);
+                    jodTodG2L2View.setAnswer("true", "" + ans, false);
                 else
-                    jodTodG2L2View.setAnswer("false", "" + ans, false);
-/*
-                ansRev = new StringBuffer(ans).reverse().toString();
-                rhymeRev = ""+new StringBuffer(rhymeCheckWord).reverse().toString();
-                Log.d("rhymAns", "rhymeCheckWord: "+rhymeCheckWord+"       g1_l2_checkAnswer: rhymAns : "+rhymAns);
-                for(int i=0; i<rhymeRev.length();i++){
-                    if(rhymeRev.charAt(i).)
-                }
-*/
-
+                    jodTodG2L2View.setAnswer("false", "" + ans, true);
             }
-/*            if(rhymAns.equalsIgnoreCase(""+rhymeCheckWord))
-                jodTodG2L2View.setAnswer("true",""+ans);
-            else
-                jodTodG2L2View.setAnswer("false",""+ans);*/
         }
     }
 
