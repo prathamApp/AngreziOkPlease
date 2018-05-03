@@ -43,8 +43,10 @@
         <activity
             android:name=".ui.start_data_confirmation.DataConfirmation"
             android:screenOrientation="sensorLandscape" />
-        <activity android:name=".ui.admin_console.AdminConsole"
+        <activity
+            android:name=".ui.admin_console.AdminConsole"
             android:screenOrientation="sensorLandscape" />
+        <activity android:name=".ui.final_screen.ResultScreen"></activity>
     </application>
 
 </manifest>
