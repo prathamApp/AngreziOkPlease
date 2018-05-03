@@ -182,8 +182,8 @@ public class BoleToh_G2_L2 extends BaseFragment implements BoleTohContract.BoleT
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                initiateQuestion();
                 presenter.setImage_g2_l2(studentID);
+                initiateQuestion();
             }
         });
 
@@ -253,12 +253,12 @@ public class BoleToh_G2_L2 extends BaseFragment implements BoleTohContract.BoleT
     }
 
     private void playTTS() {
-        text = "What is he doing?";
         presenter.startTTS(text);
     }
 
     @Override
     public void setQuestionText(String questionString) {
+        text = questionString;
         question.setText(questionString);
     }
 
