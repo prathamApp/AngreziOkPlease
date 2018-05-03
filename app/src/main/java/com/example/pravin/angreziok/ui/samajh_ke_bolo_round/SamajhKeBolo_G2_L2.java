@@ -1,6 +1,7 @@
 package com.example.pravin.angreziok.ui.samajh_ke_bolo_round;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import com.example.pravin.angreziok.BaseFragment;
 import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.animations.MyBounceInterpolator;
 import com.example.pravin.angreziok.interfaces.SpeechResult;
+import com.example.pravin.angreziok.ui.final_screen.ResultScreen;
 import com.example.pravin.angreziok.ui.fragment_intro_character;
 import com.example.pravin.angreziok.util.PD_Utility;
 import com.github.anastr.flattimelib.CountDownTimerView;
@@ -316,7 +318,10 @@ public class SamajhKeBolo_G2_L2 extends BaseFragment implements SamajhKeBoloCont
                         PD_Utility.showFragment(getActivity(), new fragment_intro_character(), R.id.cl_samajh_ke_bolo,
                                 bundle, fragment_intro_character.class.getSimpleName());
                     } else {
-                        Toast.makeText(getActivity(), "Tie breaker or Final score screen?", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getActivity(), ResultScreen.class);
+                        bundle.putParcelableArrayList("PlayerList", playerModalArrayList);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
 /*                        Intent intent = new Intent(getActivity(), JodTod.class);
                         intent.putExtras(bundle);
                         startActivity(intent);*/
