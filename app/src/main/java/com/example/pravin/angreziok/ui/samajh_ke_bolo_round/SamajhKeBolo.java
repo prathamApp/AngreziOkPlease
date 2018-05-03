@@ -5,8 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -17,7 +15,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.VideoView;
 
 import com.example.pravin.angreziok.BaseActivity;
 import com.example.pravin.angreziok.R;
@@ -26,7 +23,6 @@ import com.example.pravin.angreziok.custom.GifView;
 import com.example.pravin.angreziok.interfaces.MediaCallbacks;
 import com.example.pravin.angreziok.modalclasses.PlayerModal;
 import com.example.pravin.angreziok.ui.fragment_intro_character;
-import com.example.pravin.angreziok.ui.jod_tod_round.JodTod;
 import com.example.pravin.angreziok.ui.start_data_confirmation.DataConfirmation;
 import com.example.pravin.angreziok.util.MediaPlayerUtil;
 import com.example.pravin.angreziok.util.PD_Utility;
@@ -40,7 +36,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class SamajhKeBolo extends BaseActivity implements SamajhKeBoloContract.SamajhKeBoloView, MediaCallbacks{
+public class SamajhKeBolo extends BaseActivity implements SamajhKeBoloContract.SamajhKeBoloView, MediaCallbacks {
 
     SamajhKeBoloContract.SamajhKeBoloPresenter presenter;
     static ArrayList<PlayerModal> playerModalArrayList;
@@ -59,6 +55,7 @@ public class SamajhKeBolo extends BaseActivity implements SamajhKeBoloContract.S
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_samajh_ke_bolo);
         ButterKnife.bind(this);
+        btn_skip.setVisibility(View.GONE);
 
         Intent intent = getIntent();
         Bundle extraBundle = intent.getExtras();
@@ -90,6 +87,7 @@ public class SamajhKeBolo extends BaseActivity implements SamajhKeBoloContract.S
 
     private void showGif(String charIntroPath) {
         try {
+            btn_skip.setVisibility(View.VISIBLE);
             InputStream gif = new FileInputStream(charIntroPath + "Samaz-ke-bolo-Round-Intro.gif");
             introGifView.setGifResource(gif);
             playSound(charIntroPath);
@@ -114,6 +112,8 @@ public class SamajhKeBolo extends BaseActivity implements SamajhKeBoloContract.S
 
     @OnClick(R.id.skip_button_intro)
     public void startGame() {
+        if (mediaPlayerUtil != null)
+            mediaPlayerUtil.pauseMedia();
         loadFragment();
     }
 
@@ -141,7 +141,7 @@ public class SamajhKeBolo extends BaseActivity implements SamajhKeBoloContract.S
             public void run() {
                 loadFragment();
             }
-        },1000);
+        }, 1000);
     }
 
     @Override

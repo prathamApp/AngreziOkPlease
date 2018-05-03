@@ -60,6 +60,7 @@ public class JodTod extends BaseActivity implements JodTodContract.JodTodView, M
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jod_tod);
         ButterKnife.bind(this);
+        btn_skip.setVisibility(View.GONE);
         gameCounter = 0;
 
         Intent intent = getIntent();
@@ -92,6 +93,7 @@ public class JodTod extends BaseActivity implements JodTodContract.JodTodView, M
 
     private void showGif(String charIntroPath) {
         try {
+            btn_skip.setVisibility(View.VISIBLE);
             InputStream gif = new FileInputStream(charIntroPath + "Jod_Tod_Round-Intro.gif");
             introGifView.setGifResource(gif);
             playSound(charIntroPath);
@@ -115,6 +117,8 @@ public class JodTod extends BaseActivity implements JodTodContract.JodTodView, M
 
     @OnClick(R.id.skip_button_intro)
     public void startGame() {
+        if (mediaPlayerUtil != null)
+            mediaPlayerUtil.pauseMedia();
         loadFragment();
     }
 

@@ -56,6 +56,7 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bole_toh);
         ButterKnife.bind(this);
+        btn_skip.setVisibility(View.GONE);
 
         Intent intent = getIntent();
         Bundle extraBundle = intent.getExtras();
@@ -88,6 +89,7 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
 
     private void showGif(String charIntroPath) {
         try {
+            btn_skip.setVisibility(View.VISIBLE);
             InputStream gif = new FileInputStream(charIntroPath + "Bole-to-round-Intro.gif");
             introGifView.setGifResource(gif);
             playSound(charIntroPath);

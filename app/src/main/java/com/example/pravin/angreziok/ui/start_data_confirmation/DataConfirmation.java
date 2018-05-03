@@ -12,6 +12,7 @@ import com.example.pravin.angreziok.BaseActivity;
 import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.modalclasses.PlayerModal;
 import com.example.pravin.angreziok.ui.bole_toh_round.BoleToh;
+import com.example.pravin.angreziok.ui.start_menu.QRActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -113,6 +114,13 @@ public class DataConfirmation extends BaseActivity implements DataConfirmationCo
             startActivity(intent);
 
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent dataConfirmationIntent = new Intent(this, QRActivity.class);
+        this.finish();
+        startActivity(dataConfirmationIntent);
     }
 
     @OnClick({R.id.ll_changeTeam, R.id.tv_change_team})

@@ -1,17 +1,23 @@
 package com.example.pravin.angreziok.ui.final_screen;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.pravin.angreziok.BaseActivity;
 import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.modalclasses.PlayerModal;
+import com.example.pravin.angreziok.ui.start_data_confirmation.DataConfirmation;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -163,5 +169,60 @@ public class ResultScreen extends BaseActivity {
                 return -1;
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        quitOrNot();
+    }
+
+    private void quitOrNot() {
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.setContentView(R.layout.custom_dialog_quit);
+        dialog.setCanceledOnTouchOutside(false);
+        Button quitBtn = dialog.findViewById(R.id.dialog_btn_yes);
+        Button cancelBtn = dialog.findViewById(R.id.dialog_btn_no);
+        ImageView closeBtn = dialog.findViewById(R.id.iv_close_dialog);
+
+        dialog.show();
+
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        closeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        quitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                restartGame();
+            }
+        });
+    }
+
+    private void reInitiateScores() {
+        for (int i = 0; i < playerModalArrayList.size(); i++)
+            playerModalArrayList.get(i).setStudentScore("0");
+    }
+
+    private void restartGame() {
+        reInitiateScores();
+        Intent dataConfirmationIntent = new Intent(this, DataConfirmation.class);
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList("studentList", playerModalArrayList);
+        dataConfirmationIntent.putExtras(bundle);
+        finishAffinity();
+        startActivity(dataConfirmationIntent);
     }
 }

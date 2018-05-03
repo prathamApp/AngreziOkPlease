@@ -154,6 +154,7 @@ public class QRActivity extends BaseActivity implements QRContract.StartMenuView
 
     @OnClick(R.id.btn_start_game)
     public void gotoGame() {
+        mScannerView.stopCamera();
         Intent dataConfirmationIntent = new Intent(this, DataConfirmation.class);
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("studentList", playerModalList);
