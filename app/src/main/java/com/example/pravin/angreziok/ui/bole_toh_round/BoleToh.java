@@ -2,7 +2,6 @@ package com.example.pravin.angreziok.ui.bole_toh_round;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -16,11 +15,8 @@ import com.example.pravin.angreziok.BaseActivity;
 import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.animations.MyBounceInterpolator;
 import com.example.pravin.angreziok.custom.GifView;
-import com.example.pravin.angreziok.database.BackupDatabase;
-import com.example.pravin.angreziok.domain.Crl;
 import com.example.pravin.angreziok.interfaces.MediaCallbacks;
 import com.example.pravin.angreziok.modalclasses.PlayerModal;
-import com.example.pravin.angreziok.ui.admin_console.AdminConsole;
 import com.example.pravin.angreziok.ui.fragment_intro_character;
 import com.example.pravin.angreziok.util.MediaPlayerUtil;
 import com.example.pravin.angreziok.util.PD_Utility;
@@ -29,7 +25,6 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.UUID;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -144,4 +139,9 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
         }, 1000);
     }
 
+    @Override
+    public void onBackPressed() {
+        BaseActivity.playerModalArrayList = this.playerModalArrayList;
+        super.onBackPressed();
+    }
 }

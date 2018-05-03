@@ -137,4 +137,10 @@ public class SamajhKeBolo extends BaseActivity implements SamajhKeBoloContract.S
             }
         },1000);
     }
+
+    @Override
+    public void onBackPressed() {
+        BaseActivity.playerModalArrayList = this.playerModalArrayList;
+        super.onBackPressed();
+    }
 }

@@ -23,7 +23,7 @@ public class BaseActivity extends AppCompatActivity {
 
     public static TTSService ttsService;
     public static STTService sttService;
-    static ArrayList<PlayerModal> playerModalArrayList;
+    public static ArrayList<PlayerModal> playerModalArrayList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,9 +39,10 @@ public class BaseActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         this.finish();
+        reInitiateScores();
         Intent dataConfirmationIntent = new Intent(this, DataConfirmation.class);
         Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList("studentList", playerModalList);
+        bundle.putParcelableArrayList("studentList", playerModalArrayList);
         dataConfirmationIntent.putExtras(bundle);
         startActivity(dataConfirmationIntent);
     }
@@ -60,5 +61,10 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+    }
+
+    private void reInitiateScores() {
+        for (int i = 0; i < playerModalArrayList.size(); i++)
+            playerModalArrayList.get(i).setStudentScore("0");
     }
 }

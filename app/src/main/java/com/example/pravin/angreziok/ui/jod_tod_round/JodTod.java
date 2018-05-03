@@ -140,4 +140,10 @@ public class JodTod extends BaseActivity implements JodTodContract.JodTodView, M
             }
         },1000);
     }
+
+    @Override
+    public void onBackPressed() {
+        BaseActivity.playerModalArrayList = this.jodTodPlayerList;
+        super.onBackPressed();
+    }
 }
