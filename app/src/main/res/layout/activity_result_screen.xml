@@ -1,287 +1,299 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/loginaop"
-    android:orientation="vertical"
-    android:weightSum="100"
     tools:context=".ui.final_screen.ResultScreen">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="20dp"
-        android:layout_weight="25"
-        android:orientation="horizontal"
-        android:weightSum="20">
-
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="70dp"
-            android:layout_weight="8"
-            android:src="@drawable/congratss" />
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
-            android:layout_weight="12"
-            android:gravity="right"
-            android:orientation="horizontal"
-            android:weightSum="20">
-
-            <Button
-                android:id="@+id/btn_replay"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/round_button_selector"
-                android:text="REPLAY" />
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="75"
-        android:gravity="center"
-        android:orientation="horizontal"
+        android:layout_height="match_parent"
+        android:background="@drawable/loginaop"
+        android:orientation="vertical"
         android:weightSum="100">
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="15"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:paddingBottom="15dp"
-            android:weightSum="5">
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="20dp"
+            android:layout_weight="25"
+            android:orientation="horizontal"
+            android:weightSum="20">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:layout_marginVertical="10dp"
-                android:background="@color/whiteTransparentNormal"
-                android:text="Rank"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:textSize="30sp" />
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="70dp"
+                android:layout_weight="8"
+                android:src="@drawable/congratss" />
 
-            <TextView
-                android:id="@+id/tv_num_first"
-                android:layout_width="75dp"
-                android:layout_height="0dp"
-                android:layout_marginVertical="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/badge"
-                android:gravity="center"
-                android:text="#1"
-                android:textColor="@color/simple_black"
-                android:textSize="35sp"
-                android:textStyle="bold"
-                android:visibility="visible" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_weight="12"
+                android:gravity="right"
+                android:orientation="horizontal"
+                android:weightSum="20">
 
-            <TextView
-                android:id="@+id/tv_num_second"
-                android:layout_width="75dp"
-                android:layout_height="0dp"
-                android:layout_marginVertical="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/badge"
-                android:gravity="center"
-                android:text="#2"
-                android:textColor="@color/simple_black"
-                android:textSize="40sp"
-                android:textStyle="bold"
-                android:visibility="gone" />
+                <Button
+                    android:id="@+id/btn_replay"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/round_button_selector"
+                    android:text="REPLAY" />
 
-            <TextView
-                android:id="@+id/tv_num_third"
-                android:layout_width="75dp"
-                android:layout_height="0dp"
-                android:layout_marginVertical="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/badge"
-                android:gravity="center"
-                android:text="#3"
-                android:textColor="@color/simple_black"
-                android:textSize="40sp"
-                android:textStyle="bold"
-                android:visibility="gone" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/tv_num_fourth"
-                android:layout_width="75dp"
-                android:layout_height="0dp"
-                android:layout_marginVertical="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/badge"
-                android:gravity="center"
-                android:text="#4"
-                android:textColor="@color/simple_black"
-                android:textSize="40sp"
-                android:textStyle="bold"
-                android:visibility="gone" />
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="15"
-            android:gravity="right|center"
-            android:orientation="vertical"
-            android:paddingBottom="15dp"
-            android:weightSum="5">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:layout_marginVertical="10dp"
-                android:background="@color/whiteTransparentNormal"
-                android:text="Score"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:textSize="30sp" />
-
-            <TextView
-                android:id="@+id/tv_score_first"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginVertical="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/team_one_stud"
-                android:gravity="center"
-                android:text="#1"
-                android:textColor="@color/simple_black"
-                android:textSize="30sp"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:id="@+id/tv_score_second"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginVertical="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/team_two_stud"
-                android:gravity="center"
-                android:text="#2"
-                android:textColor="@color/simple_black"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/tv_score_third"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginVertical="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/team_three_stud"
-                android:gravity="center"
-                android:text="#3"
-                android:textColor="@color/simple_black"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/tv_score_fourth"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginVertical="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/team_four_stud"
-                android:gravity="center"
-                android:text="#4"
-                android:textColor="@color/simple_black"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                android:visibility="gone" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="50"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="75"
             android:gravity="center"
-            android:orientation="vertical"
-            android:paddingBottom="15dp"
-            android:weightSum="5">
+            android:orientation="horizontal"
+            android:weightSum="100">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:layout_marginVertical="10dp"
-                android:background="@color/whiteTransparentNormal"
-                android:text="Name"
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="15"
                 android:gravity="center"
-                android:textStyle="bold"
-                android:textSize="30sp" />
+                android:orientation="vertical"
+                android:paddingBottom="15dp"
+                android:weightSum="5">
 
-            <TextView
-                android:id="@+id/tv_team_first"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginVertical="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/team_one"
-                android:gravity="center"
-                android:text="#1"
-                android:textColor="@color/simple_black"
-                android:textSize="30sp"
-                android:visibility="visible" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginVertical="10dp"
+                    android:layout_weight="1"
+                    android:background="@color/whiteTransparentNormal"
+                    android:gravity="center"
+                    android:text="Rank"
+                    android:textSize="31sp"
+                    android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/tv_team_second"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginVertical="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/team_two"
-                android:gravity="center"
-                android:text="#2"
-                android:textColor="@color/simple_black"
-                android:textSize="30sp"
-                android:visibility="gone" />
+                <TextView
+                    android:id="@+id/tv_num_first"
+                    android:layout_width="75dp"
+                    android:layout_height="0dp"
+                    android:layout_marginVertical="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/badge"
+                    android:gravity="center"
+                    android:text="#1"
+                    android:textColor="@color/simple_black"
+                    android:textSize="35sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
 
-            <TextView
-                android:id="@+id/tv_team_third"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginVertical="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/team_three"
-                android:gravity="center"
-                android:text="#3"
-                android:textColor="@color/simple_black"
-                android:textSize="30sp"
-                android:visibility="gone" />
+                <TextView
+                    android:id="@+id/tv_num_second"
+                    android:layout_width="75dp"
+                    android:layout_height="0dp"
+                    android:layout_marginVertical="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/badge"
+                    android:gravity="center"
+                    android:text="#2"
+                    android:textColor="@color/simple_black"
+                    android:textSize="40sp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
 
-            <TextView
-                android:id="@+id/tv_team_fourth"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginVertical="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/team_four"
+                <TextView
+                    android:id="@+id/tv_num_third"
+                    android:layout_width="75dp"
+                    android:layout_height="0dp"
+                    android:layout_marginVertical="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/badge"
+                    android:gravity="center"
+                    android:text="#3"
+                    android:textColor="@color/simple_black"
+                    android:textSize="40sp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tv_num_fourth"
+                    android:layout_width="75dp"
+                    android:layout_height="0dp"
+                    android:layout_marginVertical="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/badge"
+                    android:gravity="center"
+                    android:text="#4"
+                    android:textColor="@color/simple_black"
+                    android:textSize="40sp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="15"
+                android:gravity="right|center"
+                android:orientation="vertical"
+                android:paddingBottom="15dp"
+                android:weightSum="5">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginVertical="10dp"
+                    android:layout_weight="1"
+                    android:background="@color/whiteTransparentNormal"
+                    android:gravity="center"
+                    android:text="Score"
+                    android:textSize="30sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_score_first"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginVertical="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/team_one_stud"
+                    android:gravity="center"
+                    android:text="#1"
+                    android:textColor="@color/simple_black"
+                    android:textSize="30sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_score_second"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginVertical="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/team_two_stud"
+                    android:gravity="center"
+                    android:text="#2"
+                    android:textColor="@color/simple_black"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tv_score_third"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginVertical="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/team_three_stud"
+                    android:gravity="center"
+                    android:text="#3"
+                    android:textColor="@color/simple_black"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tv_score_fourth"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginVertical="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/team_four_stud"
+                    android:gravity="center"
+                    android:text="#4"
+                    android:textColor="@color/simple_black"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="50"
                 android:gravity="center"
-                android:text="#4"
-                android:textColor="@color/simple_black"
-                android:textSize="30sp"
-                android:visibility="gone" />
+                android:orientation="vertical"
+                android:paddingBottom="15dp"
+                android:weightSum="5">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginVertical="10dp"
+                    android:layout_weight="1"
+                    android:background="@color/whiteTransparentNormal"
+                    android:gravity="center"
+                    android:text="Name"
+                    android:textSize="30sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_team_first"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginVertical="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/team_one"
+                    android:gravity="center"
+                    android:text="#1"
+                    android:textColor="@color/simple_black"
+                    android:textSize="30sp"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/tv_team_second"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginVertical="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/team_two"
+                    android:gravity="center"
+                    android:text="#2"
+                    android:textColor="@color/simple_black"
+                    android:textSize="30sp"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tv_team_third"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginVertical="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/team_three"
+                    android:gravity="center"
+                    android:text="#3"
+                    android:textColor="@color/simple_black"
+                    android:textSize="30sp"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tv_team_fourth"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginVertical="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/team_four"
+                    android:gravity="center"
+                    android:text="#4"
+                    android:textColor="@color/simple_black"
+                    android:textSize="30sp"
+                    android:visibility="gone" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
     </LinearLayout>
 
-</LinearLayout>
+    <nl.dionsegijn.konfetti.KonfettiView
+        android:id="@+id/konfettiView_result"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</RelativeLayout>

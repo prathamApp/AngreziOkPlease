@@ -1,13 +1,15 @@
 package com.example.pravin.angreziok.ui.final_screen;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.example.pravin.angreziok.BaseActivity;
 import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.modalclasses.PlayerModal;
 
@@ -17,8 +19,11 @@ import java.util.Comparator;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import nl.dionsegijn.konfetti.KonfettiView;
+import nl.dionsegijn.konfetti.models.Shape;
+import nl.dionsegijn.konfetti.models.Size;
 
-public class ResultScreen extends AppCompatActivity {
+public class ResultScreen extends BaseActivity {
 
     @BindView(R.id.tv_num_first)
     TextView num1;
@@ -47,6 +52,9 @@ public class ResultScreen extends AppCompatActivity {
     @BindView(R.id.tv_score_fourth)
     TextView tvScore4;
 
+    @BindView(R.id.konfettiView_result)
+    KonfettiView konfettiView;
+
     ArrayList<PlayerModal> playerModalArrayList;
     int[] rankArr;
     int rank = 1;
@@ -70,7 +78,27 @@ public class ResultScreen extends AppCompatActivity {
         }
 
         showResult();
+        Handler h = new Handler();
+        h.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                setCelebrationView();
+            }
+        }, 1000);
 
+    }
+
+    public void setCelebrationView() {
+        konfettiView.build()
+                .addColors(Color.YELLOW, Color.GREEN, Color.MAGENTA)
+                .setDirection(0.0, 359.0)
+                .setSpeed(1f, 5f)
+                .setFadeOutEnabled(true)
+                .setTimeToLive(2000L)
+                .addShapes(Shape.RECT, Shape.CIRCLE)
+                .addSizes(new Size(20, 5f))
+                .setPosition(-50f, konfettiView.getWidth() + 50f, -50f, -50f)
+                .stream(100, 4000L);
     }
 
     private void showResult() {
