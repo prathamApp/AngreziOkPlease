@@ -4,11 +4,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-import com.example.pravin.angreziok.contentplayer.TextToSpeechCustom;
+import com.example.pravin.angreziok.modalclasses.PlayerModal;
 import com.example.pravin.angreziok.services.STTService;
 import com.example.pravin.angreziok.services.TTSService;
-import com.example.pravin.angreziok.ui.bole_toh_round.BoleToh;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 /**
@@ -28,6 +28,11 @@ public class BaseActivity extends AppCompatActivity {
         ttsService.setSpeechRate(0.7f);
         ttsService.setLanguage(new Locale("hi", "IN"));
         sttService = STTService.init(this);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 
     @Override

@@ -1,15 +1,20 @@
 package com.example.pravin.angreziok.ui.jod_tod_round;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.example.pravin.angreziok.BaseActivity;
 import com.example.pravin.angreziok.R;
@@ -17,8 +22,8 @@ import com.example.pravin.angreziok.animations.MyBounceInterpolator;
 import com.example.pravin.angreziok.custom.GifView;
 import com.example.pravin.angreziok.interfaces.MediaCallbacks;
 import com.example.pravin.angreziok.modalclasses.PlayerModal;
-import com.example.pravin.angreziok.ui.bole_toh_round.BoleToh;
 import com.example.pravin.angreziok.ui.fragment_intro_character;
+import com.example.pravin.angreziok.ui.start_data_confirmation.DataConfirmation;
 import com.example.pravin.angreziok.util.MediaPlayerUtil;
 import com.example.pravin.angreziok.util.PD_Utility;
 
@@ -138,6 +143,62 @@ public class JodTod extends BaseActivity implements JodTodContract.JodTodView, M
             public void run() {
                 loadFragment();
             }
-        },1000);
+        }, 1000);
     }
+
+    @Override
+    public void onBackPressed() {
+        quitOrNot();
+    }
+
+    private void quitOrNot() {
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.setContentView(R.layout.custom_dialog_quit);
+        dialog.setCanceledOnTouchOutside(false);
+        Button quitBtn = dialog.findViewById(R.id.dialog_btn_yes);
+        Button cancelBtn = dialog.findViewById(R.id.dialog_btn_no);
+        ImageView closeBtn = dialog.findViewById(R.id.iv_close_dialog);
+
+        dialog.show();
+
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        closeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        quitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                restartGame();
+            }
+        });
+    }
+
+    private void reInitiateScores() {
+        for (int i = 0; i < jodTodPlayerList.size(); i++)
+            jodTodPlayerList.get(i).setStudentScore("0");
+    }
+
+    private void restartGame() {
+        reInitiateScores();
+        Intent dataConfirmationIntent = new Intent(this, DataConfirmation.class);
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList("studentList", jodTodPlayerList);
+        dataConfirmationIntent.putExtras(bundle);
+        finishAffinity();
+        startActivity(dataConfirmationIntent);
+    }
+
 }
