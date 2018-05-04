@@ -12,6 +12,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.WindowManager;
 import android.widget.VideoView;
 
@@ -125,6 +126,7 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
                     }
                 }
             }else {
+                Log.d("VidIntro", "createDataBase: ");
                 startSession();
             }
         } catch (Exception e) {
@@ -137,6 +139,10 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
             @Override
             protected Object doInBackground(Object[] objects) {
                 try {
+                    appDatabase = Room.databaseBuilder(VideoIntro.this,
+                            AppDatabase.class, AppDatabase.DB_NAME)
+                            .build();
+
                     Session startSesion = new Session();
                     String currentSession = "" + UUID.randomUUID().toString();
                     startSesion.setSessionID("" + currentSession);
@@ -144,6 +150,8 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
                     startSesion.setToDate("NA");
                     appDatabase.getSessionDao().insert(startSesion);
                     appDatabase.getStatusDao().updateValue("CurrentSession", "" + currentSession);
+
+                    BackupDatabase.backup(VideoIntro.this);
 
                     return null;
                 } catch (Exception e) {

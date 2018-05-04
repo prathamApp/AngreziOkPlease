@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.example.pravin.angreziok.AOPApplication;
 import com.example.pravin.angreziok.database.AppDatabase;
@@ -25,39 +24,36 @@ public class AppExitService extends Service {
     @Override
     public void onTaskRemoved(Intent rootIntent) {
 
-        new AsyncTask<Object, Void, Object>() {
-            @Override
-            protected Object doInBackground(Object[] objects) {
-                try {
+        try {
 
-                    appDatabase = Room.databaseBuilder(getApplicationContext(),
-                            AppDatabase.class, AppDatabase.DB_NAME)
-                            .build();
+            new AsyncTask<Object, Void, Object>() {
+                @Override
+                protected Object doInBackground(Object[] objects) {
+                    try {
 
-                    String curSession = appDatabase.getStatusDao().getValue("CurrentSession");
-                    String toDateTemp = appDatabase.getSessionDao().getToDate(curSession);
+                        appDatabase = Room.databaseBuilder(AppExitService.this,
+                                AppDatabase.class, AppDatabase.DB_NAME)
+                                .build();
 
-                    Log.d("AppExitService:", "curSession : " + curSession + "      toDateTemp : " + toDateTemp);
+                        String curSession = appDatabase.getStatusDao().getValue("CurrentSession");
+                        String toDateTemp = appDatabase.getSessionDao().getToDate(curSession);
 
-                    if (toDateTemp.equalsIgnoreCase("na")) {
-                        appDatabase.getSessionDao().UpdateToDate(curSession, AOPApplication.getCurrentDateTime());
+                        if (toDateTemp.equalsIgnoreCase("na")) {
+                            appDatabase.getSessionDao().UpdateToDate(curSession, AOPApplication.getCurrentDateTime());
+                        }
+                        BackupDatabase.backup(AppExitService.this);
+                        stopSelf();
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-/*            StatusDBHelper statusDBHelper = new StatusDBHelper(this);
-            SessionDBHelper sessionDBHelper = new SessionDBHelper(this);
-
-            String curSession = statusDBHelper.getValue("CurrentSession");
-            String curStrSession = statusDBHelper.getValue("CurrentStorySession");
-            sessionDBHelper.UpdateToDate(""+curSession, KksApplication.getCurrentDateTime());
-            sessionDBHelper.UpdateToDate(""+curStrSession, KksApplication.getCurrentDateTime());
-*/
-                    BackupDatabase.backup(getApplicationContext());
-                    Log.d("AppExitService:", "onTaskRemoved: HAHAHAHAHAHAHAHAHAAHAHAAAAAA");
-                    stopSelf();
-                } catch (Exception e) {
-                    e.printStackTrace();
+                    return null;
                 }
-                return null;
-            }
-        }.execute();
+            }.execute();
+
+            Thread.sleep(2000);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

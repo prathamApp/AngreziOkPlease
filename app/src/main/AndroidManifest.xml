@@ -46,7 +46,12 @@
         <activity
             android:name=".ui.admin_console.AdminConsole"
             android:screenOrientation="sensorLandscape" />
-        <activity android:name=".ui.final_screen.ResultScreen"></activity>
+        <activity
+            android:name=".ui.final_screen.ResultScreen"
+            android:screenOrientation="sensorLandscape" />
+        <activity
+            android:name=".ui.tab_usage.TabUsage"
+            android:screenOrientation="sensorLandscape" />
 
         <service
             android:name=".services.AppExitService"

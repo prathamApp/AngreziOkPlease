@@ -4,6 +4,7 @@ import android.arch.persistence.room.Room;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -30,7 +31,7 @@ public class TabUsage extends BaseActivity implements TabUsageContract.TabUsageV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tab_usage);
-        getSupportActionBar().hide();
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         listView = findViewById(R.id.list_view);
         listForAdapter = new ArrayList<>();

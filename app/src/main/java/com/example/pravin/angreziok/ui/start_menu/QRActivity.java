@@ -28,11 +28,13 @@ import com.example.pravin.angreziok.BaseActivity;
 import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.database.AppDatabase;
 import com.example.pravin.angreziok.database.BackupDatabase;
+import com.example.pravin.angreziok.domain.Attendance;
 import com.example.pravin.angreziok.domain.Session;
 import com.example.pravin.angreziok.domain.Student;
 import com.example.pravin.angreziok.modalclasses.PlayerModal;
 import com.example.pravin.angreziok.ui.admin_console.AdminConsole;
 import com.example.pravin.angreziok.ui.start_data_confirmation.DataConfirmation;
+import com.example.pravin.angreziok.ui.tab_usage.TabUsage;
 import com.example.pravin.angreziok.ui.video_intro.VideoIntro;
 import com.example.pravin.angreziok.util.SDCardUtil;
 import com.google.zxing.Result;
@@ -140,6 +142,11 @@ public class QRActivity extends BaseActivity implements QRContract.StartMenuView
           */
         }
     };
+
+    @OnClick(R.id.btn_stats)
+    public void showStudentsUsage() {
+        startActivity(new Intent(this, TabUsage.class));
+    }
 
     @OnClick(R.id.btn_reset_btn)
     public void resetQrList() {
@@ -382,12 +389,22 @@ public class QRActivity extends BaseActivity implements QRContract.StartMenuView
             protected Object doInBackground(Object[] objects) {
                 try {
                     Student student = new Student();
+                    Attendance attendance = new Attendance();
+
                     student.setStudentID(""+stdId);
                     student.setFirstName(""+stdFirstName);
                     student.setNewFlag(1);
                     String studentName = appDatabase.getStudentDao().checkStudent(""+stdId);
-                    if(studentName == null)
+
+                    String currentSession = appDatabase.getStatusDao().getValue("CurrentSession");
+                    attendance.setSessionID(""+currentSession);
+                    attendance.setStudentID(""+stdId);
+
+                    if(studentName == null) {
                         appDatabase.getStudentDao().insert(student);
+                    }
+
+                    appDatabase.getAttendanceDao().insert(attendance);
 
                     BackupDatabase.backup(QRActivity.this);
                     return null;
