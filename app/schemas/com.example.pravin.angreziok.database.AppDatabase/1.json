@@ -2,17 +2,23 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "1fcbab1a9ed0648cedcbe60f2c54def8",
+    "identityHash": "bd71f1e6277c87886b9972b102bc3835",
     "entities": [
       {
         "tableName": "Crl",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`CRLId` TEXT NOT NULL, `FirstName` TEXT, `LastName` TEXT, `UserName` TEXT, `Password` TEXT, `ProgramId` INTEGER NOT NULL, `Mobile` TEXT, `State` TEXT, `Email` TEXT, `CreatedBy` TEXT, `newCrl` INTEGER NOT NULL, PRIMARY KEY(`CRLId`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`CrlTableId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `CRLId` TEXT, `FirstName` TEXT, `LastName` TEXT, `UserName` TEXT, `Password` TEXT, `ProgramId` INTEGER NOT NULL, `Mobile` TEXT, `State` TEXT, `Email` TEXT, `CreatedBy` TEXT, `newCrl` INTEGER NOT NULL)",
         "fields": [
+          {
+            "fieldPath": "CrlTableId",
+            "columnName": "CrlTableId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
           {
             "fieldPath": "CRLId",
             "columnName": "CRLId",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "FirstName",
@@ -77,9 +83,9 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "CRLId"
+            "CrlTableId"
           ],
-          "autoGenerate": false
+          "autoGenerate": true
         },
         "indices": [],
         "foreignKeys": []
@@ -349,7 +355,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"1fcbab1a9ed0648cedcbe60f2c54def8\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"bd71f1e6277c87886b9972b102bc3835\")"
     ]
   }
 }
