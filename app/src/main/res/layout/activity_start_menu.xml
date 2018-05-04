@@ -211,6 +211,7 @@
                 android:gravity="center"
                 android:paddingVertical="5dp"
                 android:text="Start"
+                android:visibility="gone"
                 android:layout_marginBottom="20dp"
                 android:textSize="20sp" />
 
