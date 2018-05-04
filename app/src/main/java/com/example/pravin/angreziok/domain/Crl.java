@@ -10,7 +10,7 @@ public class Crl {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "CrlTableId")
-    private String CrlTableId;
+    private int CrlTableId;
     @ColumnInfo(name = "CRLId")
     private String CRLId;
     @ColumnInfo(name = "FirstName")
@@ -34,10 +34,11 @@ public class Crl {
     @ColumnInfo(name = "newCrl")
     private boolean newCrl;
 
+
     @Override
     public String toString() {
         return "Crl{" +
-                "CrlTableId='" + CrlTableId + '\'' +
+                "CrlTableId=" + CrlTableId +
                 ", CRLId='" + CRLId + '\'' +
                 ", FirstName='" + FirstName + '\'' +
                 ", LastName='" + LastName + '\'' +
@@ -52,24 +53,20 @@ public class Crl {
                 '}';
     }
 
-    public String getCrlTableId() {
+
+    public int getCrlTableId() {
         return CrlTableId;
     }
 
-    public void setCrlTableId(String crlTableId) {
+    public void setCrlTableId(int crlTableId) {
         CrlTableId = crlTableId;
     }
 
-    public boolean isNewCrl() {
-        return newCrl;
-    }
-
-    @NonNull
     public String getCRLId() {
         return CRLId;
     }
 
-    public void setCRLId(@NonNull String CRLId) {
+    public void setCRLId(String CRLId) {
         this.CRLId = CRLId;
     }
 
@@ -145,7 +142,7 @@ public class Crl {
         CreatedBy = createdBy;
     }
 
-    public boolean getNewCrl() {
+    public boolean isNewCrl() {
         return newCrl;
     }
 
