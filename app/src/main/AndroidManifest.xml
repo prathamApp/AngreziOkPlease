@@ -47,6 +47,12 @@
             android:name=".ui.admin_console.AdminConsole"
             android:screenOrientation="sensorLandscape" />
         <activity android:name=".ui.final_screen.ResultScreen"></activity>
+
+        <service
+            android:name=".services.AppExitService"
+            android:enabled="true"
+            android:stopWithTask="false" />
+
     </application>
 
 </manifest>
