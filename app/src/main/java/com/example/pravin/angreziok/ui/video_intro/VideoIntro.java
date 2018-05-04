@@ -118,70 +118,33 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
                                 AppDatabase.class, AppDatabase.DB_NAME)
                                 .build();
 
-                        executeAsyncForStatus();
-                        executeAsyncForCrl();
+                        doInitialEntries();
 
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
+            }else {
+                startSession();
             }
         } catch (Exception e) {
 //            e.printStackTrace();
         }
     }
 
-    private void executeAsyncForStatus() {
+    private void startSession() {
         new AsyncTask<Object, Void, Object>() {
             @Override
             protected Object doInBackground(Object[] objects) {
                 try {
                     Session startSesion = new Session();
-                    String currentStatus = "" + UUID.randomUUID().toString();
-                    startSesion.setSessionID("" + currentStatus);
+                    String currentSession = "" + UUID.randomUUID().toString();
+                    startSesion.setSessionID("" + currentSession);
                     startSesion.setFromDate(AOPApplication.getCurrentDateTime());
                     startSesion.setToDate("NA");
                     appDatabase.getSessionDao().insert(startSesion);
+                    appDatabase.getStatusDao().updateValue("CurrentSession", "" + currentSession);
 
-                    com.example.pravin.angreziok.domain.Status status;
-                    String tempKey = appDatabase.getStatusDao().getKey("SdCardPath");
-                    if (tempKey == null) {
-                        status = new com.example.pravin.angreziok.domain.Status();
-                        status.setStatusKey("DeviceID");
-                        status.setValue("" + Settings.Secure.getString(VideoIntro.this.getContentResolver(), Settings.Secure.ANDROID_ID));
-                        status.setDescription("" + Build.SERIAL);
-                        appDatabase.getStatusDao().insert(status);
-
-                        status = new com.example.pravin.angreziok.domain.Status();
-                        status.setStatusKey("CurrentSession");
-                        status.setValue("NA");
-                        appDatabase.getStatusDao().insert(status);
-
-                        status = new com.example.pravin.angreziok.domain.Status();
-                        status.setStatusKey("SdCardPath");
-                        status.setValue("NA");
-                        appDatabase.getStatusDao().insert(status);
-
-                        status = new com.example.pravin.angreziok.domain.Status();
-                        status.setStatusKey("AppLang");
-                        status.setValue("NA");
-                        appDatabase.getStatusDao().insert(status);
-
-                    }
-
-                    status = new com.example.pravin.angreziok.domain.Status();
-                    status.setStatusKey("CurrentSession");
-                    status.setValue("NA");
-                    appDatabase.getStatusDao().updateValue("CurrentSession", "" + currentStatus);
-
-                    String sdCardPathString = null;
-                    ArrayList<String> sdcard_path = SDCardUtil.getExtSdCardPaths(VideoIntro.this);
-                    for (String path : sdcard_path) {
-                        if (new File(path + "/.AOP_External").exists()) {
-                            sdCardPathString = path + "/.AOP_External/";
-                            appDatabase.getStatusDao().updateValue("SdCardPath", "" + sdCardPathString);
-                        }
-                    }
                     return null;
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -191,11 +154,34 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
         }.execute();
     }
 
-    private void executeAsyncForCrl() {
+    private void doInitialEntries() {
         try {
             new AsyncTask<Void, Void, Void>() {
                 @Override
                 protected Void doInBackground(Void... voids) {
+
+                    com.example.pravin.angreziok.domain.Status status;
+                    status = new com.example.pravin.angreziok.domain.Status();
+                    status.setStatusKey("DeviceID");
+                    status.setValue("" + Settings.Secure.getString(VideoIntro.this.getContentResolver(), Settings.Secure.ANDROID_ID));
+                    status.setDescription("" + Build.SERIAL);
+                    appDatabase.getStatusDao().insert(status);
+
+                    status = new com.example.pravin.angreziok.domain.Status();
+                    status.setStatusKey("CurrentSession");
+                    status.setValue("NA");
+                    appDatabase.getStatusDao().insert(status);
+
+                    status = new com.example.pravin.angreziok.domain.Status();
+                    status.setStatusKey("SdCardPath");
+                    status.setValue("NA");
+                    appDatabase.getStatusDao().insert(status);
+
+                    status = new com.example.pravin.angreziok.domain.Status();
+                    status.setStatusKey("AppLang");
+                    status.setValue("NA");
+                    appDatabase.getStatusDao().insert(status);
+
                     Crl crl1 = new Crl();
                     crl1.setCRLId("admin_crl");
                     crl1.setEmail("admin@admin");
@@ -223,8 +209,24 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
                     crl2.setCreatedBy("NA");
 
                     appDatabase.getCrlDao().insertAll(crl1, crl2);
+
+                    String sdCardPathString = null;
+                    ArrayList<String> sdcard_path = SDCardUtil.getExtSdCardPaths(VideoIntro.this);
+                    for (String path : sdcard_path) {
+                        if (new File(path + "/.AOP_External").exists()) {
+                            sdCardPathString = path + "/.AOP_External/";
+                            appDatabase.getStatusDao().updateValue("SdCardPath", "" + sdCardPathString);
+                        }
+                    }
+
                     BackupDatabase.backup(VideoIntro.this);
                     return null;
+                }
+
+                @Override
+                protected void onPostExecute(Void aVoid) {
+                    super.onPostExecute(aVoid);
+                    startSession();
                 }
             }.execute();
         } catch (Exception e) {
@@ -271,7 +273,7 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
             File file = this.getDir("databases", Context.MODE_PRIVATE);
 
             //String myPath = file.getAbsolutePath().replace("app_databases", "databases") + "/" + DB_NAME;
-            String myPath = file.getAbsolutePath()+ "/" + DB_NAME;
+            String myPath = file.getAbsolutePath() + "/" + DB_NAME;
             //Open the empty db as the output stream
             OutputStream myOutput = new FileOutputStream(myPath);
 
