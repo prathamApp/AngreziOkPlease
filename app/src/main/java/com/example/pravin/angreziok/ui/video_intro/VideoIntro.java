@@ -74,6 +74,7 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
 
     @OnClick(R.id.skip_button)
     public void skipVideo() {
+        BackupDatabase.backup(this);
         videoView.pause();
         videoView.stopPlayback();
         startActivity();
@@ -126,7 +127,7 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }
 
@@ -181,8 +182,6 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
                             appDatabase.getStatusDao().updateValue("SdCardPath", "" + sdCardPathString);
                         }
                     }
-
-                    BackupDatabase.backup(VideoIntro.this);
                     return null;
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -224,6 +223,7 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
                     crl2.setCreatedBy("NA");
 
                     appDatabase.getCrlDao().insertAll(crl1, crl2);
+                    BackupDatabase.backup(VideoIntro.this);
                     return null;
                 }
             }.execute();
@@ -245,8 +245,6 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
             String myPath = file.getAbsolutePath().replace("app_databases", "databases") + "/" + DB_NAME;
             checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
         } catch (SQLiteException e) {
-//             e.printStackTrace();
-            //database does't exist yet.
         }
         if (checkDB != null) {
             checkDB.close();
@@ -261,29 +259,35 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
      */
 
     private void copyDataBase() throws IOException {
+        try {
+            //Open your local db as the input stream
+            appDatabase = Room.databaseBuilder(this,
+                    AppDatabase.class, AppDatabase.DB_NAME)
+                    .build();
 
-        //Open your local db as the input stream
-        appDatabase = Room.databaseBuilder(this,
-                AppDatabase.class, AppDatabase.DB_NAME)
-                .build();
-        File input = new File(Environment.getExternalStorageDirectory().getPath() + "/PrathamKKSTabDB.db");
-        InputStream myInput = new FileInputStream(input);
-        // Path to the just created empty db
-        File file = this.getDir("databases", Context.MODE_PRIVATE);
-        String myPath = file.getAbsolutePath().replace("app_databases", "databases") + "/" + DB_NAME;
-        //Open the empty db as the output stream
-        OutputStream myOutput = new FileOutputStream(myPath);
+            File input = new File(Environment.getExternalStorageDirectory().getPath() + "/angrezi_ok_please.db");
+            InputStream myInput = new FileInputStream(input);
+            // Path to the just created empty db
+            File file = this.getDir("databases", Context.MODE_PRIVATE);
 
-        //transfer bytes from the inputfile to the outputfile
-        byte[] buffer = new byte[1024];
-        int length;
-        while ((length = myInput.read(buffer)) > 0) {
-            myOutput.write(buffer, 0, length);
+            //String myPath = file.getAbsolutePath().replace("app_databases", "databases") + "/" + DB_NAME;
+            String myPath = file.getAbsolutePath()+ "/" + DB_NAME;
+            //Open the empty db as the output stream
+            OutputStream myOutput = new FileOutputStream(myPath);
+
+            //transfer bytes from the inputfile to the outputfile
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = myInput.read(buffer)) > 0) {
+                myOutput.write(buffer, 0, length);
+            }
+            //Close the streams
+            myOutput.flush();
+            myOutput.close();
+            myInput.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        //Close the streams
-        myOutput.flush();
-        myOutput.close();
-        myInput.close();
     }
 
 }
