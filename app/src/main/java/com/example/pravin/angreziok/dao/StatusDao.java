@@ -32,7 +32,13 @@ public interface StatusDao {
     @Query("select * from Status")
     List<Status> getAllStatuses();
 
+    @Query("Select statusKey from Status where statusKey = :key")
+    String getKey(String key);
+
     @Query("Select value from Status where statusKey = :key")
     String getValue(String key);
+
+    @Query("update Status set value =:value where statusKey = :key")
+    void updateValue(String key,String value);
 
 }

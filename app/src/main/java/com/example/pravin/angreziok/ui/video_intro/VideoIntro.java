@@ -1,14 +1,17 @@
 package com.example.pravin.angreziok.ui.video_intro;
 
+import android.annotation.SuppressLint;
 import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
+import android.provider.Settings;
 import android.view.WindowManager;
 import android.widget.VideoView;
+import com.example.pravin.angreziok.domain.Status;
 
 import com.example.pravin.angreziok.AOPApplication;
 import com.example.pravin.angreziok.BaseActivity;
@@ -18,9 +21,11 @@ import com.example.pravin.angreziok.database.BackupDatabase;
 import com.example.pravin.angreziok.domain.Session;
 import com.example.pravin.angreziok.ui.start_menu.QRActivity;
 import com.example.pravin.angreziok.util.PD_Utility;
+import com.example.pravin.angreziok.util.SDCardUtil;
 
 import java.io.File;
-import java.util.List;
+import java.util.ArrayList;
+import java.util.UUID;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,7 +39,9 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
     String videoPath;
     private AppDatabase appDatabase;
     VideoIntroContract.VideoIntroPresenter presenter;
+    String final_sd_path, sdCardPathString;
 
+    @SuppressLint("StaticFieldLeak")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,26 +56,74 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         presenter.playVideo(Uri.parse(videoPath));
 
-        /*new AsyncTask<Object, Void, Object>() {
+        /*
+            "DeviceID", Settings.Secure.getString(myContext.getContentResolver(), Settings.Secure.ANDROID_ID), Build.SERIAL);
+            "CurrentSession", "", "");
+            "SdCardPath", "NA", "");
+            "AppLang", "NA", "");
+            "insertedStudents", "N", "");
+            "CurrentStorySession", "", "");
+        */
+
+        new AsyncTask<Object, Void, Object>() {
             @Override
             protected Object doInBackground(Object[] objects) {
                 try {
                     Session startSesion = new Session();
-                    startSesion.setSessionID("12345");
+                    String currentStatus = "" + UUID.randomUUID().toString();
+                    startSesion.setSessionID("" + currentStatus);
                     startSesion.setFromDate(AOPApplication.getCurrentDateTime());
-                    startSesion.setToDate(AOPApplication.getCurrentDateTime());
+                    startSesion.setToDate("NA");
                     appDatabase.getSessionDao().insert(startSesion);
-                    List<Session> sessions = appDatabase.getSessionDao().getAllSessions();
-                    for (int i = 0; i < sessions.size(); i++)
-                        Log.d(":::sessions", "" + sessions.get(i).toString());
+
+                    com.example.pravin.angreziok.domain.Status status;
+                    String tempKey = appDatabase.getStatusDao().getKey("SdCardPath");
+                    if (tempKey == null) {
+                        status = new com.example.pravin.angreziok.domain.Status();
+                        status.setStatusKey("DeviceID");
+                        status.setValue("" + Settings.Secure.getString(VideoIntro.this.getContentResolver(), Settings.Secure.ANDROID_ID));
+                        status.setDescription("" + Build.SERIAL);
+                        appDatabase.getStatusDao().insert(status);
+
+                        status = new com.example.pravin.angreziok.domain.Status();
+                        status.setStatusKey("CurrentSession");
+                        status.setValue("NA");
+                        appDatabase.getStatusDao().insert(status);
+
+                        status = new com.example.pravin.angreziok.domain.Status();
+                        status.setStatusKey("SdCardPath");
+                        status.setValue("NA");
+                        appDatabase.getStatusDao().insert(status);
+
+                        status = new com.example.pravin.angreziok.domain.Status();
+                        status.setStatusKey("AppLang");
+                        status.setValue("NA");
+                        appDatabase.getStatusDao().insert(status);
+
+                    }
+
+                    status = new com.example.pravin.angreziok.domain.Status();
+                    status.setStatusKey("CurrentSession");
+                    status.setValue("NA");
+                    appDatabase.getStatusDao().updateValue("CurrentSession",""+currentStatus);
+
+                    String sdCardPathString = null;
+                    ArrayList<String> sdcard_path = SDCardUtil.getExtSdCardPaths(VideoIntro.this);
+                    for (String path : sdcard_path) {
+                        if (new File(path + "/.AOP_External").exists()) {
+                            sdCardPathString = path + "/.AOP_External/";
+                            appDatabase.getStatusDao().updateValue("SdCardPath",""+sdCardPathString);
+                        }
+                    }
+
                     BackupDatabase.backup(VideoIntro.this);
                     return null;
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                     return null;
                 }
             }
-        }.execute();*/
+        }.execute();
     }
 
     @OnClick(R.id.skip_button)

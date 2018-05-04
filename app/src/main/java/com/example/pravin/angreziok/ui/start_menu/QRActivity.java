@@ -1,5 +1,6 @@
 package com.example.pravin.angreziok.ui.start_menu;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Room;
@@ -7,7 +8,10 @@ import android.arch.persistence.room.migration.Migration;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
@@ -19,16 +23,23 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.pravin.angreziok.AOPApplication;
 import com.example.pravin.angreziok.BaseActivity;
 import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.database.AppDatabase;
 import com.example.pravin.angreziok.database.BackupDatabase;
+import com.example.pravin.angreziok.domain.Session;
+import com.example.pravin.angreziok.domain.Student;
 import com.example.pravin.angreziok.modalclasses.PlayerModal;
 import com.example.pravin.angreziok.ui.admin_console.AdminConsole;
 import com.example.pravin.angreziok.ui.start_data_confirmation.DataConfirmation;
+import com.example.pravin.angreziok.ui.video_intro.VideoIntro;
+import com.example.pravin.angreziok.util.SDCardUtil;
 import com.google.zxing.Result;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -354,10 +365,35 @@ public class QRActivity extends BaseActivity implements QRContract.StartMenuView
             playerModal.setStudentAlias("");
 
             playerModalList.add(playerModal);
+            enterStudentData(stdId,stdFirstName);
             //scanNextQRCode();
             setStud = true;
             showQrDialog(stdFirstName);
         }
 
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    private void enterStudentData(final String stdId, final String stdFirstName) {
+        new AsyncTask<Object, Void, Object>() {
+            @Override
+            protected Object doInBackground(Object[] objects) {
+                try {
+                    Student student = new Student();
+                    student.setStudentID(""+stdId);
+                    student.setFirstName(""+stdFirstName);
+                    student.setNewFlag(1);
+                    String studentName = appDatabase.getStudentDao().checkStudent(""+stdId);
+                    if(studentName == null)
+                        appDatabase.getStudentDao().insert(student);
+
+                    BackupDatabase.backup(QRActivity.this);
+                    return null;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            }
+        }.execute();
     }
 }

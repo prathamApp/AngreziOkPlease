@@ -43,4 +43,7 @@ public interface StudentDao {
     @Query("select FirstName from Student where StudentID = :studentID")
     String getStudentName(String studentID);
 
+    @Query("select FirstName from Student where StudentID = :studentID")
+    String checkStudent(String studentID);
+
 }
