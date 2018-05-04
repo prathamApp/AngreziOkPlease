@@ -245,7 +245,7 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
             String myPath = file.getAbsolutePath().replace("app_databases", "databases") + "/" + DB_NAME;
             checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
         } catch (SQLiteException e) {
-             e.printStackTrace();
+//             e.printStackTrace();
             //database does't exist yet.
         }
         if (checkDB != null) {
