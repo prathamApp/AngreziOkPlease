@@ -8,8 +8,9 @@ import android.support.annotation.NonNull;
 @Entity(tableName = "Crl")
 public class Crl {
 
-    @PrimaryKey
-    @NonNull
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "CrlTableId")
+    private String CrlTableId;
     @ColumnInfo(name = "CRLId")
     private String CRLId;
     @ColumnInfo(name = "FirstName")
@@ -36,7 +37,8 @@ public class Crl {
     @Override
     public String toString() {
         return "Crl{" +
-                "CRLId='" + CRLId + '\'' +
+                "CrlTableId='" + CrlTableId + '\'' +
+                ", CRLId='" + CRLId + '\'' +
                 ", FirstName='" + FirstName + '\'' +
                 ", LastName='" + LastName + '\'' +
                 ", UserName='" + UserName + '\'' +
@@ -46,8 +48,20 @@ public class Crl {
                 ", State='" + State + '\'' +
                 ", Email='" + Email + '\'' +
                 ", CreatedBy='" + CreatedBy + '\'' +
-                ", newCrl='" + newCrl + '\'' +
+                ", newCrl=" + newCrl +
                 '}';
+    }
+
+    public String getCrlTableId() {
+        return CrlTableId;
+    }
+
+    public void setCrlTableId(String crlTableId) {
+        CrlTableId = crlTableId;
+    }
+
+    public boolean isNewCrl() {
+        return newCrl;
     }
 
     @NonNull
