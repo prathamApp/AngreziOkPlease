@@ -192,7 +192,7 @@ public class AdminConsolePresenterImpl implements AdminConsoleContract.AdminCons
                 _crlObj.put("State", crlsList.get(i).getState());
                 _crlObj.put("Email", crlsList.get(i).getEmail());
                 _crlObj.put("CreatedBy", crlsList.get(i).getCreatedBy());
-                _crlObj.put("newCrl", !crlsList.get(i).getNewCrl());
+                _crlObj.put("newCrl", !crlsList.get(i).isNewCrl());
                 newCrlsData.put(_crlObj);
             }
         } catch (Exception e) {
