@@ -2,7 +2,10 @@ package com.example.pravin.angreziok.ui.video_intro;
 
 import android.annotation.SuppressLint;
 import android.arch.persistence.room.Room;
+import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -11,25 +14,33 @@ import android.os.Environment;
 import android.provider.Settings;
 import android.view.WindowManager;
 import android.widget.VideoView;
-import com.example.pravin.angreziok.domain.Status;
 
 import com.example.pravin.angreziok.AOPApplication;
 import com.example.pravin.angreziok.BaseActivity;
 import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.database.AppDatabase;
 import com.example.pravin.angreziok.database.BackupDatabase;
+import com.example.pravin.angreziok.domain.Crl;
 import com.example.pravin.angreziok.domain.Session;
+import com.example.pravin.angreziok.services.AppExitService;
 import com.example.pravin.angreziok.ui.start_menu.QRActivity;
 import com.example.pravin.angreziok.util.PD_Utility;
 import com.example.pravin.angreziok.util.SDCardUtil;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.UUID;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.example.pravin.angreziok.database.AppDatabase.DB_NAME;
 
 public class VideoIntro extends BaseActivity implements VideoIntroContract.VideoIntroView {
 
@@ -47,24 +58,79 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_intro);
         ButterKnife.bind(this);
-        appDatabase = Room.databaseBuilder(this,
+        createDataBase();
+        //TODO
+        /*appDatabase = Room.databaseBuilder(this,
                 AppDatabase.class, AppDatabase.DB_NAME)
-                .build();
+                .build();*/
         presenter = new VideoIntroPresenterImpl(this, this, videoView);
         videoPath = PD_Utility.getExternalPath(this) + "Videos/intro.mp4";
         PD_Utility.showLog("ext_path::", videoPath);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         presenter.playVideo(Uri.parse(videoPath));
+        startService(new Intent(this, AppExitService.class));
+    }
 
-        /*
-            "DeviceID", Settings.Secure.getString(myContext.getContentResolver(), Settings.Secure.ANDROID_ID), Build.SERIAL);
-            "CurrentSession", "", "");
-            "SdCardPath", "NA", "");
-            "AppLang", "NA", "");
-            "insertedStudents", "N", "");
-            "CurrentStorySession", "", "");
-        */
 
+    @OnClick(R.id.skip_button)
+    public void skipVideo() {
+        videoView.pause();
+        videoView.stopPlayback();
+        startActivity();
+/*        Intent installIntent = new Intent();
+        installIntent.setAction(TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA);
+        startActivity(installIntent);*/
+    }
+
+    @Override
+    public void startActivity() {
+
+        File file = new File(Environment.getExternalStorageDirectory().toString() + "/.AOPInternal");
+        if (!file.exists())
+            file.mkdir();
+
+        file = new File(Environment.getExternalStorageDirectory().toString() + "/.AOPInternal/UsageJsons");
+        if (!file.exists())
+            file.mkdir();
+
+        file = new File(Environment.getExternalStorageDirectory().toString() + "/.AOPInternal/SelfUsageJsons");
+        if (!file.exists())
+            file.mkdir();
+
+        file = new File(Environment.getExternalStorageDirectory().toString() + "/.AOPInternal/JsonsBackup");
+        if (!file.exists())
+            file.mkdir();
+
+        startActivity(new Intent(this, QRActivity.class));
+        finish();
+    }
+
+    public void createDataBase() {
+        try {
+            boolean dbExist = checkDataBase();
+            if (!dbExist) {
+                if (new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/angrezi_ok_please.db").exists()) {
+                    copyDataBase();
+                } else {
+                    try {
+                        appDatabase = Room.databaseBuilder(this,
+                                AppDatabase.class, AppDatabase.DB_NAME)
+                                .build();
+
+                        executeAsyncForStatus();
+                        executeAsyncForCrl();
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void executeAsyncForStatus() {
         new AsyncTask<Object, Void, Object>() {
             @Override
             protected Object doInBackground(Object[] objects) {
@@ -105,14 +171,14 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
                     status = new com.example.pravin.angreziok.domain.Status();
                     status.setStatusKey("CurrentSession");
                     status.setValue("NA");
-                    appDatabase.getStatusDao().updateValue("CurrentSession",""+currentStatus);
+                    appDatabase.getStatusDao().updateValue("CurrentSession", "" + currentStatus);
 
                     String sdCardPathString = null;
                     ArrayList<String> sdcard_path = SDCardUtil.getExtSdCardPaths(VideoIntro.this);
                     for (String path : sdcard_path) {
                         if (new File(path + "/.AOP_External").exists()) {
                             sdCardPathString = path + "/.AOP_External/";
-                            appDatabase.getStatusDao().updateValue("SdCardPath",""+sdCardPathString);
+                            appDatabase.getStatusDao().updateValue("SdCardPath", "" + sdCardPathString);
                         }
                     }
 
@@ -126,37 +192,98 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
         }.execute();
     }
 
-    @OnClick(R.id.skip_button)
-    public void skipVideo() {
-        videoView.pause();
-        videoView.stopPlayback();
-        startActivity();
-/*        Intent installIntent = new Intent();
-        installIntent.setAction(TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA);
-        startActivity(installIntent);*/
+    private void executeAsyncForCrl() {
+        try {
+            new AsyncTask<Void, Void, Void>() {
+                @Override
+                protected Void doInBackground(Void... voids) {
+                    Crl crl1 = new Crl();
+                    crl1.setCRLId("admin_crl");
+                    crl1.setEmail("admin@admin");
+                    crl1.setFirstName("Admin");
+                    crl1.setLastName("Admin");
+                    crl1.setMobile("0123456789");
+                    crl1.setUserName("admin");
+                    crl1.setPassword("pratham");
+                    crl1.setState("NA");
+                    crl1.setProgramId(2);
+                    crl1.setNewCrl(true);
+                    crl1.setCreatedBy("NA");
+
+                    Crl crl2 = new Crl();
+                    crl2.setCRLId("admin_crl");
+                    crl2.setEmail("admin@admin");
+                    crl2.setFirstName("Admin");
+                    crl2.setLastName("Admin");
+                    crl2.setMobile("0123456789");
+                    crl2.setUserName("ll");
+                    crl2.setPassword("ll");
+                    crl2.setState("NA");
+                    crl2.setProgramId(2);
+                    crl2.setNewCrl(true);
+                    crl2.setCreatedBy("NA");
+
+                    appDatabase.getCrlDao().insertAll(crl1, crl2);
+                    return null;
+                }
+            }.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    @Override
-    public void startActivity() {
+    /**
+     * Check if the database already exist to avoid re-copying the file each time you open the application.
+     *
+     * @return true if it exists, false if it doesn't
+     */
 
-        File file = new File(Environment.getExternalStorageDirectory().toString() + "/.AOPInternal");
-        if (!file.exists())
-            file.mkdir();
+    private boolean checkDataBase() {
+        SQLiteDatabase checkDB = null;
+        try {
+            File file = this.getDir("databases", Context.MODE_PRIVATE);
+            String myPath = file.getAbsolutePath().replace("app_databases", "databases") + "/" + DB_NAME;
+            checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
+        } catch (SQLiteException e) {
+             e.printStackTrace();
+            //database does't exist yet.
+        }
+        if (checkDB != null) {
+            checkDB.close();
+        }
+        return checkDB != null ? true : false;
+    }
 
-        file = new File(Environment.getExternalStorageDirectory().toString() + "/.AOPInternal/UsageJsons");
-        if (!file.exists())
-            file.mkdir();
+    /**
+     * Copies your database from your local assets-folder to the just created empty database in the
+     * system folder, from where it can be accessed and handled.
+     * This is done by transfering bytestream.
+     */
 
-        file = new File(Environment.getExternalStorageDirectory().toString() + "/.AOPInternal/SelfUsageJsons");
-        if (!file.exists())
-            file.mkdir();
+    private void copyDataBase() throws IOException {
 
-        file = new File(Environment.getExternalStorageDirectory().toString() + "/.AOPInternal/JsonsBackup");
-        if (!file.exists())
-            file.mkdir();
+        //Open your local db as the input stream
+        appDatabase = Room.databaseBuilder(this,
+                AppDatabase.class, AppDatabase.DB_NAME)
+                .build();
+        File input = new File(Environment.getExternalStorageDirectory().getPath() + "/PrathamKKSTabDB.db");
+        InputStream myInput = new FileInputStream(input);
+        // Path to the just created empty db
+        File file = this.getDir("databases", Context.MODE_PRIVATE);
+        String myPath = file.getAbsolutePath().replace("app_databases", "databases") + "/" + DB_NAME;
+        //Open the empty db as the output stream
+        OutputStream myOutput = new FileOutputStream(myPath);
 
-        startActivity(new Intent(this, QRActivity.class));
-        finish();
+        //transfer bytes from the inputfile to the outputfile
+        byte[] buffer = new byte[1024];
+        int length;
+        while ((length = myInput.read(buffer)) > 0) {
+            myOutput.write(buffer, 0, length);
+        }
+        //Close the streams
+        myOutput.flush();
+        myOutput.close();
+        myInput.close();
     }
 
 }
