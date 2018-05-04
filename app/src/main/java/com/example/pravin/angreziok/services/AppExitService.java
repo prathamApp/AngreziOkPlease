@@ -58,6 +58,6 @@ public class AppExitService extends Service {
                 }
                 return null;
             }
-        }.execute()
+        }.execute();
     }
 }
