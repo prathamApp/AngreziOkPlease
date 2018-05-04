@@ -61,6 +61,8 @@ public class QRActivity extends BaseActivity implements QRContract.StartMenuView
     TextView tv_stud_three;
     @BindView(R.id.tv_stud_four)
     TextView tv_stud_four;
+    @BindView(R.id.btn_start_game)
+    Button btn_start_game;
 
 
     private AppDatabase appDatabase;
@@ -314,7 +316,7 @@ public class QRActivity extends BaseActivity implements QRContract.StartMenuView
             Matcher mat = pattern.matcher(result.getText());
 
             if (mat.matches()) {
-
+                btn_start_game.setVisibility(View.VISIBLE);
                 if (playerModalList.size() <= 0)
                     qrEntryProcess(result);
                 else {
