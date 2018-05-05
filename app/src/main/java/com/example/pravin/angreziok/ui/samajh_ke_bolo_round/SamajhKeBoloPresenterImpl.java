@@ -128,7 +128,7 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
     public void setImage_gl_l2(String studId) {
         samajhKeBoloG1L2View.hideOptionView();
         randomNumber = getRandomNumber(0, g1l2QuestionData.size());
-        questionStartTime = AOPApplication.getCurrentDateTime();
+        setQuestionStartTime();
         studentID = studId;
         resourceID = g1l2QuestionData.get(randomNumber).getResourceId();
         questionId = resourceID;
@@ -237,7 +237,7 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
     public void setWords_g2_l2(String studId) {
         samajhKeBoloG2L2View.hideOptionView();
         randomNumber = getRandomNumber(0, g2l2QuestionData.size());
-        questionStartTime = AOPApplication.getCurrentDateTime();
+        setQuestionStartTime();
         studentID = studId;
         resourceID = g2l2QuestionData.get(randomNumber).getResourceId();
         questionId = resourceID;
@@ -265,7 +265,7 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
     public void setQuestion_g3_l2(String studId) {
         samajhKeBoloG3L2View.hideOptionView();
         randomNumber = getRandomNumber(0, g3l2QuestionData.size());
-        questionStartTime = AOPApplication.getCurrentDateTime();
+        setQuestionStartTime();
         studentID = studId;
         resourceID = g3l2QuestionData.get(randomNumber).getResourceId();
         questionId = resourceID;
@@ -342,6 +342,17 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
         scoredMarks = 0;
     }
 
+    private void setQuestionStartTime() {
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                String AppStartDateTime = appDatabase.getStatusDao().getValue("AppStartDateTime");
+                questionStartTime = AOPApplication.getCurrentDateTime(true, AppStartDateTime);
+                return null;
+            }
+        }.execute();
+    }
+
     public void addScore(String studentID, String resourceID, int questionId, int scoredMarks, int totalMarks, String startDateTime, int questionLevel) {
         try {
             final Score score = new Score();
@@ -354,12 +365,13 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
             score.setScoredMarks(scoredMarks);
             score.setTotalMarks(totalMarks);
             score.setStartDateTime("" + startDateTime);
-            score.setEndDateTime("" + AOPApplication.getCurrentDateTime());
             score.setLevel(0);
 
             new AsyncTask<Object, Void, Object>() {
                 @Override
                 protected Object doInBackground(Object... objects) {
+                    String AppStartDateTime = appDatabase.getStatusDao().getValue("AppStartDateTime");
+                    score.setEndDateTime("" + AOPApplication.getCurrentDateTime(true, AppStartDateTime));
                     appDatabase.getScoreDao().insert(score);
                     BackupDatabase.backup(mContext);
                     return null;

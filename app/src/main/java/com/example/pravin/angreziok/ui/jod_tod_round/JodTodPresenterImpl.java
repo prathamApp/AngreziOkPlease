@@ -1,7 +1,6 @@
 package com.example.pravin.angreziok.ui.jod_tod_round;
 
 import android.arch.persistence.room.Room;
-import android.content.ContentProviderOperation;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -27,8 +26,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-
-import butterknife.OnClick;
 
 import static com.example.pravin.angreziok.ui.jod_tod_round.JodTod.jodTodPlayerList;
 
@@ -154,15 +151,15 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
         if (!ans.equalsIgnoreCase("") && !ans.equalsIgnoreCase(" ")) {
             String actualAns = "" + ans.charAt(0);
             boolean match = false;
-            for(int i=0; i<g1g2result.size();i++){
-                if(g1g2result.get(i).equalsIgnoreCase(ans)) {
+            for (int i = 0; i < g1g2result.size(); i++) {
+                if (g1g2result.get(i).equalsIgnoreCase(ans)) {
                     match = true;
                     break;
                 }
             }
-            if(!match)
+            if (!match)
                 g1g2result.add(ans);
-            jodTodG1L2View.setAnswer(actualAns, ans,match);
+            jodTodG1L2View.setAnswer(actualAns, ans, match);
         }
     }
 
@@ -175,14 +172,14 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
             if (ans.length() > rhymeLen) {
 
                 boolean match = false;
-                for(int i=0; i<g1g2result.size();i++){
-                    if(g1g2result.get(i).equalsIgnoreCase(ans)) {
+                for (int i = 0; i < g1g2result.size(); i++) {
+                    if (g1g2result.get(i).equalsIgnoreCase(ans)) {
                         match = true;
                         break;
                     }
                 }
 
-                if(!match)
+                if (!match)
                     g1g2result.add(ans);
 
                 Log.d("rhymAns", "ans: " + ans + "      Rhyme : " + rhymeCheckWord);
@@ -232,7 +229,7 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
     public String g3_l2_getQuestionText(String studId) {
         randomNumber = getRandomNumber(0, g3l2QuestionData.size());
         String questionString = g3l2QuestionData.get(randomNumber).getResourceQuestion();
-        questionStartTime = AOPApplication.getCurrentDateTime();
+        setQuestionStartTime();
         studentID = studId;
         resourceID = g3l2QuestionData.get(randomNumber).getResourceId();
         questionId = resourceID;
@@ -242,15 +239,14 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
     }
 
     @Override
-    public String g3_l2_getQuestionAudio(){
+    public String g3_l2_getQuestionAudio() {
         return g3l2QuestionData.get(randomNumber).getResourceAudio();
     }
 
     @Override
     public String g1_l2_getQuestionText(String studId) {
         randomNumber = getRandomNumber(0, g1l2QuestionData.size());
-
-        questionStartTime = AOPApplication.getCurrentDateTime();
+        setQuestionStartTime();
         studentID = studId;
         resourceID = g1l2QuestionData.get(randomNumber).getResourceId();
         questionId = resourceID;
@@ -258,7 +254,7 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
         String questionString = g1l2QuestionData.get(randomNumber).getResourceQuestion();
         jodTodG1L2View.setQuestionText(questionString);
 
-        if(g1g2result.size()>0) {
+        if (g1g2result.size() > 0) {
             g1g2result.clear();
         }
         g1g2result.add(g1l2QuestionData.get(randomNumber).getResourceText());
@@ -280,12 +276,12 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
         String questionString = g2l2QuestionData.get(randomNumber).getResourceQuestion();
         jodTodG2L2View.setQuestionText(questionString);
 
-        if(g1g2result.size()>0) {
+        if (g1g2result.size() > 0) {
             g1g2result.clear();
         }
         g1g2result.add(questionWord);
 
-        questionStartTime = AOPApplication.getCurrentDateTime();
+        setQuestionStartTime();
         studentID = studId;
         resourceID = g2l2SubList.get(randomNumber).getResourceId();
         questionId = resourceID;
@@ -355,6 +351,17 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
         scoredMarks = 0;
     }
 
+    private void setQuestionStartTime() {
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                String AppStartDateTime = appDatabase.getStatusDao().getValue("AppStartDateTime");
+                questionStartTime = AOPApplication.getCurrentDateTime(true, AppStartDateTime);
+                return null;
+            }
+        }.execute();
+    }
+
     public void addScore(String studentID, String resourceID, int questionId, int scoredMarks, int totalMarks, String startDateTime, int questionLevel) {
         try {
             final Score score = new Score();
@@ -367,12 +374,13 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
             score.setScoredMarks(scoredMarks);
             score.setTotalMarks(totalMarks);
             score.setStartDateTime("" + startDateTime);
-            score.setEndDateTime("" + AOPApplication.getCurrentDateTime());
             score.setLevel(0);
 
             new AsyncTask<Object, Void, Object>() {
                 @Override
                 protected Object doInBackground(Object... objects) {
+                    String AppStartDateTime = appDatabase.getStatusDao().getValue("AppStartDateTime");
+                    score.setEndDateTime("" + AOPApplication.getCurrentDateTime(true, AppStartDateTime));
                     appDatabase.getScoreDao().insert(score);
                     BackupDatabase.backup(mContext);
                     return null;

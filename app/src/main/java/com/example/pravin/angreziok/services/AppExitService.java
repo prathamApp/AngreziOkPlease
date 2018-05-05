@@ -36,10 +36,11 @@ public class AppExitService extends Service {
                                 .build();
 
                         String curSession = appDatabase.getStatusDao().getValue("CurrentSession");
+                        String AppStartDateTime = appDatabase.getStatusDao().getValue("AppStartDateTime");
                         String toDateTemp = appDatabase.getSessionDao().getToDate(curSession);
 
                         if (toDateTemp.equalsIgnoreCase("na")) {
-                            appDatabase.getSessionDao().UpdateToDate(curSession, AOPApplication.getCurrentDateTime());
+                            appDatabase.getSessionDao().UpdateToDate(curSession, AOPApplication.getCurrentDateTime(true,AppStartDateTime));
                         }
                         BackupDatabase.backup(AppExitService.this);
                         stopSelf();

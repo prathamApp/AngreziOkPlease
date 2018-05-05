@@ -61,7 +61,17 @@ public class BaseActivity extends AppCompatActivity {
     public void ActivityOnPause() {
 
         setTimer = true;
-        pauseTime = AOPApplication.getCurrentDateTime();
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                appDatabase = Room.databaseBuilder(BaseActivity.this,
+                        AppDatabase.class, AppDatabase.DB_NAME)
+                        .build();
+                String AppStartDateTime = appDatabase.getStatusDao().getValue("AppStartDateTime");
+                pauseTime = AOPApplication.getCurrentDateTime(true,AppStartDateTime);
+                return null;
+            }
+        }.execute();
         Log.d("APP_END", "onFinish: Startd the App: " + duration);
         Log.d("APP_END", "onFinish: Startd the App: " + pauseTime);
 
@@ -79,20 +89,19 @@ public class BaseActivity extends AppCompatActivity {
                     @Override
                     protected Object doInBackground(Object[] objects) {
                         try {
-                            Log.d("APP_END", "onFinish: Ended the App: " + AOPApplication.getCurrentDateTime());
-
 
                             appDatabase = Room.databaseBuilder(BaseActivity.this,
                                     AppDatabase.class, AppDatabase.DB_NAME)
                                     .build();
 
                             String curSession = appDatabase.getStatusDao().getValue("CurrentSession");
+                            String AppStartDateTime = appDatabase.getStatusDao().getValue("AppStartDateTime");
                             String toDateTemp = appDatabase.getSessionDao().getToDate(curSession);
 
                             Log.d("AppExitService:", "curSession : " + curSession + "      toDateTemp : " + toDateTemp);
 
                             if (toDateTemp.equalsIgnoreCase("na")) {
-                                appDatabase.getSessionDao().UpdateToDate(curSession, AOPApplication.getCurrentDateTime());
+                                appDatabase.getSessionDao().UpdateToDate(curSession, AOPApplication.getCurrentDateTime(true,AppStartDateTime));
                             }
                             BackupDatabase.backup(BaseActivity.this);
                             finishAffinity();

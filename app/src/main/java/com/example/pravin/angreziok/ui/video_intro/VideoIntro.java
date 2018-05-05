@@ -19,6 +19,7 @@ import android.widget.VideoView;
 import com.example.pravin.angreziok.AOPApplication;
 import com.example.pravin.angreziok.BaseActivity;
 import com.example.pravin.angreziok.R;
+import com.example.pravin.angreziok.dao.StatusDao;
 import com.example.pravin.angreziok.database.AppDatabase;
 import com.example.pravin.angreziok.database.BackupDatabase;
 import com.example.pravin.angreziok.domain.Crl;
@@ -49,9 +50,9 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
     VideoView videoView;
 
     String videoPath;
-    private AppDatabase appDatabase;
+    public static AppDatabase appDatabase;
     VideoIntroContract.VideoIntroPresenter presenter;
-    String final_sd_path, sdCardPathString;
+    String final_sd_path, sdCardPathString, appStartTime;
 
     @SuppressLint("StaticFieldLeak")
     @Override
@@ -64,6 +65,12 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
         /*appDatabase = Room.databaseBuilder(this,
                 AppDatabase.class, AppDatabase.DB_NAME)
                 .build();*/
+        appStartTime = AOPApplication.getCurrentDateTime(false,"");
+
+        // Reset Timer
+        AOPApplication.resetTimer();
+        AOPApplication.startTimer();
+
         presenter = new VideoIntroPresenterImpl(this, this, videoView);
         videoPath = PD_Utility.getExternalPath(this) + "Videos/intro.mp4";
         PD_Utility.showLog("ext_path::", videoPath);
@@ -75,6 +82,7 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
 
     @OnClick(R.id.skip_button)
     public void skipVideo() {
+        startSession();
         BackupDatabase.backup(this);
         videoView.pause();
         videoView.stopPlayback();
@@ -125,9 +133,9 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
                         e.printStackTrace();
                     }
                 }
-            }else {
+            } else {
                 Log.d("VidIntro", "createDataBase: ");
-                startSession();
+                //startSession();
             }
         } catch (Exception e) {
 //            e.printStackTrace();
@@ -136,6 +144,8 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
 
     private void startSession() {
         new AsyncTask<Object, Void, Object>() {
+            String currentSession;
+
             @Override
             protected Object doInBackground(Object[] objects) {
                 try {
@@ -143,13 +153,19 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
                             AppDatabase.class, AppDatabase.DB_NAME)
                             .build();
 
+                    StatusDao statusDao = appDatabase.getStatusDao();
+                    currentSession = "" + UUID.randomUUID().toString();
+                    statusDao.updateValue("CurrentSession", "" + currentSession);
+                    statusDao.updateValue("AppStartDateTime", appStartTime);
+
                     Session startSesion = new Session();
-                    String currentSession = "" + UUID.randomUUID().toString();
                     startSesion.setSessionID("" + currentSession);
-                    startSesion.setFromDate(AOPApplication.getCurrentDateTime());
+                    String timerTime = AOPApplication.getCurrentDateTime(true, appStartTime);
+                    Log.d("doInBackground", "------------------------------------------------------------------------doInBackground : " + timerTime);
+                    //String timerTime = AOPApplication.getCurrentDateTime(true);
+                    startSesion.setFromDate(timerTime);
                     startSesion.setToDate("NA");
                     appDatabase.getSessionDao().insert(startSesion);
-                    appDatabase.getStatusDao().updateValue("CurrentSession", "" + currentSession);
 
                     BackupDatabase.backup(VideoIntro.this);
 
@@ -187,6 +203,11 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
 
                     status = new com.example.pravin.angreziok.domain.Status();
                     status.setStatusKey("AppLang");
+                    status.setValue("NA");
+                    appDatabase.getStatusDao().insert(status);
+
+                    status = new com.example.pravin.angreziok.domain.Status();
+                    status.setStatusKey("AppStartDateTime");
                     status.setValue("NA");
                     appDatabase.getStatusDao().insert(status);
 

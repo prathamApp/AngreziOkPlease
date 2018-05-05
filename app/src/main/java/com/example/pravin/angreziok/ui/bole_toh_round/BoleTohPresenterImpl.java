@@ -50,7 +50,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
     ArrayList<String> resAudioArray = new ArrayList<String>();
     ArrayList<String> resIdArray = new ArrayList<String>();
     int readQuestionNo, randomNumber;
-    String sdCardPathString, questionStartTime, studentID, resourceID,questionId;
+    String sdCardPathString, questionStartTime, studentID, resourceID, questionId;
     private AppDatabase appDatabase;
 
     public BoleTohPresenterImpl(Context mContext) {
@@ -251,7 +251,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
 
     @Override
     public void checkFinalAnswer_g1_l2(String ans, int currentTeam) {
-        int scoredMarks,  totalMarks=10;
+        int scoredMarks, totalMarks = 10;
         if (g1l2QuestionData.get(randomNumber).getResourceText().equalsIgnoreCase(ans)) {
             //  TODO correct answer animation + increase score of group
             boleTohG1L2View.setCelebrationView();
@@ -266,12 +266,12 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
             Toast.makeText(mContext, "Wrong", Toast.LENGTH_SHORT).show();
             playMusic("Sounds/wrong.mp3", getSdcardPath());
         }
-        addScore(studentID,resourceID,0,scoredMarks,totalMarks,questionStartTime,0);
+        addScore(studentID, resourceID, 0, scoredMarks, totalMarks, questionStartTime, 0);
     }
 
     @Override
     public void checkFinalAnswer_g2_l2(String ans, int currentTeam) {
-        int scoredMarks,  totalMarks=10;
+        int scoredMarks, totalMarks = 10;
         if (g2l2QuestionData.get(randomNumber).getResourceText().equalsIgnoreCase(ans)) {
             //  TODO correct answer animation + increase score of group
             boleTohG2L2View.setCelebrationView();
@@ -286,13 +286,13 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
             Toast.makeText(mContext, "Wrong", Toast.LENGTH_SHORT).show();
             playMusic("Sounds/wrong.mp3", getSdcardPath());
         }
-        addScore(studentID,resourceID,0,scoredMarks,totalMarks,questionStartTime,0);
+        addScore(studentID, resourceID, 0, scoredMarks, totalMarks, questionStartTime, 0);
 
     }
 
     @Override
     public void checkFinalAnswer_g3_l2(String ans, int currentTeam) {
-        int scoredMarks,  totalMarks=10;
+        int scoredMarks, totalMarks = 10;
         if (currentPairList.get(1).getResourceText().equalsIgnoreCase(ans)) {
             //  TODO correct answer animation + increase score of group
             boleTohG3L2View.setCelebrationView();
@@ -307,7 +307,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
             Toast.makeText(mContext, "Wrong", Toast.LENGTH_SHORT).show();
             playMusic("Sounds/wrong.mp3", getSdcardPath());
         }
-        addScore(studentID,resourceID,0,scoredMarks,totalMarks,questionStartTime,0);
+        addScore(studentID, resourceID, 0, scoredMarks, totalMarks, questionStartTime, 0);
     }
 
     @Override
@@ -360,7 +360,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
         String questionString = g1l2QuestionData.get(randomNumber).getResourceQuestion();
         String imagePath = getSdcardPath() + "PicGameImages/" + g1l2QuestionData.get(randomNumber).getResourceImage();
         Log.d("imagePath", "setImage_gl_l2: " + imagePath);
-        questionStartTime = AOPApplication.getCurrentDateTime();
+        setQuestionStartTime();
         studentID = studId;
         resourceID = g1l2QuestionData.get(randomNumber).getResourceId();
         questionId = resourceID;
@@ -375,7 +375,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
         randomNumber = getRandomNumber(0, g2l2QuestionData.size());
         String imagePath = getSdcardPath() + "PicGameImages/" + g2l2QuestionData.get(randomNumber).getResourceImage();
         Toast.makeText(mContext, "actual ans: " + g2l2QuestionData.get(randomNumber).getResourceText(), Toast.LENGTH_SHORT).show();
-        questionStartTime = AOPApplication.getCurrentDateTime();
+        setQuestionStartTime();
         studentID = studId;
         resourceID = g2l2QuestionData.get(randomNumber).getResourceId();
         questionId = resourceID;
@@ -395,7 +395,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
         String questionImagePath = path + "PicGameImages/" + currentPairList.get(1).getResourceImage();
         Toast.makeText(mContext, "Hint:::" + currentPairList.get(0).getResourceText(), Toast.LENGTH_SHORT).show();
         Toast.makeText(mContext, "Question:::" + currentPairList.get(1).getResourceText(), Toast.LENGTH_SHORT).show();
-        questionStartTime = AOPApplication.getCurrentDateTime();
+        setQuestionStartTime();
         studentID = studId;
         resourceID = g3l2QuestionData.get(randomNumber).getResourceId();
         questionId = resourceID;
@@ -404,6 +404,16 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
         boleTohG3L2View.setQuestionText(questionString);
     }
 
+    private void setQuestionStartTime() {
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                String AppStartDateTime = appDatabase.getStatusDao().getValue("AppStartDateTime");
+                questionStartTime = AOPApplication.getCurrentDateTime(true, AppStartDateTime);
+                return null;
+            }
+        }.execute();
+    }
 
     public void addScore(String studentID, String resourceID, int questionId, int scoredMarks, int totalMarks, String startDateTime, int questionLevel) {
         try {
@@ -417,12 +427,13 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
             score.setScoredMarks(scoredMarks);
             score.setTotalMarks(totalMarks);
             score.setStartDateTime("" + startDateTime);
-            score.setEndDateTime("" + AOPApplication.getCurrentDateTime());
             score.setLevel(0);
 
             new AsyncTask<Object, Void, Object>() {
                 @Override
                 protected Object doInBackground(Object... objects) {
+                    String AppStartDateTime = appDatabase.getStatusDao().getValue("AppStartDateTime");
+                    score.setEndDateTime("" + AOPApplication.getCurrentDateTime(true, AppStartDateTime));
                     appDatabase.getScoreDao().insert(score);
                     BackupDatabase.backup(mContext);
                     return null;
