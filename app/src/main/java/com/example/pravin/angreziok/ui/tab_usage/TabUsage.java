@@ -56,7 +56,7 @@ public class TabUsage extends BaseActivity implements TabUsageContract.TabUsageV
                     while (!cursor.isAfterLast()) {
                         studentData = new JSONObject();
                         studentData.put("FirstName", cursor.getString(cursor.getColumnIndex("FirstName")));
-                        studentData.put("time", cursor.getString(cursor.getColumnIndex("time")));
+                        studentData.put("time", cursor.getString(cursor.getColumnIndex("result")));
                         allUsageData.add(studentData);
                         cursor.moveToNext();
                     }
