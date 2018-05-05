@@ -4,21 +4,17 @@ import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 import android.support.v7.app.AppCompatDelegate;
+import android.util.Log;
 
-import com.example.pravin.angreziok.modalclasses.GenericModalGson;
-import com.google.gson.Gson;
-
-import org.json.JSONObject;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.UUID;
 
 /**
@@ -32,8 +28,9 @@ public class AOPApplication extends Application {
     }
 
     private static AOPApplication aopApplication;
-    private static Application wholeApplication;
     static String ext_path;
+    static Timer gpsTimer, gpsFixTimer;
+    public static int gpsFixCount;
     private static final DateFormat dateTimeFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.ENGLISH);
     private static final DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
 
@@ -47,17 +44,94 @@ public class AOPApplication extends Application {
         return dateTimeFormat.format(cal.getTime());
     }
 
+    public String GetCurrentDateTime(boolean getSysTime) {
+        if (getSysTime) {
+            //
+            Calendar cal = Calendar.getInstance();
+            return dateFormat.format(cal.getTime());
+        } else {
+            //
+            Log.d("GetCurrentDateTime ", "" + AOPApplication.getAccurateTimeStamp());
+            return AOPApplication.getAccurateTimeStamp();
+        }
+    }
+
+    public String GetCurrentDate() {
+        Log.d("GetDate ", "" + AOPApplication.getAccurateDate());
+        return AOPApplication.getAccurateDate();
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
         aopApplication = this;
-        wholeApplication = this;
     }
 
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         MultiDex.install(this);
+    }
+
+    public static String getAccurateTimeStamp() {
+        // String to Date
+        StatusDBHelper statusDBHelper = new StatusDBHelper(mInstance);
+        String gpsTime = statusDBHelper.getValue("GPSDateTime");
+        Date gpsDateTime = null;
+        try {
+            gpsDateTime = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.ENGLISH).parse(gpsTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        // Add Seconds to Gps Date Time
+        Calendar addSec = Calendar.getInstance();
+        addSec.setTime(gpsDateTime);
+        addSec.add(addSec.SECOND, getTimerCount());
+        String updatedTime = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.ENGLISH).format(addSec.getTime());
+
+        return updatedTime;
+    }
+
+    public static String getAccurateDate() {
+        // String to Date
+        StatusDBHelper statusDBHelper = new StatusDBHelper(mInstance);
+        String gpsTime = statusDBHelper.getValue("GPSDateTime");
+        Date gpsDateTime = null;
+        try {
+            gpsDateTime = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH).parse(gpsTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        // Add Seconds to Gps Date Time
+        Calendar addSec = Calendar.getInstance();
+        addSec.setTime(gpsDateTime);
+        addSec.add(addSec.SECOND, getTimerCount());
+        String updatedTime = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH).format(addSec.getTime());
+
+        return updatedTime;
+    }
+
+    public static void startGPSFixTimer() {
+        gpsFixTimer = new Timer();
+        gpsFixTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                gpsFixCount++;
+            }
+        }, 1000, 1000);
+    }
+
+    public static void resetGPSFixTimer() {
+        if (gpsFixTimer != null) {
+            gpsFixTimer.cancel();
+            gpsFixCount = 0;
+        } else {
+            gpsFixCount = 00;
+        }
+    }
+
+    public static int getGPSFixTimerCount() {
+        return gpsFixCount;
     }
 
     public static UUID getUniqueID() {

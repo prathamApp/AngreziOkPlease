@@ -47,7 +47,8 @@ public class TabUsage extends BaseActivity implements TabUsageContract.TabUsageV
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
-                Cursor cursor = appDatabase.getSessionDao().getStudentUsageData();
+                Cursor cursor = appDatabase.getSessionDao().
+                        getStudentUsageData();
                 cursor.moveToFirst();
                 ArrayList<JSONObject> allUsageData = new ArrayList<JSONObject>();
                 JSONObject studentData = null;
