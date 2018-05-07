@@ -28,7 +28,6 @@ public interface SamajhKeBoloContract {
 
         void set_g3_l2_data(String path);
         void setQuestion_g3_l2(String studentID);
-        String getCurrentQuestion_g3_l2();
         String[] getOptions_g3_l2();
         void checkAnswerOfOptions(String answer, int currentTeam);
         void checkAnswerOfStt(String answer,int currentTeam);
@@ -61,7 +60,7 @@ public interface SamajhKeBoloContract {
         void setCurrentScore();
         void initiateQuestion();
         void hideOptionView();
-        void setQuestion(String question);
+        void setQuestion(String question,String questionAudio);
         void setQuestionWords(String[] words);
         void setAnswer(String ans);
         void animateMic();

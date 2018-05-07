@@ -270,13 +270,16 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
         studentID = studId;
         resourceID = g3l2CurrentQuestionList.get(0).getResourceId();
         questionId = resourceID;
-        samajhKeBoloG3L2View.setQuestion(getCurrentQuestion_g3_l2());
+        samajhKeBoloG3L2View.setQuestion(getCurrentQuestion_g3_l2(),getCurrentQuestionAudio_g3_l2());
         samajhKeBoloG3L2View.setQuestionWords(getOptions_g3_l2());
     }
 
-    @Override
     public String getCurrentQuestion_g3_l2() {
         return g3l2CurrentQuestionList.get(0).getResourceQuestion();
+    }
+
+    public String getCurrentQuestionAudio_g3_l2() {
+        return g3l2CurrentQuestionList.get(0).getResourceAudio();
     }
 
     @Override

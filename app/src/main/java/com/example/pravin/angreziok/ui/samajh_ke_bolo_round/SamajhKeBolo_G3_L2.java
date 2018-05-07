@@ -94,8 +94,8 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
     ImageView mic;
 
 
-    String text;
     SamajhKeBoloContract.SamajhKeBoloPresenter presenter;
+    String text;
     int speechCount, currentTeam;
     Dialog dialog;
 
@@ -239,8 +239,8 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
     }
 
     @Override
-    public void setQuestion(String questionText) {
-        text = questionText;
+    public void setQuestion(String questionText,String questionAudio) {
+        text = questionAudio;
         question.setText(questionText);
     }
 
@@ -257,14 +257,14 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
         playTTS();
     }
 
+    private void playTTS() {
+        presenter.startTTS(text);
+    }
+
     private void setDataForGame() {
         String path = presenter.getSdcardPath();
         presenter.set_g3_l2_data(path);
         showQuestion.setText("Listen and answer properly");
-    }
-
-    private void playTTS() {
-        presenter.startTTS(text);
     }
 
     private void startTimer() {
@@ -281,7 +281,7 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
 
     @OnClick(R.id.ib_g3_l2_speaker)
     public void soundClicked() {
-        presenter.startTTS(text);
+        presenter.startTTS(question.getText().toString());
     }
 
     @OnClick(R.id.ib_g3_l2_mic)
