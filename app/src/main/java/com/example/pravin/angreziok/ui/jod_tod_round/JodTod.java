@@ -97,7 +97,7 @@ public class JodTod extends BaseActivity implements JodTodContract.JodTodView, M
             public void run() {
                 showGif(charIntroPath);
             }
-        }, 500);
+        }, 100);
         presenter = new JodTodPresenterImpl(this);
     }
 

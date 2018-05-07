@@ -92,7 +92,7 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
             public void run() {
                 showGif(charIntroPath);
             }
-        }, 500);
+        }, 100);
         presenter = new BoleTohPresenterImpl(this);
     }
 

@@ -91,7 +91,7 @@ public class SamajhKeBolo extends BaseActivity implements SamajhKeBoloContract.S
             public void run() {
                 showGif(charIntroPath);
             }
-        }, 500);
+        }, 100);
         presenter = new SamajhKeBoloPresenterImpl(this);
     }
 
