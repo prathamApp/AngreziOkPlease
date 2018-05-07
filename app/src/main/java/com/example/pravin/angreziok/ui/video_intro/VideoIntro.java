@@ -79,11 +79,34 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
         startService(new Intent(this, AppExitService.class));
     }
 
+    private void addStartTime() {
+        new AsyncTask<Object, Void, Object>() {
+            @Override
+            protected Object doInBackground(Object[] objects) {
+                try {
+                    appDatabase = Room.databaseBuilder(VideoIntro.this,
+                            AppDatabase.class, AppDatabase.DB_NAME)
+                            .build();
+
+                    StatusDao statusDao = appDatabase.getStatusDao();
+                    statusDao.updateValue("AppStartDateTime", appStartTime);
+                    BackupDatabase.backup(VideoIntro.this);
+                    return null;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            }
+        }.execute();
+    }
+
+
+
 
     @OnClick(R.id.skip_button)
     public void skipVideo() {
-        startSession();
         BackupDatabase.backup(this);
+        addStartTime();
         videoView.pause();
         videoView.stopPlayback();
         startActivity();
@@ -111,6 +134,8 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
         if (!file.exists())
             file.mkdir();
 
+        addStartTime();
+
         startActivity(new Intent(this, QRActivity.class));
         finish();
     }
@@ -126,9 +151,7 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
                         appDatabase = Room.databaseBuilder(this,
                                 AppDatabase.class, AppDatabase.DB_NAME)
                                 .build();
-
                         doInitialEntries();
-
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -140,42 +163,6 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
         } catch (Exception e) {
 //            e.printStackTrace();
         }
-    }
-
-    private void startSession() {
-        new AsyncTask<Object, Void, Object>() {
-            String currentSession;
-
-            @Override
-            protected Object doInBackground(Object[] objects) {
-                try {
-                    appDatabase = Room.databaseBuilder(VideoIntro.this,
-                            AppDatabase.class, AppDatabase.DB_NAME)
-                            .build();
-
-                    StatusDao statusDao = appDatabase.getStatusDao();
-                    currentSession = "" + UUID.randomUUID().toString();
-                    statusDao.updateValue("CurrentSession", "" + currentSession);
-                    statusDao.updateValue("AppStartDateTime", appStartTime);
-
-                    Session startSesion = new Session();
-                    startSesion.setSessionID("" + currentSession);
-                    String timerTime = AOPApplication.getCurrentDateTime(true, appStartTime);
-                    Log.d("doInBackground", "------------------------------------------------------------------------doInBackground : " + timerTime);
-                    //String timerTime = AOPApplication.getCurrentDateTime(true);
-                    startSesion.setFromDate(timerTime);
-                    startSesion.setToDate("NA");
-                    appDatabase.getSessionDao().insert(startSesion);
-
-                    BackupDatabase.backup(VideoIntro.this);
-
-                    return null;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    return null;
-                }
-            }
-        }.execute();
     }
 
     private void doInitialEntries() {
@@ -250,12 +237,6 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
 
                     BackupDatabase.backup(VideoIntro.this);
                     return null;
-                }
-
-                @Override
-                protected void onPostExecute(Void aVoid) {
-                    super.onPostExecute(aVoid);
-                    startSession();
                 }
             }.execute();
         } catch (Exception e) {

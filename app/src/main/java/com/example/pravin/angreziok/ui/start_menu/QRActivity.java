@@ -26,6 +26,8 @@ import android.widget.Toast;
 import com.example.pravin.angreziok.AOPApplication;
 import com.example.pravin.angreziok.BaseActivity;
 import com.example.pravin.angreziok.R;
+import com.example.pravin.angreziok.dao.SessionDao;
+import com.example.pravin.angreziok.dao.StatusDao;
 import com.example.pravin.angreziok.database.AppDatabase;
 import com.example.pravin.angreziok.database.BackupDatabase;
 import com.example.pravin.angreziok.domain.Attendance;
@@ -175,6 +177,7 @@ public class QRActivity extends BaseActivity implements QRContract.StartMenuView
     @OnClick(R.id.btn_start_game)
     public void gotoGame() {
         mScannerView.stopCamera();
+        startSession();
         Intent dataConfirmationIntent = new Intent(this, DataConfirmation.class);
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("studentList", playerModalList);
@@ -381,6 +384,43 @@ public class QRActivity extends BaseActivity implements QRContract.StartMenuView
         }
 
     }
+
+    private void startSession() {
+        new AsyncTask<Object, Void, Object>() {
+            String currentSession;
+
+            @Override
+            protected Object doInBackground(Object[] objects) {
+                try {
+                    appDatabase = Room.databaseBuilder(QRActivity.this,
+                            AppDatabase.class, AppDatabase.DB_NAME)
+                            .build();
+
+                    StatusDao statusDao = appDatabase.getStatusDao();
+                    currentSession = "" + UUID.randomUUID().toString();
+                    statusDao.updateValue("CurrentSession", "" + currentSession);
+
+                    String AppStartDateTime = appDatabase.getStatusDao().getValue("AppStartDateTime");
+
+                    Session startSesion = new Session();
+                    startSesion.setSessionID("" + currentSession);
+                    String timerTime = AOPApplication.getCurrentDateTime(true, AppStartDateTime);
+
+                    Log.d("doInBackground", "--------------------------------------------doInBackground : " + timerTime);
+                    startSesion.setFromDate(timerTime);
+                    startSesion.setToDate("NA");
+                    appDatabase.getSessionDao().insert(startSesion);
+
+                    BackupDatabase.backup(QRActivity.this);
+                    return null;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            }
+        }.execute();
+    }
+
 
     @SuppressLint("StaticFieldLeak")
     private void enterStudentData(final String stdId, final String stdFirstName) {
