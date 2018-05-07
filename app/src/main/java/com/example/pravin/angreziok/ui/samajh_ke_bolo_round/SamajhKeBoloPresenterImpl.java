@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -32,20 +33,18 @@ import static com.example.pravin.angreziok.ui.samajh_ke_bolo_round.SamajhKeBolo.
 
 public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeBoloPresenter, MediaCallbacks {
 
-    String ttsQuestion;
-    float speechRate = 1.0f;
     public TTSService ttsService;
     Context mContext;
     MediaPlayerUtil mediaPlayerUtil;
     SamajhKeBoloContract.SamajhKeBolo_G1_L2_View samajhKeBoloG1L2View;
     SamajhKeBoloContract.SamajhKeBolo_G3_L2_View samajhKeBoloG3L2View;
     SamajhKeBoloContract.SamajhKeBolo_G2_L2_View samajhKeBoloG2L2View;
-    List<GenericModalGson> g2l2QuestionData, g1l2QuestionData, g3l2QuestionData;
+    List<GenericModalGson> g2l2QuestionData, g1l2QuestionData, g3l2QuestionData, g3l2CurrentQuestionList;
     GenericModalGson whereWhenGameData, sayItGameData, askGameData;
     private AppDatabase appDatabase;
 
-    int readQuestionNo, randomNumber,scoredMarks, totalMarks = 25;;
-    String sdCardPathString, questionStartTime, studentID, resourceID,questionId;
+    int randomNumber,scoredMarks, totalMarks = 25;;
+    String questionStartTime, studentID, resourceID,questionId;
 
     public SamajhKeBoloPresenterImpl(Context mContext) {
         this.mContext = mContext;
@@ -259,15 +258,17 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
     public void set_g3_l2_data(String path) {
         askGameData = fetchJsonData("RoundThreeGameThree", path);
         g3l2QuestionData = askGameData.getNodelist();
+        randomNumber = getRandomNumber(0, g3l2QuestionData.size());
+        g3l2CurrentQuestionList = g3l2QuestionData.get(randomNumber).getNodelist();
     }
 
     @Override
     public void setQuestion_g3_l2(String studId) {
         samajhKeBoloG3L2View.hideOptionView();
-        randomNumber = getRandomNumber(0, g3l2QuestionData.size());
+        Collections.shuffle(g3l2CurrentQuestionList);
         setQuestionStartTime();
         studentID = studId;
-        resourceID = g3l2QuestionData.get(randomNumber).getResourceId();
+        resourceID = g3l2CurrentQuestionList.get(0).getResourceId();
         questionId = resourceID;
         samajhKeBoloG3L2View.setQuestion(getCurrentQuestion_g3_l2());
         samajhKeBoloG3L2View.setQuestionWords(getOptions_g3_l2());
@@ -275,7 +276,7 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
 
     @Override
     public String getCurrentQuestion_g3_l2() {
-        return g3l2QuestionData.get(randomNumber).getResourceQuestion();
+        return g3l2CurrentQuestionList.get(0).getResourceQuestion();
     }
 
     @Override
@@ -309,12 +310,19 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
 
     @Override
     public String[] getOptions_g3_l2() {
-        return g3l2QuestionData.get(randomNumber).getResourceText().split(",");
+        String[] options = new String[4];
+        options[0] = g3l2CurrentQuestionList.get(0).getResourceText();
+        options[1] = g3l2CurrentQuestionList.get(1).getResourceText();
+        options[2] = g3l2CurrentQuestionList.get(2).getResourceText();
+        options[3] = g3l2CurrentQuestionList.get(3).getResourceText();
+        List tempList = Arrays.asList(options);
+        Collections.shuffle(tempList);
+        return  (String[])tempList.toArray();
     }
 
     @Override
     public void checkAnswerOfOptions(String answer, int currentTeam) {
-        if (g3l2QuestionData.get(randomNumber).getResourceType().equalsIgnoreCase(answer)) {
+        if (g3l2CurrentQuestionList.get(0).getResourceText().equalsIgnoreCase(answer)) {
             int currentTeamScore = Integer.parseInt(playerModalArrayList.get(currentTeam).studentScore);
             playerModalArrayList.get(currentTeam).setStudentScore(String.valueOf(currentTeamScore + 15));
             scoredMarks = 15;
@@ -326,7 +334,7 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
 
     @Override
     public void checkAnswerOfStt(String answer, int currentTeam) {
-        if (answer.equalsIgnoreCase(g3l2QuestionData.get(randomNumber).getResourceType())) {
+        if (answer.equalsIgnoreCase(g3l2CurrentQuestionList.get(0).getResourceText())) {
             //  TODO correct answer animation + increase score of group
             samajhKeBoloG3L2View.setCelebrationView();
             playMusic("Sounds/BilkulSahijawab.mp3", getSdcardPath());
