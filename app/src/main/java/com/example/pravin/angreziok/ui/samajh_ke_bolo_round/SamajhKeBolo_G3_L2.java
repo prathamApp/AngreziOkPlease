@@ -186,7 +186,7 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
             public void onClick(View v) {
                 dialog.dismiss();
                 presenter.setQuestion_g3_l2(studentID);
-//                initiateQuestion();
+                initiateQuestion();
             }
         });
     }
@@ -243,7 +243,6 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
         text = questionAudio;
         question.setText(questionText);
         showQuestion.setText(primaryQuestion);
-        initiateQuestion();
     }
 
     public void bounceView(View view) {
@@ -264,7 +263,7 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
     }
 
     private void playTTS() {
-        presenter.startTTS(text);
+        presenter.startTTSForCallbacks(text);
     }
 
     private void setDataForGame() {

@@ -13,6 +13,7 @@ public interface SamajhKeBoloContract {
         void setImage_gl_l2(String studentID);
         String getCurrentQuestion_g1_l2();
         void startTTS(String text);
+        void startTTSForCallbacks(String text);
         String[] getOptions_g1_l2();
         int[] getUniqueRandomNumber(int min, int max, int numSize);
         void g1_l2_checkAnswer(String ans);

@@ -32,7 +32,7 @@ import static com.example.pravin.angreziok.AOPApplication.getRandomNumber;
 import static com.example.pravin.angreziok.ui.samajh_ke_bolo_round.SamajhKeBolo.playerModalArrayList;
 
 
-public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeBoloPresenter, MediaCallbacks, TTSCallbacks {
+public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeBoloPresenter, MediaCallbacks {
 
     public TTSService ttsService;
     Context mContext;
@@ -145,8 +145,17 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
 
     @Override
     public void startTTS(String text) {
-        ttsService.initCallback(SamajhKeBoloPresenterImpl.this);
         ttsService.play(text);
+    }
+
+    @Override
+    public void startTTSForCallbacks(String text) {
+        ttsService.playAndOnDone(text, new Runnable() {
+            @Override
+            public void run() {
+                samajhKeBoloG3L2View.timerInit();
+            }
+        });
     }
 
     @Override
@@ -424,8 +433,4 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
 
     }
 
-    @Override
-    public void onTTSComplete() {
-        samajhKeBoloG3L2View.timerInit();
-    }
 }
