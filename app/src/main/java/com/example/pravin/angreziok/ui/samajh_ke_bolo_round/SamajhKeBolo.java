@@ -69,7 +69,7 @@ public class SamajhKeBolo extends BaseActivity implements SamajhKeBoloContract.S
 
         Intent intent = getIntent();
         Bundle extraBundle = intent.getExtras();
-        playerModalArrayList = extraBundle.getParcelableArrayList("PlayerList");
+        playerModalArrayList = extraBundle.getParcelableArrayList("playerModalArrayList");
         for (int i = 0; i < 3; i++)
             list.add(new Integer(i));
         Collections.shuffle(list);

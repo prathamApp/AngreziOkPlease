@@ -146,6 +146,7 @@ public class AOPApplication extends Application {
 
     public static String getAccurateTimeStamp(String appStartTime) {
         try {
+            Log.d("TAG:::", "getAccurateTimeStamp: "+appStartTime);
             Date gpsDateTime = dateTimeFormat.parse(appStartTime);
             // Add Seconds to Gps Date Time
             Calendar addSec = Calendar.getInstance();

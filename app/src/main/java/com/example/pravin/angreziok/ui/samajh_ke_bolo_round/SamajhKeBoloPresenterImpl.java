@@ -11,6 +11,7 @@ import com.example.pravin.angreziok.database.AppDatabase;
 import com.example.pravin.angreziok.database.BackupDatabase;
 import com.example.pravin.angreziok.domain.Score;
 import com.example.pravin.angreziok.interfaces.MediaCallbacks;
+import com.example.pravin.angreziok.interfaces.TTSCallbacks;
 import com.example.pravin.angreziok.modalclasses.GenericModalGson;
 import com.example.pravin.angreziok.services.TTSService;
 import com.example.pravin.angreziok.util.MediaPlayerUtil;
@@ -31,7 +32,7 @@ import static com.example.pravin.angreziok.AOPApplication.getRandomNumber;
 import static com.example.pravin.angreziok.ui.samajh_ke_bolo_round.SamajhKeBolo.playerModalArrayList;
 
 
-public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeBoloPresenter, MediaCallbacks {
+public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeBoloPresenter, MediaCallbacks, TTSCallbacks {
 
     public TTSService ttsService;
     Context mContext;
@@ -144,6 +145,7 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
 
     @Override
     public void startTTS(String text) {
+        ttsService.initCallback(SamajhKeBoloPresenterImpl.this);
         ttsService.play(text);
     }
 
@@ -270,8 +272,12 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
         studentID = studId;
         resourceID = g3l2CurrentQuestionList.get(0).getResourceId();
         questionId = resourceID;
-        samajhKeBoloG3L2View.setQuestion(getCurrentQuestion_g3_l2(),getCurrentQuestionAudio_g3_l2());
+        samajhKeBoloG3L2View.setQuestion(getCurrentQuestion_g3_l2(),getCurrentQuestionAudio_g3_l2(),getPrimaryQuestion_g3_l2());
         samajhKeBoloG3L2View.setQuestionWords(getOptions_g3_l2());
+    }
+
+    public String getPrimaryQuestion_g3_l2() {
+        return g3l2QuestionData.get(randomNumber).getResourceText();
     }
 
     public String getCurrentQuestion_g3_l2() {
@@ -416,5 +422,10 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
     @Override
     public void onComplete() {
 
+    }
+
+    @Override
+    public void onTTSComplete() {
+        samajhKeBoloG3L2View.timerInit();
     }
 }

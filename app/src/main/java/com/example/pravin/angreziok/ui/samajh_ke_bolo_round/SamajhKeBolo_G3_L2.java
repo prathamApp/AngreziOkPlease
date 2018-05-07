@@ -186,7 +186,7 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
             public void onClick(View v) {
                 dialog.dismiss();
                 presenter.setQuestion_g3_l2(studentID);
-                initiateQuestion();
+//                initiateQuestion();
             }
         });
     }
@@ -239,9 +239,11 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
     }
 
     @Override
-    public void setQuestion(String questionText,String questionAudio) {
+    public void setQuestion(String questionText, String questionAudio, String primaryQuestion) {
         text = questionAudio;
         question.setText(questionText);
+        showQuestion.setText(primaryQuestion);
+        initiateQuestion();
     }
 
     public void bounceView(View view) {
@@ -253,8 +255,12 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
 
     @Override
     public void initiateQuestion() {
-        startTimer();
         playTTS();
+    }
+
+    @Override
+    public void timerInit() {
+        startTimer();
     }
 
     private void playTTS() {
@@ -264,7 +270,6 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
     private void setDataForGame() {
         String path = presenter.getSdcardPath();
         presenter.set_g3_l2_data(path);
-        showQuestion.setText("Listen and answer properly");
     }
 
     private void startTimer() {

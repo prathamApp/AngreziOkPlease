@@ -69,6 +69,8 @@ public class fragment_intro_character extends BaseFragment {
         ButterKnife.bind(this, view);
         myFragmentRound = getArguments().getString("round", "");
         count = getArguments().getInt("count", 0);
+        myFragmentRound = "R3";
+        count = 2;
         Log.d("games", "onViewCreated: "+count);
 
         switch (myFragmentRound) {

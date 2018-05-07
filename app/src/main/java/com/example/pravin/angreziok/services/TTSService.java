@@ -18,6 +18,8 @@ import android.speech.tts.UtteranceProgressListener;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.example.pravin.angreziok.interfaces.TTSCallbacks;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -61,6 +63,7 @@ public class TTSService implements TextToSpeech.OnInitListener {
      * activity if you want the TTSService's state to be tied to the activity lifecycle
      */
     private Activity activity = null;
+    private TTSCallbacks mTTSCallbacks;
 
     private boolean initialized = false;
     private boolean muted = false;
@@ -87,6 +90,13 @@ public class TTSService implements TextToSpeech.OnInitListener {
         }
     };
 
+    /**
+     * Initializes TTS interface callback.
+     */
+    public void initCallback(final TTSCallbacks callbacks) {
+        this.mTTSCallbacks= callbacks;
+    }
+
     UtteranceProgressListener utteranceProgressListener = new UtteranceProgressListener() {
         @Override
         public void onStart(String utteranceId) {
@@ -95,6 +105,7 @@ public class TTSService implements TextToSpeech.OnInitListener {
 
         @Override
         public void onDone(String utteranceId) {
+            mTTSCallbacks.onTTSComplete();
             if (detectAndRun(utteranceId, onDoneRunnables)) {
                 // because either onDone or onError will be called for an utteranceId, cleanup other
                 if (onErrorRunnables.containsKey(utteranceId)) {

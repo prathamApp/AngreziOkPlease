@@ -60,10 +60,11 @@ public interface SamajhKeBoloContract {
         void setCurrentScore();
         void initiateQuestion();
         void hideOptionView();
-        void setQuestion(String question,String questionAudio);
+        void setQuestion(String question, String questionAudio, String primaryQuestion);
         void setQuestionWords(String[] words);
         void setAnswer(String ans);
         void animateMic();
+        void timerInit();
     }
 
 }
