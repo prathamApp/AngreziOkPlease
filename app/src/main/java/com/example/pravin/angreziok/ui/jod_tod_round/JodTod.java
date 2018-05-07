@@ -1,10 +1,12 @@
 package com.example.pravin.angreziok.ui.jod_tod_round;
 
 import android.app.Dialog;
+import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -15,15 +17,23 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.example.pravin.angreziok.AOPApplication;
 import com.example.pravin.angreziok.BaseActivity;
 import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.animations.MyBounceInterpolator;
 import com.example.pravin.angreziok.custom.GifView;
+import com.example.pravin.angreziok.dao.SessionDao;
+import com.example.pravin.angreziok.dao.StatusDao;
+import com.example.pravin.angreziok.database.AppDatabase;
+import com.example.pravin.angreziok.database.BackupDatabase;
 import com.example.pravin.angreziok.interfaces.MediaCallbacks;
 import com.example.pravin.angreziok.modalclasses.PlayerModal;
+import com.example.pravin.angreziok.ui.bole_toh_round.BoleToh;
 import com.example.pravin.angreziok.ui.fragment_intro_character;
 import com.example.pravin.angreziok.ui.start_data_confirmation.DataConfirmation;
+import com.example.pravin.angreziok.ui.start_menu.QRActivity;
 import com.example.pravin.angreziok.util.MediaPlayerUtil;
 import com.example.pravin.angreziok.util.PD_Utility;
 
@@ -160,19 +170,18 @@ public class JodTod extends BaseActivity implements JodTodContract.JodTodView, M
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setContentView(R.layout.custom_dialog_quit);
+        TextView dialogText = dialog.findViewById(R.id.dialog_tv_student_name);
         dialog.setCanceledOnTouchOutside(false);
-        Button quitBtn = dialog.findViewById(R.id.dialog_btn_yes);
-        Button cancelBtn = dialog.findViewById(R.id.dialog_btn_no);
+        Button replayBtn = dialog.findViewById(R.id.dialog_btn_yes);
+        Button quitBtn = dialog.findViewById(R.id.dialog_btn_no);
         ImageView closeBtn = dialog.findViewById(R.id.iv_close_dialog);
+
+        replayBtn.setText("Replay");
+        quitBtn.setText("Quit");
+        dialogText.setText("What do you wish to do???");
 
         dialog.show();
 
-        cancelBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
 
         closeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -181,13 +190,62 @@ public class JodTod extends BaseActivity implements JodTodContract.JodTodView, M
             }
         });
 
-        quitBtn.setOnClickListener(new View.OnClickListener() {
+        replayBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
                 restartGame();
             }
         });
+
+        quitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                quitGame();
+            }
+        });
+    }
+
+    private void quitGame() {
+        reInitiateScores();
+        endSession();
+        Intent qrScan = new Intent(this, QRActivity.class);
+        finishAffinity();
+        startActivity(qrScan);
+    }
+
+    private void endSession() {
+        new AsyncTask<Object, Void, Object>() {
+
+            @Override
+            protected Object doInBackground(Object[] objects) {
+                try {
+                    AppDatabase appDatabase;
+                    appDatabase = Room.databaseBuilder(JodTod.this,
+                            AppDatabase.class, AppDatabase.DB_NAME)
+                            .build();
+
+                    StatusDao statusDao = appDatabase.getStatusDao();
+                    SessionDao sessionDao = appDatabase.getSessionDao();
+                    String currentSession = statusDao.getValue("CurrentSession");
+                    String AppStartDateTime = appDatabase.getStatusDao().getValue("AppStartDateTime");
+                    String sessionToDate = sessionDao.getToDate(currentSession);
+
+                    if(sessionToDate.equalsIgnoreCase("na")) {
+                        String timerTime = AOPApplication.getCurrentDateTime(true, AppStartDateTime);
+                        appDatabase.getSessionDao().UpdateToDate(currentSession,timerTime);
+                    }
+
+                    BackupDatabase.backup(JodTod.this);
+
+                    return null;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            }
+        }.execute();
     }
 
     private void reInitiateScores() {
