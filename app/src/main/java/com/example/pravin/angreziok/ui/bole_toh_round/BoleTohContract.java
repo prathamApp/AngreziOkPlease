@@ -77,7 +77,7 @@ public interface BoleTohContract {
 
         void showOptions_g1_l2();
 
-        void initiateQuestion();
+        void initiateQuestion(String questionString);
 
         void hideOptionView();
 

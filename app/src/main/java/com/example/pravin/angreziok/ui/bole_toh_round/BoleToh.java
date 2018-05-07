@@ -182,6 +182,8 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
         closeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (mediaPlayerUtil != null)
+                    mediaPlayerUtil.pauseMedia();
                 dialog.dismiss();
             }
         });
@@ -189,6 +191,8 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
         replayBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (mediaPlayerUtil != null)
+                    mediaPlayerUtil.pauseMedia();
                 dialog.dismiss();
                 restartGame();
             }
@@ -197,6 +201,8 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
         quitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (mediaPlayerUtil != null)
+                    mediaPlayerUtil.pauseMedia();
                 dialog.dismiss();
                     quitGame();
             }

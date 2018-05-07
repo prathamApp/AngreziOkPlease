@@ -186,6 +186,8 @@ public class JodTod extends BaseActivity implements JodTodContract.JodTodView, M
         closeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (mediaPlayerUtil != null)
+                    mediaPlayerUtil.pauseMedia();
                 dialog.dismiss();
             }
         });
@@ -193,6 +195,8 @@ public class JodTod extends BaseActivity implements JodTodContract.JodTodView, M
         replayBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (mediaPlayerUtil != null)
+                    mediaPlayerUtil.pauseMedia();
                 dialog.dismiss();
                 restartGame();
             }
@@ -201,6 +205,8 @@ public class JodTod extends BaseActivity implements JodTodContract.JodTodView, M
         quitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (mediaPlayerUtil != null)
+                    mediaPlayerUtil.pauseMedia();
                 dialog.dismiss();
                 quitGame();
             }

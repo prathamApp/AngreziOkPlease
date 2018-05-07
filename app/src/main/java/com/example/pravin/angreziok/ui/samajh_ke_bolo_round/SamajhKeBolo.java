@@ -180,6 +180,8 @@ public class SamajhKeBolo extends BaseActivity implements SamajhKeBoloContract.S
         closeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (mediaPlayerUtil != null)
+                    mediaPlayerUtil.pauseMedia();
                 dialog.dismiss();
             }
         });
@@ -187,6 +189,8 @@ public class SamajhKeBolo extends BaseActivity implements SamajhKeBoloContract.S
         replayBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (mediaPlayerUtil != null)
+                    mediaPlayerUtil.pauseMedia();
                 dialog.dismiss();
                 restartGame();
             }
@@ -195,6 +199,8 @@ public class SamajhKeBolo extends BaseActivity implements SamajhKeBoloContract.S
         quitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (mediaPlayerUtil != null)
+                    mediaPlayerUtil.pauseMedia();
                 dialog.dismiss();
                 quitGame();
             }

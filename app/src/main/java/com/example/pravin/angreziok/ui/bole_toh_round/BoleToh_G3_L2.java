@@ -262,6 +262,7 @@ public class BoleToh_G3_L2 extends BaseFragment implements BoleTohContract.BoleT
 
     @Override
     public void setQuestionText(String questionString) {
+        text= questionString;
         question.setText(questionString);
     }
 
