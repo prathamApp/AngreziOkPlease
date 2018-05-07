@@ -195,6 +195,11 @@ public class fragment_intro_character extends BaseFragment {
         loadFragment(frag, count);
     }
 
+    @OnClick(R.id.replay_button)
+    public void replayVideo() {
+        playVideo(Uri.parse(videoPath));
+    }
+
     public void loadFragment(int no, int count) {
 
         switch (no) {

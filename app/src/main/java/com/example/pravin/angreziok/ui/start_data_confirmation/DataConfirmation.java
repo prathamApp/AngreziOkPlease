@@ -1,6 +1,8 @@
 package com.example.pravin.angreziok.ui.start_data_confirmation;
 
+import android.arch.persistence.room.Room;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -8,8 +10,13 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.example.pravin.angreziok.AOPApplication;
 import com.example.pravin.angreziok.BaseActivity;
 import com.example.pravin.angreziok.R;
+import com.example.pravin.angreziok.dao.SessionDao;
+import com.example.pravin.angreziok.dao.StatusDao;
+import com.example.pravin.angreziok.database.AppDatabase;
+import com.example.pravin.angreziok.database.BackupDatabase;
 import com.example.pravin.angreziok.modalclasses.PlayerModal;
 import com.example.pravin.angreziok.ui.bole_toh_round.BoleToh;
 import com.example.pravin.angreziok.ui.start_menu.QRActivity;
@@ -45,6 +52,7 @@ public class DataConfirmation extends BaseActivity implements DataConfirmationCo
     TextView teamThree;
     @BindView(R.id.tv_team_four)
     TextView teamFour;
+    public static AppDatabase appDatabase;
 
 
     @Override
@@ -116,8 +124,42 @@ public class DataConfirmation extends BaseActivity implements DataConfirmationCo
         }
     }
 
+    private void endSession() {
+        new AsyncTask<Object, Void, Object>() {
+
+            @Override
+            protected Object doInBackground(Object[] objects) {
+                try {
+                    appDatabase = Room.databaseBuilder(DataConfirmation.this,
+                            AppDatabase.class, AppDatabase.DB_NAME)
+                            .build();
+
+                    StatusDao statusDao = appDatabase.getStatusDao();
+                    SessionDao sessionDao = appDatabase.getSessionDao();
+                    String currentSession = statusDao.getValue("CurrentSession");
+                    String AppStartDateTime = appDatabase.getStatusDao().getValue("AppStartDateTime");
+                    String sessionToDate = sessionDao.getToDate(currentSession);
+
+                    if(sessionToDate.equalsIgnoreCase("na")) {
+                        String timerTime = AOPApplication.getCurrentDateTime(true, AppStartDateTime);
+                        appDatabase.getSessionDao().UpdateToDate(currentSession,timerTime);
+                    }
+
+                    BackupDatabase.backup(DataConfirmation.this);
+
+                    return null;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            }
+        }.execute();
+    }
+
+
     @Override
     public void onBackPressed() {
+        endSession();
         Intent dataConfirmationIntent = new Intent(this, QRActivity.class);
         this.finish();
         startActivity(dataConfirmationIntent);
