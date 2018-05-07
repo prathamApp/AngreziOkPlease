@@ -1,9 +1,11 @@
 package com.example.pravin.angreziok.ui.final_screen;
 
 import android.app.Dialog;
+import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -14,10 +16,16 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.pravin.angreziok.AOPApplication;
 import com.example.pravin.angreziok.BaseActivity;
 import com.example.pravin.angreziok.R;
+import com.example.pravin.angreziok.dao.SessionDao;
+import com.example.pravin.angreziok.dao.StatusDao;
+import com.example.pravin.angreziok.database.AppDatabase;
+import com.example.pravin.angreziok.database.BackupDatabase;
 import com.example.pravin.angreziok.modalclasses.PlayerModal;
 import com.example.pravin.angreziok.ui.start_data_confirmation.DataConfirmation;
+import com.example.pravin.angreziok.ui.start_menu.QRActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,6 +33,7 @@ import java.util.Comparator;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import nl.dionsegijn.konfetti.KonfettiView;
 import nl.dionsegijn.konfetti.models.Shape;
 import nl.dionsegijn.konfetti.models.Size;
@@ -58,12 +67,16 @@ public class ResultScreen extends BaseActivity {
     @BindView(R.id.tv_score_fourth)
     TextView tvScore4;
 
+    @BindView(R.id.btn_replay)
+    TextView btnReplay;
+
     @BindView(R.id.konfettiView_result)
     KonfettiView konfettiView;
 
     ArrayList<PlayerModal> playerModalArrayList;
     int[] rankArr;
     int rank = 1;
+    public static AppDatabase appDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -173,18 +186,24 @@ public class ResultScreen extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        quitOrNot();
+        quitOrNot("backPress");
     }
 
-    private void quitOrNot() {
+    private void quitOrNot(final String msg) {
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setContentView(R.layout.custom_dialog_quit);
+        TextView dialogText = dialog.findViewById(R.id.dialog_tv_student_name);
         dialog.setCanceledOnTouchOutside(false);
         Button quitBtn = dialog.findViewById(R.id.dialog_btn_yes);
         Button cancelBtn = dialog.findViewById(R.id.dialog_btn_no);
         ImageView closeBtn = dialog.findViewById(R.id.iv_close_dialog);
+
+        if(msg.equalsIgnoreCase("replay")){
+            dialogText.setText("Replay Game ???");
+            quitBtn.setText("Replay");
+        }
 
         dialog.show();
 
@@ -206,9 +225,57 @@ public class ResultScreen extends BaseActivity {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                restartGame();
+                if(msg.equalsIgnoreCase("replay"))
+                    restartGame();
+                else
+                    quitGame();
             }
         });
+    }
+
+    private void quitGame() {
+        reInitiateScores();
+        endSession();
+        Intent qrScan = new Intent(this, QRActivity.class);
+        finishAffinity();
+        startActivity(qrScan);
+    }
+
+    private void endSession() {
+        new AsyncTask<Object, Void, Object>() {
+
+            @Override
+            protected Object doInBackground(Object[] objects) {
+                try {
+                    appDatabase = Room.databaseBuilder(ResultScreen.this,
+                            AppDatabase.class, AppDatabase.DB_NAME)
+                            .build();
+
+                    StatusDao statusDao = appDatabase.getStatusDao();
+                    SessionDao sessionDao = appDatabase.getSessionDao();
+                    String currentSession = statusDao.getValue("CurrentSession");
+                    String AppStartDateTime = appDatabase.getStatusDao().getValue("AppStartDateTime");
+                    String sessionToDate = sessionDao.getToDate(currentSession);
+
+                    if(sessionToDate.equalsIgnoreCase("na")) {
+                        String timerTime = AOPApplication.getCurrentDateTime(true, AppStartDateTime);
+                        appDatabase.getSessionDao().UpdateToDate(currentSession,timerTime);
+                    }
+
+                    BackupDatabase.backup(ResultScreen.this);
+
+                    return null;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            }
+        }.execute();
+    }
+
+    @OnClick(R.id.btn_replay)
+    public void replayVideo() {
+        quitOrNot("replay");
     }
 
     private void reInitiateScores() {

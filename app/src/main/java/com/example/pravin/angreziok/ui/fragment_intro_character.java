@@ -1,5 +1,6 @@
 package com.example.pravin.angreziok.ui;
 
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -45,6 +46,8 @@ public class fragment_intro_character extends BaseFragment {
     TextView instructionsTextView;
     @BindView(R.id.btn_skip_instructions)
     Button buttontSkip;
+    @BindView(R.id.replay_button)
+    Button replay_button;
 
     int frag = 0, count;
     String myFragmentRound,videoPath;
@@ -181,6 +184,13 @@ public class fragment_intro_character extends BaseFragment {
         try {
             joker_videoView.setVideoURI(path);
             joker_videoView.start();
+            joker_videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    replay_button.setVisibility(View.VISIBLE);
+                    buttontSkip.setText("Start");
+                }
+            });
         } catch (Exception e) {
             Log.e("Cant Play Video", e.getMessage());
             e.printStackTrace();
@@ -197,6 +207,8 @@ public class fragment_intro_character extends BaseFragment {
 
     @OnClick(R.id.replay_button)
     public void replayVideo() {
+        replay_button.setVisibility(View.GONE);
+        buttontSkip.setText("Skip");
         playVideo(Uri.parse(videoPath));
     }
 
