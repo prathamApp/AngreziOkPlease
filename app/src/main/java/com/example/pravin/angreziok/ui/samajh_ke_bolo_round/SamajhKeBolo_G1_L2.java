@@ -309,7 +309,6 @@ public class SamajhKeBolo_G1_L2 extends BaseFragment implements SamajhKeBoloCont
                 @Override
                 public void run() {
 
-                    //TODO display Score screen after final round
                     getActivity().findViewById(R.id.iv_g1_l2_submit_ans).setOnClickListener(null);
                     Bundle bundle = new Bundle();
                     SamajhKeBolo.gameCounter += 1;
@@ -323,10 +322,6 @@ public class SamajhKeBolo_G1_L2 extends BaseFragment implements SamajhKeBoloCont
                         bundle.putParcelableArrayList("PlayerList", playerModalArrayList);
                         intent.putExtras(bundle);
                         startActivity(intent);
-                        Toast.makeText(getActivity(), "Tie breaker or Final score screen?", Toast.LENGTH_SHORT).show();
-/*                        Intent intent = new Intent(getActivity(), JodTod.class);
-                        intent.putExtras(bundle);
-                        startActivity(intent);*/
                     }
 
                 }

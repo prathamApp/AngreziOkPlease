@@ -43,8 +43,8 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
     GenericModalGson whereWhenGameData, sayItGameData, askGameData;
     private AppDatabase appDatabase;
 
-    int randomNumber,scoredMarks, totalMarks = 25;;
-    String questionStartTime, studentID, resourceID,questionId;
+    int randomNumber, scoredMarks, totalMarks = 25;
+    String questionStartTime, studentID, resourceID, questionId;
 
     public SamajhKeBoloPresenterImpl(Context mContext) {
         this.mContext = mContext;
@@ -184,7 +184,7 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
             if (ans.split(" ").length > 1) {
                 scoredMarks = 25;
                 playerModalArrayList.get(currentTeam).setStudentScore(String.valueOf(currentTeamScore + 25));
-            }else {
+            } else {
                 scoredMarks = 15;
                 playerModalArrayList.get(currentTeam).setStudentScore(String.valueOf(currentTeamScore + 15));
             }
@@ -289,7 +289,7 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
             if (ans.split(" ").length > 1) {
                 scoredMarks = 25;
                 playerModalArrayList.get(currentTeam).setStudentScore(String.valueOf(currentTeamScore + 25));
-            }else {
+            } else {
                 scoredMarks = 15;
                 playerModalArrayList.get(currentTeam).setStudentScore(String.valueOf(currentTeamScore + 15));
             }
@@ -317,7 +317,7 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
         options[3] = g3l2CurrentQuestionList.get(3).getResourceText();
         List tempList = Arrays.asList(options);
         Collections.shuffle(tempList);
-        return  (String[])tempList.toArray();
+        return (String[]) tempList.toArray();
     }
 
     @Override

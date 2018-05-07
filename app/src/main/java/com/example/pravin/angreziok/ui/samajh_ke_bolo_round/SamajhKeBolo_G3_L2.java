@@ -370,7 +370,8 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
                         bundle.putParcelableArrayList("PlayerList", playerModalArrayList);
                         intent.putExtras(bundle);
                         startActivity(intent);
-                        /*                        Intent intent = new Intent(getActivity(), JodTod.class);
+                        /*
+                        Intent intent = new Intent(getActivity(), JodTod.class);
                         intent.putExtras(bundle);
                         startActivity(intent);*/
                     }
