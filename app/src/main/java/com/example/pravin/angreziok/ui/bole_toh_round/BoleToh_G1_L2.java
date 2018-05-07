@@ -179,7 +179,6 @@ public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleT
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                initiateQuestion();
                 presenter.setImage_gl_l2(studentID);
             }
         });
@@ -236,9 +235,9 @@ public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleT
     }
 
     @Override
-    public void initiateQuestion() {
+    public void initiateQuestion(String questionString) {
         startTimer();
-        playTTS();
+        playTTS(questionString);
     }
 
     private void setDataForGame() {
@@ -246,14 +245,13 @@ public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleT
         presenter.set_g1_l2_data(path);
     }
 
-    private void playTTS() {
-        text = "What is This?";
-        showQuestion.setText(text);
-        presenter.startTTS(text);
+    private void playTTS(String questionString) {
+        presenter.startTTS(questionString);
     }
 
     @Override
     public void setQuestionText(String questionString) {
+        initiateQuestion(questionString);
         showQuestion.setText(questionString);
     }
 

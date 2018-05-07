@@ -183,7 +183,6 @@ public class BoleToh_G2_L2 extends BaseFragment implements BoleTohContract.BoleT
             public void onClick(View v) {
                 dialog.dismiss();
                 presenter.setImage_g2_l2(studentID);
-                initiateQuestion();
             }
         });
 
@@ -259,6 +258,7 @@ public class BoleToh_G2_L2 extends BaseFragment implements BoleTohContract.BoleT
     @Override
     public void setQuestionText(String questionString) {
         text = questionString;
+        initiateQuestion();
         question.setText(questionString);
     }
 
