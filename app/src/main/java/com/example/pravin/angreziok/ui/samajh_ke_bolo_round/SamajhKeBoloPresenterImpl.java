@@ -135,7 +135,7 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
         questionId = resourceID;
         String imagePath = getSdcardPath() + "images/WhereGameL2/" + g1l2CurrentQuestionList.get(0).getResourceImage();
         Log.d("imagePath", "setImage_gl_l2: " + imagePath);
-        Toast.makeText(mContext, "actual ans: " + g1l2CurrentQuestionList.get(randomNumber).getResourceText(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(mContext, "actual ans: " + g1l2CurrentQuestionList.get(0).getResourceText(), Toast.LENGTH_SHORT).show();
         samajhKeBoloG1L2View.setQuestionImage(imagePath);
     }
 
