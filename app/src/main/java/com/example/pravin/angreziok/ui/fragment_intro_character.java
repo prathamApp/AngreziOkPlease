@@ -78,7 +78,7 @@ public class fragment_intro_character extends BaseFragment {
                     case 0:
                         instructionsTextView.setText("Picture Game\n\nआप पर्दे पर एक चित्र देखेंगे|\n" +
                                 "उसका नाम अंग्रेजी में बताईयें|");
-                        videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/ActionGame.mp4";
+                        videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/PictureGame.mp4";
                         playVideo(Uri.parse(videoPath));
                         break;
                     case 1:
