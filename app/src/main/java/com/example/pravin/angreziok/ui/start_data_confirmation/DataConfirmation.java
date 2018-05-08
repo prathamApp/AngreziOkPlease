@@ -72,7 +72,7 @@ public class DataConfirmation extends BaseActivity implements DataConfirmationCo
         teamNames.add("Superstars");
         teamNames.add("Allstars");
 
-        playerModalArrayList = extraBundle.getParcelableArrayList("studentList");
+        playerModalArrayList = extraBundle.getParcelableArrayList("playerModalArrayList");
         playerCount = playerModalArrayList.size();
         setStudentsAndTeams();
 
@@ -116,7 +116,7 @@ public class DataConfirmation extends BaseActivity implements DataConfirmationCo
             playerModalArrayList.get(i).setStudentAlias(""+teamNames.get(i));
             Log.d("DataConfirmationTAG", "StudNames: "+playerModalArrayList.get(i).getStudentName()+"  TeamName: "+playerModalArrayList.get(i).getStudentAlias());
 
-            Intent intent = new Intent(this, SamajhKeBolo.class);
+            Intent intent = new Intent(this, BoleToh.class);
             Bundle bundle = new Bundle();
             bundle.putParcelableArrayList("playerModalArrayList", playerModalArrayList);
             intent.putExtras(bundle);

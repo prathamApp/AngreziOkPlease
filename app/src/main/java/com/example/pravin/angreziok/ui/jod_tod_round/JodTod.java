@@ -263,7 +263,7 @@ public class JodTod extends BaseActivity implements JodTodContract.JodTodView, M
         reInitiateScores();
         Intent dataConfirmationIntent = new Intent(this, DataConfirmation.class);
         Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList("studentList", jodTodPlayerList);
+        bundle.putParcelableArrayList("playerModalArrayList", jodTodPlayerList);
         dataConfirmationIntent.putExtras(bundle);
         finishAffinity();
         startActivity(dataConfirmationIntent);

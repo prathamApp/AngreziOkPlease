@@ -125,7 +125,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
         try {
             int[] integerArray = getUniqueRandomNumber(0, g1l1QuestionData.size(), 4);
             readQuestionNo = getRandomNumber(0, 4);
-            String imagePath = sdCardPathString + "PicGameImages/";
+            String imagePath = sdCardPathString + "images/PicGameL1/";
             resTextArray.clear();
             resIdArray.clear();
             resImageArray.clear();
@@ -358,7 +358,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
         boleTohG1L2View.hideOptionView();
         randomNumber = getRandomNumber(0, g1l2QuestionData.size());
         String questionString = g1l2QuestionData.get(randomNumber).getResourceQuestion();
-        String imagePath = getSdcardPath() + "PicGameImages/" + g1l2QuestionData.get(randomNumber).getResourceImage();
+        String imagePath = getSdcardPath() + "images/PicGameL2/" + g1l2QuestionData.get(randomNumber).getResourceImage();
         Log.d("imagePath", "setImage_gl_l2: " + imagePath);
         setQuestionStartTime();
         studentID = studId;
@@ -373,7 +373,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
     public void setImage_g2_l2(String studId) {
         boleTohG2L2View.hideOptionView();
         randomNumber = getRandomNumber(0, g2l2QuestionData.size());
-        String imagePath = getSdcardPath() + "PicGameImages/" + g2l2QuestionData.get(randomNumber).getResourceImage();
+        String imagePath = getSdcardPath() + "images/ActionL2/" + g2l2QuestionData.get(randomNumber).getResourceImage();
         Toast.makeText(mContext, "actual ans: " + g2l2QuestionData.get(randomNumber).getResourceText(), Toast.LENGTH_SHORT).show();
         setQuestionStartTime();
         studentID = studId;
@@ -391,8 +391,8 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
         String path = getSdcardPath();
         currentPairList = g3l2QuestionData.get(randomNumber).getNodelist();
         Collections.shuffle(currentPairList);
-        String hintImagePath = path + "PicGameImages/" + currentPairList.get(0).getResourceImage();
-        String questionImagePath = path + "PicGameImages/" + currentPairList.get(1).getResourceImage();
+        String hintImagePath = path + "images/PicGameL2/" + currentPairList.get(0).getResourceImage();
+        String questionImagePath = path + "images/PicGameL2/" + currentPairList.get(1).getResourceImage();
         Toast.makeText(mContext, "Hint:::" + currentPairList.get(0).getResourceText(), Toast.LENGTH_SHORT).show();
         Toast.makeText(mContext, "Question:::" + currentPairList.get(1).getResourceText(), Toast.LENGTH_SHORT).show();
         setQuestionStartTime();

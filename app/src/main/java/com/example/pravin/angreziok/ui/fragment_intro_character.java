@@ -69,8 +69,6 @@ public class fragment_intro_character extends BaseFragment {
         ButterKnife.bind(this, view);
         myFragmentRound = getArguments().getString("round", "");
         count = getArguments().getInt("count", 0);
-        myFragmentRound = "R3";
-        count = 2;
         Log.d("games", "onViewCreated: "+count);
 
         switch (myFragmentRound) {
@@ -80,19 +78,19 @@ public class fragment_intro_character extends BaseFragment {
                     case 0:
                         instructionsTextView.setText("Picture Game\n\nआप पर्दे पर एक चित्र देखेंगे|\n" +
                                 "उसका नाम अंग्रेजी में बताईयें|");
-                        videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/ActionGame_1.mp4";
+                        videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/ActionGame.mp4";
                         playVideo(Uri.parse(videoPath));
                         break;
                     case 1:
                         instructionsTextView.setText("Action Game\n\nआप पर्दे पर एक क्रिया देखेंगे|\n" +
                                 "उस क्रिया का नाम अंग्रेजी में बताईयें|");
-                        videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/ActionGame_1.mp4";
+                        videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/ActionGame.mp4";
                         playVideo(Uri.parse(videoPath));
                         break;
                     case 2:
                         instructionsTextView.setText("Pairs Game\n\n इस गेम में आप पर्दे पर दो चित्र देखेंगे|\n" +
                                 "मैं आपको पहले चित्र के बारें में बताउंगी| आप  मुझे उसी तरह दुसरे चित्र के बारें में बताओ|");
-                        videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/RhymingGame.mp4";
+                        videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/PairsGame.mp4";
                         playVideo(Uri.parse(videoPath));
                         break;
                 }
@@ -103,7 +101,7 @@ public class fragment_intro_character extends BaseFragment {
                     case 0:
                         instructionsTextView.setText("Alphabets Game\n\nअब आप पर्दे पर एक अक्षर देखेंगे और उसकी आवाज़ सुनेंगे|\n" +
                                 "Timer ख़तम होने से पहले इस अक्षर से शुरू होने वाले ज्यादा से ज्यादा अंग्रेजी शब्द हमें बताईयें|");
-                        videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/RhymingGame.mp4";
+                        videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/AlphabetGame.mp4";
                         playVideo(Uri.parse(videoPath));
                         break;
                     case 1:
@@ -113,8 +111,8 @@ public class fragment_intro_character extends BaseFragment {
                         playVideo(Uri.parse(videoPath));
                         break;
                     case 2:
-                        instructionsTextView.setText("Listen and Spell Game\n\nइस गेम में आपको अक्षर से खाली स्थान भर कर एक शब्द बनाना है| और जानकारी के लिए यह विडियो देखे| ");
-                        videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/RhymingGame.mp4";
+                        instructionsTextView.setText("Listen and Spell\n\nइस गेम में आपको अक्षर से खाली स्थान भर कर एक शब्द बनाना है| और जानकारी के लिए यह विडियो देखे| ");
+                        videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/Listen _Spell.mp4";
                         playVideo(Uri.parse(videoPath));
                         break;
                 }
@@ -128,13 +126,13 @@ public class fragment_intro_character extends BaseFragment {
                         playVideo(Uri.parse(videoPath));
                         break;
                     case 1:
-                        instructionsTextView.setText("Say-it Game\n\nइस गेम में आपसे एक सवाल पूछा जायेगा|आपको तीन विकल्प दिए जायेंगे| सही विकल्प चुन कर उस शब्द को बोल कर बताओ|");
-                        videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/CompareGame.mp4";
+                        instructionsTextView.setText("Compare Game\n\nइस गेम में आपसे एक सवाल पूछा जायेगा|आपको तीन विकल्प दिए जायेंगे| सही विकल्प चुन कर उस शब्द को बोल कर बताओ|");
+                        videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/CampareGame.mp4";
                         playVideo(Uri.parse(videoPath));
                         break;
                     case 2:
-                        instructionsTextView.setText("How to Ask Game\n\nइस गेम में आप अपनी मातृ भाषा में एक वाक्य सुनेंगे| आपको साथ में 2 अंग्रेजी वाक्य के विकल्प दिए जायेंगे| आपको सही अनुवाद चुनकर उस वाक्य को पढ़ कर सुनना है|");
-                        videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/RhymingGame.mp4";
+                        instructionsTextView.setText("Say it in English \n\nइस गेम में आप अपनी मातृ भाषा में एक वाक्य सुनेंगे| आपको साथ में 2 अंग्रेजी वाक्य के विकल्प दिए जायेंगे| आपको सही अनुवाद चुनकर उस वाक्य को पढ़ कर सुनना है|");
+                        videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/SayItInEnglish.mp4";
                         playVideo(Uri.parse(videoPath));
                         break;
                 }
