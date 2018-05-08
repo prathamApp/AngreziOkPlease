@@ -257,7 +257,7 @@ public class SamajhKeBolo extends BaseActivity implements SamajhKeBoloContract.S
         reInitiateScores();
         Intent dataConfirmationIntent = new Intent(this, DataConfirmation.class);
         Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList("studentList", playerModalArrayList);
+        bundle.putParcelableArrayList("playerModalArrayList", playerModalArrayList);
         dataConfirmationIntent.putExtras(bundle);
         finishAffinity();
         startActivity(dataConfirmationIntent);
