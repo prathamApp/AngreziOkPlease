@@ -71,8 +71,10 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
         Bundle extraBundle = intent.getExtras();
         playerModalArrayList = extraBundle.getParcelableArrayList("playerModalArrayList");
 
+        list.clear();
+        gameCounter = 0;
         for (int i = 0; i < 3; i++)
-            list.add(new Integer(i));
+            list.add(i);
         Collections.shuffle(list);
         Log.d("games", "\n\n\nShuffle: \n\n\n");
         for (int i = 0; i < list.size(); i++)
