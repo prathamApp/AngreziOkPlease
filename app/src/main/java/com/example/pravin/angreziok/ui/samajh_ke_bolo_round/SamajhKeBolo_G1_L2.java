@@ -308,7 +308,6 @@ public class SamajhKeBolo_G1_L2 extends BaseFragment implements SamajhKeBoloCont
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-
                     getActivity().findViewById(R.id.iv_g1_l2_submit_ans).setOnClickListener(null);
                     Bundle bundle = new Bundle();
                     SamajhKeBolo.gameCounter += 1;
@@ -323,7 +322,6 @@ public class SamajhKeBolo_G1_L2 extends BaseFragment implements SamajhKeBoloCont
                         intent.putExtras(bundle);
                         startActivity(intent);
                     }
-
                 }
             }, 2500);
         }

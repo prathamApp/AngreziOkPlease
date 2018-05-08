@@ -3,22 +3,16 @@ package com.example.pravin.angreziok.services;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Application;
-import android.app.Service;
 import android.content.Context;
-import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.IBinder;
 import android.os.Looper;
 import android.os.SystemClock;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
-import android.support.annotation.Nullable;
 import android.util.Log;
-
-import com.example.pravin.angreziok.interfaces.TTSCallbacks;
 
 import java.util.ArrayList;
 import java.util.HashMap;

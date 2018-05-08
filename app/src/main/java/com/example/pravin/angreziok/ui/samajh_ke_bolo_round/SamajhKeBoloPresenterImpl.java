@@ -11,7 +11,6 @@ import com.example.pravin.angreziok.database.AppDatabase;
 import com.example.pravin.angreziok.database.BackupDatabase;
 import com.example.pravin.angreziok.domain.Score;
 import com.example.pravin.angreziok.interfaces.MediaCallbacks;
-import com.example.pravin.angreziok.interfaces.TTSCallbacks;
 import com.example.pravin.angreziok.modalclasses.GenericModalGson;
 import com.example.pravin.angreziok.services.TTSService;
 import com.example.pravin.angreziok.util.MediaPlayerUtil;
