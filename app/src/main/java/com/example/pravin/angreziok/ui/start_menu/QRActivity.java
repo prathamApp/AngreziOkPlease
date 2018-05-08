@@ -180,7 +180,7 @@ public class QRActivity extends BaseActivity implements QRContract.StartMenuView
         startSession();
         Intent dataConfirmationIntent = new Intent(this, DataConfirmation.class);
         Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList("studentList", playerModalList);
+        bundle.putParcelableArrayList("playerModalArrayList", playerModalList);
         dataConfirmationIntent.putExtras(bundle);
         startActivity(dataConfirmationIntent);
     }
