@@ -342,7 +342,7 @@ public class JodTod_G3_L2 extends BaseFragment implements JodTodContract.JodTod_
                                 bundle, fragment_intro_character.class.getSimpleName());
                     } else {
                         Intent intent = new Intent(getActivity(), SamajhKeBolo.class);
-                        bundle.putParcelableArrayList("PlayerList", jodTodPlayerList);
+                        bundle.putParcelableArrayList("playerModalArrayList", jodTodPlayerList);
                         intent.putExtras(bundle);
                         startActivity(intent);
                     }
