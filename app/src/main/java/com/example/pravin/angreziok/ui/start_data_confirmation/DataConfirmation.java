@@ -54,6 +54,7 @@ public class DataConfirmation extends BaseActivity implements DataConfirmationCo
     @BindView(R.id.tv_team_four)
     TextView teamFour;
     public static AppDatabase appDatabase;
+    public static boolean fragmentPauseFlg = false;
 
 
     @Override

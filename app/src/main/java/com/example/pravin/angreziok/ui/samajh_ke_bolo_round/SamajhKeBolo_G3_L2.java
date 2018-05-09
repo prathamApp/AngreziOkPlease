@@ -26,6 +26,7 @@ import com.example.pravin.angreziok.animations.MyBounceInterpolator;
 import com.example.pravin.angreziok.interfaces.SpeechResult;
 import com.example.pravin.angreziok.ui.final_screen.ResultScreen;
 import com.example.pravin.angreziok.ui.fragment_intro_character;
+import com.example.pravin.angreziok.ui.start_data_confirmation.DataConfirmation;
 import com.example.pravin.angreziok.util.PD_Utility;
 import com.github.anastr.flattimelib.CountDownTimerView;
 import com.github.anastr.flattimelib.intf.OnTimeFinish;
@@ -435,5 +436,25 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
     public void onResult(String result) {
         answerView.setVisibility(View.VISIBLE);
         answer.setText(result);
+    }
+
+    @Override
+    public void onResume() {
+        try {
+            if (DataConfirmation.fragmentPauseFlg) {
+                DataConfirmation.fragmentPauseFlg = false;
+                mCountDownTimer.resume();
+            }
+        } catch (Exception e) {
+        }
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        DataConfirmation.fragmentPauseFlg = true;
+        mCountDownTimer.pause();
+        presenter.fragmentOnPause();
     }
 }

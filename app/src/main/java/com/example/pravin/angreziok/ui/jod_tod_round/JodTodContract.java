@@ -14,6 +14,8 @@ public interface JodTodContract {
 
         void startTTS(String text);
 
+        void fragmentOnPause();
+
         String getSdcardPath();
 
         void set_g3_l2_data();

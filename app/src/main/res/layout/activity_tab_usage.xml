@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/loginaop"
     tools:context=".ui.tab_usage.TabUsage">
 
     <LinearLayout
@@ -14,28 +15,43 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginTop="10dp"
             android:layout_weight="1.2">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:background="#32c45b"
+                android:background="@drawable/round_icon_normal"
                 android:text=" USAGE "
+                android:layout_marginHorizontal="20dp"
                 android:textAllCaps="false"
-                android:textColor="#ffffff"
+                android:textColor="@color/simple_black"
                 android:textSize="25sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_weight="8.8"
+        android:weightSum="10"
+        android:orientation="vertical">
+
         <ListView
             android:id="@+id/list_view"
             android:layout_width="match_parent"
-            android:layout_marginTop="5dp"
+            android:background="@drawable/round_icon_normal"
             android:layout_height="0dp"
-            android:layout_weight="8.8" />
+            android:padding="10dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_weight="9.3"
+            android:gravity="center"/>
 
+    </LinearLayout>
     </LinearLayout>
 
 

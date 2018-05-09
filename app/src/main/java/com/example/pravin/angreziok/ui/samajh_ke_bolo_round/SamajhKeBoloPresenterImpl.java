@@ -28,6 +28,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static com.example.pravin.angreziok.AOPApplication.getRandomNumber;
+import static com.example.pravin.angreziok.BaseActivity.ttsService;
 import static com.example.pravin.angreziok.ui.samajh_ke_bolo_round.SamajhKeBolo.playerModalArrayList;
 
 
@@ -35,7 +36,7 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
 
     public TTSService ttsService;
     Context mContext;
-    MediaPlayerUtil mediaPlayerUtil;
+    public MediaPlayerUtil mediaPlayerUtil;
     SamajhKeBoloContract.SamajhKeBolo_G1_L2_View samajhKeBoloG1L2View;
     SamajhKeBoloContract.SamajhKeBolo_G3_L2_View samajhKeBoloG3L2View;
     SamajhKeBoloContract.SamajhKeBolo_G2_L2_View samajhKeBoloG2L2View;
@@ -422,6 +423,14 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
     @Override
     public void onComplete() {
 
+    }
+
+    @Override
+    public void fragmentOnPause() {
+        if (mediaPlayerUtil != null)
+            mediaPlayerUtil.stopMedia();
+        if(ttsService != null )
+            ttsService.stop();
     }
 
 }

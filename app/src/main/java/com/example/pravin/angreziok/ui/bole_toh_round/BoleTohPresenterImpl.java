@@ -37,7 +37,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
     float speechRate = 1.0f;
     public TTSService ttsService;
     Context mContext;
-    MediaPlayerUtil mediaPlayerUtil;
+    public MediaPlayerUtil mediaPlayerUtil;
     BoleTohContract.BoleToh_G1_L2_View boleTohG1L2View;
     BoleTohContract.BoleToh_G3_L2_View boleTohG3L2View;
     BoleTohContract.BoleToh_G2_L2_View boleTohG2L2View;
@@ -391,8 +391,8 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
         String path = getSdcardPath();
         currentPairList = g3l2QuestionData.get(randomNumber).getNodelist();
         Collections.shuffle(currentPairList);
-        String hintImagePath = path + "images/PicGameL2/" + currentPairList.get(0).getResourceImage();
-        String questionImagePath = path + "images/PicGameL2/" + currentPairList.get(1).getResourceImage();
+        String hintImagePath = path + "images/PairsGameL2/" + currentPairList.get(0).getResourceImage();
+        String questionImagePath = path + "images/PairsGameL2/" + currentPairList.get(1).getResourceImage();
         Toast.makeText(mContext, "Hint:::" + currentPairList.get(0).getResourceText(), Toast.LENGTH_SHORT).show();
         Toast.makeText(mContext, "Question:::" + currentPairList.get(1).getResourceText(), Toast.LENGTH_SHORT).show();
         setQuestionStartTime();
@@ -499,5 +499,13 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
 
     @Override
     public void onComplete() {
+    }
+
+    @Override
+    public void fragmentOnPause() {
+        if (mediaPlayerUtil != null)
+            mediaPlayerUtil.stopMedia();
+        if(ttsService != null )
+            ttsService.stop();
     }
 }

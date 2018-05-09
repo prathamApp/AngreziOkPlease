@@ -147,6 +147,7 @@ public class QRActivity extends BaseActivity implements QRContract.StartMenuView
 
     @OnClick(R.id.btn_stats)
     public void showStudentsUsage() {
+        mScannerView.stopCamera();
         startActivity(new Intent(this, TabUsage.class));
     }
 
@@ -411,6 +412,13 @@ public class QRActivity extends BaseActivity implements QRContract.StartMenuView
                     startSesion.setToDate("NA");
                     appDatabase.getSessionDao().insert(startSesion);
 
+                    Attendance attendance = new Attendance();
+                    for(int i =0; i<playerModalList.size(); i++) {
+                        attendance.setSessionID("" + currentSession);
+                        attendance.setStudentID("" + playerModalList.get(i).getStudentID());
+                        appDatabase.getAttendanceDao().insert(attendance);
+                    }
+
                     BackupDatabase.backup(QRActivity.this);
                     return null;
                 } catch (Exception e) {
@@ -429,22 +437,15 @@ public class QRActivity extends BaseActivity implements QRContract.StartMenuView
             protected Object doInBackground(Object[] objects) {
                 try {
                     Student student = new Student();
-                    Attendance attendance = new Attendance();
 
                     student.setStudentID(""+stdId);
                     student.setFirstName(""+stdFirstName);
                     student.setNewFlag(1);
                     String studentName = appDatabase.getStudentDao().checkStudent(""+stdId);
 
-                    String currentSession = appDatabase.getStatusDao().getValue("CurrentSession");
-                    attendance.setSessionID(""+currentSession);
-                    attendance.setStudentID(""+stdId);
-
                     if(studentName == null) {
                         appDatabase.getStudentDao().insert(student);
                     }
-
-                    appDatabase.getAttendanceDao().insert(attendance);
 
                     BackupDatabase.backup(QRActivity.this);
                     return null;

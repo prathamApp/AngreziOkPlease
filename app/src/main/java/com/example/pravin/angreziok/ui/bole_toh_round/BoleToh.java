@@ -30,7 +30,6 @@ import com.example.pravin.angreziok.database.AppDatabase;
 import com.example.pravin.angreziok.database.BackupDatabase;
 import com.example.pravin.angreziok.interfaces.MediaCallbacks;
 import com.example.pravin.angreziok.modalclasses.PlayerModal;
-import com.example.pravin.angreziok.ui.final_screen.ResultScreen;
 import com.example.pravin.angreziok.ui.fragment_intro_character;
 import com.example.pravin.angreziok.ui.start_data_confirmation.DataConfirmation;
 import com.example.pravin.angreziok.ui.start_menu.QRActivity;
@@ -52,13 +51,15 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
     static ArrayList<PlayerModal> playerModalArrayList;
     static int gameCounter = 0;
     String charIntroPath;
-    MediaPlayerUtil mediaPlayerUtil;
+    public MediaPlayerUtil mediaPlayerUtil;
 
     @BindView(R.id.round_intro_gifview)
     GifView introGifView;
     @BindView(R.id.skip_button_intro)
     Button btn_skip;
+    Boolean pauseFlg = false;
     static ArrayList<Integer> list = new ArrayList<Integer>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,6 +154,7 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
+                pauseFlg = false;
                 loadFragment();
             }
         }, 1000);
@@ -160,7 +162,7 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
 
     @Override
     public void onBackPressed() {
-       quitOrNot();
+        quitOrNot();
     }
 
     private void quitOrNot() {
@@ -206,7 +208,7 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
                 if (mediaPlayerUtil != null)
                     mediaPlayerUtil.pauseMedia();
                 dialog.dismiss();
-                    quitGame();
+                quitGame();
             }
         });
     }
@@ -236,9 +238,9 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
                     String AppStartDateTime = appDatabase.getStatusDao().getValue("AppStartDateTime");
                     String sessionToDate = sessionDao.getToDate(currentSession);
 
-                    if(sessionToDate.equalsIgnoreCase("na")) {
+                    if (sessionToDate.equalsIgnoreCase("na")) {
                         String timerTime = AOPApplication.getCurrentDateTime(true, AppStartDateTime);
-                        appDatabase.getSessionDao().UpdateToDate(currentSession,timerTime);
+                        appDatabase.getSessionDao().UpdateToDate(currentSession, timerTime);
                     }
 
                     BackupDatabase.backup(BoleToh.this);
@@ -267,4 +269,25 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
         finishAffinity();
         startActivity(dataConfirmationIntent);
     }
+
+    @Override
+    public void onPause() {
+        pauseFlg = true;
+        if (mediaPlayerUtil != null)
+            mediaPlayerUtil.pauseMedia();
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        try {
+            if (pauseFlg && !DataConfirmation.fragmentPauseFlg) {
+                mediaPlayerUtil.resumeMedia();
+            }
+        } catch (Exception e) {
+        }
+        pauseFlg = false;
+        super.onResume();
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.example.pravin.angreziok.ui.tab_usage;
 
 import android.arch.persistence.room.Room;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.adapters.TabUsageAdapter;
 import com.example.pravin.angreziok.database.AppDatabase;
 import com.example.pravin.angreziok.modalclasses.Usage;
+import com.example.pravin.angreziok.ui.start_menu.QRActivity;
 
 import org.json.JSONObject;
 
@@ -82,4 +84,12 @@ public class TabUsage extends BaseActivity implements TabUsageContract.TabUsageV
         listAdapter = new TabUsageAdapter(this, this.listForAdapter);
         listView.setAdapter(listAdapter);
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent qrScan = new Intent(this, QRActivity.class);
+        finish();
+        startActivity(qrScan);
+    }
+
 }

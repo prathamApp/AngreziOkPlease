@@ -28,6 +28,7 @@ import com.example.pravin.angreziok.animations.MyBounceInterpolator;
 import com.example.pravin.angreziok.interfaces.SpeechResult;
 import com.example.pravin.angreziok.ui.fragment_intro_character;
 import com.example.pravin.angreziok.ui.jod_tod_round.JodTod;
+import com.example.pravin.angreziok.ui.start_data_confirmation.DataConfirmation;
 import com.example.pravin.angreziok.util.PD_Utility;
 import com.github.anastr.flattimelib.CountDownTimerView;
 import com.github.anastr.flattimelib.intf.OnTimeFinish;
@@ -88,7 +89,7 @@ public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleT
 
     String text;
     BoleTohContract.BoleTohPresenter presenter;
-    int speechCount, currentTeam,timeOfTimer=20000;
+    int speechCount, currentTeam, timeOfTimer = 20000;
     Dialog dialog;
 
     @Override
@@ -106,6 +107,7 @@ public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleT
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
+        DataConfirmation.fragmentPauseFlg = false;
         presenter = new BoleTohPresenterImpl(getActivity(), this, ttsService);
         setInitialScores();
         setDataForGame();
@@ -217,7 +219,7 @@ public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleT
                 .setTimeToLive(1500L)
                 .addShapes(Shape.RECT, Shape.CIRCLE)
                 .addSizes(new Size(12, 5f))
-                .setPosition(-50f,+ 50f, -50f, -50f)
+                .setPosition(-50f, +50f, -50f, -50f)
                 .stream(500, 1000L);
     }
 
@@ -374,5 +376,25 @@ public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleT
         optionsView.setVisibility(View.VISIBLE);
         setAnswer(result);
         presenter.g1_l2_checkAnswer(result);
+    }
+
+    @Override
+    public void onResume() {
+        try {
+            if (DataConfirmation.fragmentPauseFlg) {
+                DataConfirmation.fragmentPauseFlg = false;
+                mCountDownTimer.resume();
+            }
+        } catch (Exception e) {
+        }
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        DataConfirmation.fragmentPauseFlg = true;
+        mCountDownTimer.pause();
+        presenter.fragmentOnPause();
     }
 }

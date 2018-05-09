@@ -58,6 +58,8 @@ public interface BoleTohContract {
 
         void showImages(String path);
 
+        void fragmentOnPause();
+
         String getCurrentQuestion();
 
         String getCurrentHint();

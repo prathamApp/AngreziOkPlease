@@ -45,7 +45,7 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
     int randomNumber1, randomNumber;
     String rhymeCheckWord, questionWord;
     String sdCardPathString, questionStartTime, studentID, resourceID, questionId;
-    MediaPlayerUtil mediaPlayerUtil;
+    public MediaPlayerUtil mediaPlayerUtil;
     private AppDatabase appDatabase;
     int scoredMarks, totalMarks = 15;
     ArrayList<String> g1g2result;
@@ -56,7 +56,6 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
         appDatabase = Room.databaseBuilder(mContext,
                 AppDatabase.class, AppDatabase.DB_NAME)
                 .build();
-
     }
 
     public JodTodPresenterImpl(Context context, JodTodContract.JodTod_G3_L2_View jodTod_g3_l2_view, TTSService ttsService) {
@@ -87,7 +86,6 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
                 .build();
         g1g2result = new ArrayList<String>();
     }
-
 
     @Override
     public void setCurrentScore(int currentMarks) {
@@ -426,7 +424,13 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
     }
 
     @Override
-    public void onComplete() {
+    public void onComplete() {    }
 
+    @Override
+    public void fragmentOnPause() {
+        if (mediaPlayerUtil != null)
+            mediaPlayerUtil.stopMedia();
+        if(ttsService != null )
+            ttsService.stop();
     }
 }

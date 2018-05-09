@@ -30,7 +30,6 @@ import com.example.pravin.angreziok.database.AppDatabase;
 import com.example.pravin.angreziok.database.BackupDatabase;
 import com.example.pravin.angreziok.interfaces.MediaCallbacks;
 import com.example.pravin.angreziok.modalclasses.PlayerModal;
-import com.example.pravin.angreziok.ui.bole_toh_round.BoleToh;
 import com.example.pravin.angreziok.ui.fragment_intro_character;
 import com.example.pravin.angreziok.ui.start_data_confirmation.DataConfirmation;
 import com.example.pravin.angreziok.ui.start_menu.QRActivity;
@@ -59,6 +58,7 @@ public class SamajhKeBolo extends BaseActivity implements SamajhKeBoloContract.S
     Button btn_skip;
     static ArrayList<Integer> list = new ArrayList<Integer>();
     static int gameCounter = 0;
+    Boolean pauseFlg = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,6 +151,7 @@ public class SamajhKeBolo extends BaseActivity implements SamajhKeBoloContract.S
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
+                pauseFlg = false;
                 loadFragment();
             }
         }, 1000);
@@ -234,9 +235,9 @@ public class SamajhKeBolo extends BaseActivity implements SamajhKeBoloContract.S
                     String AppStartDateTime = appDatabase.getStatusDao().getValue("AppStartDateTime");
                     String sessionToDate = sessionDao.getToDate(currentSession);
 
-                    if(sessionToDate.equalsIgnoreCase("na")) {
+                    if (sessionToDate.equalsIgnoreCase("na")) {
                         String timerTime = AOPApplication.getCurrentDateTime(true, AppStartDateTime);
-                        appDatabase.getSessionDao().UpdateToDate(currentSession,timerTime);
+                        appDatabase.getSessionDao().UpdateToDate(currentSession, timerTime);
                     }
 
                     BackupDatabase.backup(SamajhKeBolo.this);
@@ -263,5 +264,25 @@ public class SamajhKeBolo extends BaseActivity implements SamajhKeBoloContract.S
         dataConfirmationIntent.putExtras(bundle);
         finishAffinity();
         startActivity(dataConfirmationIntent);
+    }
+
+    @Override
+    public void onPause() {
+        pauseFlg = true;
+        if (mediaPlayerUtil != null)
+            mediaPlayerUtil.pauseMedia();
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        try {
+            if (pauseFlg && !DataConfirmation.fragmentPauseFlg) {
+                mediaPlayerUtil.resumeMedia();
+            }
+        } catch (Exception e) {
+        }
+        pauseFlg = false;
+        super.onResume();
     }
 }

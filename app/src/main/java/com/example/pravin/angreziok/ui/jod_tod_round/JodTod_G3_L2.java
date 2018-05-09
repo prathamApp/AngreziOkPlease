@@ -25,6 +25,7 @@ import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.animations.MyBounceInterpolator;
 import com.example.pravin.angreziok.ui.fragment_intro_character;
 import com.example.pravin.angreziok.ui.samajh_ke_bolo_round.SamajhKeBolo;
+import com.example.pravin.angreziok.ui.start_data_confirmation.DataConfirmation;
 import com.example.pravin.angreziok.util.PD_Utility;
 import com.github.anastr.flattimelib.CountDownTimerView;
 import com.github.anastr.flattimelib.intf.OnTimeFinish;
@@ -75,7 +76,7 @@ public class JodTod_G3_L2 extends BaseFragment implements JodTodContract.JodTod_
     int currentTeam;
     Dialog dialog;
     TextView currentTextView;
-    boolean playingThroughTts = true;
+    boolean playingThroughTts = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -294,7 +295,7 @@ public class JodTod_G3_L2 extends BaseFragment implements JodTodContract.JodTod_
         if (playingThroughTts)
             presenter.startTTS(text);
         else
-            presenter.playMusic(path, presenter.getSdcardPath() + "Sounds/");
+            presenter.playMusic(path, presenter.getSdcardPath() + "Sounds/ListenSpellGame/");
     }
 
     private void startTimer() {
@@ -375,5 +376,25 @@ public class JodTod_G3_L2 extends BaseFragment implements JodTodContract.JodTod_
         animateView(textView, getActivity());
 //        Toast.makeText(getActivity(), "" + textView.getText(), Toast.LENGTH_SHORT).show();
         currentTextView.setText(textView.getText());
+    }
+
+    @Override
+    public void onResume() {
+        try {
+            if (DataConfirmation.fragmentPauseFlg) {
+                DataConfirmation.fragmentPauseFlg = false;
+                mCountDownTimer.resume();
+            }
+        } catch (Exception e) {
+        }
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        DataConfirmation.fragmentPauseFlg = true;
+        mCountDownTimer.pause();
+        presenter.fragmentOnPause();
     }
 }

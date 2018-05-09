@@ -25,6 +25,7 @@ import com.example.pravin.angreziok.ui.jod_tod_round.JodTod_G3_L2;
 import com.example.pravin.angreziok.ui.samajh_ke_bolo_round.SamajhKeBolo_G1_L2;
 import com.example.pravin.angreziok.ui.samajh_ke_bolo_round.SamajhKeBolo_G2_L2;
 import com.example.pravin.angreziok.ui.samajh_ke_bolo_round.SamajhKeBolo_G3_L2;
+import com.example.pravin.angreziok.ui.start_data_confirmation.DataConfirmation;
 import com.example.pravin.angreziok.util.PD_Utility;
 import com.example.pravin.angreziok.util.SDCardUtil;
 
@@ -61,6 +62,15 @@ public class fragment_intro_character extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_intro_character, container, false);
+    }
+
+    @Override
+    public void onResume() {
+        if(DataConfirmation.fragmentPauseFlg) {
+            DataConfirmation.fragmentPauseFlg = true;
+            joker_videoView.start();
+        }
+        super.onResume();
     }
 
     @Override
@@ -202,6 +212,7 @@ public class fragment_intro_character extends BaseFragment {
 
     @OnClick(R.id.btn_skip_instructions)
     public void gotoNext() {
+        DataConfirmation.fragmentPauseFlg=false;
         loadFragment(frag, count);
     }
 
@@ -275,5 +286,12 @@ public class fragment_intro_character extends BaseFragment {
             }
         }
         return sdCardPathString;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        DataConfirmation.fragmentPauseFlg = true;
+        joker_videoView.pause();
     }
 }

@@ -32,9 +32,10 @@ public interface SamajhKeBoloContract {
         String[] getOptions_g3_l2();
         void checkAnswerOfOptions(String answer, int currentTeam);
         void checkAnswerOfStt(String answer,int currentTeam);
+        void fragmentOnPause();
 
         void setCurrentScore(int scoredMarks);
-    }
+        }
 
     interface SamajhKeBolo_G1_L2_View {
         void setCelebrationView();
