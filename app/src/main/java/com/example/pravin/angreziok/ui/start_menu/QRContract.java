@@ -7,7 +7,7 @@ package com.example.pravin.angreziok.ui.start_menu;
 public interface QRContract {
 
     public interface StartMenuView{
-        void showToast();
+        void showToast(String myToast);
     }
 
     public interface StartMenuPresenter {

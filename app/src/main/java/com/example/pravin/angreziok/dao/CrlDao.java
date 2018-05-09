@@ -36,4 +36,7 @@ public interface CrlDao {
 
     @Query("select * from Crl where newCrl = 1")
     List<Crl> getAllNewCrls();
+
+    @Query("select FirstName from Crl where UserName = :uName and Password = :uPass")
+    String checkCrls(String uName, String uPass);
 }

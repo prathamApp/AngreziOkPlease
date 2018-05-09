@@ -21,6 +21,5 @@ public class QRPresenterImpl implements QRContract.StartMenuPresenter {
     @Override
     public void displayToast() {
         Toast.makeText(mContext, "In presenter displayToast", Toast.LENGTH_SHORT).show();
-        startMenuView.showToast();
     }
 }

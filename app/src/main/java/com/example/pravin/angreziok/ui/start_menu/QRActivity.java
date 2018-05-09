@@ -9,9 +9,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
@@ -26,7 +24,6 @@ import android.widget.Toast;
 import com.example.pravin.angreziok.AOPApplication;
 import com.example.pravin.angreziok.BaseActivity;
 import com.example.pravin.angreziok.R;
-import com.example.pravin.angreziok.dao.SessionDao;
 import com.example.pravin.angreziok.dao.StatusDao;
 import com.example.pravin.angreziok.database.AppDatabase;
 import com.example.pravin.angreziok.database.BackupDatabase;
@@ -37,11 +34,8 @@ import com.example.pravin.angreziok.modalclasses.PlayerModal;
 import com.example.pravin.angreziok.ui.admin_console.AdminConsole;
 import com.example.pravin.angreziok.ui.start_data_confirmation.DataConfirmation;
 import com.example.pravin.angreziok.ui.tab_usage.TabUsage;
-import com.example.pravin.angreziok.ui.video_intro.VideoIntro;
-import com.example.pravin.angreziok.util.SDCardUtil;
 import com.google.zxing.Result;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.UUID;
 import java.util.regex.Matcher;
@@ -77,7 +71,7 @@ public class QRActivity extends BaseActivity implements QRContract.StartMenuView
     Boolean setStud = false;
     ArrayList<PlayerModal> playerModalList;
     public ZXingScannerView mScannerView;
-
+    int crlCheck;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -187,8 +181,8 @@ public class QRActivity extends BaseActivity implements QRContract.StartMenuView
     }
 
     @Override
-    public void showToast() {
-        Toast.makeText(this, "In mainview showToast", Toast.LENGTH_SHORT).show();
+    public void showToast(String ToastContent) {
+        Toast.makeText(QRActivity.this, "" + ToastContent, Toast.LENGTH_SHORT).show();
     }
 
     private String[] decodeStudentId(String text, String s) {
@@ -263,15 +257,57 @@ public class QRActivity extends BaseActivity implements QRContract.StartMenuView
             public void onClick(View v) {
 
                 dialog.dismiss();
-                String userNameString = ""+userName.getText();
-                String passwordString = ""+password.getText();
+                String userNameString = "" + userName.getText();
+                String passwordString = "" + password.getText();
 
-                if(userNameString.equalsIgnoreCase(passwordString)){
-                    Intent Intent = new Intent(QRActivity.this, AdminConsole.class);
-                    startActivity(Intent);
-                }
+                Log.d("name:::::", "userNameString : " + userNameString + "       passwordString:" + passwordString);
+
+                checkLogin(userNameString, passwordString);
+/*                if (userNameString.equalsIgnoreCase(passwordString)) {
+                }*/
             }
         });
+    }
+
+    private void checkLogin(final String userNameString, final String passwordString) {
+        Log.d("name:::::", "userNameString : " + userNameString + "       passwordString:" + passwordString);
+        crlCheck = 0;
+
+        new AsyncTask<Object, Void, Object>() {
+            @Override
+            protected Object doInBackground(Object[] objects) {
+                try {
+                    appDatabase = Room.databaseBuilder(QRActivity.this,
+                            AppDatabase.class, AppDatabase.DB_NAME)
+                            .build();
+
+                    String name = appDatabase.getCrlDao().checkCrls(userNameString, passwordString);
+
+                    Log.d("name:::::", "doInBackground: " + name);
+
+                    if (name != null) {
+                        Intent Intent = new Intent(QRActivity.this, AdminConsole.class);
+                        startActivity(Intent);
+                    } else {
+                        crlCheck = 1;
+                    }
+
+
+                } catch (Exception e) {
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Object o) {
+                super.onPostExecute(o);
+                if (crlCheck == 1) {
+                    Toast.makeText(QRActivity.this, "Username or Password Incorrect", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }.execute();
+
+
     }
 
     public void dialogClick() {
@@ -378,7 +414,7 @@ public class QRActivity extends BaseActivity implements QRContract.StartMenuView
             playerModal.setStudentAlias("");
 
             playerModalList.add(playerModal);
-            enterStudentData(stdId,stdFirstName);
+            enterStudentData(stdId, stdFirstName);
             //scanNextQRCode();
             setStud = true;
             showQrDialog(stdFirstName);
@@ -413,7 +449,7 @@ public class QRActivity extends BaseActivity implements QRContract.StartMenuView
                     appDatabase.getSessionDao().insert(startSesion);
 
                     Attendance attendance = new Attendance();
-                    for(int i =0; i<playerModalList.size(); i++) {
+                    for (int i = 0; i < playerModalList.size(); i++) {
                         attendance.setSessionID("" + currentSession);
                         attendance.setStudentID("" + playerModalList.get(i).getStudentID());
                         appDatabase.getAttendanceDao().insert(attendance);
@@ -438,12 +474,12 @@ public class QRActivity extends BaseActivity implements QRContract.StartMenuView
                 try {
                     Student student = new Student();
 
-                    student.setStudentID(""+stdId);
-                    student.setFirstName(""+stdFirstName);
+                    student.setStudentID("" + stdId);
+                    student.setFirstName("" + stdFirstName);
                     student.setNewFlag(1);
-                    String studentName = appDatabase.getStudentDao().checkStudent(""+stdId);
+                    String studentName = appDatabase.getStudentDao().checkStudent("" + stdId);
 
-                    if(studentName == null) {
+                    if (studentName == null) {
                         appDatabase.getStudentDao().insert(student);
                     }
 
