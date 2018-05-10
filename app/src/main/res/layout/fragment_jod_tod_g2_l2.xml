@@ -271,7 +271,7 @@
                                     android:layout_height="match_parent"
                                     android:layout_gravity="center"
                                     android:gravity="center"
-                                    android:text="Shirley"
+                                    android:text=""
                                     android:textColor="@color/whiteTransparentNormal"
                                     android:textSize="60dp"
                                     android:textStyle="bold" />
@@ -424,13 +424,12 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:background="@drawable/question_gradiance_bg"
+                android:background="@drawable/question_gradiance_bg_2"
                 android:gravity="center"
                 android:text="This is where the question will appear"
                 android:textColor="@color/simple_white"
                 android:textSize="25sp"
                 android:textStyle="italic|bold" />
-
         </LinearLayout>
     </LinearLayout>
 
