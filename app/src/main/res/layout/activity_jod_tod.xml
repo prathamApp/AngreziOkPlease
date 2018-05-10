@@ -4,7 +4,7 @@
     android:id="@+id/cl_jod_tod"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bole_toh_bg"
+    android:background="@drawable/jod_tod_bg"
     tools:context="com.example.pravin.angreziok.ui.jod_tod_round.JodTod">
 
     <FrameLayout
