@@ -51,7 +51,7 @@
                             android:layout_height="match_parent"
                             android:layout_gravity="center"
                             android:layout_marginVertical="2dp"
-                            android:background="@drawable/round_two_background"
+                            android:background="@drawable/round_one_background"
                             android:gravity="center"
                             android:paddingHorizontal="50dp">
 
@@ -61,7 +61,7 @@
                                 android:gravity="center"
                                 android:text="Samajh Ke Bolo Round"
                                 android:textAlignment="center"
-                                android:textColor="@color/simple_black"
+                                android:textColor="@color/simple_white"
                                 android:textSize="30sp"
                                 android:textStyle="bold|italic" />
                         </LinearLayout>
