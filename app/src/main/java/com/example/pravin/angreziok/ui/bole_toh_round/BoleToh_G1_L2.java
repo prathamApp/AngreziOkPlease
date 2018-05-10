@@ -160,6 +160,7 @@ public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleT
 
     public void showDialog() {
         fadeOtherGroups();
+        answer.setText("");
         speechCount = 0;
         String teamName = playerModalArrayList.get(currentTeam).getStudentAlias();
         final String studentID = playerModalArrayList.get(currentTeam).getStudentID();
@@ -172,7 +173,6 @@ public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleT
         Button button = dialog.findViewById(R.id.dialog_btn_scan_qr);
         text.setText("Next question would be for " + teamName);
         button.setText("Ready ??");
-
         dialog.show();
 
         Button scanNextQR = dialog.findViewById(R.id.dialog_btn_scan_qr);
@@ -296,7 +296,6 @@ public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleT
         submitAnswer.setClickable(false);
         mCountDownTimer.pause();
         presenter.checkFinalAnswer_g1_l2(answer.getText().toString(), currentTeam);
-        answer.setText("");
         currentTeam += 1;
         if (currentTeam < playerModalArrayList.size()) {
             Handler handler = new Handler();

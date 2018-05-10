@@ -400,7 +400,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
         resourceID = g3l2QuestionData.get(randomNumber).getResourceId();
         questionId = resourceID;
         boleTohG3L2View.setPairsImages(hintImagePath, questionImagePath);
-        String questionString = g3l2QuestionData.get(randomNumber).getResourceQuestion();
+        String questionString = currentPairList.get(0).getResourceQuestion();
         boleTohG3L2View.setQuestionText(questionString);
     }
 

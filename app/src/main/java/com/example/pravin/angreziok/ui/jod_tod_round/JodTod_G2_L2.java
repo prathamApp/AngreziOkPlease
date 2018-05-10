@@ -272,7 +272,6 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
 
     @Override
     public void hideOptionView() {
-        showQuestion.setVisibility(View.GONE);
     }
 
     private void setDataForGame() {

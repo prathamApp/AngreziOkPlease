@@ -364,7 +364,7 @@ public class JodTod_G3_L2 extends BaseFragment implements JodTodContract.JodTod_
 
     @OnClick(R.id.ib_g1_l2_speaker)
     public void soundClicked() {
-        presenter.startTTS(text);
+        playTTS();
     }
 
     @OnClick({R.id.A, R.id.B, R.id.C, R.id.D, R.id.E, R.id.F, R.id.G, R.id.H, R.id.I, R.id.J,

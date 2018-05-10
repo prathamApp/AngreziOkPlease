@@ -167,6 +167,7 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
 
     public void showDialog() {
         fadeOtherGroups();
+        answer.setText("");
         speechCount = 0;
         String teamName = SamajhKeBolo.playerModalArrayList.get(currentTeam).getStudentAlias();
         final String studentID = playerModalArrayList.get(currentTeam).getStudentID();
@@ -342,7 +343,6 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
         submitAnswer.setClickable(false);
         mCountDownTimer.pause();
         presenter.checkAnswerOfStt(answer.getText().toString(), currentTeam);
-        answer.setText("");
         currentTeam += 1;
         if (currentTeam < SamajhKeBolo.playerModalArrayList.size()) {
             Handler handler = new Handler();

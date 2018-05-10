@@ -31,7 +31,7 @@ public class BaseActivity extends AppCompatActivity {
     static Boolean setTimer = false;
     static String pauseTime;
     private AppDatabase appDatabase;
-
+    String AppStartDateTime;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -101,7 +101,7 @@ public class BaseActivity extends AppCompatActivity {
                             Log.d("AppExitService:", "curSession : " + curSession + "      toDateTemp : " + toDateTemp);
 
                             if (toDateTemp.equalsIgnoreCase("na")) {
-                                appDatabase.getSessionDao().UpdateToDate(curSession, AOPApplication.getCurrentDateTime(true,AppStartDateTime));
+                                appDatabase.getSessionDao().UpdateToDate(curSession, pauseTime);
                             }
                             BackupDatabase.backup(BaseActivity.this);
                             finishAffinity();
