@@ -72,7 +72,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/round_button_selector"
                 android:paddingHorizontal="10dp"
-                android:text="Cancle" />
+                android:text="Cancel" />
 
         </LinearLayout>
 
