@@ -292,6 +292,7 @@ public class SamajhKeBolo_G1_L2 extends BaseFragment implements SamajhKeBoloCont
         submitAnswer.setClickable(false);
         mCountDownTimer.pause();
         presenter.checkFinalAnswer_g1_l2(answer.getText().toString(), currentTeam);
+        answer.setText("");
         currentTeam += 1;
         if (currentTeam < playerModalArrayList.size()) {
             Handler handler = new Handler();
