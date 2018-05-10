@@ -51,7 +51,7 @@
                             android:layout_height="match_parent"
                             android:layout_gravity="center"
                             android:layout_marginVertical="2dp"
-                            android:background="@drawable/round_one_background"
+                            android:background="@drawable/round_two_background"
                             android:gravity="center"
                             android:paddingHorizontal="50dp">
 
@@ -270,7 +270,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_margin="10dp"
-                                    android:background="@drawable/custom_dialog_bg3"
+                                    android:background="@drawable/round_one_background"
                                     android:gravity="center"
                                     android:orientation="vertical"
                                     android:weightSum="4">
@@ -283,6 +283,7 @@
                                         android:layout_weight="1"
                                         android:gravity="center"
                                         android:text="word1"
+                                        android:textColor="@color/simple_white"
                                         android:textSize="30sp"
                                         android:textStyle="bold|italic" />
 
@@ -292,6 +293,7 @@
                                         android:layout_height="0dp"
                                         android:layout_marginVertical="10dp"
                                         android:layout_weight="1"
+                                        android:textColor="@color/simple_white"
                                         android:gravity="center"
                                         android:text="word2"
                                         android:textSize="30sp"
@@ -304,6 +306,7 @@
                                         android:layout_marginVertical="10dp"
                                         android:layout_weight="1"
                                         android:gravity="center"
+                                        android:textColor="@color/simple_white"
                                         android:text="word3"
                                         android:textSize="30sp"
                                         android:textStyle="bold|italic" />
@@ -530,7 +533,7 @@
                 android:layout_weight="3"
                 android:gravity="center"
                 android:text="This is where the question will appear"
-                android:textColor="@color/simple_white"
+                android:textColor="@color/simple_black"
                 android:textSize="25sp"
                 android:textStyle="italic|bold" />
         </LinearLayout>
