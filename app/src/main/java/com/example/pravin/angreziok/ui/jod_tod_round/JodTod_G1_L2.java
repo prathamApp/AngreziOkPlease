@@ -184,7 +184,6 @@ public class JodTod_G1_L2 extends BaseFragment implements JodTodContract.JodTod_
     }
 
     private void setQuestionDynamically(String questionText) {
-        // TODO Create views for setting question by extracting vowels from it
         tv_ques_img.setText(questionText);
     }
 
