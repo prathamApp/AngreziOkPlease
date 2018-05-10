@@ -290,7 +290,6 @@ public class JodTod_G3_L2 extends BaseFragment implements JodTodContract.JodTod_
         showQuestion.setText(questionString);
     }
 
-
     private void playTTS() {
         if (playingThroughTts)
             presenter.startTTS(text);
