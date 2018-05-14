@@ -22,7 +22,7 @@ public class BackupDatabase {
             if (sd.canWrite()) {
                 File file = mContext.getDir("databases", Context.MODE_PRIVATE);
 
-                String currentDBPath = file.getAbsolutePath()+"/"+ DB_NAME;
+                String currentDBPath = file.getAbsolutePath().replace("app_databases","databases")+"/"+ DB_NAME;
                 String backupDBPath = AppDatabase.DB_NAME+".db";
                 File currentDB = new File(currentDBPath);
                 File backupDB = new File(sd, backupDBPath);

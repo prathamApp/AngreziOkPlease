@@ -57,10 +57,10 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_intro);
         ButterKnife.bind(this);
+        appStartTime = AOPApplication.getCurrentDateTime(false, "");
         //The Android's default system path of your application database.
         createDataBase();
 
-        appStartTime = AOPApplication.getCurrentDateTime(false, "");
 
         // Reset Timer
         AOPApplication.resetTimer();
@@ -296,6 +296,10 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
 
             Thread.sleep(500);
             copyFileUsingStream(new File(myPath), new File(toCopyPath));
+
+            addStartTime();
+
+
 
         } catch (Exception e) {
             e.printStackTrace();
