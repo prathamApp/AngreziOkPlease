@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.pravin.angreziok">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
@@ -11,8 +15,23 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.EXPAND_STATUS_BAR" />
+    <uses-permission
+        android:name="android.permission.CHANGE_CONFIGURATION"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
+    <uses-permission
+        android:name="android.permission.WRITE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
+
+    <uses-permission
+        android:name="android.permission.WRITE_SECURE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
+
 
     <application
+        android:name=".AOPApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -57,7 +76,44 @@
             android:name=".services.AppExitService"
             android:enabled="true"
             android:stopWithTask="false" />
+        <receiver
+            android:name=".ui.ftpSettings.FsNotification"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.example.pravin.angreziok.ui.ftpSettings.FTPSERVER_STARTED" />
+                <action android:name="com.example.pravin.angreziok.ui.ftpSettings.FTPSERVER_STOPPED" />
+            </intent-filter>
+        </receiver>
 
+        <service android:name=".ui.ftpSettings.FsService" />
+        <service android:name=".ui.ftpSettings.NsdService" />
+
+        <receiver
+            android:name=".ui.ftpSettings.NsdService$StartStopReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.example.pravin.angreziok.ui.ftpSettings.FTPSERVER_STARTED" />
+                <action android:name="com.example.pravin.angreziok.ui.ftpSettings.FTPSERVER_STOPPED" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Don't export this receiver in free, this clashes with paid -->
+        <receiver
+            android:name=".ui.ftpSettings.RequestStartStopReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.example.pravin.angreziok.ui.ftpSettings.ACTION_START_FTPSERVER" />
+                <action android:name="com.example.pravin.angreziok.ui.ftpSettings.ACTION_STOP_FTPSERVER" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".ui.ftpSettings.WifiStateChangeReceiver">
+            <intent-filter>
+                <action android:name="android.net.wifi.STATE_CHANGE" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name=".ui.ftpSettings.WifiStateChangeReceiver$StartServerService" />
+        <service android:name=".ui.ftpSettings.WifiStateChangeReceiver$StopServerService" />
     </application>
 
 </manifest>

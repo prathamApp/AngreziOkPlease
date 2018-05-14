@@ -2,13 +2,19 @@ package com.example.pravin.angreziok;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.support.multidex.MultiDex;
 import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 
 import com.example.pravin.angreziok.database.AppDatabase;
 import com.example.pravin.angreziok.ui.video_intro.VideoIntro;
+
+import net.vrallev.android.cat.Cat;
+
+import org.apache.commons.net.ftp.FTPClient;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -26,6 +32,9 @@ import java.util.UUID;
 
 public class AOPApplication extends Application {
 
+    public static String networkSSID = "PrathamHotSpot-" + Build.SERIAL;
+    public static FTPClient ftpClient;
+
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
@@ -35,11 +44,32 @@ public class AOPApplication extends Application {
     static String ext_path;
     private static final DateFormat dateTimeFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.ENGLISH);
     private static final DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
+    public static String path;
 
     @Override
     public void onCreate() {
         super.onCreate();
         aopApplication = this;
+    }
+
+    public static String getPath() {
+        return path;
+    }
+
+    public static void setPath(String path) {
+        AOPApplication.aopApplication.path = path;
+    }
+
+    public static String getVersion() {
+        Context context = AOPApplication.aopApplication;
+        String packageName = context.getPackageName();
+        try {
+            PackageManager pm = context.getPackageManager();
+            return pm.getPackageInfo(packageName, 0).versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            Cat.e("Unable to find the name " + packageName + " in the package");
+            return null;
+        }
     }
 
     @Override

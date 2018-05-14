@@ -43,8 +43,9 @@ public class AdminConsolePresenterImpl implements AdminConsoleContract.AdminCons
     String pushFileName, pushAPI, transferFileName;
     int cnt = 0, allFiles = 0, fileCnt=0;
     int[] fileCount;
-    static boolean sentFlag = false;
+    static boolean sentFlag = false, transferFlg = false;
     boolean currentPush = false;
+    String MainPath;
 
     public AdminConsolePresenterImpl(Context mContext, AdminConsoleContract.AdminConsoleView adminConsoleView) {
         this.mContext = mContext;
@@ -116,8 +117,8 @@ public class AdminConsolePresenterImpl implements AdminConsoleContract.AdminCons
                     String requestString = generateRequestString(scoreData, attendanceData, newStudentData, newCrlData, sessionData);
                     transferFileName = "AOP_Usage:" + AOPApplication.getUniqueID().toString();
                     WriteSettings(mContext, requestString, transferFileName);
-                    if(!currentPush)
-                        adminConsoleView.transferFile(transferFileName);
+                    /*if(!currentPush)
+                        adminConsoleView.transferFile(transferFileName);*/
                     super.onPostExecute(obj);
                 }
             }.execute();
@@ -281,7 +282,7 @@ public class AdminConsolePresenterImpl implements AdminConsoleContract.AdminCons
         OutputStreamWriter osw = null;
 
         try {
-            String MainPath;
+
             if (currentPush) {
                 MainPath = Environment.getExternalStorageDirectory() + "/.AOPInternal/SelfUsageJsons/" + fName + ".json";
             } else {
@@ -301,6 +302,10 @@ public class AdminConsolePresenterImpl implements AdminConsoleContract.AdminCons
             }
             if (currentPush) {
                 pushToServer();
+            }
+            if(transferFlg){
+                transferFlg = false;
+                adminConsoleView.WifiTransfer();
             }
         } catch (Exception e) {
             e.printStackTrace();

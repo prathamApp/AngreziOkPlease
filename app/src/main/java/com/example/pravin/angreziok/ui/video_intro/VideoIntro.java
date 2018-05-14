@@ -36,7 +36,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -62,9 +61,6 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_intro);
         ButterKnife.bind(this);
-        appDatabase = Room.databaseBuilder(VideoIntro.this,
-                AppDatabase.class, AppDatabase.DB_NAME)
-                .build();
         createDataBase();
 
         appStartTime = AOPApplication.getCurrentDateTime(false,"");
@@ -127,6 +123,10 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
         if (!file.exists())
             file.mkdir();
 
+        file = new File(Environment.getExternalStorageDirectory().toString() + "/.AOPInternal/ReceivedUsageJsons");
+        if (!file.exists())
+            file.mkdir();
+
         file = new File(Environment.getExternalStorageDirectory().toString() + "/.AOPInternal/SelfUsageJsons");
         if (!file.exists())
             file.mkdir();
@@ -142,26 +142,26 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
     public void createDataBase() {
         try {
             boolean dbExist = checkDataBase();
-            BackupDatabase.backup(VideoIntro.this);
-//            if (!dbExist) {
-//                if (new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/angrezi_ok_please.db").exists()) {
-//                    copyDataBase();
-//                } else {
-//                    try {
-//                        appDatabase = Room.databaseBuilder(this,
-//                                AppDatabase.class, AppDatabase.DB_NAME)
-//                                .build();
-//                        doInitialEntries();
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            } else {
-//                addStartTime();
-//                Log.d("VidIntro", "createDataBase: ");
-//            }
+            if (!dbExist) {
+                if (new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/angrezi_ok_please.db").exists()) {
+                    copyDataBase();
+                } else {
+                    try {
+                        appDatabase = Room.databaseBuilder(this,
+                                AppDatabase.class, AppDatabase.DB_NAME)
+                                .build();
+                        doInitialEntries();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            } else {
+                addStartTime();
+                Log.d("VidIntro", "createDataBase: ");
+                //startSession();
+            }
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }
 
@@ -260,32 +260,13 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
         SQLiteDatabase checkDB = null;
         try {
             File file = this.getDir("databases", Context.MODE_PRIVATE);
-//            String myPath = file.getAbsolutePath().replace("app_databases", "databases") + "/" + DB_NAME;
-            String myPath = VideoIntro.this.getDatabasePath(DB_NAME).toString();
-            boolean myFie = new File(myPath).exists();
-            checkDB = SQLiteDatabase.openOrCreateDatabase(myPath, null);
-            String f = VideoIntro.this.getDatabasePath(DB_NAME).toString();
-            String dbname = Environment.getExternalStorageDirectory()+"/"+DB_NAME+".db";
-
-            File temp = new File(f);
-            boolean tempBack = new File(dbname).renameTo(new File(Environment.getExternalStorageDirectory() + "/" + DB_NAME));
-            File fileTempBack = new File(Environment.getExternalStorageDirectory() + "/" + DB_NAME);
-
-            if (fileTempBack.exists()) {
-                FileChannel src = new FileInputStream(fileTempBack).getChannel();
-                FileChannel dst = new FileOutputStream(temp).getChannel();
-//                dst.transferFrom(src, 0, src.size());
-                src.transferTo(0,src.size(),dst);
-                src.close();
-                dst.close();
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
+            String myPath = file.getAbsolutePath().replace("app_databases", "databases") + "/" + DB_NAME;
+            checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
+        } catch (SQLiteException e) {
         }
-//        if (checkDB != null) {
-//            checkDB.close();
-//        }
+        if (checkDB != null) {
+            checkDB.close();
+        }
         return checkDB != null ? true : false;
     }
 
@@ -298,16 +279,16 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
     private void copyDataBase() throws IOException {
         try {
             //Open your local db as the input stream
-           /* appDatabase = Room.databaseBuilder(this,
+            appDatabase = Room.databaseBuilder(this,
                     AppDatabase.class, AppDatabase.DB_NAME)
                     .build();
-*/
+
             File input = new File(Environment.getExternalStorageDirectory().getPath() + "/angrezi_ok_please.db");
             InputStream myInput = new FileInputStream(input);
             // Path to the just created empty db
             File file = this.getDir("databases", Context.MODE_PRIVATE);
 
-//            String myPath = file.getAbsolutePath().replace("app_databases", "databases") + "/" + DB_NAME;
+            //String myPath = file.getAbsolutePath().replace("app_databases", "databases") + "/" + DB_NAME;
             String myPath = file.getAbsolutePath() + "/" + DB_NAME;
             //Open the empty db as the output stream
             OutputStream myOutput = new FileOutputStream(myPath);
@@ -322,31 +303,8 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
             myOutput.flush();
             myOutput.close();
             myInput.close();
-
-
             addStartTime();
-            new AsyncTask<Void, Void, Void>() {
-                @Override
-                protected Void doInBackground(Void... voids) {
-                    /* For checking tables */
 
-                    Cursor c = appDatabase.query("SELECT name FROM sqlite_master WHERE type='table'", null);
-
-                    if (c.moveToFirst()) {
-                        while (!c.isAfterLast()) {
-                            Log.d("TableName", "Table Name====================> " + c.getString(0));
-                            c.moveToNext();
-                        }
-                    }
-                    Log.d("TableName", "\n\n\nAttendenceSize   ====================> " + appDatabase.getAttendanceDao().getAllAttendanceEntries().size());
-                    Log.d("TableName", "\n\n\nAppStartDateTime ====================> " + appDatabase.getStatusDao().getValue("AppStartDateTime"));
-                    Log.d("TableName", "\n\n\nSdCardPath       ====================> " + appDatabase.getStatusDao().getValue("SdCardPath       "));
-                    Log.d("TableName", "\n\n\nCurrentSession   ====================> " + appDatabase.getStatusDao().getValue("CurrentSession   "));
-                    Log.d("TableName", "\n\n\nDeviceID         ====================> " + appDatabase.getStatusDao().getValue("DeviceID         "));
-
-                    return null;
-                }
-            }.execute();
         } catch (Exception e) {
             e.printStackTrace();
         }

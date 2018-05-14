@@ -10,6 +10,7 @@ public interface AdminConsoleContract {
         void transferFile(String fileName);
         void generateDialog(String msg);
         void stopDialog();
+        void WifiTransfer();
     }
 
     interface AdminConsolePresenter {

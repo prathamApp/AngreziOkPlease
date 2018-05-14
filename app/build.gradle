@@ -32,10 +32,14 @@ android {
     sourceSets {
         androidTest.assets.srcDirs += files("$projectDir/schemas".toString())
     }
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     testImplementation 'junit:junit:4.12'
@@ -43,7 +47,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation 'com.android.support:support-vector-drawable:26.+'
     implementation 'me.dm7.barcodescanner:zxing:1.9.8'
-
     //Butterknife
     implementation 'com.jakewharton:butterknife:8.7.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.7.0'
@@ -54,38 +57,41 @@ dependencies {
     implementation 'com.nex3z:flow-layout:1.1.0'
     //Android debug
     //debugImplementation 'com.amitshekhar.android:debug-db:1.0.3'
-
-//    New libraries
-
+    //    New libraries
     // ViewModel and LiveData
-    implementation "android.arch.lifecycle:extensions:1.1.0"
-// alternatively, just ViewModel
-    implementation "android.arch.lifecycle:viewmodel:1.1.0"
-// alternatively, just LiveData
-    implementation "android.arch.lifecycle:livedata:1.1.0"
+    implementation 'android.arch.lifecycle:extensions:1.1.0'
+    // alternatively, just ViewModel
+    implementation 'android.arch.lifecycle:viewmodel:1.1.0'
+    // alternatively, just LiveData
+    implementation 'android.arch.lifecycle:livedata:1.1.0'
     implementation 'com.android.support:cardview-v7:26.1.+'
-
-
     annotationProcessor "android.arch.lifecycle:compiler:1.1.0"
-
-// Room (use 1.1.0-alpha2 for latest alpha)
-    implementation "android.arch.persistence.room:runtime:1.0.0"
+    // Room (use 1.1.0-alpha2 for latest alpha)
+    implementation 'android.arch.persistence.room:runtime:1.0.0'
     annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
-
-// Paging
-    implementation "android.arch.paging:runtime:1.0.0-alpha5"
-
-// Test helpers for LiveData
-    testImplementation "android.arch.core:core-testing:1.1.0"
-
-// Test helpers for Room
-    testImplementation "android.arch.persistence.room:testing:1.0.0"
-
-// Timer library
+    // Paging
+    implementation 'android.arch.paging:runtime:1.0.0-alpha5'
+    // Test helpers for LiveData
+    testImplementation 'android.arch.core:core-testing:1.1.0'
+    // Test helpers for Room
+    testImplementation 'android.arch.persistence.room:testing:1.0.0'
+    // Timer library
     implementation 'com.github.anastr:flattimelib:1.0.3'
-
     implementation 'com.github.bumptech.glide:glide:3.7.0'
-
-// Celebration library
+    // Celebration library
     implementation 'nl.dionsegijn:konfetti:1.1.0'
+    implementation 'org.greenrobot:eventbus:3.1.1'
+    compileOnly 'org.projectlombok:lombok:1.16.12'
+    annotationProcessor 'org.projectlombok:lombok:1.16.12'
+    implementation 'net.vrallev.android:cat:1.0.5'
+    implementation files('libs/commons-net-3.6.jar')
+    implementation files('libs/commons-net-3.6-sources.jar')
+    implementation files('libs/ftp4j-1.7.2.jar')
+    implementation 'commons-io:commons-io:2.5'
+    implementation 'commons-io:commons-io:2.5'
+    implementation files('libs/android-logging-log4j-1.0.3.jar')
+    implementation files('libs/commons-net-3.6-sources.jar')
+    implementation files('libs/commons-net-3.6.jar')
+    implementation files('libs/ftp4j-1.7.2.jar')
+    implementation files('libs/log4j-1.2.17.jar')
 }

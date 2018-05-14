@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/receiveFtpDialog"
+    android:layout_width="match_parent"
+    android:keepScreenOn="true"
+    android:layout_height="match_parent"
+    android:background="@drawable/loginaop"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_margin="16dp"
+        android:background="@drawable/round_icon_normal_black"
+        android:gravity="center_horizontal"
+        android:padding="16dp"
+        android:text="Receiver"
+        android:textColor="@color/simple_white"
+        android:textSize="32sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/title"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="16dp"
+            android:layout_weight="1"
+            android:background="@drawable/round_icon_normal_black"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_SSID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="16dp"
+                android:layout_marginHorizontal="50dp"
+                android:text="SSID"
+                android:singleLine="true"
+                android:textColor="@color/simple_white"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tv_ipaddr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="16dp"
+                android:layout_marginHorizontal="50dp"
+                android:text="IP : 192.168.43.1"
+                android:singleLine="true"
+                android:textColor="@color/simple_white"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tv_port"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="16dp"
+                android:layout_marginHorizontal="50dp"
+                android:text="Port : 8080"
+                android:singleLine="true"
+                android:textColor="@color/simple_white"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/btn_Disconnect"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="32dp"
+                android:background="@drawable/round_button_selector"
+                android:onClick="connect"
+                android:text="Disconnect"
+                android:textAllCaps="true"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_weight="1"
+            android:background="@drawable/round_icon_normal_black"
+            android:gravity="center">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/lb_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:gravity="center_horizontal"
+                    android:text="Details"
+                    android:textColor="@color/simple_white"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:gravity="center_horizontal"
+                    android:text="Description"
+                    android:textColor="@color/simple_white"
+                    android:textSize="18sp" />
+
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center"
+                    android:id="@+id/recievingProgress"
+                    android:elevation="5dp"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+
+</RelativeLayout>
