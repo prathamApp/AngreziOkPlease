@@ -57,15 +57,6 @@ public class AOPApplication extends Application {
         return dateFormat.format(cal.getTime());
     }
 
-   /* public static String getCurrentDateTime(boolean timerTime) {
-        if (timerTime) {
-            return AOPApplication.getAccurateTimeStamp();
-        } else {
-            Calendar cal = Calendar.getInstance();
-            return dateTimeFormat.format(cal.getTime());
-        }
-    }*/
-
     public static String getCurrentDateTime(boolean timerTime, String appStartTime) {
         if (timerTime) {
             return AOPApplication.getAccurateTimeStamp(appStartTime);
@@ -116,33 +107,6 @@ public class AOPApplication extends Application {
     public static int getTimerCount() {
         return count;
     }
-
-    /*public static String getAccurateTimeStamp() {
-        // String to Date
-        new AsyncTask<Void, Void, String>() {
-            @Override
-            protected String doInBackground(Void... voids) {
-                try {
-                    String gpsTime = VideoIntro.appDatabase.getStatusDao().getValue("AppStartDateTime");
-                    Date gpsDateTime = dateTimeFormat.parse(gpsTime);
-                    // Add Seconds to Gps Date Time
-                    Calendar addSec = Calendar.getInstance();
-                    addSec.setTime(gpsDateTime);
-                    addSec.add(addSec.SECOND, getTimerCount());
-                    return dateTimeFormat.format(addSec.getTime());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    return null;
-                }
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-            }
-        }.execute();
-        return null;
-    }*/
 
     public static String getAccurateTimeStamp(String appStartTime) {
         try {

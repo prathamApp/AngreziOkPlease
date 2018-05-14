@@ -4,9 +4,7 @@ import android.annotation.SuppressLint;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -24,7 +22,6 @@ import com.example.pravin.angreziok.dao.StatusDao;
 import com.example.pravin.angreziok.database.AppDatabase;
 import com.example.pravin.angreziok.database.BackupDatabase;
 import com.example.pravin.angreziok.domain.Crl;
-import com.example.pravin.angreziok.domain.Session;
 import com.example.pravin.angreziok.services.AppExitService;
 import com.example.pravin.angreziok.ui.start_menu.QRActivity;
 import com.example.pravin.angreziok.util.PD_Utility;
@@ -36,9 +33,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.nio.channels.FileChannel;
 import java.util.ArrayList;
-import java.util.UUID;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -54,7 +49,7 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
     String videoPath;
     public static AppDatabase appDatabase;
     VideoIntroContract.VideoIntroPresenter presenter;
-    String final_sd_path, sdCardPathString, appStartTime;
+    String appStartTime;
 
     @SuppressLint("StaticFieldLeak")
     @Override
@@ -62,12 +57,10 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_intro);
         ButterKnife.bind(this);
-        appDatabase = Room.databaseBuilder(VideoIntro.this,
-                AppDatabase.class, AppDatabase.DB_NAME)
-                .build();
+        //The Android's default system path of your application database.
         createDataBase();
 
-        appStartTime = AOPApplication.getCurrentDateTime(false,"");
+        appStartTime = AOPApplication.getCurrentDateTime(false, "");
 
         // Reset Timer
         AOPApplication.resetTimer();
@@ -103,8 +96,6 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
     }
 
 
-
-
     @OnClick(R.id.skip_button)
     public void skipVideo() {
         BackupDatabase.backup(this);
@@ -137,32 +128,6 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
 
         startActivity(new Intent(this, QRActivity.class));
         finish();
-    }
-
-    public void createDataBase() {
-        try {
-            boolean dbExist = checkDataBase();
-            BackupDatabase.backup(VideoIntro.this);
-//            if (!dbExist) {
-//                if (new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/angrezi_ok_please.db").exists()) {
-//                    copyDataBase();
-//                } else {
-//                    try {
-//                        appDatabase = Room.databaseBuilder(this,
-//                                AppDatabase.class, AppDatabase.DB_NAME)
-//                                .build();
-//                        doInitialEntries();
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            } else {
-//                addStartTime();
-//                Log.d("VidIntro", "createDataBase: ");
-//            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     private void doInitialEntries() {
@@ -250,6 +215,31 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
         }
     }
 
+    public void createDataBase() {
+        try {
+            boolean dbExist = checkDataBase();
+            if (!dbExist) {
+                if (new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/angrezi_ok_please.db").exists()) {
+                    copyDataBase();
+                } else {
+                    try {
+                        appDatabase = Room.databaseBuilder(this,
+                                AppDatabase.class, AppDatabase.DB_NAME)
+                                .build();
+                        doInitialEntries();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            } else {
+                addStartTime();
+                Log.d("VidIntro", "createDataBase: ");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * Check if the database already exist to avoid re-copying the file each time you open the application.
      *
@@ -260,32 +250,15 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
         SQLiteDatabase checkDB = null;
         try {
             File file = this.getDir("databases", Context.MODE_PRIVATE);
-//            String myPath = file.getAbsolutePath().replace("app_databases", "databases") + "/" + DB_NAME;
-            String myPath = VideoIntro.this.getDatabasePath(DB_NAME).toString();
-            boolean myFie = new File(myPath).exists();
-            checkDB = SQLiteDatabase.openOrCreateDatabase(myPath, null);
-            String f = VideoIntro.this.getDatabasePath(DB_NAME).toString();
-            String dbname = Environment.getExternalStorageDirectory()+"/"+DB_NAME+".db";
-
-            File temp = new File(f);
-            boolean tempBack = new File(dbname).renameTo(new File(Environment.getExternalStorageDirectory() + "/" + DB_NAME));
-            File fileTempBack = new File(Environment.getExternalStorageDirectory() + "/" + DB_NAME);
-
-            if (fileTempBack.exists()) {
-                FileChannel src = new FileInputStream(fileTempBack).getChannel();
-                FileChannel dst = new FileOutputStream(temp).getChannel();
-//                dst.transferFrom(src, 0, src.size());
-                src.transferTo(0,src.size(),dst);
-                src.close();
-                dst.close();
-            }
+            String myPath = file.getAbsolutePath() + "/" + DB_NAME;
+            checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-//        if (checkDB != null) {
-//            checkDB.close();
-//        }
+        if (checkDB != null) {
+            checkDB.close();
+        }
         return checkDB != null ? true : false;
     }
 
@@ -298,17 +271,13 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
     private void copyDataBase() throws IOException {
         try {
             //Open your local db as the input stream
-           /* appDatabase = Room.databaseBuilder(this,
-                    AppDatabase.class, AppDatabase.DB_NAME)
-                    .build();
-*/
+            File file = this.getDir("databases", Context.MODE_PRIVATE);
+            String myPath = file.getAbsolutePath() + "/" + DB_NAME;
+            String toCopyPath = file.getAbsolutePath().replace("app_databases", "databases") + "/" + DB_NAME;
+            SQLiteDatabase.openOrCreateDatabase(myPath, null);
+
             File input = new File(Environment.getExternalStorageDirectory().getPath() + "/angrezi_ok_please.db");
             InputStream myInput = new FileInputStream(input);
-            // Path to the just created empty db
-            File file = this.getDir("databases", Context.MODE_PRIVATE);
-
-//            String myPath = file.getAbsolutePath().replace("app_databases", "databases") + "/" + DB_NAME;
-            String myPath = file.getAbsolutePath() + "/" + DB_NAME;
             //Open the empty db as the output stream
             OutputStream myOutput = new FileOutputStream(myPath);
 
@@ -323,33 +292,32 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
             myOutput.close();
             myInput.close();
 
-
             addStartTime();
-            new AsyncTask<Void, Void, Void>() {
-                @Override
-                protected Void doInBackground(Void... voids) {
-                    /* For checking tables */
 
-                    Cursor c = appDatabase.query("SELECT name FROM sqlite_master WHERE type='table'", null);
+            Thread.sleep(500);
+            copyFileUsingStream(new File(myPath), new File(toCopyPath));
 
-                    if (c.moveToFirst()) {
-                        while (!c.isAfterLast()) {
-                            Log.d("TableName", "Table Name====================> " + c.getString(0));
-                            c.moveToNext();
-                        }
-                    }
-                    Log.d("TableName", "\n\n\nAttendenceSize   ====================> " + appDatabase.getAttendanceDao().getAllAttendanceEntries().size());
-                    Log.d("TableName", "\n\n\nAppStartDateTime ====================> " + appDatabase.getStatusDao().getValue("AppStartDateTime"));
-                    Log.d("TableName", "\n\n\nSdCardPath       ====================> " + appDatabase.getStatusDao().getValue("SdCardPath       "));
-                    Log.d("TableName", "\n\n\nCurrentSession   ====================> " + appDatabase.getStatusDao().getValue("CurrentSession   "));
-                    Log.d("TableName", "\n\n\nDeviceID         ====================> " + appDatabase.getStatusDao().getValue("DeviceID         "));
-
-                    return null;
-                }
-            }.execute();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    private static void copyFileUsingStream(File source, File dest) throws IOException {
+        InputStream is = null;
+        OutputStream os = null;
+        try {
+            is = new FileInputStream(source);
+            os = new FileOutputStream(dest);
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = is.read(buffer)) > 0) {
+                os.write(buffer, 0, length);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            is.close();
+            os.close();
+        }
+    }
 }
