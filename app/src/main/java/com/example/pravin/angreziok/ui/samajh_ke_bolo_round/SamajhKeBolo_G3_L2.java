@@ -93,6 +93,8 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
     ImageView submitAnswer;
     @BindView(R.id.ib_g3_l2_mic)
     ImageView mic;
+    @BindView(R.id.tv_game_title)
+    TextView gameTitle;
 
 
     SamajhKeBoloContract.SamajhKeBoloPresenter presenter;
@@ -121,6 +123,11 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
         speechCount = 0;
         currentTeam = 0;
         showDialog();
+    }
+
+    @Override
+    public void setGameTitleFromJson(String gameName) {
+        gameTitle.setText(gameName);
     }
 
     private void setInitialScores() {

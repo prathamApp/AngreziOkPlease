@@ -72,9 +72,13 @@ public interface BoleTohContract {
         void setCelebrationView();
 
         void setCurrentScore();
+
     }
 
     interface BoleToh_G1_L2_View {
+
+        void setGameTitleFromJson(String gameName);
+
         void setAnswer(String ans);
 
         void showOptions_g1_l2();
@@ -93,6 +97,9 @@ public interface BoleTohContract {
     }
 
     interface BoleToh_G2_L2_View {
+
+        void setGameTitleFromJson(String gameName);
+
         void setActionGif(String path);
 
         void setAnswer(String ans);
@@ -112,6 +119,9 @@ public interface BoleTohContract {
     }
 
     interface BoleToh_G3_L2_View {
+
+        void setGameTitleFromJson(String gameName);
+
         void setPairsImages(String hintImage, String questionImage);
 
         void setAnswer(String ans);

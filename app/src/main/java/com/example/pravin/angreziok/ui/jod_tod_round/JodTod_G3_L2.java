@@ -70,6 +70,8 @@ public class JodTod_G3_L2 extends BaseFragment implements JodTodContract.JodTod_
     ImageView submitAnswer;
     @BindView(R.id.questionDiv)
     LinearLayout questionDiv;
+    @BindView(R.id.tv_game_title)
+    TextView gameTitle;
 
     String text, path;
     JodTodContract.JodTodPresenter presenter;
@@ -98,6 +100,11 @@ public class JodTod_G3_L2 extends BaseFragment implements JodTodContract.JodTod_
         setDataForGame();
         currentTeam = 0;
         showDialog();
+    }
+
+    @Override
+    public void setGameTitleFromJson(String gameName) {
+        gameTitle.setText(gameName);
     }
 
     private void setInitialScores() {

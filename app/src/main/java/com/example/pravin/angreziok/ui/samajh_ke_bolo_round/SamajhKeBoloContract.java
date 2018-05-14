@@ -38,6 +38,7 @@ public interface SamajhKeBoloContract {
         }
 
     interface SamajhKeBolo_G1_L2_View {
+        void setGameTitleFromJson(String gameName);
         void setCelebrationView();
         void setCurrentScore();
         void initiateQuestion();
@@ -48,6 +49,7 @@ public interface SamajhKeBoloContract {
     }
 
     interface SamajhKeBolo_G2_L2_View {
+        void setGameTitleFromJson(String gameName);
         void setCelebrationView();
         void setCurrentScore();
         void initiateQuestion();
@@ -58,6 +60,7 @@ public interface SamajhKeBoloContract {
     }
 
     interface SamajhKeBolo_G3_L2_View {
+        void setGameTitleFromJson(String gameName);
         void setCelebrationView();
         void setCurrentScore();
         void initiateQuestion();

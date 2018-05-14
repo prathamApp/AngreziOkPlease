@@ -186,34 +186,25 @@ public class ResultScreen extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        quitOrNot("backPress");
+        quitOrNot();
     }
 
-    private void quitOrNot(final String msg) {
+    private void quitOrNot() {
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setContentView(R.layout.custom_dialog_quit);
         TextView dialogText = dialog.findViewById(R.id.dialog_tv_student_name);
         dialog.setCanceledOnTouchOutside(false);
-        Button quitBtn = dialog.findViewById(R.id.dialog_btn_yes);
-        Button cancelBtn = dialog.findViewById(R.id.dialog_btn_no);
+        Button  replayBtn= dialog.findViewById(R.id.dialog_btn_yes);
+        Button quitBtn = dialog.findViewById(R.id.dialog_btn_no);
         ImageView closeBtn = dialog.findViewById(R.id.iv_close_dialog);
 
-        if(msg.equalsIgnoreCase("replay")){
-            dialogText.setText("Replay Game ???");
-            quitBtn.setText("Replay");
-        }
+        dialogText.setText("What to do now...???");
+        quitBtn.setText("Quit");
+        replayBtn.setText("Replay");
 
         dialog.show();
-
-        cancelBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-
         closeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -221,14 +212,19 @@ public class ResultScreen extends BaseActivity {
             }
         });
 
+        replayBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                restartGame();
+            }
+        });
+
         quitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                if(msg.equalsIgnoreCase("replay"))
-                    restartGame();
-                else
-                    quitGame();
+                quitGame();
             }
         });
     }
@@ -257,9 +253,9 @@ public class ResultScreen extends BaseActivity {
                     String AppStartDateTime = appDatabase.getStatusDao().getValue("AppStartDateTime");
                     String sessionToDate = sessionDao.getToDate(currentSession);
 
-                    if(sessionToDate.equalsIgnoreCase("na")) {
+                    if (sessionToDate.equalsIgnoreCase("na")) {
                         String timerTime = AOPApplication.getCurrentDateTime(true, AppStartDateTime);
-                        appDatabase.getSessionDao().UpdateToDate(currentSession,timerTime);
+                        appDatabase.getSessionDao().UpdateToDate(currentSession, timerTime);
                     }
 
                     BackupDatabase.backup(ResultScreen.this);
@@ -275,7 +271,7 @@ public class ResultScreen extends BaseActivity {
 
     @OnClick(R.id.btn_replay)
     public void replayVideo() {
-        quitOrNot("replay");
+        quitOrNot();
     }
 
     private void reInitiateScores() {

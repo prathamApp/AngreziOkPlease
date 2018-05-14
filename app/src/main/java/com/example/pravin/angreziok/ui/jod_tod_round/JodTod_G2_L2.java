@@ -75,6 +75,8 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
     KonfettiView konfettiView;
     @BindView(R.id.iv_submit_ans)
     ImageView submitAnswer;
+    @BindView(R.id.tv_game_title)
+    TextView gameTitle;
 
     String text;
     JodTodContract.JodTodPresenter presenter;
@@ -106,6 +108,11 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
         totalAnsCounter=0;
         correctAnsCounter=0;
         showDialog();
+    }
+
+    @Override
+    public void setGameTitleFromJson(String gameName) {
+        gameTitle.setText(gameName);
     }
 
     private void setInitialScores() {
@@ -275,7 +282,6 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
     }
 
     private void setDataForGame() {
-        presenter.set_g1_l2_data();
         showQuestion.setText("Say The Words Starting With");
     }
 

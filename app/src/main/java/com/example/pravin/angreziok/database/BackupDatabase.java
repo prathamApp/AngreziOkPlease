@@ -7,6 +7,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.nio.channels.FileChannel;
 
+import static com.example.pravin.angreziok.database.AppDatabase.DB_NAME;
+
 /**
  * Created by pravin on 23 Feb 2018.
  */
@@ -19,9 +21,12 @@ public class BackupDatabase {
             File data = Environment.getDataDirectory();
 
             if (sd.canWrite()) {
-                String currentDBPath = "//data//" + mContext.getPackageName() + "//databases//" + AppDatabase.DB_NAME;
+                File file = mContext.getDir("databases", Context.MODE_PRIVATE);
+
+                String currentDBPath = file.getAbsolutePath().replace("app_databases", "databases") + "/" + DB_NAME;
+               // String currentDBPath = "//data//" + mContext.getPackageName() + "//app_databases//" + AppDatabase.DB_NAME;
                 String backupDBPath = AppDatabase.DB_NAME+".db";
-                File currentDB = new File(data, currentDBPath);
+                File currentDB = new File(data , currentDBPath);
                 File backupDB = new File(sd, backupDBPath);
 
                 if (currentDB.exists()) {

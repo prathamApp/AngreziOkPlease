@@ -53,6 +53,8 @@ public interface JodTodContract {
 
     interface JodTod_G3_L2_View {
 
+        void setGameTitleFromJson(String gameName);
+
         void setCelebrationView();
 
         void setCurrentScore();
@@ -64,6 +66,8 @@ public interface JodTodContract {
     }
 
     interface JodTod_G1_L2_View {
+
+        void setGameTitleFromJson(String gameName);
 
         void setCelebrationView();
 
@@ -77,6 +81,8 @@ public interface JodTodContract {
     }
 
     interface JodTod_G2_L2_View {
+
+        void setGameTitleFromJson(String gameName);
 
         void setCelebrationView();
 

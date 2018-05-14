@@ -40,7 +40,6 @@ public class TabUsage extends BaseActivity implements TabUsageContract.TabUsageV
         presenter = new TabUsagePresenterImpl(this, this);
         appDatabase = Room.databaseBuilder(this,
                 AppDatabase.class, AppDatabase.DB_NAME)
-//                .addMigrations(MIGRATION_1_2)
                 .build();
         executeAsync();
     }
@@ -59,7 +58,7 @@ public class TabUsage extends BaseActivity implements TabUsageContract.TabUsageV
                     while (!cursor.isAfterLast()) {
                         studentData = new JSONObject();
                         studentData.put("FirstName", cursor.getString(cursor.getColumnIndex("FirstName")));
-                        studentData.put("time", cursor.getString(cursor.getColumnIndex("result")));
+                        studentData.put("result", cursor.getString(cursor.getColumnIndex("result")));
                         allUsageData.add(studentData);
                         cursor.moveToNext();
                     }

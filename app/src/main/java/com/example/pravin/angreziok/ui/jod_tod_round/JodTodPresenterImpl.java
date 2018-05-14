@@ -118,7 +118,7 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
         randomNumber = getRandomNumber(0, g2l2SubList.size());
         questionWord = g2l2SubList.get(randomNumber).getResourceText();
         jodTodG2L2View.initiateQuestion(questionWord);
-        String questionString = g2l2QuestionData.get(randomNumber).getResourceQuestion();
+        String questionString = g2l2SubList.get(randomNumber).getResourceQuestion();
         jodTodG2L2View.setQuestionText(questionString);
     }
 
@@ -128,6 +128,8 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
         // TODO Create json file for game three
         gsonListenAndSpellGameData = fetchJsonData("RoundTwoGameThree", getSdcardPath());
         g3l2QuestionData = gsonListenAndSpellGameData.getNodelist();
+        String gameTitle = gsonListenAndSpellGameData.getNodeTitle();
+        jodTodG3L2View.setGameTitleFromJson(gameTitle);
     }
 
     @Override
@@ -135,6 +137,8 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
         // TODO Create json file for game three
         gsonAlphabetGameData = fetchJsonData("RoundTwoGameOne", getSdcardPath());
         g1l2QuestionData = gsonAlphabetGameData.getNodelist();
+        String gameTitle = gsonAlphabetGameData.getNodeTitle();
+        jodTodG1L2View.setGameTitleFromJson(gameTitle);
     }
 
     @Override
@@ -142,6 +146,8 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
         // TODO Create json file for game three
         gsonRhymeGameData = fetchJsonData("RoundTwoGameTwo", getSdcardPath());
         g2l2QuestionData = gsonRhymeGameData.getNodelist();
+        String gameTitle = gsonRhymeGameData.getNodeTitle();
+        jodTodG2L2View.setGameTitleFromJson(gameTitle);
     }
 
     @Override
@@ -363,10 +369,7 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
     public void addScore(String studentID, String resourceID, int questionId, int scoredMarks, int totalMarks, String startDateTime, int questionLevel) {
         try {
             final Score score = new Score();
-
-            score.setSessionID("");
             score.setStudentID("" + studentID);
-            score.setDeviceID("");
             score.setResourceID("" + resourceID);
             score.setQuestionId(questionId);
             score.setScoredMarks(scoredMarks);
@@ -378,6 +381,8 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
                 @Override
                 protected Object doInBackground(Object... objects) {
                     String AppStartDateTime = appDatabase.getStatusDao().getValue("AppStartDateTime");
+                    score.setSessionID(""+appDatabase.getStatusDao().getValue("CurrentSession"));
+                    score.setDeviceID(""+appDatabase.getStatusDao().getValue("DeviceID"));
                     score.setEndDateTime("" + AOPApplication.getCurrentDateTime(true, AppStartDateTime));
                     appDatabase.getScoreDao().insert(score);
                     BackupDatabase.backup(mContext);

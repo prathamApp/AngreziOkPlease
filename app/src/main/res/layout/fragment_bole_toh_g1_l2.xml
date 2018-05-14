@@ -56,10 +56,11 @@
                             android:paddingHorizontal="50dp">
 
                             <TextView
+                                android:id="@+id/tv_game_title"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:gravity="center"
-                                android:text="Bole Toh Round"
+                                android:text="Round 1 - PictureGame"
                                 android:textAlignment="center"
                                 android:textColor="@color/simple_black"
                                 android:textSize="30sp"
@@ -262,6 +263,7 @@
                                 android:layout_height="match_parent"
                                 android:layout_gravity="center"
                                 android:layout_weight="1"
+                                android:paddingVertical="5dp"
                                 android:background="@drawable/gameimgbg"
                                 android:gravity="center">
 

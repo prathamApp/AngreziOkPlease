@@ -168,18 +168,24 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
     public void set_g1_l2_data(String path) {
         gsonActGameData = fetchJsonData("RoundOneGameOne", path);
         g1l2QuestionData = gsonActGameData.getNodelist();
+        String gameTitle = gsonActGameData.getNodeTitle();
+        boleTohG1L2View.setGameTitleFromJson(gameTitle);
     }
 
     @Override
     public void set_g2_l2_data(String path) {
         gsonActGameData = fetchJsonData("RoundOneGameTwo", path);
         g2l2QuestionData = gsonActGameData.getNodelist();
+        String gameTitle = gsonActGameData.getNodeTitle();
+        boleTohG2L2View.setGameTitleFromJson(gameTitle);
     }
 
     @Override
     public void set_g3_l2_data(String path) {
         gsonPairGameData = fetchJsonData("RoundOneGameThree", path);
         g3l2QuestionData = gsonPairGameData.getNodelist();
+        String gameTitle = gsonPairGameData.getNodeTitle();
+        boleTohG3L2View.setGameTitleFromJson(gameTitle);
     }
 
     @Override
@@ -418,10 +424,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
     public void addScore(String studentID, String resourceID, int questionId, int scoredMarks, int totalMarks, String startDateTime, int questionLevel) {
         try {
             final Score score = new Score();
-
-            score.setSessionID("");
             score.setStudentID("" + studentID);
-            score.setDeviceID("");
             score.setResourceID("" + resourceID);
             score.setQuestionId(questionId);
             score.setScoredMarks(scoredMarks);
@@ -433,6 +436,8 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
                 @Override
                 protected Object doInBackground(Object... objects) {
                     String AppStartDateTime = appDatabase.getStatusDao().getValue("AppStartDateTime");
+                    score.setSessionID(""+appDatabase.getStatusDao().getValue("CurrentSession"));
+                    score.setDeviceID(""+appDatabase.getStatusDao().getValue("DeviceID"));
                     score.setEndDateTime("" + AOPApplication.getCurrentDateTime(true, AppStartDateTime));
                     appDatabase.getScoreDao().insert(score);
                     BackupDatabase.backup(mContext);

@@ -30,7 +30,7 @@ public class TabUsagePresenterImpl implements TabUsageContract.TabUsagePresenter
     public ArrayList<Usage> setData(ArrayList<JSONObject> usageData, ArrayList<Usage> listForAdapter) {
         try {
             for (int i = 0; i < usageData.size(); i++) {
-                int currentSec = usageData.get(i).getInt("time");
+                int currentSec = usageData.get(i).getInt("result");
                 String FName = usageData.get(i).getString("FirstName");
 
                 hours = String.format("%02d", currentSec / 3600) + "h";

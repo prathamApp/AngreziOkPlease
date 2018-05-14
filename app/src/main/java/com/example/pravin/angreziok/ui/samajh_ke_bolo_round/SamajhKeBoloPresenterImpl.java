@@ -107,6 +107,8 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
         g1l2QuestionData = whereWhenGameData.getNodelist();
         randomNumber = getRandomNumber(0, g1l2QuestionData.size());
         g1l2CurrentQuestionList = g1l2QuestionData.get(randomNumber).getNodelist();
+        String gameTitle = whereWhenGameData.getNodeTitle();
+        samajhKeBoloG1L2View.setGameTitleFromJson(gameTitle);
     }
 
     public GenericModalGson fetchJsonData(String jasonName, String path) {
@@ -259,6 +261,8 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
     public void set_g2_l2_data(String path) {
         sayItGameData = fetchJsonData("RoundThreeGameTwo", path);
         g2l2QuestionData = sayItGameData.getNodelist();
+        String gameTitle = sayItGameData.getNodeTitle();
+        samajhKeBoloG2L2View.setGameTitleFromJson(gameTitle);
     }
 
     @Override
@@ -267,6 +271,8 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
         g3l2QuestionData = askGameData.getNodelist();
         randomNumber = getRandomNumber(0, g3l2QuestionData.size());
         g3l2CurrentQuestionList = g3l2QuestionData.get(randomNumber).getNodelist();
+        String gameTitle = askGameData.getNodeTitle();
+        samajhKeBoloG3L2View.setGameTitleFromJson(gameTitle);
     }
 
     @Override
@@ -374,10 +380,7 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
     public void addScore(String studentID, String resourceID, int questionId, int scoredMarks, int totalMarks, String startDateTime, int questionLevel) {
         try {
             final Score score = new Score();
-
-            score.setSessionID("");
             score.setStudentID("" + studentID);
-            score.setDeviceID("");
             score.setResourceID("" + resourceID);
             score.setQuestionId(questionId);
             score.setScoredMarks(scoredMarks);
@@ -389,6 +392,8 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
                 @Override
                 protected Object doInBackground(Object... objects) {
                     String AppStartDateTime = appDatabase.getStatusDao().getValue("AppStartDateTime");
+                    score.setSessionID(""+appDatabase.getStatusDao().getValue("CurrentSession"));
+                    score.setDeviceID(""+appDatabase.getStatusDao().getValue("DeviceID"));
                     score.setEndDateTime("" + AOPApplication.getCurrentDateTime(true, AppStartDateTime));
                     appDatabase.getScoreDao().insert(score);
                     BackupDatabase.backup(mContext);

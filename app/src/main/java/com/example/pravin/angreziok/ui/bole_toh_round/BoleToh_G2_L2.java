@@ -89,6 +89,8 @@ public class BoleToh_G2_L2 extends BaseFragment implements BoleTohContract.BoleT
     ImageView submitAnswer;
     @BindView(R.id.question)
     TextView question;
+    @BindView(R.id.tv_game_title)
+    TextView gameTitle;
 
     String text;
     BoleTohContract.BoleTohPresenter presenter;
@@ -116,7 +118,13 @@ public class BoleToh_G2_L2 extends BaseFragment implements BoleTohContract.BoleT
         setDataForGame();
         speechCount = 0;
         currentTeam = 0;
+        mCountDownTimer.setClickable(false);
         showDialog();
+    }
+
+    @Override
+    public void setGameTitleFromJson(String gameName) {
+        gameTitle.setText(gameName);
     }
 
     private void setInitialScores() {

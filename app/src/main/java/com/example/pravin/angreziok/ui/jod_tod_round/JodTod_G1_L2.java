@@ -75,6 +75,8 @@ public class JodTod_G1_L2 extends BaseFragment implements JodTodContract.JodTod_
     KonfettiView konfettiView;
     @BindView(R.id.iv_submit_ans)
     ImageView submitAnswer;
+    @BindView(R.id.tv_game_title)
+    TextView gameTitle;
 
     String text;
     JodTodContract.JodTodPresenter presenter;
@@ -92,6 +94,11 @@ public class JodTod_G1_L2 extends BaseFragment implements JodTodContract.JodTod_
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_jod_tod_g1_l2, container, false);
+    }
+
+    @Override
+    public void setGameTitleFromJson(String gameName) {
+        gameTitle.setText(gameName);
     }
 
     @Override
