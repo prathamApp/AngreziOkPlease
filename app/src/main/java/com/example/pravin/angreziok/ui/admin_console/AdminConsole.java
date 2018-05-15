@@ -39,6 +39,7 @@ import com.example.pravin.angreziok.AOPApplication;
 import com.example.pravin.angreziok.BaseActivity;
 import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.database.AppDatabase;
+import com.example.pravin.angreziok.database.BackupDatabase;
 import com.example.pravin.angreziok.util.FTPConnect;
 import com.example.pravin.angreziok.util.FTPInterface;
 import com.example.pravin.angreziok.util.MessageEvent;
@@ -490,6 +491,12 @@ public class AdminConsole extends BaseActivity implements AdminConsoleContract.A
                 appDatabase.getStudentDao().setNewStudentsToOld();
                 appDatabase.getCrlDao().setNewCrlToOld();
                 return null;
+            }
+
+            @Override
+            protected void onPostExecute(Object o) {
+                super.onPostExecute(o);
+                BackupDatabase.backup(AdminConsole.this);
             }
         }.execute();
     }
