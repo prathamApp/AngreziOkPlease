@@ -32,4 +32,7 @@ public interface ScoreDao {
     @Query("select * from Score")
     List<Score> getAllScores();
 
+    @Query("DELETE FROM Score")
+    void deleteAllScores();
+
 }

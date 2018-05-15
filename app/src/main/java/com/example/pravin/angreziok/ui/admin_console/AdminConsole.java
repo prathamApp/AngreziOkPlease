@@ -471,8 +471,8 @@ public class AdminConsole extends BaseActivity implements AdminConsoleContract.A
             cnt++;
         }
         
-        clearDBRecords();
         tv_Details.setText("\nFiles Transferred : " + cnt + fileName);
+        clearDBRecords();
     }
 
     public AppDatabase appDatabase;
@@ -486,8 +486,9 @@ public class AdminConsole extends BaseActivity implements AdminConsoleContract.A
 
             @Override
             protected Object doInBackground(Object... objects) {
-                appDatabase.getScoreDao().deleteAll();
-                appDatabase.getStudentDao().update()
+                appDatabase.getScoreDao().deleteAllScores();
+                appDatabase.getStudentDao().setNewStudentsToOld();
+                appDatabase.getCrlDao().setNewCrlToOld();
                 return null;
             }
         }.execute();
