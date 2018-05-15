@@ -2,6 +2,7 @@ package com.example.pravin.angreziok.ui.admin_console;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.arch.persistence.room.Room;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -36,10 +38,10 @@ import android.widget.Toast;
 import com.example.pravin.angreziok.AOPApplication;
 import com.example.pravin.angreziok.BaseActivity;
 import com.example.pravin.angreziok.R;
+import com.example.pravin.angreziok.database.AppDatabase;
 import com.example.pravin.angreziok.util.FTPConnect;
 import com.example.pravin.angreziok.util.FTPInterface;
 import com.example.pravin.angreziok.util.MessageEvent;
-import com.example.pravin.angreziok.util.Utility;
 
 import org.apache.commons.io.FileUtils;
 import org.greenrobot.eventbus.EventBus;
@@ -155,7 +157,7 @@ public class AdminConsole extends BaseActivity implements AdminConsoleContract.A
     }
 
     @Override
-    public void WifiTransfer(){
+    public void WifiTransfer() {
         WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         boolean wifiEnabled = wifiManager.isWifiEnabled();
         if (!wifiEnabled) {
@@ -459,17 +461,36 @@ public class AdminConsole extends BaseActivity implements AdminConsoleContract.A
         int cnt = 0;
         String fileName = "";
         for (int i = 0; i < files.length; i++) {
-                try {
-                    fileName += "\n" + files[i].getName() + "   " + Integer.parseInt(String.valueOf(files[i].length() / 1024)) + " kb";
-                    FileUtils.moveFileToDirectory(new File(files[i].getAbsolutePath()),
-                            new File(Environment.getExternalStorageDirectory().toString() + "/.AOPInternal/JsonsBackup"), false);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                cnt++;
+            try {
+                fileName += "\n" + files[i].getName() + "   " + Integer.parseInt(String.valueOf(files[i].length() / 1024)) + " kb";
+                FileUtils.moveFileToDirectory(new File(files[i].getAbsolutePath()),
+                        new File(Environment.getExternalStorageDirectory().toString() + "/.AOPInternal/JsonsBackup"), false);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            cnt++;
         }
-//        clearDBRecords();
+        
+        clearDBRecords();
         tv_Details.setText("\nFiles Transferred : " + cnt + fileName);
+    }
+
+    public AppDatabase appDatabase;
+    private void clearDBRecords() {
+
+        appDatabase = Room.databaseBuilder(AdminConsole.this,
+                AppDatabase.class, AppDatabase.DB_NAME)
+                .build();
+
+        new AsyncTask<Object, Void, Object>() {
+
+            @Override
+            protected Object doInBackground(Object... objects) {
+                appDatabase.getScoreDao().deleteAll();
+                appDatabase.getStudentDao().update()
+                return null;
+            }
+        }.execute();
     }
 
     @OnClick(R.id.btn_receive_data)

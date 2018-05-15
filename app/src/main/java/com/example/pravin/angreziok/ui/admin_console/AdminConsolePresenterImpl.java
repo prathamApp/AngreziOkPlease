@@ -41,7 +41,7 @@ public class AdminConsolePresenterImpl implements AdminConsoleContract.AdminCons
     AdminConsoleContract.AdminConsoleView adminConsoleView;
     File[] filesForBackup;
     String pushFileName, pushAPI, transferFileName;
-    int cnt = 0, allFiles = 0, fileCnt=0;
+    int cnt = 0, allFiles = 0, fileCnt = 0;
     int[] fileCount;
     static boolean sentFlag = false, transferFlg = false;
     boolean currentPush = false;
@@ -114,12 +114,12 @@ public class AdminConsolePresenterImpl implements AdminConsoleContract.AdminCons
 
                 @Override
                 protected void onPostExecute(Object obj) {
-                    super.onPostExecute(obj);
                     String requestString = generateRequestString(scoreData, attendanceData, newStudentData, newCrlData, sessionData);
                     transferFileName = "AOP_Usage:" + AOPApplication.getUniqueID().toString();
                     WriteSettings(mContext, requestString, transferFileName);
                     /*if(!currentPush)
                         adminConsoleView.transferFile(transferFileName);*/
+                    super.onPostExecute(obj);
                 }
             }.execute();
         } catch (Exception e) {
@@ -303,7 +303,7 @@ public class AdminConsolePresenterImpl implements AdminConsoleContract.AdminCons
             if (currentPush) {
                 pushToServer();
             }
-            if(transferFlg){
+            if (transferFlg) {
                 transferFlg = false;
                 adminConsoleView.WifiTransfer();
             }
@@ -330,20 +330,10 @@ public class AdminConsolePresenterImpl implements AdminConsoleContract.AdminCons
             if (currentPush) {
                 path = Environment.getExternalStorageDirectory().toString() + "/.AOPInternal/SelfUsageJsons";
             } else {
-                File file = new File(Environment.getExternalStorageDirectory().toString() + "/Bluetooth");
-
-                path = Environment.getExternalStorageDirectory().toString() + "/Bluetooth";
-
-                if (!file.exists())
-                    path = Environment.getExternalStorageDirectory().toString() + "/Bluetooth";
-
-                file = new File(Environment.getExternalStorageDirectory().toString() + "/bluetooth");
-                if (!file.exists())
-                    path = Environment.getExternalStorageDirectory().toString() + "/bluetooth";
+                path = Environment.getExternalStorageDirectory() + "/.AOPInternal/ReceivedUsageJsons";
             }
 
             String destFolder = Environment.getExternalStorageDirectory() + "/.AOPInternal/JsonsBackup";
-
             Log.d("path", "pushToServer: " + path);
 
             File blueToothDir = new File(path);
