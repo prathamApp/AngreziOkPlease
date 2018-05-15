@@ -31,7 +31,6 @@ public class BaseActivity extends AppCompatActivity {
     static Boolean setTimer = false;
     static String pauseTime;
     private AppDatabase appDatabase;
-    String AppStartDateTime;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,10 +40,6 @@ public class BaseActivity extends AppCompatActivity {
         ttsService.setSpeechRate(0.7f);
         ttsService.setLanguage(new Locale("hi", "IN"));
         sttService = STTService.init(this);
-        appDatabase = Room.databaseBuilder(this,
-                AppDatabase.class, AppDatabase.DB_NAME)
-                .build();
-
     }
 
     @Override
@@ -68,7 +63,10 @@ public class BaseActivity extends AppCompatActivity {
                         AppDatabase.class, AppDatabase.DB_NAME)
                         .build();
                 String AppStartDateTime = appDatabase.getStatusDao().getValue("AppStartDateTime");
-                pauseTime = AOPApplication.getCurrentDateTime(true,AppStartDateTime);
+                if (AppStartDateTime == null)
+                    pauseTime = AOPApplication.getCurrentDateTime(false,"");
+                else
+                    pauseTime = AOPApplication.getCurrentDateTime(true,AppStartDateTime);
                 return null;
             }
         }.execute();
@@ -76,7 +74,6 @@ public class BaseActivity extends AppCompatActivity {
         Log.d("APP_END", "onFinish: Startd the App: " + pauseTime);
 
         cd = new CountDownTimer(duration, 1000) {
-            //cd = new CountDownTimer(duration, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 duration = millisUntilFinished;
@@ -131,12 +128,12 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        ActivityOnPause();
+        //ActivityOnPause();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        ActivityResumed();
+       // ActivityResumed();
     }
 }

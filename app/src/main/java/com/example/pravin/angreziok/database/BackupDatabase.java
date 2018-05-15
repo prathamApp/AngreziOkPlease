@@ -16,12 +16,17 @@ public class BackupDatabase {
     public static void backup(Context mContext) {
         try {
             File sd = Environment.getExternalStorageDirectory();
-            File data = Environment.getDataDirectory();
 
             if (sd.canWrite()) {
+<<<<<<< HEAD
                 String currentDBPath = "//data//" + mContext.getPackageName() + "//databases//" + AppDatabase.DB_NAME;
+=======
+                File file = mContext.getDir("databases", Context.MODE_PRIVATE);
+
+                String currentDBPath = file.getAbsolutePath().replace("app_databases","databases")+"/"+ DB_NAME;
+>>>>>>> 61e858afad1936e2a628ff5a320b4b4743473bd2
                 String backupDBPath = AppDatabase.DB_NAME+".db";
-                File currentDB = new File(data , currentDBPath);
+                File currentDB = new File(currentDBPath);
                 File backupDB = new File(sd, backupDBPath);
 
                 if (currentDB.exists()) {
