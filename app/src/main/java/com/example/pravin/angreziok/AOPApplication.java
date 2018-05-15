@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 
 import com.example.pravin.angreziok.database.AppDatabase;
+import com.example.pravin.angreziok.ui.video_intro.VideoIntro;
 
 import net.vrallev.android.cat.Cat;
 
@@ -39,6 +40,7 @@ public class AOPApplication extends Application {
     }
 
     public static AOPApplication aopApplication;
+    private static AppDatabase appDatabase;
     static String ext_path;
     private static final DateFormat dateTimeFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.ENGLISH);
     private static final DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
@@ -138,12 +140,12 @@ public class AOPApplication extends Application {
 
     public static String getAccurateTimeStamp(String appStartTime) {
         try {
-            Log.d("TAG:::", "getAccurateTimeStamp: " + appStartTime);
+            Log.d("TAG:::", "getAccurateTimeStamp: "+appStartTime);
             Date gpsDateTime = dateTimeFormat.parse(appStartTime);
             // Add Seconds to Gps Date Time
             Calendar addSec = Calendar.getInstance();
             addSec.setTime(gpsDateTime);
-            Log.d("doInBackground", "------------------------------------------------------------------------getTimerCount: " + getTimerCount());
+            Log.d("doInBackground", "getTimerCount: "+getTimerCount());
             addSec.add(addSec.SECOND, getTimerCount());
 
             return dateTimeFormat.format(addSec.getTime());
