@@ -31,7 +31,6 @@ public class BaseActivity extends AppCompatActivity {
     static Boolean setTimer = false;
     static String pauseTime;
     private AppDatabase appDatabase;
-    String AppStartDateTime;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
