@@ -42,6 +42,7 @@ import com.example.pravin.angreziok.util.MessageEvent;
 import com.example.pravin.angreziok.util.Utility;
 
 import org.apache.commons.io.FileUtils;
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -437,11 +438,11 @@ public class AdminConsole extends BaseActivity implements AdminConsoleContract.A
                 ftpConnect.turnOnOffHotspot(false);
                 WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
                 wifiManager.setWifiEnabled(false);
-/*                try {
+                try {
                     //FileUtils.deleteDirectory(new File(Environment.getExternalStorageDirectory() + "/.AOPInternal/UsageJsons"));
-                } catch (IOException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
-                }*/
+                }
                 receiverDialog.dismiss();
             }
         });
@@ -452,7 +453,23 @@ public class AdminConsole extends BaseActivity implements AdminConsoleContract.A
 
     @Override
     public void onFilesRecievedComplete(String typeOfFile, String filename) {
-        //TODO move to backup;
+        String path = Environment.getExternalStorageDirectory().toString() + "/.AOPInternal/UsageJsons";
+        File directory = new File(path);
+        File[] files = directory.listFiles();
+        int cnt = 0;
+        String fileName = "";
+        for (int i = 0; i < files.length; i++) {
+                try {
+                    fileName += "\n" + files[i].getName() + "   " + Integer.parseInt(String.valueOf(files[i].length() / 1024)) + " kb";
+                    FileUtils.moveFileToDirectory(new File(files[i].getAbsolutePath()),
+                            new File(Environment.getExternalStorageDirectory().toString() + "/.AOPInternal/JsonsBackup"), false);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                cnt++;
+        }
+//        clearDBRecords();
+        tv_Details.setText("\nFiles Transferred : " + cnt + fileName);
     }
 
     @OnClick(R.id.btn_receive_data)
@@ -463,10 +480,10 @@ public class AdminConsole extends BaseActivity implements AdminConsoleContract.A
         if (!ftpConnect.checkServiceRunning()) {
             // Set HotSpot Name after crl name
             AOPApplication.networkSSID = "PrathamHotSpot_TEST";
-            File f = new File(Environment.getExternalStorageDirectory() + "/.AOPInternal/UsageJsons");
+            File f = new File(Environment.getExternalStorageDirectory() + "/.AOPInternal/ReceivedUsageJsons");
             if (!f.exists())
                 f.mkdir();
-            AOPApplication.setPath(Environment.getExternalStorageDirectory() + "/.AOPInternal/UsageJsons");
+            AOPApplication.setPath(Environment.getExternalStorageDirectory() + "/.AOPInternal/ReceivedUsageJsons");
             // Create FTP Server
             ftpConnect.createFTPHotspot();
         } else {
@@ -475,28 +492,38 @@ public class AdminConsole extends BaseActivity implements AdminConsoleContract.A
         }
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
+    }
 
     // Eventbus
 // This method will be called when a MessageEvent is posted (in the UI thread)
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(MessageEvent event) {
-
         if (event.message.equalsIgnoreCase("Recieved")) {
             filename = "";
             tv_Details.setText("");
             recievingProgress.setVisibility(View.VISIBLE);
 
-            File transferSrc = new File(Environment.getExternalStorageDirectory() + "/.AOPInternal/UsageJsons");
+            File transferSrc = new File(Environment.getExternalStorageDirectory() + "/.AOPInternal/ReceivedUsageJsons");
             if (transferSrc.exists() && transferSrc.listFiles().length > 0) {
                 File[] files = transferSrc.listFiles();
                 for (int i = 0; i < files.length; i++) {
-                    Utility.targetPath = Environment.getExternalStorageDirectory() + "/.AOPInternal/ReceivedUsageJsons";
-                    Utility.recievedFilePath = files[i].getAbsolutePath();
+//                    Utility.targetPath = Environment.getExternalStorageDirectory() + "/.AOPInternal/ReceivedUsageJsons";
+//                    Utility.recievedFilePath = files[i].getAbsolutePath();
                     try {
                         filename += "\n" + files[i].getName() + "   " + Integer.parseInt(String.valueOf(files[i].length() / 1024)) + " kb";
-                        FileUtils.moveFileToDirectory(new File(Utility.recievedFilePath),
-                                new File(Utility.targetPath /*+ "/" + files[i].getName()*/), true);
-                    } catch (IOException e) {
+//                        FileUtils.moveFileToDirectory(new File(Utility.recievedFilePath),
+//                                new File(Utility.targetPath /*+ "/" + files[i].getName()*/), true);
+                    } catch (Exception e) {
                         e.printStackTrace();
                     } finally {
                         tv_Details.setText("Files Recieved...." + filename);

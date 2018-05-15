@@ -89,7 +89,8 @@ public class FTPConnect implements FTPInterface.FTPConnectInterface {
 //            new ListFilesOnFTP(false, null, false).execute();
             new UploadTHroughFTP(typeOfFile).execute();
         } else {
-            pushPullInterface.showDialog();
+            //TODO show error dialog
+//            pushPullInterface.showDialog();
         }
     }
 
@@ -443,6 +444,10 @@ public class FTPConnect implements FTPInterface.FTPConnectInterface {
             boolean result = false;
             try {
                 // for Transfer Usage
+//                FTPFile[] subFiles = temp.listFiles();
+//                for (int i = 0; i < subFiles.length; i++) {
+//                    Log.d("fileName", "doInBackground: "+subFiles[i].getName());
+//                }
                 temp.enterLocalPassiveMode();
                 temp.setFileType(FTP.BINARY_FILE_TYPE);
                 if (sendingClient.equalsIgnoreCase("TransferUsage")) {

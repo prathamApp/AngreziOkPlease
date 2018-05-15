@@ -114,12 +114,12 @@ public class AdminConsolePresenterImpl implements AdminConsoleContract.AdminCons
 
                 @Override
                 protected void onPostExecute(Object obj) {
+                    super.onPostExecute(obj);
                     String requestString = generateRequestString(scoreData, attendanceData, newStudentData, newCrlData, sessionData);
                     transferFileName = "AOP_Usage:" + AOPApplication.getUniqueID().toString();
                     WriteSettings(mContext, requestString, transferFileName);
                     /*if(!currentPush)
                         adminConsoleView.transferFile(transferFileName);*/
-                    super.onPostExecute(obj);
                 }
             }.execute();
         } catch (Exception e) {

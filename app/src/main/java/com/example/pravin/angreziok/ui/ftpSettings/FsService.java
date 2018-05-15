@@ -56,13 +56,13 @@ public class FsService extends Service implements Runnable {
     private static final String TAG = FsService.class.getSimpleName();
 
     // Service will (global) broadcast when server start/stop
-    static public final String ACTION_STARTED = "com.example.pef.prathamopenschool.ftpSettings.FTPSERVER_STARTED";
-    static public final String ACTION_STOPPED = "com.example.pef.prathamopenschool.ftpSettings.FTPSERVER_STOPPED";
-    static public final String ACTION_FAILEDTOSTART = "com.example.pef.prathamopenschool.ftpSettings.FTPSERVER_FAILEDTOSTART";
+    static public final String ACTION_STARTED = "com.example.pravin.angreziok.ui.ftpSettings.FTPSERVER_STARTED";
+    static public final String ACTION_STOPPED = "com.example.pravin.angreziok.ui.ftpSettings.FTPSERVER_STOPPED";
+    static public final String ACTION_FAILEDTOSTART = "com.example.pravin.angreziok.ui.ftpSettings.FTPSERVER_FAILEDTOSTART";
 
     // RequestStartStopReceiver listens for these actions to start/stop this server
-    static public final String ACTION_START_FTPSERVER = "com.example.pef.prathamopenschool.ftpSettings.ACTION_START_FTPSERVER";
-    static public final String ACTION_STOP_FTPSERVER = "com.example.pef.prathamopenschool.ftpSettings.ACTION_STOP_FTPSERVER";
+    static public final String ACTION_START_FTPSERVER = "com.example.pravin.angreziok.ui.ftpSettings.ACTION_START_FTPSERVER";
+    static public final String ACTION_STOP_FTPSERVER = "com.example.pravin.angreziok.ui.ftpSettings.ACTION_STOP_FTPSERVER";
 
     protected static Thread serverThread = null;
     protected boolean shouldExit = false;
