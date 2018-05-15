@@ -5,7 +5,6 @@ import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -119,10 +118,6 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
         if (!file.exists())
             file.mkdir();
 
-        file = new File(Environment.getExternalStorageDirectory().toString() + "/.AOPInternal/ReceivedUsageJsons");
-        if (!file.exists())
-            file.mkdir();
-
         file = new File(Environment.getExternalStorageDirectory().toString() + "/.AOPInternal/SelfUsageJsons");
         if (!file.exists())
             file.mkdir();
@@ -133,32 +128,6 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
 
         startActivity(new Intent(this, QRActivity.class));
         finish();
-    }
-
-    public void createDataBase() {
-        try {
-            boolean dbExist = checkDataBase();
-            if (!dbExist) {
-                if (new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/angrezi_ok_please.db").exists()) {
-                    copyDataBase();
-                } else {
-                    try {
-                        appDatabase = Room.databaseBuilder(this,
-                                AppDatabase.class, AppDatabase.DB_NAME)
-                                .build();
-                        doInitialEntries();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            } else {
-                addStartTime();
-                Log.d("VidIntro", "createDataBase: ");
-                //startSession();
-            }
-        } catch (Exception e) {
-//            e.printStackTrace();
-        }
     }
 
     private void doInitialEntries() {
@@ -281,11 +250,6 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
         SQLiteDatabase checkDB = null;
         try {
             File file = this.getDir("databases", Context.MODE_PRIVATE);
-            String myPath = file.getAbsolutePath().replace("app_databases", "databases") + "/" + DB_NAME;
-            checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
-        if (checkDB != null) {
-            checkDB.close();
-        }
             String myPath = file.getAbsolutePath() + "/" + DB_NAME;
             checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
 
@@ -307,16 +271,6 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
     private void copyDataBase() throws IOException {
         try {
             //Open your local db as the input stream
-            appDatabase = Room.databaseBuilder(this,
-                    AppDatabase.class, AppDatabase.DB_NAME)
-                    .build();
-
-            File input = new File(Environment.getExternalStorageDirectory().getPath() + "/angrezi_ok_please.db");
-            InputStream myInput = new FileInputStream(input);
-            // Path to the just created empty db
-            File file = this.getDir("databases", Context.MODE_PRIVATE);
-
-            //String myPath = file.getAbsolutePath().replace("app_databases", "databases") + "/" + DB_NAME;
             File file = this.getDir("databases", Context.MODE_PRIVATE);
             String myPath = file.getAbsolutePath() + "/" + DB_NAME;
             String toCopyPath = file.getAbsolutePath().replace("app_databases", "databases") + "/" + DB_NAME;
@@ -337,18 +291,21 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
             myOutput.flush();
             myOutput.close();
             myInput.close();
-            addStartTime();
+
             addStartTime();
 
             Thread.sleep(500);
             copyFileUsingStream(new File(myPath), new File(toCopyPath));
 
             addStartTime();
+
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-}
+
     private static void copyFileUsingStream(File source, File dest) throws IOException {
         InputStream is = null;
         OutputStream os = null;
