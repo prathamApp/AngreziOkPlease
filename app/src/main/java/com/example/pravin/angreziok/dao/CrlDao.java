@@ -7,6 +7,7 @@ import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
 import com.example.pravin.angreziok.domain.Crl;
+import com.example.pravin.angreziok.domain.Student;
 
 import java.util.List;
 
@@ -33,6 +34,9 @@ public interface CrlDao {
 
     @Query("select * from Crl")
     List<Crl> getAllCrls();
+
+    @Query("update Crl set newCrl = 0 where newCrl = 1")
+    void setNewCrlToOld();
 
     @Query("select * from Crl where newCrl = 1")
     List<Crl> getAllNewCrls();
