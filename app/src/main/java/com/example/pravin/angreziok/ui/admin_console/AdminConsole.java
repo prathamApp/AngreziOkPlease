@@ -164,7 +164,6 @@ public class AdminConsole extends BaseActivity implements AdminConsoleContract.A
         if (!wifiEnabled) {
             wifiManager.setWifiEnabled(true);
         }
-
         // Operation
         // Display ftp dialog
         Dialog dialog = new Dialog(this);

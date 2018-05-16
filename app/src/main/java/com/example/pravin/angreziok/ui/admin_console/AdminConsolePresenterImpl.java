@@ -282,12 +282,7 @@ public class AdminConsolePresenterImpl implements AdminConsoleContract.AdminCons
         OutputStreamWriter osw = null;
 
         try {
-
-            if (currentPush) {
-                MainPath = Environment.getExternalStorageDirectory() + "/.AOPInternal/SelfUsageJsons/" + fName + ".json";
-            } else {
-                MainPath = Environment.getExternalStorageDirectory() + "/.AOPInternal/UsageJsons/" + fName + ".json";
-            }
+            MainPath = Environment.getExternalStorageDirectory() + "/.AOPInternal/UsageJsons/" + fName + ".json";
             File file = new File(MainPath);
             try {
                 fOut = new FileOutputStream(file);
@@ -328,7 +323,7 @@ public class AdminConsolePresenterImpl implements AdminConsoleContract.AdminCons
             //Moving to Receive usage
             String path;
             if (currentPush) {
-                path = Environment.getExternalStorageDirectory().toString() + "/.AOPInternal/SelfUsageJsons";
+                path = Environment.getExternalStorageDirectory().toString() + "/.AOPInternal/UsageJsons";
             } else {
                 path = Environment.getExternalStorageDirectory() + "/.AOPInternal/ReceivedUsageJsons";
             }
