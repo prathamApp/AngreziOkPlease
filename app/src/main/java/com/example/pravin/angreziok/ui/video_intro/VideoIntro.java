@@ -118,10 +118,6 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
         if (!file.exists())
             file.mkdir();
 
-        file = new File(Environment.getExternalStorageDirectory() + "/.AOPInternal/SelfUsageJsons");
-        if (!file.exists())
-            file.mkdir();
-
         file = new File(Environment.getExternalStorageDirectory().toString() + "/.AOPInternal/ReceivedUsageJsons");
         if (!file.exists())
             file.mkdir();

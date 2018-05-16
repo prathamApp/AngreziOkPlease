@@ -91,6 +91,8 @@ public class AdminConsolePresenterImpl implements AdminConsoleContract.AdminCons
         try {
             new AsyncTask<Object, Void, Object>() {
 
+                String DeviceID;
+
                 JSONArray scoreData = new JSONArray(),
                         attendanceData = new JSONArray(),
                         newStudentData = new JSONArray(),
@@ -109,12 +111,13 @@ public class AdminConsolePresenterImpl implements AdminConsoleContract.AdminCons
                     newCrlData = fillNewCrlsData(crlsList);
                     List<Session> sessionsList = appDatabase.getSessionDao().getAllSessions();
                     sessionData = fillSessionData(sessionsList);
+                    DeviceID = appDatabase.getStatusDao().getValue("DeviceID");
                     return null;
                 }
 
                 @Override
                 protected void onPostExecute(Object obj) {
-                    String requestString = generateRequestString(scoreData, attendanceData, newStudentData, newCrlData, sessionData);
+                    String requestString = generateRequestString(scoreData, attendanceData, newStudentData, newCrlData, sessionData,DeviceID);
                     transferFileName = "AOP_Usage:" + AOPApplication.getUniqueID().toString();
                     WriteSettings(mContext, requestString, transferFileName);
                     /*if(!currentPush)
@@ -132,7 +135,7 @@ public class AdminConsolePresenterImpl implements AdminConsoleContract.AdminCons
         return transferFileName;
     }
 
-    private String generateRequestString(JSONArray scoreData, JSONArray attendanceData, JSONArray newStudentData, JSONArray newCrlData, JSONArray sessionData) {
+    private String generateRequestString(JSONArray scoreData, JSONArray attendanceData, JSONArray newStudentData, JSONArray newCrlData, JSONArray sessionData, String DeviceID) {
         String requestString = "";
         try {
             JSONObject metaDataObj = new JSONObject();
@@ -142,7 +145,7 @@ public class AdminConsolePresenterImpl implements AdminConsoleContract.AdminCons
             metaDataObj.put("NewCrlsCount", newCrlData.length());
             metaDataObj.put("SessionsCount", sessionData.length());
             metaDataObj.put("TransId", AOPApplication.getUniqueID());
-            metaDataObj.put("DeviceId", "Take From Status");//TODO DeviceID
+            metaDataObj.put("DeviceId", ""+DeviceID);
             metaDataObj.put("MobileNumber", "0");
 
             requestString = "{ \"metadata\": " + metaDataObj +
@@ -312,7 +315,6 @@ public class AdminConsolePresenterImpl implements AdminConsoleContract.AdminCons
 
         cnt = 0;
         allFiles = 0;
-
         // Checking Internet Connection
         SyncUtility syncUtility = new SyncUtility(mContext);
 
@@ -331,20 +333,20 @@ public class AdminConsolePresenterImpl implements AdminConsoleContract.AdminCons
             String destFolder = Environment.getExternalStorageDirectory() + "/.AOPInternal/JsonsBackup";
             Log.d("path", "pushToServer: " + path);
 
-            File blueToothDir = new File(path);
-            if (!blueToothDir.exists() && !currentPush) {
-                Toast.makeText(mContext, "Bluetooth folder does not exist", Toast.LENGTH_SHORT).show();
+            File usageDir = new File(path);
+            if (!usageDir.exists() && !currentPush) {
+                Toast.makeText(mContext, "UsageJsons folder does not exist", Toast.LENGTH_SHORT).show();
             } else {
                 adminConsoleView.generateDialog("Please Wait...");
-                File[] files = blueToothDir.listFiles();
-                filesForBackup = blueToothDir.listFiles();
+                File[] files = usageDir.listFiles();
+                filesForBackup = usageDir.listFiles();
 
                 for (int i = 0; i < files.length; i++) {
                     if (files[i].getName().contains(pushFileName)) {
                         allFiles++;
-                        fileCnt++;
                     }
                 }
+                fileCnt = allFiles;
                 fileCount = new int[files.length];
                 Toast.makeText(mContext, "Pushing data to server Please wait...", Toast.LENGTH_SHORT).show();
                 for (int i = 0; i < files.length; i++) {
@@ -480,21 +482,13 @@ public class AdminConsolePresenterImpl implements AdminConsoleContract.AdminCons
         } else {
             builder = new AlertDialog.Builder(mContext);
         }
-        if (currentPush) {
-            dialogTitle = "<font color='#2E96BB'>PUSH SUCCESSFUL ?</font>";
-            msgQuestion = "CLEAR RECORDS IF SUCCESSFUL????\n\n If you click on 'PUSH SUCCESSFUL' then Data will be Deleted!!!\n If you click 'PUSH FAILED' the Data will persist";
-            negativeMsg = "PUSH FAILED";
-            positiveMsg = "PUSH SUCCESSFUL";
-            successToast = "DATA CLEARED";
-            failedToast = "DATA NOT CLEAR ";
-        } else {
-            dialogTitle = "<font color='#2E96BB'>SHARE SUCCESSFUL ?</font>";
-            msgQuestion = "If you see 'File received successfully' message on master tab,\nClick SHARE SUCCESSFUL.\n\nWARNING : If you click SHARE SUCCESSFUL without receiving\n data on master tab, Data will be LOST !!!";
-            negativeMsg = "SHARE FAILED";
-            positiveMsg = "SHARE SUCCESSFUL";
-            successToast = "File Transferred Successfully!!!";
-            failedToast = "File Not Transferred !!!";
-        }
+        dialogTitle = "<font color='#2E96BB'>PUSH SUCCESSFUL ?</font>";
+        msgQuestion = "CLEAR RECORDS IF SUCCESSFUL????\n\n If you click on 'PUSH SUCCESSFUL' then Data will be Deleted!!!\n If you click 'PUSH FAILED' the Data will persist";
+        negativeMsg = "PUSH FAILED";
+        positiveMsg = "PUSH SUCCESSFUL";
+        successToast = "DATA CLEARED";
+        failedToast = "DATA NOT CLEAR ";
+
         builder.setTitle(Html.fromHtml("" + dialogTitle))
                 .setMessage("" + msgQuestion)
                 .setNegativeButton("" + negativeMsg, new DialogInterface.OnClickListener() {
@@ -502,7 +496,7 @@ public class AdminConsolePresenterImpl implements AdminConsoleContract.AdminCons
                         // do nothing
                         Toast.makeText(mContext, "" + failedToast, Toast.LENGTH_SHORT).show();
                         //Delete
-                        if (!currentPush) {
+                        if (currentPush) {
                             File f = new File(Environment.getExternalStorageDirectory() + "/.AOPInternal/UsageJsons/" + transferFileName + ".json");
                             f.delete();
                         }
@@ -512,21 +506,20 @@ public class AdminConsolePresenterImpl implements AdminConsoleContract.AdminCons
                 .setPositiveButton("" + positiveMsg, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // continue with delete
-                        new AsyncTask<Object, Void, Object>() {
+                        if (currentPush) {
+                            new AsyncTask<Object, Void, Object>() {
 
-                            @Override
-                            protected Object doInBackground(Object... objects) {
-                                appDatabase.getScoreDao().deleteAll();
-                                return null;
-                            }
-                        }.execute();
+                                @Override
+                                protected Object doInBackground(Object... objects) {
+                                    appDatabase.getScoreDao().deleteAllScores();
+                                    appDatabase.getStudentDao().setNewStudentsToOld();
+                                    appDatabase.getCrlDao().setNewCrlToOld();
+                                    return null;
+                                }
+                            }.execute();
+                        }
                         BackupDatabase.backup(mContext);
                         Toast.makeText(mContext, "" + successToast, Toast.LENGTH_SHORT).show();
-                        if (!currentPush) {
-                            File f = new File(Environment.getExternalStorageDirectory() + "/.AOPInternal/UsageJsons/" + transferFileName + ".json");
-                            String destFolder = Environment.getExternalStorageDirectory() + "/.AOPInternal/JsonsBackup";
-                            fileCutPaste(f, destFolder);
-                        }
                     }
                 })
 

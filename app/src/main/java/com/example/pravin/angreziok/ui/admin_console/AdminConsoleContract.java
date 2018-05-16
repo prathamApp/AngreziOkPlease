@@ -6,8 +6,6 @@ import android.graphics.Bitmap;
 public interface AdminConsoleContract {
 
     interface AdminConsoleView {
-
-        void transferFile(String fileName);
         void generateDialog(String msg);
         void stopDialog();
         void WifiTransfer();
