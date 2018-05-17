@@ -97,7 +97,6 @@ public class BaseActivity extends AppCompatActivity {
                                     .build();
 
                             String curSession = appDatabase.getStatusDao().getValue("CurrentSession");
-                            String AppStartDateTime = appDatabase.getStatusDao().getValue("AppStartDateTime");
                             String toDateTemp = appDatabase.getSessionDao().getToDate(curSession);
 
                             Log.d("AppExitService:", "curSession : " + curSession + "      toDateTemp : " + toDateTemp);
