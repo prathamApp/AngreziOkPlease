@@ -5,18 +5,13 @@ import android.app.ProgressDialog;
 import android.arch.persistence.room.Room;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,9 +69,6 @@ public class AdminConsole extends BaseActivity implements AdminConsoleContract.A
     ImageButton btn_transferData;
     @BindView(R.id.btn_push)
     ImageButton btn_push;
-    @BindView(R.id.btn_self_push)
-    ImageButton btn_self_push;
-
     @BindView(R.id.et_crlFirstName)
     EditText et_FirstName;
     @BindView(R.id.et_crlLastName)
@@ -107,6 +99,7 @@ public class AdminConsole extends BaseActivity implements AdminConsoleContract.A
     EditText edt_Port;
     Button btn_Connect;
     ListView lst_networks;
+    Dialog dialog;
     private boolean NoDataToTransfer = false;
 
 
@@ -122,7 +115,6 @@ public class AdminConsole extends BaseActivity implements AdminConsoleContract.A
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_console);
         ButterKnife.bind(this);
-
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 /*        PowerManager powerManager = (PowerManager) getSystemService(POWER_SERVICE);
         PowerManager.WakeLock wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
@@ -135,6 +127,57 @@ public class AdminConsole extends BaseActivity implements AdminConsoleContract.A
         addAdminFlg = false;
         adminPresenter = new AdminConsolePresenterImpl(AdminConsole.this, this);
         addStatesData();
+    }
+
+    public void showActionDialog(String clickedButton) {
+
+        dialog = new Dialog(AdminConsole.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.setContentView(R.layout.dialog_admin);
+        dialog.setCanceledOnTouchOutside(false);
+        Button button_left = dialog.findViewById(R.id.dialog_btn_left);
+        Button button_right = dialog.findViewById(R.id.dialog_btn_right);
+
+        if (clickedButton.equalsIgnoreCase("Push")) {
+            button_left.setText("Push");
+            button_right.setText("Device Push");
+        }
+        dialog.show();
+
+
+        button_left.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                if (clickedButton.equalsIgnoreCase("Push")) {
+                    try {
+                        adminPresenter.pushToServer();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else if (clickedButton.equalsIgnoreCase("Usage")) {
+                    adminPresenter.createJsonforTransfer();
+                } else if (clickedButton.equalsIgnoreCase("Content")) {
+                    Toast.makeText(AdminConsole.this, "Transfer Content", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        button_right.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                if (clickedButton.equalsIgnoreCase("Push")) {
+                    pushCurrentTabData();
+                } else if (clickedButton.equalsIgnoreCase("Usage")) {
+                    receiveData();
+                } else if (clickedButton.equalsIgnoreCase("Content")) {
+                    Toast.makeText(AdminConsole.this, "Receive Content", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
     }
 
     @Override
@@ -150,11 +193,13 @@ public class AdminConsole extends BaseActivity implements AdminConsoleContract.A
 
     @OnClick(R.id.btn_transfer_data)
     public void transferData() {
-        // Generate Json file
         adminPresenter.transferFlg = true;
-        adminPresenter.createJsonforTransfer();
-        //transferFile(adminPresenter.getTransferFilename());
+        showActionDialog("Usage");
+    }
 
+    @OnClick(R.id.btn_transfer_content)
+    public void ContentData() {
+        showActionDialog("Content");
     }
 
     @Override
@@ -242,7 +287,6 @@ public class AdminConsole extends BaseActivity implements AdminConsoleContract.A
         });
     }
 
-    @OnClick(R.id.btn_self_push)
     public void pushCurrentTabData() {
         adminPresenter.currentPush = true;
         adminPresenter.createJsonforTransfer();
@@ -250,11 +294,7 @@ public class AdminConsole extends BaseActivity implements AdminConsoleContract.A
 
     @OnClick(R.id.btn_push)
     public void pushToServer() {
-        try {
-            adminPresenter.pushToServer();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        showActionDialog("push");
     }
 
     @Override
@@ -399,12 +439,13 @@ public class AdminConsole extends BaseActivity implements AdminConsoleContract.A
             }
             cnt++;
         }
-        
+
         tv_Details.setText("\nFiles Transferred : " + cnt + fileName);
         clearDBRecords();
     }
 
     public AppDatabase appDatabase;
+
     private void clearDBRecords() {
 
         appDatabase = Room.databaseBuilder(AdminConsole.this,
@@ -429,7 +470,6 @@ public class AdminConsole extends BaseActivity implements AdminConsoleContract.A
         }.execute();
     }
 
-    @OnClick(R.id.btn_receive_data)
     public void receiveData() {
         // get CRL Name by ID
         WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);

@@ -25,7 +25,7 @@
         android:paddingVertical="5dp"
         android:text="Admin Console"
         android:textColor="@color/simple_white"
-        android:textSize="25sp"
+        android:textSize="30sp"
         android:textStyle="bold|italic" />
 
     <LinearLayout
@@ -35,7 +35,7 @@
         android:layout_weight="90"
         android:orientation="horizontal"
         android:visibility="visible"
-        android:weightSum="5">
+        android:weightSum="4">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -57,8 +57,8 @@
 
                 <ImageButton
                     android:id="@+id/btn_add_admin"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
                     android:layout_centerInParent="true"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
@@ -71,11 +71,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/btn_add_admin"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="15dp"
                     android:gravity="center"
-                    android:text="Add New Admin"
+                    android:text="New\nAdmin"
                     android:textColor="#000000"
-                    android:textSize="23sp"
+                    android:textSize="25sp"
                     android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
@@ -100,8 +100,8 @@
 
                 <ImageButton
                     android:id="@+id/btn_transfer_data"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
                     android:layout_centerInParent="true"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
@@ -114,54 +114,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/btn_add_admin"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="15dp"
                     android:gravity="center"
-                    android:text="Transfer\nData"
+                    android:text="Send / Receive\nUsage"
                     android:textColor="#000000"
-                    android:textSize="23sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="@drawable/admin_oprations_bg"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:paddingVertical="20dp">
-
-                <ImageButton
-                    android:id="@+id/btn_receive_data"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_centerInParent="true"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:adjustViewBounds="true"
-                    android:background="@drawable/admin_button_selector"
-                    android:scaleType="center"
-                    app:srcCompat="@drawable/ic_receive_data" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/btn_add_admin"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center"
-                    android:text="Receive\nData"
-                    android:textColor="#000000"
-                    android:textSize="23sp"
+                    android:textSize="25sp"
                     android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
@@ -186,8 +143,8 @@
 
                 <ImageButton
                     android:id="@+id/btn_push"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
                     android:layout_centerInParent="true"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
@@ -200,11 +157,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/btn_add_admin"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="15dp"
                     android:gravity="center"
-                    android:text="Push To Server"
+                    android:text="Push To\nServer"
                     android:textColor="#000000"
-                    android:textSize="23sp"
+                    android:textSize="25sp"
                     android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
@@ -228,25 +185,26 @@
                 android:paddingVertical="20dp">
 
                 <ImageButton
-                    android:id="@+id/btn_self_push"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:id="@+id/btn_transfer_content"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
                     android:layout_centerInParent="true"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:adjustViewBounds="true"
                     android:background="@drawable/admin_button_selector"
                     android:scaleType="center"
-                    app:srcCompat="@drawable/ic_phonelink" />
+                    app:srcCompat="@drawable/ic_transfer_circle_black" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_below="@id/btn_add_admin"
+                    android:layout_marginTop="15dp"
                     android:gravity="center"
-                    android:text="Push Device Data"
+                    android:text="Share / Receive\nContent"
                     android:textColor="#000000"
-                    android:textSize="23sp"
+                    android:textSize="25sp"
                     android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
@@ -271,11 +229,11 @@
             android:layout_marginHorizontal="30dp"
             android:layout_marginTop="5dp"
             android:layout_weight="1"
+            android:background="@drawable/admin_oprations_bg"
             android:hint="First Name ..."
             android:inputType="textPersonName"
-            android:singleLine="true"
             android:paddingHorizontal="10dp"
-            android:background="@drawable/admin_oprations_bg"
+            android:singleLine="true"
             android:textSize="20sp"
             android:tooltipText="First name" />
 
@@ -286,10 +244,10 @@
             android:layout_marginHorizontal="30dp"
             android:layout_marginTop="5dp"
             android:layout_weight="1"
-            android:paddingHorizontal="10dp"
             android:background="@drawable/admin_oprations_bg"
             android:hint="Last Name..."
             android:inputType="textPersonName"
+            android:paddingHorizontal="10dp"
             android:singleLine="true"
             android:textSize="20sp"
             android:tooltipText="Last Name" />
@@ -301,11 +259,11 @@
             android:layout_marginHorizontal="30dp"
             android:layout_marginTop="5dp"
             android:layout_weight="1"
-            android:paddingHorizontal="10dp"
             android:background="@drawable/admin_oprations_bg"
             android:hint="Mobile Number..."
             android:inputType="number"
             android:maxLength="10"
+            android:paddingHorizontal="10dp"
             android:singleLine="true"
             android:textSize="20sp"
             android:tooltipText="Mobile Number" />
@@ -317,10 +275,10 @@
             android:layout_marginHorizontal="30dp"
             android:layout_marginTop="5dp"
             android:layout_weight="1"
-            android:paddingHorizontal="10dp"
             android:background="@drawable/admin_oprations_bg"
             android:hint="Mail ID..."
             android:inputType="textEmailAddress"
+            android:paddingHorizontal="10dp"
             android:singleLine="true"
             android:textSize="20sp"
             android:tooltipText="Mail ID" />
@@ -332,11 +290,11 @@
             android:layout_marginHorizontal="30dp"
             android:layout_marginTop="5dp"
             android:layout_weight="1"
-            android:paddingHorizontal="10dp"
             android:background="@drawable/admin_oprations_bg"
             android:hint="User Name..."
             android:inputType="text"
             android:maxLength="11"
+            android:paddingHorizontal="10dp"
             android:singleLine="true"
             android:textSize="20sp"
             android:tooltipText="User Name" />
@@ -348,11 +306,11 @@
             android:layout_marginHorizontal="30dp"
             android:layout_marginTop="5dp"
             android:layout_weight="1"
-            android:paddingHorizontal="10dp"
             android:background="@drawable/admin_oprations_bg"
             android:hint="Password..."
             android:inputType="textPassword"
             android:maxLength="11"
+            android:paddingHorizontal="10dp"
             android:singleLine="true"
             android:textSize="20sp"
             android:tooltipText="Password" />
@@ -364,9 +322,9 @@
             android:layout_marginHorizontal="30dp"
             android:layout_marginTop="5dp"
             android:layout_weight="1"
-            android:paddingHorizontal="10dp"
             android:background="@drawable/admin_oprations_bg"
             android:hint="States..."
+            android:paddingHorizontal="10dp"
             android:textSize="20sp" />
 
         <Button
@@ -378,8 +336,8 @@
             android:layout_marginHorizontal="100dp"
             android:layout_marginTop="15dp"
             android:layout_weight="1.3"
-            android:text="SUBMIT"
             android:background="@drawable/round_button_selector"
+            android:text="SUBMIT"
             android:textSize="20sp" />
 
     </LinearLayout>
