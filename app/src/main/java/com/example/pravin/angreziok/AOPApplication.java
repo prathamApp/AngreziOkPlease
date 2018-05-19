@@ -6,18 +6,21 @@ import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.multidex.MultiDex;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 
 import com.example.pravin.angreziok.database.AppDatabase;
-import com.example.pravin.angreziok.ui.video_intro.VideoIntro;
+import com.example.pravin.angreziok.util.SDCardUtil;
 
 import net.vrallev.android.cat.Cat;
 
 import org.apache.commons.net.ftp.FTPClient;
 
+import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -56,8 +59,23 @@ public class AOPApplication extends Application {
         return path;
     }
 
+    public static String getSdCardPath() {
+        String sdCardPathString = null;
+        ArrayList<String> sdcard_path = SDCardUtil.getExtSdCardPaths(aopApplication);
+        for (String path : sdcard_path) {
+            if (new File(path + "/.AOP_External").exists()) {
+                sdCardPathString = path + "/.AOP_External/";
+            }
+        }
+        return sdCardPathString;
+    }
+
     public static void setPath(String path) {
         AOPApplication.aopApplication.path = path;
+    }
+
+    public static void setSdCardPath(String path) {
+        ext_path = path;
     }
 
     public static String getVersion() {
@@ -140,12 +158,12 @@ public class AOPApplication extends Application {
 
     public static String getAccurateTimeStamp(String appStartTime) {
         try {
-            Log.d("TAG:::", "getAccurateTimeStamp: "+appStartTime);
+            Log.d("TAG:::", "getAccurateTimeStamp: " + appStartTime);
             Date gpsDateTime = dateTimeFormat.parse(appStartTime);
             // Add Seconds to Gps Date Time
             Calendar addSec = Calendar.getInstance();
             addSec.setTime(gpsDateTime);
-            Log.d("doInBackground", "getTimerCount: "+getTimerCount());
+            Log.d("doInBackground", "getTimerCount: " + getTimerCount());
             addSec.add(addSec.SECOND, getTimerCount());
 
             return dateTimeFormat.format(addSec.getTime());
@@ -153,6 +171,10 @@ public class AOPApplication extends Application {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public static boolean hasRealRemovableSdCard(Context context) {
+        return ContextCompat.getExternalFilesDirs(context, null).length >= 2;
     }
 
     public static String getAccurateDate() {

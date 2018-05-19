@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.arch.persistence.room.Room;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.wifi.WifiInfo;
@@ -35,6 +36,8 @@ import com.example.pravin.angreziok.BaseActivity;
 import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.database.AppDatabase;
 import com.example.pravin.angreziok.database.BackupDatabase;
+import com.example.pravin.angreziok.ui.shareConent.DashboardActivity;
+import com.example.pravin.angreziok.ui.tab_usage.TabUsage;
 import com.example.pravin.angreziok.util.FTPConnect;
 import com.example.pravin.angreziok.util.FTPInterface;
 import com.example.pravin.angreziok.util.MessageEvent;
@@ -199,7 +202,7 @@ public class AdminConsole extends BaseActivity implements AdminConsoleContract.A
 
     @OnClick(R.id.btn_transfer_content)
     public void ContentData() {
-        showActionDialog("Content");
+        startActivity(new Intent(this, DashboardActivity.class));
     }
 
     @Override
