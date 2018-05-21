@@ -365,7 +365,8 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
             myOutput.close();
             myInput.close();
 
-            addStartTime();
+            //addStartTime();
+            activateDB();
 
             Thread.sleep(500);
             copyFileUsingStream(new File(myPath), new File(toCopyPath));
@@ -376,6 +377,28 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void activateDB() {
+        new AsyncTask<Object, Void, Object>() {
+            @Override
+            protected Object doInBackground(Object[] objects) {
+                try {
+                    appDatabase = Room.databaseBuilder(VideoIntro.this,
+                            AppDatabase.class, AppDatabase.DB_NAME)
+                            .build();
+
+                    StatusDao statusDao = appDatabase.getStatusDao();
+                    String old_data =statusDao.getValue("AppStartDateTime");
+                    Log.d("OLDAppStartDateTime", "OLD AppStartDateTime: "+old_data);
+                    BackupDatabase.backup(VideoIntro.this);
+                    return null;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            }
+        }.execute();
     }
 
     private static void copyFileUsingStream(File source, File dest) throws IOException {

@@ -17,6 +17,7 @@ import com.example.pravin.angreziok.interfaces.FolderClick;
 import com.example.pravin.angreziok.modalclasses.Modal_DownloadContent;
 import com.example.pravin.angreziok.util.SDCardUtil;
 import com.google.gson.Gson;
+
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
@@ -74,7 +75,7 @@ public class ShowFilesOnDevice extends AppCompatActivity implements FolderClick 
 
         treeUri = PreferenceManager.getDefaultSharedPreferences(ShowFilesOnDevice.this).getString("URI", "");
         client1 = AOPApplication.ftpClient;
-        
+
         if (!client1.equals(null)) {
             listFtpFiles(false, null, false);
         }
@@ -152,40 +153,22 @@ public class ShowFilesOnDevice extends AppCompatActivity implements FolderClick 
                 final_file = child_file;
             }
         } else {
-            DocumentFile documentFile = DocumentFile.fromTreeUri(ShowFilesOnDevice.this, Uri.parse(treeUri));
-            if (name.getName().equalsIgnoreCase(".AOP_External")) {
-                //check whether root folder ".AOP_External" exists or not
-                DocumentFile documentFile1 = documentFile.findFile(".AOP_External");
-                if (documentFile1 == null)
-                    documentFile = documentFile.createDirectory(".AOP_External");
-                else
-                    documentFile = documentFile1;
 
-                //check whether sub folder folder "" exists or not
-                DocumentFile documentFile2 = documentFile.findFile("");
-                if (documentFile2 == null)
-                    documentFile = documentFile.createDirectory("");
-                else
-                    documentFile = documentFile2;
+            DocumentFile documentFile = DocumentFile.fromTreeUri(ShowFilesOnDevice.this, Uri.parse(treeUri));
+            Log.d("GetName", "onDownload: " + name.getName());
+            //check whether root folder ".AOP_External" exists or not
+            if (documentFile.findFile(".AOP_External") == null) {
+                documentFile = documentFile.createDirectory(".AOP_External");
             } else {
-                DocumentFile documentFile1 = documentFile.findFile(".AOP_External");
-                if (documentFile1 == null)
-                    documentFile = documentFile.createDirectory(".AOP_External");
-                else
-                    documentFile = documentFile1;
-                //check whether sub folder folder "" exists or not
-                DocumentFile documentFile2 = documentFile.findFile("");
-                if (documentFile2 == null)
-                    documentFile = documentFile.createDirectory("");
-                else
-                    documentFile = documentFile2;
-                //check whether downloading file exists or not
-                DocumentFile documentFile3 = documentFile.findFile(name.getName());
-                if (documentFile3 == null)
-                    documentFile = documentFile.createDirectory(name.getName());
-                else
-                    documentFile = documentFile3;
+                documentFile = documentFile.findFile(".AOP_External");
             }
+
+
+            DocumentFile documentFile1 = documentFile.findFile(name.getName());
+            if (documentFile1 == null)
+                documentFile = documentFile.createDirectory(name.getName());
+            else
+                documentFile = documentFile1;
             finalDocumentFile = documentFile;
         }
         DocumentFile finalDocumentFile1 = finalDocumentFile;
@@ -202,18 +185,26 @@ public class ShowFilesOnDevice extends AppCompatActivity implements FolderClick 
 
             @Override
             protected Void doInBackground(Void... voids) {
-                if (name.isDirectory()) {
-                    if (isSdCard)
-                        downloadDirectoryToSdCard(client1, finalDocumentFile1, name);
-                    else
-                        downloadDirectoryToInternal(client1, final_file1, name);
-                } else {
-                    if (isSdCard)
-                        downloadFile(client1, name, finalDocumentFile1);
-                    else
-                        downloadFile(client1, name, finalDocumentFile1);
+                try {
+                    client1.changeWorkingDirectory(".AOP_External");
+
+                    if (name.isDirectory()) {
+                        if (isSdCard)
+                            downloadDirectoryToSdCard(client1, finalDocumentFile1, name);
+                        else
+                            downloadDirectoryToInternal(client1, final_file1, name);
+                    } else {
+                        if (isSdCard)
+                            downloadFile(client1, name, finalDocumentFile1);
+                        else
+                            downloadFile(client1, name, finalDocumentFile1);
+                    }
+//                    client1.changeToParentDirectory();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
                 return null;
+
             }
 
             @Override
@@ -223,6 +214,7 @@ public class ShowFilesOnDevice extends AppCompatActivity implements FolderClick 
                     pd.dismiss();
             }
         }.execute();
+
     }
 
     private void downloadDirectoryToInternal(FTPClient client1, File final_file1, FTPFile name) {
@@ -235,8 +227,8 @@ public class ShowFilesOnDevice extends AppCompatActivity implements FolderClick 
             Log.d("file_sizeInternal::", subFiles.length + "");
             if (subFiles != null && subFiles.length > 0) {
                 for (FTPFile aFile : subFiles) {
-                    Log.d("nameInternal::", AOPApplication.getSdCardPath()+aFile.getName() + "");
-                    String currentFileName = AOPApplication.getSdCardPath()+aFile.getName();
+                    Log.d("nameInternal::", AOPApplication.getSdCardPath() + aFile.getName() + "");
+                    String currentFileName = AOPApplication.getSdCardPath() + aFile.getName();
                     if (currentFileName.equals(".") || currentFileName.equals("..")) {
                         // skip parent directory and the directory itself
                         continue;
@@ -264,7 +256,7 @@ public class ShowFilesOnDevice extends AppCompatActivity implements FolderClick 
 
     private void downloadFileToInternal(FTPClient client1, FTPFile aFile, File tempFile) {
         try {
-            tempFile = new File(AOPApplication.getSdCardPath()+tempFile, aFile.getName());
+            tempFile = new File(AOPApplication.getSdCardPath() + tempFile, aFile.getName());
             Log.d("tempFileInternal::", tempFile.getAbsolutePath());
             OutputStream outputStream = ShowFilesOnDevice.this.getContentResolver().openOutputStream(Uri.fromFile(tempFile));
             client1.setFileType(FTP.BINARY_FILE_TYPE);
@@ -339,7 +331,10 @@ public class ShowFilesOnDevice extends AppCompatActivity implements FolderClick 
 
     private void downloadFile(FTPClient ftpClient, FTPFile ftpFile, DocumentFile tempFile) {
         try {
-            tempFile = tempFile.createFile("image", ftpFile.getName());
+            if (tempFile.findFile(ftpFile.getName()) == null)
+                tempFile = tempFile.createFile("image", ftpFile.getName());
+            else
+                tempFile = tempFile.findFile(ftpFile.getName());
             OutputStream outputStream = ShowFilesOnDevice.this.getContentResolver().openOutputStream(tempFile.getUri());
             ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
             ftpClient.retrieveFile(ftpFile.getName(), outputStream);

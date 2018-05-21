@@ -81,6 +81,7 @@ public class File_Adapter extends RecyclerView.Adapter<File_Adapter.MyViewHolder
             @Override
             public void onClick(View v) {
                 folderClick.onDownload(listPosition, dataSet.get(listPosition).getMfile());
+                Log.d("adapter", "onClick File Name: " + dataSet.get(listPosition).getMfile());
             }
         });
 

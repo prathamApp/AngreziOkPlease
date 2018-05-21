@@ -2,14 +2,11 @@ package com.example.pravin.angreziok.ui.shareConent;
 
 import android.annotation.SuppressLint;
 import android.app.ActivityManager;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.net.wifi.WifiConfiguration;
@@ -23,7 +20,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -49,7 +45,7 @@ public class DashboardActivity extends AppCompatActivity {
     Switch sw_FtpServer;
 
     //    EditText edt_ServerName, edt_HostName, edt_Port, edt_Login, edt_Password;
-    EditText edt_HostName, edt_Port, edt_Login, edt_Password;
+    TextView edt_HostName, edt_Port, edt_Login, edt_Password;
     //Switch sw_AnonymousConnection;
     Button btn_Connect, btn_Reset;
     LinearLayout linearLayout;
@@ -80,17 +76,18 @@ public class DashboardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
+        Intent intent = getIntent();
+        String dashboardAction = intent.getStringExtra("action");
 
         // Memory Allocation
         sw_FtpServer = (Switch) findViewById(R.id.btn_ftpSettings);
 //        edt_ServerName = (EditText) findViewById(R.id.edt_Servername);
-        edt_HostName = (EditText) findViewById(R.id.edt_HostName);
-        edt_Port = (EditText) findViewById(R.id.edt_Port);
-        edt_Login = (EditText) findViewById(R.id.edt_Login);
-        edt_Password = (EditText) findViewById(R.id.edt_Password);
+        edt_HostName = (TextView) findViewById(R.id.edt_HostName);
+        edt_Port = (TextView) findViewById(R.id.edt_Port);
+        edt_Login = (TextView) findViewById(R.id.edt_Login);
+        edt_Password = (TextView) findViewById(R.id.edt_Password);
         //  sw_AnonymousConnection = (Switch) findViewById(R.id.sw_AnonymousConnection);
         btn_Connect = (Button) findViewById(R.id.btn_Save);
         btn_Reset = (Button) findViewById(R.id.btn_Reset);
@@ -112,54 +109,23 @@ public class DashboardActivity extends AppCompatActivity {
 
         pd = new ProgressDialog(this);
 
-        // Share Receive Dialog
-        Dialog dialog = new Dialog(DashboardActivity.this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_admin);
-        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-        shareButton = dialog.findViewById(R.id.dialog_btn_left);
-        receiveButton = dialog.findViewById(R.id.dialog_btn_right);
-        // Setting Dialog
-        dialog.setCanceledOnTouchOutside(false);
-//        dialog.setCancelable(false);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
-        dialog.show();
 
-        shareButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                shareLayout.setVisibility(View.VISIBLE);
-                receiveLayout.setVisibility(View.GONE);
-                //start server if higher api
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    // Start Server
-                    tv_note.setVisibility(View.VISIBLE);
-                } else {
-                    tv_note.setVisibility(View.GONE);
-                }
-                dialog.dismiss();
+        if (dashboardAction.equalsIgnoreCase("transfer")) {
+            shareLayout.setVisibility(View.VISIBLE);
+            receiveLayout.setVisibility(View.GONE);
+            //start server if higher api
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                // Start Server
+                tv_note.setVisibility(View.VISIBLE);
+            } else {
+                tv_note.setVisibility(View.GONE);
             }
-        });
+        }
 
-        receiveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                shareLayout.setVisibility(View.GONE);
-                receiveLayout.setVisibility(View.VISIBLE);
-                dialog.dismiss();
-            }
-        });
-
-        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-                // if from activity
-                finish();
-
-            }
-
-        });
-
+        if (dashboardAction.equalsIgnoreCase("receive")) {
+            shareLayout.setVisibility(View.GONE);
+            receiveLayout.setVisibility(View.VISIBLE);
+        }
 
         // Switch Press Action
         sw_FtpServer.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -590,18 +556,8 @@ public class DashboardActivity extends AppCompatActivity {
 
     // Reset Form
     public void resetValues(View view) {
-
-        // Snackbar instead of Toast
         Snackbar snackbar = Snackbar.make(linearLayout, "Cleared !!!", Snackbar.LENGTH_LONG);
         snackbar.show();
-
-//        edt_ServerName.getText().clear();
-        edt_HostName.getText().clear();
-        edt_Port.getText().clear();
-        edt_Login.getText().clear();
-        edt_Password.getText().clear();
-        //sw_AnonymousConnection.setChecked(false);
-        //sw_FtpServer.setChecked(false);
     }
 
 }

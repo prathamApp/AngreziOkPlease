@@ -37,6 +37,7 @@ import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.database.AppDatabase;
 import com.example.pravin.angreziok.database.BackupDatabase;
 import com.example.pravin.angreziok.ui.shareConent.DashboardActivity;
+import com.example.pravin.angreziok.ui.start_data_confirmation.DataConfirmation;
 import com.example.pravin.angreziok.ui.tab_usage.TabUsage;
 import com.example.pravin.angreziok.util.FTPConnect;
 import com.example.pravin.angreziok.util.FTPInterface;
@@ -162,7 +163,9 @@ public class AdminConsole extends BaseActivity implements AdminConsoleContract.A
                 } else if (clickedButton.equalsIgnoreCase("Usage")) {
                     adminPresenter.createJsonforTransfer();
                 } else if (clickedButton.equalsIgnoreCase("Content")) {
-                    Toast.makeText(AdminConsole.this, "Transfer Content", Toast.LENGTH_SHORT).show();
+                    Intent dashboardIntent= new Intent(AdminConsole.this, DashboardActivity.class);
+                    dashboardIntent.putExtra("action","transfer");
+                    startActivity(dashboardIntent);
                 }
             }
         });
@@ -176,7 +179,9 @@ public class AdminConsole extends BaseActivity implements AdminConsoleContract.A
                 } else if (clickedButton.equalsIgnoreCase("Usage")) {
                     receiveData();
                 } else if (clickedButton.equalsIgnoreCase("Content")) {
-                    Toast.makeText(AdminConsole.this, "Receive Content", Toast.LENGTH_SHORT).show();
+                    Intent dashboardIntent= new Intent(AdminConsole.this, DashboardActivity.class);
+                    dashboardIntent.putExtra("action","receive");
+                    startActivity(dashboardIntent);
                 }
             }
         });
@@ -202,7 +207,7 @@ public class AdminConsole extends BaseActivity implements AdminConsoleContract.A
 
     @OnClick(R.id.btn_transfer_content)
     public void ContentData() {
-        startActivity(new Intent(this, DashboardActivity.class));
+        showActionDialog("Content");
     }
 
     @Override
