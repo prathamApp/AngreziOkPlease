@@ -42,10 +42,8 @@ import java.lang.reflect.Method;
 
 public class DashboardActivity extends AppCompatActivity {
 
-    Switch sw_FtpServer;
-
     //    EditText edt_ServerName, edt_HostName, edt_Port, edt_Login, edt_Password;
-    TextView edt_HostName, edt_Port, edt_Login, edt_Password;
+    TextView edt_HostName, edt_Port, edt_Login, edt_Password,tv_ftpSettings;
     //Switch sw_AnonymousConnection;
     Button btn_Connect, btn_Reset;
     LinearLayout linearLayout;
@@ -80,9 +78,11 @@ public class DashboardActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String dashboardAction = intent.getStringExtra("action");
+        btn_Connect.setVisibility(View.GONE);
 
         // Memory Allocation
-        sw_FtpServer = (Switch) findViewById(R.id.btn_ftpSettings);
+        tv_ftpSettings = (TextView) findViewById(R.id.tv_ftpSettings);
+//        sw_FtpServer = (Switch) findViewById(R.id.btn_ftpSettings);
 //        edt_ServerName = (EditText) findViewById(R.id.edt_Servername);
         edt_HostName = (TextView) findViewById(R.id.edt_HostName);
         edt_Port = (TextView) findViewById(R.id.edt_Port);
@@ -120,42 +120,61 @@ public class DashboardActivity extends AppCompatActivity {
             } else {
                 tv_note.setVisibility(View.GONE);
             }
+            StartTransfer();
         }
-
-        if (dashboardAction.equalsIgnoreCase("receive")) {
+        else if (dashboardAction.equalsIgnoreCase("receive")) {
             shareLayout.setVisibility(View.GONE);
             receiveLayout.setVisibility(View.VISIBLE);
+            btn_Connect.performClick();
         }
 
         // Switch Press Action
-        sw_FtpServer.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked == true) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        CreateWifiAccessPointOnHigherAPI createOneHAPI = new CreateWifiAccessPointOnHigherAPI();
-                        createOneHAPI.execute((Void) null);
+//        sw_FtpServer.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                if (isChecked == true) {
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//                        CreateWifiAccessPointOnHigherAPI createOneHAPI = new CreateWifiAccessPointOnHigherAPI();
+//                        createOneHAPI.execute((Void) null);
+//
+//                    } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && Build.VERSION.SDK_INT <= Build.VERSION_CODES.O) {
+//                        // Start HotSpot
+//                        WifiAPController wifiAPController = new WifiAPController();
+//                        wifiAPController.wifiToggle("PrathamHotspot", ""/*, wifiManager*/, DashboardActivity.this);
+//                    } else {
+//                        // Start HotSpot
+//                        CreateWifiAccessPoint createOne = new CreateWifiAccessPoint();
+//                        createOne.execute((Void) null);
+//
+//                    }
+//                } else if (isChecked == false) {
+//                    // Stop Hotspot
+//                    turnOnOffHotspot(DashboardActivity.this, false);
+//                    // Stop Server
+//                    stopServer();
+//                    // Snackbar instead of Toast
+//                    Snackbar snackbar = Snackbar.make(linearLayout, "Server Stopped !!!", Snackbar.LENGTH_LONG);
+//                    snackbar.show();
+//                }
+//            }
+//        });
+    }
 
-                    } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && Build.VERSION.SDK_INT <= Build.VERSION_CODES.O) {
-                        // Start HotSpot
-                        WifiAPController wifiAPController = new WifiAPController();
-                        wifiAPController.wifiToggle("PrathamHotspot", ""/*, wifiManager*/, DashboardActivity.this);
-                    } else {
-                        // Start HotSpot
-                        CreateWifiAccessPoint createOne = new CreateWifiAccessPoint();
-                        createOne.execute((Void) null);
+    public void StartTransfer(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            CreateWifiAccessPointOnHigherAPI createOneHAPI = new CreateWifiAccessPointOnHigherAPI();
+            createOneHAPI.execute((Void) null);
 
-                    }
-                } else if (isChecked == false) {
-                    // Stop Hotspot
-                    turnOnOffHotspot(DashboardActivity.this, false);
-                    // Stop Server
-                    stopServer();
-                    // Snackbar instead of Toast
-                    Snackbar snackbar = Snackbar.make(linearLayout, "Server Stopped !!!", Snackbar.LENGTH_LONG);
-                    snackbar.show();
-                }
-            }
-        });
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && Build.VERSION.SDK_INT <= Build.VERSION_CODES.O) {
+            // Start HotSpot
+            WifiAPController wifiAPController = new WifiAPController();
+            wifiAPController.wifiToggle("PrathamHotspot", ""/*, wifiManager*/, DashboardActivity.this);
+        } else {
+            // Start HotSpot
+            CreateWifiAccessPoint createOne = new CreateWifiAccessPoint();
+            createOne.execute((Void) null);
+
+        }
+
     }
 
     private class CreateWifiAccessPointOnHigherAPI extends AsyncTask<Void, Void, Boolean> {
@@ -312,8 +331,8 @@ public class DashboardActivity extends AppCompatActivity {
         super.onResume();
         Boolean serviceRunning = checkServiceRunning();
         // check service is running or not
-        if (!serviceRunning)
-            sw_FtpServer.setChecked(false);
+/*        if (!serviceRunning)
+            sw_FtpServer.setChecked(false);*/
     }
 
     // Checking FTP Service is on or not

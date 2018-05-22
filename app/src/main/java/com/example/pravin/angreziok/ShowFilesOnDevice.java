@@ -59,6 +59,8 @@ public class ShowFilesOnDevice extends AppCompatActivity implements FolderClick 
     String treeUri;
     ArrayList<Integer> level = new ArrayList<>();
     private File tempFile;
+    long totalDirSize;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,6 +109,7 @@ public class ShowFilesOnDevice extends AppCompatActivity implements FolderClick 
             protected void onPostExecute(FTPFile[] files) {
                 super.onPostExecute(files);
                 data.clear();
+                int i=0;
                 for (FTPFile mfile : files) {
                     File_Model model = new File_Model();
                     model.setMfile(mfile);
@@ -153,6 +156,7 @@ public class ShowFilesOnDevice extends AppCompatActivity implements FolderClick 
                 final_file = child_file;
             }
         } else {
+//            totalDirSize = name.getSize();
 
             DocumentFile documentFile = DocumentFile.fromTreeUri(ShowFilesOnDevice.this, Uri.parse(treeUri));
             Log.d("GetName", "onDownload: " + name.getName());
@@ -163,35 +167,55 @@ public class ShowFilesOnDevice extends AppCompatActivity implements FolderClick 
                 documentFile = documentFile.findFile(".AOP_External");
             }
 
-
             DocumentFile documentFile1 = documentFile.findFile(name.getName());
             if (documentFile1 == null)
                 documentFile = documentFile.createDirectory(name.getName());
-            else
+            else {
                 documentFile = documentFile1;
+                Log.d("totalDirSize", "onDownload: "+totalDirSize);
+            }
             finalDocumentFile = documentFile;
         }
         DocumentFile finalDocumentFile1 = finalDocumentFile;
         File final_file1 = final_file;
-        new AsyncTask<Void, Void, Void>() {
+        new AsyncTask<Void, Integer, Void>() {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                pd = new ProgressDialog(ShowFilesOnDevice.this);
-                pd.setMessage("Please Wait !!! Downloading ...");
-                pd.setCanceledOnTouchOutside(false);
-                pd.show();
+                showProgressDialog();
             }
 
             @Override
             protected Void doInBackground(Void... voids) {
                 try {
                     client1.changeWorkingDirectory(".AOP_External");
+/*
+                    final long totalProgressTime = name.;
+                    final Thread t = new Thread() {
+                        @Override
+                        public void run() {
+                            int jumpTime = 0;
+
+                            while (jumpTime < totalProgressTime) {
+                                try {
+                                    sleep(200);
+                                    if(name.isFile())
+                                        jumpTime += name.getSize();
+                                    pd.setProgress(jumpTime);
+                                } catch (InterruptedException e) {
+                                    // TODO Auto-generated catch block
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    };
+                    t.start();*/
+
 
                     if (name.isDirectory()) {
-                        if (isSdCard)
+                        if (isSdCard) {
                             downloadDirectoryToSdCard(client1, finalDocumentFile1, name);
-                        else
+                        }else
                             downloadDirectoryToInternal(client1, final_file1, name);
                     } else {
                         if (isSdCard)
@@ -199,12 +223,19 @@ public class ShowFilesOnDevice extends AppCompatActivity implements FolderClick 
                         else
                             downloadFile(client1, name, finalDocumentFile1);
                     }
+//                    publishProgress((int) name.getSize());
 //                    client1.changeToParentDirectory();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
                 return null;
 
+            }
+
+            @Override
+            protected void onProgressUpdate(Integer... values) {
+                super.onProgressUpdate(values);
+                pd.setProgress(values[0]);
             }
 
             @Override
@@ -215,6 +246,30 @@ public class ShowFilesOnDevice extends AppCompatActivity implements FolderClick 
             }
         }.execute();
 
+    }
+
+    public  void showProgressDialog(){
+        pd = new ProgressDialog(ShowFilesOnDevice.this);
+        pd.setMessage("Please Wait !!! Downloading ...");
+        pd.setCanceledOnTouchOutside(false);
+        pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        pd.setIndeterminate(true);
+        pd.setMax(100);
+//        pd.setProgress(0);
+        pd.show();
+    }
+
+
+    public static long getFolderSize(File f) {
+        long size = 0;
+        if (f.isDirectory()) {
+            for (File file : f.listFiles()) {
+                size += getFolderSize(file);
+            }
+        } else {
+            size=f.length();
+        }
+        return size;
     }
 
     private void downloadDirectoryToInternal(FTPClient client1, File final_file1, FTPFile name) {
@@ -317,6 +372,8 @@ public class ShowFilesOnDevice extends AppCompatActivity implements FolderClick 
                         downloadDirectoryToSdCard(ftpClient, tempUri, null);
                     } else {
                         downloadFile(ftpClient, aFile, tempUri);
+                        Log.d("downloadDirectSdCard:", (Math.round((aFile.getSize() / (1024* 1024)) * 10)+"")) ;
+                        pd.setProgress((int) (Math.round((aFile.getSize() / (1024* 1024)) * 10) / 10)*100/subFiles.length);
                     }
                 }
                 tempUri = tempUri.getParentFile();
@@ -340,25 +397,25 @@ public class ShowFilesOnDevice extends AppCompatActivity implements FolderClick 
             ftpClient.retrieveFile(ftpFile.getName(), outputStream);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             //Todo copy json to database
-            if (ftpFile.getName().endsWith(".json")) {
-                String path = SDCardUtil.getRealPathFromURI_API19(ShowFilesOnDevice.this, tempFile.getUri());
-                Log.d("json_path:::", path + "");
-                Log.d("json_path:::", ftpFile.getName() + "");
-                //Todo read json from file
-                String response = loadJSONFromAsset(path);
-                JSONObject jsonObject = null;
-                try {
-                    jsonObject = new JSONObject(response);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                Gson gson = new Gson();
-                Modal_DownloadContent download_content = gson.fromJson(jsonObject.toString(), Modal_DownloadContent.class);
-            }
+//            if (ftpFile.getName().endsWith(".json")) {
+//                String path = SDCardUtil.getRealPathFromURI_API19(ShowFilesOnDevice.this, tempFile.getUri());
+//                Log.d("json_path:::", path + "");
+//                Log.d("json_path:::", ftpFile.getName() + "");
+//                //Todo read json from file
+//                String response = loadJSONFromAsset(path);
+//                JSONObject jsonObject = null;
+//                try {
+//                    jsonObject = new JSONObject(response);
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//                Gson gson = new Gson();
+//                Modal_DownloadContent download_content = gson.fromJson(jsonObject.toString(), Modal_DownloadContent.class);
+//            }
         }
     }
 
