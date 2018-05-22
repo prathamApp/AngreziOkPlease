@@ -4,15 +4,18 @@ import android.annotation.SuppressLint;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.WindowManager;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.example.pravin.angreziok.AOPApplication;
@@ -39,6 +42,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.example.pravin.angreziok.AOPApplication.hasRealRemovableSdCard;
 import static com.example.pravin.angreziok.database.AppDatabase.DB_NAME;
 
 public class VideoIntro extends BaseActivity implements VideoIntroContract.VideoIntroView {
@@ -51,14 +55,27 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
     VideoIntroContract.VideoIntroPresenter presenter;
     String appStartTime;
 
+    private String url;
+    Boolean SDcard;
+    public static final int RequestPermissionCode = 1;
+    int RequestCheckResult;
+    boolean RequestTF;
+    SharedPreferences pref;
+    int SDCardLocationChooser = 7;
+    private String shareItPath;
+    private int PraDigiPath = 99;
+    private Uri treeUri;
+
     @SuppressLint("StaticFieldLeak")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_intro);
         ButterKnife.bind(this);
+        pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
         appStartTime = AOPApplication.getCurrentDateTime(false, "");
         //The Android's default system path of your application database.
+        FTPModule();
         createDataBase();
 
 
@@ -215,6 +232,62 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
         }
     }
 
+    public void FTPModule() {
+        // Select PraDigi Path
+        String path = "";
+        // TODO Path Change
+        // Check folder exists on Internal
+        if (hasRealRemovableSdCard(VideoIntro.this)) {
+            // sd card select
+            if (PreferenceManager.getDefaultSharedPreferences(VideoIntro.this).getString("URI", null) == null) {
+                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+                intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                startActivityForResult(intent, PraDigiPath);
+            } else {
+                AOPApplication.setSdCardPath(PreferenceManager.getDefaultSharedPreferences(VideoIntro.this).getString("PATH", ""));
+            }
+        }
+    }
+
+    @SuppressLint("NewApi")
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, final Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PraDigiPath) {
+            if (data != null && data.getData() != null) {
+                treeUri = data.getData();
+                final int takeFlags = data.getFlags()
+                        & (Intent.FLAG_GRANT_READ_URI_PERMISSION
+                        | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    getContentResolver().takePersistableUriPermission(treeUri, takeFlags);
+                }
+                PreferenceManager.getDefaultSharedPreferences(VideoIntro.this).edit().putString("PATH",
+                        SDCardUtil.getFullPathFromTreeUri(treeUri, VideoIntro.this)).apply();
+                PreferenceManager.getDefaultSharedPreferences(VideoIntro.this).edit().putString("URI",
+                        String.valueOf(treeUri)).apply();
+                PreferenceManager.getDefaultSharedPreferences(VideoIntro.this).edit().putBoolean("IS_SDCARD",
+                        true).apply();
+                AOPApplication.setSdCardPath(PreferenceManager.getDefaultSharedPreferences(VideoIntro.this).getString("PATH", ""));
+
+                Toast.makeText(this, "SD Card Selected !!!", Toast.LENGTH_SHORT).show();
+
+            } else {
+                Toast.makeText(this, "Please select SD Card!!!", Toast.LENGTH_LONG).show();
+            }
+        }
+        if (requestCode == SDCardLocationChooser) {
+            Uri treeUri = data.getData();
+            String path = SDCardUtil.getFullPathFromTreeUri(treeUri, VideoIntro.this);
+            Log.d("SDCardPath :::", path);
+            final int takeFlags = data.getFlags()
+                    & (Intent.FLAG_GRANT_READ_URI_PERMISSION
+                    | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            getContentResolver().takePersistableUriPermission(treeUri, takeFlags);
+        }
+    }
+
+
     public void createDataBase() {
         try {
             boolean dbExist = checkDataBase();
@@ -292,7 +365,8 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
             myOutput.close();
             myInput.close();
 
-            addStartTime();
+            //addStartTime();
+            activateDB();
 
             Thread.sleep(500);
             copyFileUsingStream(new File(myPath), new File(toCopyPath));
@@ -300,10 +374,31 @@ public class VideoIntro extends BaseActivity implements VideoIntroContract.Video
             addStartTime();
 
 
-
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void activateDB() {
+        new AsyncTask<Object, Void, Object>() {
+            @Override
+            protected Object doInBackground(Object[] objects) {
+                try {
+                    appDatabase = Room.databaseBuilder(VideoIntro.this,
+                            AppDatabase.class, AppDatabase.DB_NAME)
+                            .build();
+
+                    StatusDao statusDao = appDatabase.getStatusDao();
+                    String old_data =statusDao.getValue("AppStartDateTime");
+                    Log.d("OLDAppStartDateTime", "OLD AppStartDateTime: "+old_data);
+                    BackupDatabase.backup(VideoIntro.this);
+                    return null;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            }
+        }.execute();
     }
 
     private static void copyFileUsingStream(File source, File dest) throws IOException {

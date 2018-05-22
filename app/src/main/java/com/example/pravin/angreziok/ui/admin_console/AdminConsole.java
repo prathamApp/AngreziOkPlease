@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.arch.persistence.room.Room;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.wifi.WifiInfo;
@@ -35,6 +36,9 @@ import com.example.pravin.angreziok.BaseActivity;
 import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.database.AppDatabase;
 import com.example.pravin.angreziok.database.BackupDatabase;
+import com.example.pravin.angreziok.ui.shareConent.DashboardActivity;
+import com.example.pravin.angreziok.ui.start_data_confirmation.DataConfirmation;
+import com.example.pravin.angreziok.ui.tab_usage.TabUsage;
 import com.example.pravin.angreziok.util.FTPConnect;
 import com.example.pravin.angreziok.util.FTPInterface;
 import com.example.pravin.angreziok.util.MessageEvent;
@@ -159,7 +163,9 @@ public class AdminConsole extends BaseActivity implements AdminConsoleContract.A
                 } else if (clickedButton.equalsIgnoreCase("Usage")) {
                     adminPresenter.createJsonforTransfer();
                 } else if (clickedButton.equalsIgnoreCase("Content")) {
-                    Toast.makeText(AdminConsole.this, "Transfer Content", Toast.LENGTH_SHORT).show();
+                    Intent dashboardIntent= new Intent(AdminConsole.this, DashboardActivity.class);
+                    dashboardIntent.putExtra("action","transfer");
+                    startActivity(dashboardIntent);
                 }
             }
         });
@@ -173,7 +179,9 @@ public class AdminConsole extends BaseActivity implements AdminConsoleContract.A
                 } else if (clickedButton.equalsIgnoreCase("Usage")) {
                     receiveData();
                 } else if (clickedButton.equalsIgnoreCase("Content")) {
-                    Toast.makeText(AdminConsole.this, "Receive Content", Toast.LENGTH_SHORT).show();
+                    Intent dashboardIntent= new Intent(AdminConsole.this, DashboardActivity.class);
+                    dashboardIntent.putExtra("action","receive");
+                    startActivity(dashboardIntent);
                 }
             }
         });

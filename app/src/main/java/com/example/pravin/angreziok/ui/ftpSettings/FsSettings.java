@@ -61,10 +61,10 @@ public class FsSettings {
         // or when the chrootDir is garbage, initialize to good default
         if (dirName.equals("") || !chrootDir.isDirectory()) {
             if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-                chrootDir = new File(AOPApplication.getPath()/*+"/PraDigi/"*/);
+                chrootDir = new File(AOPApplication.getSdCardPath()/*+"/PraDigi/"*/);
                 Log.d("fssetting::",chrootDir.getAbsolutePath());
             } else {
-                chrootDir = new File(AOPApplication.getPath()/*+"/PraDigi/"*/);
+                chrootDir = new File(AOPApplication.getSdCardPath()/*+"/PraDigi/"*/);
                 Log.d("fssetting::",chrootDir.getAbsolutePath());
             }
         }
@@ -75,7 +75,7 @@ public class FsSettings {
             // but this will probably not be what the user wants
             return AOPApplication.aopApplication.getFilesDir();
         }
-        chrootDir = new File(AOPApplication.getPath());
+        chrootDir = new File(AOPApplication.getSdCardPath());
         return chrootDir;
     }
 

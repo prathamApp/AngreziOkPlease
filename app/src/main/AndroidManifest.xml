@@ -72,6 +72,12 @@
         <activity
             android:name=".ui.tab_usage.TabUsage"
             android:screenOrientation="sensorLandscape" />
+        <activity
+            android:name=".ui.shareConent.DashboardActivity"
+            android:screenOrientation="sensorLandscape" />
+        <activity
+            android:name="ShowFilesOnDevice"
+            android:screenOrientation="sensorLandscape" />
 
         <service
             android:name=".services.AppExitService"
