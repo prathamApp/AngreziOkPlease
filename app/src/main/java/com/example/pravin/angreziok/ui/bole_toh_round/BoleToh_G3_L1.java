@@ -24,9 +24,11 @@ import android.widget.Toast;
 import com.example.pravin.angreziok.BaseFragment;
 import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.animations.MyBounceInterpolator;
-import com.example.pravin.angreziok.util.PD_Utility;
+import com.example.pravin.angreziok.custom.GifView;
 import com.github.anastr.flattimelib.CountDownTimerView;
 import com.github.anastr.flattimelib.intf.OnTimeFinish;
+
+import java.io.FileInputStream;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,7 +41,7 @@ import static com.example.pravin.angreziok.BaseActivity.ttsService;
 import static com.example.pravin.angreziok.ui.bole_toh_round.BoleToh.playerModalArrayList;
 
 
-public class BoleToh_G1_L1 extends BaseFragment implements BoleTohContract.BoleToh_G1_L1_View {
+public class BoleToh_G3_L1 extends BaseFragment implements BoleTohContract.BoleToh_G3_L1_View {
 
     @BindView(R.id.mCountDownTimer)
     CountDownTimerView mCountDownTimer;
@@ -68,10 +70,6 @@ public class BoleToh_G1_L1 extends BaseFragment implements BoleTohContract.BoleT
     ImageView iv_image1;
     @BindView(R.id.iv_image2)
     ImageView iv_image2;
-    @BindView(R.id.iv_image3)
-    ImageView iv_image3;
-    @BindView(R.id.iv_image4)
-    ImageView iv_image4;
     @BindView(R.id.ib_r1g1_speaker)
     ImageButton ib_speaker;
     @BindView(R.id.konfettiView_r1g1)
@@ -93,7 +91,7 @@ public class BoleToh_G1_L1 extends BaseFragment implements BoleTohContract.BoleT
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_bole_toh_g1_l1, container, false);
+        return inflater.inflate(R.layout.fragment_bole_toh_g3_l1, container, false);
     }
 
     @Override
@@ -117,7 +115,7 @@ public class BoleToh_G1_L1 extends BaseFragment implements BoleTohContract.BoleT
         presenter = new BoleTohPresenterImpl(getActivity(), this, ttsService);
         setOnClickListeners();
         path = presenter.getSdcardPath();
-        presenter.doInitialWork(path);
+        presenter.doInitialWorkG3l1(path);
         setInitialScores();
         showDialog();
 //        customCountDownTimer = new CustomCountDownTimer(mCountDownTimer,getActivity());
@@ -158,7 +156,7 @@ public class BoleToh_G1_L1 extends BaseFragment implements BoleTohContract.BoleT
                 .setTimeToLive(1500L)
                 .addShapes(Shape.RECT, Shape.CIRCLE)
                 .addSizes(new Size(12, 5f))
-                .setPosition(-50f,50f, -50f, -50f)
+                .setPosition(-50f, 50f, -50f, -50f)
                 .stream(500, 1000L);
     }
 
@@ -227,7 +225,7 @@ public class BoleToh_G1_L1 extends BaseFragment implements BoleTohContract.BoleT
                 dialog.dismiss();
                 mCountDownTimer.start(15000);
                 BoleToh.animateView(mCountDownTimer, getActivity());
-                presenter.showImagesG1L1(path,studentID);
+                presenter.showImagesG3L1(path, studentID);
             }
         });
 
@@ -251,34 +249,20 @@ public class BoleToh_G1_L1 extends BaseFragment implements BoleTohContract.BoleT
 
     @OnClick(R.id.iv_image1)
     public void setIv_image1() {
-        presenter.g1_l1_checkAnswer(1, currentTeam, false);
+        presenter.g3_l1_checkAnswer(1, currentTeam, false);
         answerPostProcessing();
     }
 
     @OnClick(R.id.iv_image2)
     public void setIv_image2() {
-        presenter.g1_l1_checkAnswer(2, currentTeam, false);
+        presenter.g3_l1_checkAnswer(2, currentTeam, false);
         answerPostProcessing();
     }
 
-    @OnClick(R.id.iv_image3)
-    public void setIv_image3() {
-        presenter.g1_l1_checkAnswer(3, currentTeam, false);
-        answerPostProcessing();
-    }
-
-    @OnClick(R.id.iv_image4)
-    public void setIv_image4() {
-        presenter.g1_l1_checkAnswer(4, currentTeam, false);
-        answerPostProcessing();
-    }
-
-    public void answerPostProcessing(){
+    public void answerPostProcessing() {
 
         iv_image1.setClickable(false);
         iv_image2.setClickable(false);
-        iv_image3.setClickable(false);
-        iv_image4.setClickable(false);
 
         mCountDownTimer.pause();
         currentTeam += 1;
@@ -289,8 +273,6 @@ public class BoleToh_G1_L1 extends BaseFragment implements BoleTohContract.BoleT
                 public void run() {
                     iv_image1.setClickable(true);
                     iv_image2.setClickable(true);
-                    iv_image3.setClickable(true);
-                    iv_image4.setClickable(true);
                     showDialog();
                 }
             }, 2500);
@@ -314,20 +296,22 @@ public class BoleToh_G1_L1 extends BaseFragment implements BoleTohContract.BoleT
     }
 
     @Override
-    public void setQuestionImages(final int readQuesNo, Bitmap... bitmaps) {
-        questionConter++;
-        iv_image1.setImageBitmap(bitmaps[0]);
-        iv_image2.setImageBitmap(bitmaps[1]);
-        iv_image3.setImageBitmap(bitmaps[2]);
-        iv_image4.setImageBitmap(bitmaps[3]);
+    public void setQuestionImgs(final int readQuesNo, Bitmap... bitmaps) {
+        try {
+            questionConter++;
+            iv_image1.setImageBitmap(bitmaps[0]);
+            iv_image2.setImageBitmap(bitmaps[1]);
 
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                presenter.readQuestion(readQuesNo);
-            }
-        }, 1500);
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    presenter.readQuestion(readQuesNo);
+                }
+            }, 1500);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
 

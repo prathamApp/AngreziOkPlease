@@ -76,6 +76,9 @@
             android:name=".ui.shareConent.DashboardActivity"
             android:screenOrientation="sensorLandscape" />
         <activity
+            android:name=".ui.ChooseLevel.ChooseLevel"
+            android:screenOrientation="sensorLandscape" />
+        <activity
             android:name="ShowFilesOnDevice"
             android:screenOrientation="sensorLandscape" />
 

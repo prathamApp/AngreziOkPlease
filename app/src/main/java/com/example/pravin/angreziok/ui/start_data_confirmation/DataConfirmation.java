@@ -18,6 +18,7 @@ import com.example.pravin.angreziok.dao.StatusDao;
 import com.example.pravin.angreziok.database.AppDatabase;
 import com.example.pravin.angreziok.database.BackupDatabase;
 import com.example.pravin.angreziok.modalclasses.PlayerModal;
+import com.example.pravin.angreziok.ui.ChooseLevel.ChooseLevel;
 import com.example.pravin.angreziok.ui.bole_toh_round.BoleToh;
 import com.example.pravin.angreziok.ui.samajh_ke_bolo_round.SamajhKeBolo;
 import com.example.pravin.angreziok.ui.start_menu.QRActivity;
@@ -114,16 +115,15 @@ public class DataConfirmation extends BaseActivity implements DataConfirmationCo
     public void startGame(){
         for(int i=0; i<playerCount; i++) {
 
-            playerModalArrayList.get(i).setStudentAlias(""+teamNames.get(i));
-            Log.d("DataConfirmationTAG", "StudNames: "+playerModalArrayList.get(i).getStudentName()+"  TeamName: "+playerModalArrayList.get(i).getStudentAlias());
-
-            Intent intent = new Intent(this, BoleToh.class);
+            playerModalArrayList.get(i).setStudentAlias("" + teamNames.get(i));
+            Log.d("DataConfirmationTAG", "StudNames: " + playerModalArrayList.get(i).getStudentName() + "  TeamName: " + playerModalArrayList.get(i).getStudentAlias());
+        }
+            Intent intent = new Intent(this, ChooseLevel.class);
             Bundle bundle = new Bundle();
             bundle.putParcelableArrayList("playerModalArrayList", playerModalArrayList);
             intent.putExtras(bundle);
             startActivity(intent);
 
-        }
     }
 
     private void endSession() {

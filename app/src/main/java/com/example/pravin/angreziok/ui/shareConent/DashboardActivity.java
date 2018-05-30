@@ -22,10 +22,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.example.pravin.angreziok.AOPApplication;
@@ -43,16 +40,16 @@ import java.lang.reflect.Method;
 public class DashboardActivity extends AppCompatActivity {
 
     //    EditText edt_ServerName, edt_HostName, edt_Port, edt_Login, edt_Password;
-    TextView edt_HostName, edt_Port, edt_Login, edt_Password,tv_ftpSettings;
+    TextView edt_HostName, edt_Port, edt_Login, edt_Password, tv_ftpSettings;
     //Switch sw_AnonymousConnection;
-    Button btn_Connect, btn_Reset;
+    Button btn_Connect, btn_Reset, btn_Disconnect;
     LinearLayout linearLayout;
     private Uri treeUri;
     private String networkSSID = "PrathamHotSpot";
     public static ProgressDialog pd;
     LinearLayout shareLayout, receiveLayout;
     Button shareButton, receiveButton;
-    private boolean connected = false;
+    public boolean connected = false, startServer = false;
     PowerManager pm;
     TextView tv_note;
     PowerManager.WakeLock wl;
@@ -78,8 +75,6 @@ public class DashboardActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String dashboardAction = intent.getStringExtra("action");
-        btn_Connect.setVisibility(View.GONE);
-
         // Memory Allocation
         tv_ftpSettings = (TextView) findViewById(R.id.tv_ftpSettings);
 //        sw_FtpServer = (Switch) findViewById(R.id.btn_ftpSettings);
@@ -88,6 +83,7 @@ public class DashboardActivity extends AppCompatActivity {
         edt_Port = (TextView) findViewById(R.id.edt_Port);
         edt_Login = (TextView) findViewById(R.id.edt_Login);
         edt_Password = (TextView) findViewById(R.id.edt_Password);
+        btn_Disconnect = (Button) findViewById(R.id.btn_disconnect_device);
         //  sw_AnonymousConnection = (Switch) findViewById(R.id.sw_AnonymousConnection);
         btn_Connect = (Button) findViewById(R.id.btn_Save);
         btn_Reset = (Button) findViewById(R.id.btn_Reset);
@@ -111,6 +107,8 @@ public class DashboardActivity extends AppCompatActivity {
 
 
         if (dashboardAction.equalsIgnoreCase("transfer")) {
+            startServer = true;
+            btn_Disconnect.setText("Stop Server");
             shareLayout.setVisibility(View.VISIBLE);
             receiveLayout.setVisibility(View.GONE);
             //start server if higher api
@@ -121,12 +119,26 @@ public class DashboardActivity extends AppCompatActivity {
                 tv_note.setVisibility(View.GONE);
             }
             StartTransfer();
-        }
-        else if (dashboardAction.equalsIgnoreCase("receive")) {
+        } else if (dashboardAction.equalsIgnoreCase("receive")) {
             shareLayout.setVisibility(View.GONE);
             receiveLayout.setVisibility(View.VISIBLE);
             btn_Connect.performClick();
         }
+
+        btn_Disconnect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (startServer) {
+                    startServer = false;
+                    btn_Disconnect.setText("Start Server");
+                    closeHotSpot();
+                } else {
+                    startServer = true;
+                    btn_Disconnect.setText("Stop Server");
+                    StartTransfer();
+                }
+            }
+        });
 
         // Switch Press Action
 //        sw_FtpServer.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -159,7 +171,17 @@ public class DashboardActivity extends AppCompatActivity {
 //        });
     }
 
-    public void StartTransfer(){
+    private void closeHotSpot() {
+        // Stop Hotspot
+        turnOnOffHotspot(DashboardActivity.this, false);
+        // Stop Server
+        stopServer();
+        // Snackbar instead of Toast
+        Snackbar snackbar = Snackbar.make(linearLayout, "Server Stopped !!!", Snackbar.LENGTH_LONG);
+        snackbar.show();
+    }
+
+    public void StartTransfer() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             CreateWifiAccessPointOnHigherAPI createOneHAPI = new CreateWifiAccessPointOnHigherAPI();
             createOneHAPI.execute((Void) null);

@@ -1,5 +1,7 @@
 package com.example.pravin.angreziok.ui.jod_tod_round;
 
+import android.graphics.Bitmap;
+
 /**
  * Created by Pravin on 20/03/2018.
  */
@@ -11,6 +13,14 @@ public interface JodTodContract {
     }
 
     interface JodTodPresenter {
+
+        void doInitialWorkG1l1(String path);
+
+        void showImagesG1L1(String path,String stidId);
+
+        void readQuestion(int questionToRead);
+
+        void g1_l1_checkAnswer(int imageViewNum, int currentTeam, boolean timeOut);
 
         void startTTS(String text);
 
@@ -65,6 +75,14 @@ public interface JodTodContract {
 
     }
 
+    interface JodTod_G1_L1_View {
+        void setQuestionImgs(int readQuesNo, Bitmap... bitmaps);
+
+        void setCelebrationView();
+
+        void setCurrentScore();
+    }
+
     interface JodTod_G1_L2_View {
 
         void setGameTitleFromJson(String gameName);
@@ -75,7 +93,7 @@ public interface JodTodContract {
 
         void initiateQuestion(String question);
 
-        void setAnswer(String ans,String sttWord,boolean match);
+        void setAnswer(String ans, String sttWord, boolean match);
 
         void setQuestionText(String questionString);
     }
@@ -90,7 +108,7 @@ public interface JodTodContract {
 
         void initiateQuestion(String question);
 
-        void setAnswer(String ans,String sttWord,boolean match);
+        void setAnswer(String ans, String sttWord, boolean match);
 
         void hideOptionView();
 

@@ -48,18 +48,41 @@
                 android:textSize="25sp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/tv_ftpSettings"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="120dp"
-                android:layout_marginTop="16dp"
                 android:background="@drawable/round_icon_normal_black"
-                android:padding="16dp"
-                android:text="   Network SSID : PrathamHotSpot\n   Login : ftp\n   Pass : ftp"
-                android:textColor="@color/simple_white"
-                android:textSize="20sp"
-                android:textStyle="normal" />
+                android:layout_marginHorizontal="120dp"
+                android:orientation="vertical"
+                android:paddingVertical="16dp"
+                android:layout_marginTop="16dp">
+
+                <TextView
+                    android:id="@+id/tv_ftpSettings"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="16dp"
+                    android:text="   Network SSID : PrathamHotSpot\n   Login : ftp\n   Pass : ftp"
+                    android:textColor="@color/simple_white"
+                    android:textSize="20sp"
+                    android:textStyle="normal" />
+
+                <Button
+                    android:id="@+id/btn_disconnect_device"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/round_button_selector"
+                    android:layout_gravity="center"
+                    android:text="Disconnect"
+                    android:gravity="center"
+                    android:textColor="@color/simple_black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
 
             <TextView
                 android:id="@+id/tv_note"

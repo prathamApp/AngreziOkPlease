@@ -13,9 +13,9 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 
+import com.example.pravin.angreziok.adapters.File_Adapter;
 import com.example.pravin.angreziok.interfaces.FolderClick;
 import com.example.pravin.angreziok.modalclasses.Modal_DownloadContent;
-import com.example.pravin.angreziok.util.SDCardUtil;
 import com.google.gson.Gson;
 
 import org.apache.commons.net.ftp.FTP;
@@ -178,7 +178,7 @@ public class ShowFilesOnDevice extends AppCompatActivity implements FolderClick 
         }
         DocumentFile finalDocumentFile1 = finalDocumentFile;
         File final_file1 = final_file;
-        new AsyncTask<Void, Integer, Void>() {
+        new AsyncTask<Void, Void, Void>() {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
@@ -232,11 +232,11 @@ public class ShowFilesOnDevice extends AppCompatActivity implements FolderClick 
 
             }
 
-            @Override
+/*            @Override
             protected void onProgressUpdate(Integer... values) {
                 super.onProgressUpdate(values);
                 pd.setProgress(values[0]);
-            }
+            }*/
 
             @Override
             protected void onPostExecute(Void aVoid) {
@@ -252,10 +252,12 @@ public class ShowFilesOnDevice extends AppCompatActivity implements FolderClick 
         pd = new ProgressDialog(ShowFilesOnDevice.this);
         pd.setMessage("Please Wait !!! Downloading ...");
         pd.setCanceledOnTouchOutside(false);
+/*
         pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         pd.setIndeterminate(true);
         pd.setMax(100);
 //        pd.setProgress(0);
+*/
         pd.show();
     }
 
@@ -373,7 +375,7 @@ public class ShowFilesOnDevice extends AppCompatActivity implements FolderClick 
                     } else {
                         downloadFile(ftpClient, aFile, tempUri);
                         Log.d("downloadDirectSdCard:", (Math.round((aFile.getSize() / (1024* 1024)) * 10)+"")) ;
-                        pd.setProgress((int) (Math.round((aFile.getSize() / (1024* 1024)) * 10) / 10)*100/subFiles.length);
+                        //pd.setProgress((int) (Math.round((aFile.getSize() / (1024* 1024)) * 10) / 10)*100/subFiles.length);
                     }
                 }
                 tempUri = tempUri.getParentFile();

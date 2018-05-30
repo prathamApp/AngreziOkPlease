@@ -43,6 +43,7 @@ import nl.dionsegijn.konfetti.models.Size;
 import static com.example.pravin.angreziok.BaseActivity.sttService;
 import static com.example.pravin.angreziok.BaseActivity.ttsService;
 import static com.example.pravin.angreziok.ui.bole_toh_round.BoleToh.gameCounter;
+import static com.example.pravin.angreziok.ui.bole_toh_round.BoleToh.gameLevel;
 import static com.example.pravin.angreziok.ui.bole_toh_round.BoleToh.playerModalArrayList;
 
 
@@ -324,11 +325,13 @@ public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleT
                     gameCounter += 1;
                     if (gameCounter <= 1) {
                         bundle.putString("round", "R1");
+                        bundle.putString("level", gameLevel);
                         bundle.putInt("count", BoleToh.list.get(gameCounter));
                         PD_Utility.showFragment(getActivity(), new fragment_intro_character(), R.id.cl_bole_toh,
                                 bundle, fragment_intro_character.class.getSimpleName());
                     } else {
                         Intent intent = new Intent(getActivity(), JodTod.class);
+                        intent.putExtra("level","L2");
                         bundle.putParcelableArrayList("playerModalArrayList", playerModalArrayList);
                         intent.putExtras(bundle);
                         startActivity(intent);

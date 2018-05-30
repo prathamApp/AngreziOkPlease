@@ -40,6 +40,7 @@ import nl.dionsegijn.konfetti.models.Size;
 
 import static com.example.pravin.angreziok.BaseActivity.sttService;
 import static com.example.pravin.angreziok.BaseActivity.ttsService;
+import static com.example.pravin.angreziok.ui.samajh_ke_bolo_round.SamajhKeBolo.gameLevel;
 import static com.example.pravin.angreziok.ui.samajh_ke_bolo_round.SamajhKeBolo.playerModalArrayList;
 
 
@@ -323,6 +324,7 @@ public class SamajhKeBolo_G2_L2 extends BaseFragment implements SamajhKeBoloCont
                     SamajhKeBolo.gameCounter += 1;
                     if (SamajhKeBolo.gameCounter <= 1) {
                         bundle.putString("round", "R3");
+                        bundle.putString("level", gameLevel);
                         bundle.putInt("count", SamajhKeBolo.list.get(SamajhKeBolo.gameCounter));
                         PD_Utility.showFragment(getActivity(), new fragment_intro_character(), R.id.cl_samajh_ke_bolo,
                                 bundle, fragment_intro_character.class.getSimpleName());

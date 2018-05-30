@@ -8,17 +8,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.example.pravin.angreziok.BaseFragment;
 import com.example.pravin.angreziok.R;
-import com.example.pravin.angreziok.custom.GifView;
+import com.example.pravin.angreziok.ui.bole_toh_round.BoleToh_G1_L1;
 import com.example.pravin.angreziok.ui.bole_toh_round.BoleToh_G1_L2;
+import com.example.pravin.angreziok.ui.bole_toh_round.BoleToh_G2_L1;
 import com.example.pravin.angreziok.ui.bole_toh_round.BoleToh_G2_L2;
+import com.example.pravin.angreziok.ui.bole_toh_round.BoleToh_G3_L1;
 import com.example.pravin.angreziok.ui.bole_toh_round.BoleToh_G3_L2;
+import com.example.pravin.angreziok.ui.jod_tod_round.JodTod_G1_L1;
 import com.example.pravin.angreziok.ui.jod_tod_round.JodTod_G1_L2;
 import com.example.pravin.angreziok.ui.jod_tod_round.JodTod_G2_L2;
 import com.example.pravin.angreziok.ui.jod_tod_round.JodTod_G3_L2;
@@ -30,8 +32,6 @@ import com.example.pravin.angreziok.util.PD_Utility;
 import com.example.pravin.angreziok.util.SDCardUtil;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -51,7 +51,7 @@ public class fragment_intro_character extends BaseFragment {
     Button replay_button;
 
     int frag = 0, count;
-    String myFragmentRound,videoPath;
+    String myFragmentRound, videoPath, gameLevel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,7 +66,7 @@ public class fragment_intro_character extends BaseFragment {
 
     @Override
     public void onResume() {
-        if(DataConfirmation.fragmentPauseFlg) {
+        if (DataConfirmation.fragmentPauseFlg) {
             DataConfirmation.fragmentPauseFlg = true;
             joker_videoView.start();
         }
@@ -78,114 +78,125 @@ public class fragment_intro_character extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
         myFragmentRound = getArguments().getString("round", "");
+        gameLevel = getArguments().getString("level", "");
         count = getArguments().getInt("count", 0);
-        Log.d("games", "onViewCreated: "+count);
+        Log.d("games", "onViewCreated: " + count);
 
-        switch (myFragmentRound) {
-            case "R1":
-                frag = 1;
-                switch (count) {
-                    case 0:
-                        instructionsTextView.setText("Picture Game\n\nआप पर्दे पर एक चित्र देखेंगे|\n" +
-                                "उसका नाम अंग्रेजी में बताईयें|");
-                        videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/PictureGame.mp4";
-                        playVideo(Uri.parse(videoPath));
-                        break;
-                    case 1:
-                        instructionsTextView.setText("Action Game\n\nआप पर्दे पर एक क्रिया देखेंगे|\n" +
-                                "उस क्रिया का नाम अंग्रेजी में बताईयें|");
-                        videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/ActionGame.mp4";
-                        playVideo(Uri.parse(videoPath));
-                        break;
-                    case 2:
-                        instructionsTextView.setText("Pairs Game\n\n इस गेम में आप पर्दे पर दो चित्र देखेंगे|\n" +
-                                "मैं आपको पहले चित्र के बारें में बताउंगी| आप  मुझे उसी तरह दुसरे चित्र के बारें में बताओ|");
-                        videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/PairsGame.mp4";
-                        playVideo(Uri.parse(videoPath));
-                        break;
-                }
-                break;
-            case "R2":
-                frag = 2;
-                switch (count) {
-                    case 0:
-                        instructionsTextView.setText("Alphabets Game\n\nअब आप पर्दे पर एक अक्षर देखेंगे और उसकी आवाज़ सुनेंगे|\n" +
-                                "Timer ख़तम होने से पहले इस अक्षर से शुरू होने वाले ज्यादा से ज्यादा अंग्रेजी शब्द हमें बताईयें|");
-                        videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/AlphabetGame.mp4";
-                        playVideo(Uri.parse(videoPath));
-                        break;
-                    case 1:
-                        instructionsTextView.setText("Rhyming Game\n\nआप पर्दे पर एक शब्द देखेंगे जो मैं आपके लिए पढूंगी|\n" +
-                                "Timer ख़तम होने से पहले आपको उस शब्द की तरह आवाज़ करने वाले ज्यादा से ज्यादा अंग्रेजी शब्द हमें बताने है|");
-                        videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/RhymingGame.mp4";
-                        playVideo(Uri.parse(videoPath));
-                        break;
-                    case 2:
-                        instructionsTextView.setText("Listen and Spell\n\nइस गेम में आपको अक्षर से खाली स्थान भर कर एक शब्द बनाना है| और जानकारी के लिए यह विडियो देखे| ");
-                        videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/Listen _Spell.mp4";
-                        playVideo(Uri.parse(videoPath));
-                        break;
-                }
-                break;
-            case "R3":
-                frag = 3;
-                switch (count) {
-                    case 0:
-                        instructionsTextView.setText("Where-When Game\n\nआपको एक चित्र के बारें में सवाल पूछा जायेगा| आपको उस सवाल का सही जवाब देना है|");
-                        videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/WhereGame.mp4";
-                        playVideo(Uri.parse(videoPath));
-                        break;
-                    case 1:
-                        instructionsTextView.setText("Compare Game\n\nइस गेम में आपसे एक सवाल पूछा जायेगा|आपको तीन विकल्प दिए जायेंगे| सही विकल्प चुन कर उस शब्द को बोल कर बताओ|");
-                        videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/CampareGame.mp4";
-                        playVideo(Uri.parse(videoPath));
-                        break;
-                    case 2:
-                        instructionsTextView.setText("Say it in English \n\nइस गेम में आप अपनी मातृ भाषा में एक वाक्य सुनेंगे| आपको साथ में 2 अंग्रेजी वाक्य के विकल्प दिए जायेंगे| आपको सही अनुवाद चुनकर उस वाक्य को पढ़ कर सुनना है|");
-                        videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/SayItInEnglish.mp4";
-                        playVideo(Uri.parse(videoPath));
-                        break;
-                }
-                break;
+        if (gameLevel.equalsIgnoreCase("l2")) {
+            switch (myFragmentRound) {
+                case "R1":
+                    frag = 1;
+                    switch (count) {
+                        case 0:
+                            instructionsTextView.setText("Picture Game\n\nआप पर्दे पर एक चित्र देखेंगे|\n" +
+                                    "उसका नाम अंग्रेजी में बताईयें|");
+                            videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/PictureGame.mp4";
+                            playVideo(Uri.parse(videoPath));
+                            break;
+                        case 1:
+                            instructionsTextView.setText("Action Game\n\nआप पर्दे पर एक क्रिया देखेंगे|\n" +
+                                    "उस क्रिया का नाम अंग्रेजी में बताईयें|");
+                            videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/ActionGame.mp4";
+                            playVideo(Uri.parse(videoPath));
+                            break;
+                        case 2:
+                            instructionsTextView.setText("Pairs Game\n\n इस गेम में आप पर्दे पर दो चित्र देखेंगे|\n" +
+                                    "मैं आपको पहले चित्र के बारें में बताउंगी| आप  मुझे उसी तरह दुसरे चित्र के बारें में बताओ|");
+                            videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/PairsGame.mp4";
+                            playVideo(Uri.parse(videoPath));
+                            break;
+                    }
+                    break;
+                case "R2":
+                    frag = 2;
+                    switch (count) {
+                        case 0:
+                            instructionsTextView.setText("Alphabets Game\n\nअब आप पर्दे पर एक अक्षर देखेंगे और उसकी आवाज़ सुनेंगे|\n" +
+                                    "Timer ख़तम होने से पहले इस अक्षर से शुरू होने वाले ज्यादा से ज्यादा अंग्रेजी शब्द हमें बताईयें|");
+                            videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/AlphabetGame.mp4";
+                            playVideo(Uri.parse(videoPath));
+                            break;
+                        case 1:
+                            instructionsTextView.setText("Rhyming Game\n\nआप पर्दे पर एक शब्द देखेंगे जो मैं आपके लिए पढूंगी|\n" +
+                                    "Timer ख़तम होने से पहले आपको उस शब्द की तरह आवाज़ करने वाले ज्यादा से ज्यादा अंग्रेजी शब्द हमें बताने है|");
+                            videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/RhymingGame.mp4";
+                            playVideo(Uri.parse(videoPath));
+                            break;
+                        case 2:
+                            instructionsTextView.setText("Listen and Spell\n\nइस गेम में आपको अक्षर से खाली स्थान भर कर एक शब्द बनाना है| और जानकारी के लिए यह विडियो देखे| ");
+                            videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/Listen _Spell.mp4";
+                            playVideo(Uri.parse(videoPath));
+                            break;
+                    }
+                    break;
+                case "R3":
+                    frag = 3;
+                    switch (count) {
+                        case 0:
+                            instructionsTextView.setText("Where-When Game\n\nआपको एक चित्र के बारें में सवाल पूछा जायेगा| आपको उस सवाल का सही जवाब देना है|");
+                            videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/WhereGame.mp4";
+                            playVideo(Uri.parse(videoPath));
+                            break;
+                        case 1:
+                            instructionsTextView.setText("Compare Game\n\nइस गेम में आपसे एक सवाल पूछा जायेगा|आपको तीन विकल्प दिए जायेंगे| सही विकल्प चुन कर उस शब्द को बोल कर बताओ|");
+                            videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/CampareGame.mp4";
+                            playVideo(Uri.parse(videoPath));
+                            break;
+                        case 2:
+                            instructionsTextView.setText("Say it in English \n\nइस गेम में आप अपनी मातृ भाषा में एक वाक्य सुनेंगे| आपको साथ में 2 अंग्रेजी वाक्य के विकल्प दिए जायेंगे| आपको सही अनुवाद चुनकर उस वाक्य को पढ़ कर सुनना है|");
+                            videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/SayItInEnglish.mp4";
+                            playVideo(Uri.parse(videoPath));
+                            break;
+                    }
+                    break;
+            }
+        } else {
+            switch (myFragmentRound) {
+                case "R1":
+                    frag = 1;
+                    switch (count) {
+                        case 0:
+                            instructionsTextView.setText("Picture Game\n\nLEVEL 1");
+                            videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/PictureGame.mp4";
+                            playVideo(Uri.parse(videoPath));
+                            break;
+                        case 1:
+                            instructionsTextView.setText("Action Game\n\nआप पर्दे पर एक क्रिया देखेंगे|\n" +
+                                    "उस क्रिया का नाम अंग्रेजी में बताईयें|");
+                            videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/ActionGame.mp4";
+                            playVideo(Uri.parse(videoPath));
+                            break;
+                        case 2:
+                            instructionsTextView.setText("Pairs Game\n\n इस गेम में आप पर्दे पर दो चित्र देखेंगे|\n" +
+                                    "मैं आपको पहले चित्र के बारें में बताउंगी| आप  मुझे उसी तरह दुसरे चित्र के बारें में बताओ|");
+                            videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/PairsGame.mp4";
+                            playVideo(Uri.parse(videoPath));
+                            break;
+                    }
+                    break;
+                case "R2":
+                    frag = 1;
+                    switch (count) {
+                        case 0:
+                            instructionsTextView.setText("Alphabets Game");
+                            videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/AlphabetGame.mp4";
+                            playVideo(Uri.parse(videoPath));
+                            break;
+                        case 1:
+                            instructionsTextView.setText("Alphabets Game");
+                            videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/AlphabetGame.mp4";
+                            playVideo(Uri.parse(videoPath));
+                            break;
+                        case 2:
+                            instructionsTextView.setText("Alphabets Game");
+                            videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/AlphabetGame.mp4";
+                            playVideo(Uri.parse(videoPath));
+                            break;
+                    }
+                    break;
+            }
+
         }
-
-/*        switch (myFragmentRound) {
-            case "R1G1L2":
-                instructionsTextView.setText("Picture Game");
-                frag = 1;
-                break;
-            case "R1G2L2":
-                instructionsTextView.setText("Action Game");
-                frag = 2;
-                break;
-            case "R1G3L2":
-                instructionsTextView.setText("Pairs Game");
-                frag = 3;
-                break;
-            case "R2G1L2":
-                instructionsTextView.setText("Alphabets Game");
-                frag = 4;
-                break;
-            case "R2G2L2":
-                instructionsTextView.setText("Rhyming Game");
-                frag = 5;
-                break;
-            case "R2G3L2":
-                instructionsTextView.setText("Listen and Spell Game");
-                frag = 6;
-                break;
-            case "R3G1L2":
-                instructionsTextView.setText("Where-When Game");
-                frag = 7;
-                break;
-            case "R3G2L2":
-                instructionsTextView.setText("Say-it Game");
-                frag = 8;
-                break;
-            case "R3G3L2":
-                instructionsTextView.setText("How to Ask Game");
-                frag = 9;
-        }*/
     }
 
     public void playVideo(Uri path) {
@@ -212,7 +223,7 @@ public class fragment_intro_character extends BaseFragment {
 
     @OnClick(R.id.btn_skip_instructions)
     public void gotoNext() {
-        DataConfirmation.fragmentPauseFlg=false;
+        DataConfirmation.fragmentPauseFlg = false;
         loadFragment(frag, count);
     }
 
@@ -225,55 +236,92 @@ public class fragment_intro_character extends BaseFragment {
 
     public void loadFragment(int no, int count) {
 
-        switch (no) {
-            case 1:
-                switch (count) {
-                    case 0:
-                        PD_Utility.showFragment(getActivity(), new BoleToh_G1_L2(), R.id.cl_bole_toh,
-                                null, BoleToh_G1_L2.class.getSimpleName());
-                        break;
-                    case 1:
-                        PD_Utility.showFragment(getActivity(), new BoleToh_G2_L2(), R.id.cl_bole_toh,
-                                null, BoleToh_G2_L2.class.getSimpleName());
-                        break;
-                    case 2:
-                        PD_Utility.showFragment(getActivity(), new BoleToh_G3_L2(), R.id.cl_bole_toh,
-                                null, BoleToh_G3_L2.class.getSimpleName());
-                        break;
-                }
-                break;
-            case 2:
-                switch (count) {
-                    case 0:
-                        PD_Utility.showFragment(getActivity(), new JodTod_G1_L2(), R.id.cl_jod_tod,
-                                null, JodTod_G1_L2.class.getSimpleName());
-                        break;
-                    case 1:
-                        PD_Utility.showFragment(getActivity(), new JodTod_G2_L2(), R.id.cl_jod_tod,
-                                null, JodTod_G2_L2.class.getSimpleName());
-                        break;
-                    case 2:
-                        PD_Utility.showFragment(getActivity(), new JodTod_G3_L2(), R.id.cl_jod_tod,
-                                null, JodTod_G3_L2.class.getSimpleName());
-                        break;
-                }
-                break;
-            case 3:
-                switch (count) {
-                    case 0:
-                        PD_Utility.showFragment(getActivity(), new SamajhKeBolo_G1_L2(), R.id.cl_samajh_ke_bolo,
-                                null, SamajhKeBolo_G1_L2.class.getSimpleName());
-                        break;
-                    case 1:
-                        PD_Utility.showFragment(getActivity(), new SamajhKeBolo_G2_L2(), R.id.cl_samajh_ke_bolo,
-                                null, SamajhKeBolo_G2_L2.class.getSimpleName());
-                        break;
-                    case 2:
-                        PD_Utility.showFragment(getActivity(), new SamajhKeBolo_G3_L2(), R.id.cl_samajh_ke_bolo,
-                                null, SamajhKeBolo_G3_L2.class.getSimpleName());
-                        break;
-                }
-                break;
+        if (gameLevel.equalsIgnoreCase("l2")) {
+            switch (no) {
+                case 1:
+                    switch (count) {
+                        case 0:
+                            PD_Utility.showFragment(getActivity(), new BoleToh_G1_L2(), R.id.cl_bole_toh,
+                                    null, BoleToh_G1_L2.class.getSimpleName());
+                            break;
+                        case 1:
+                            PD_Utility.showFragment(getActivity(), new BoleToh_G2_L2(), R.id.cl_bole_toh,
+                                    null, BoleToh_G2_L2.class.getSimpleName());
+                            break;
+                        case 2:
+                            PD_Utility.showFragment(getActivity(), new BoleToh_G3_L2(), R.id.cl_bole_toh,
+                                    null, BoleToh_G3_L2.class.getSimpleName());
+                            break;
+                    }
+                    break;
+                case 2:
+                    switch (count) {
+                        case 0:
+                            PD_Utility.showFragment(getActivity(), new JodTod_G1_L2(), R.id.cl_jod_tod,
+                                    null, JodTod_G1_L2.class.getSimpleName());
+                            break;
+                        case 1:
+                            PD_Utility.showFragment(getActivity(), new JodTod_G2_L2(), R.id.cl_jod_tod,
+                                    null, JodTod_G2_L2.class.getSimpleName());
+                            break;
+                        case 2:
+                            PD_Utility.showFragment(getActivity(), new JodTod_G3_L2(), R.id.cl_jod_tod,
+                                    null, JodTod_G3_L2.class.getSimpleName());
+                            break;
+                    }
+                    break;
+                case 3:
+                    switch (count) {
+                        case 0:
+                            PD_Utility.showFragment(getActivity(), new SamajhKeBolo_G1_L2(), R.id.cl_samajh_ke_bolo,
+                                    null, SamajhKeBolo_G1_L2.class.getSimpleName());
+                            break;
+                        case 1:
+                            PD_Utility.showFragment(getActivity(), new SamajhKeBolo_G2_L2(), R.id.cl_samajh_ke_bolo,
+                                    null, SamajhKeBolo_G2_L2.class.getSimpleName());
+                            break;
+                        case 2:
+                            PD_Utility.showFragment(getActivity(), new SamajhKeBolo_G3_L2(), R.id.cl_samajh_ke_bolo,
+                                    null, SamajhKeBolo_G3_L2.class.getSimpleName());
+                            break;
+                    }
+                    break;
+            }
+        } else {
+            switch (no) {
+                case 12:
+                    switch (count) {
+                        case 0:
+                            PD_Utility.showFragment(getActivity(), new BoleToh_G1_L1(), R.id.cl_bole_toh,
+                                    null, BoleToh_G1_L1.class.getSimpleName());
+                            break;
+                        case 1:
+                            PD_Utility.showFragment(getActivity(), new BoleToh_G2_L1(), R.id.cl_bole_toh,
+                                    null, BoleToh_G2_L1.class.getSimpleName());
+                            break;
+                        case 2:
+                            PD_Utility.showFragment(getActivity(), new BoleToh_G3_L1(), R.id.cl_bole_toh,
+                                    null, BoleToh_G3_L1.class.getSimpleName());
+                            break;
+                    }
+                    break;
+                case 1:
+                    switch (count) {
+                        case 0:
+                            PD_Utility.showFragment(getActivity(), new JodTod_G1_L1(), R.id.cl_jod_tod,
+                                    null, JodTod_G1_L1.class.getSimpleName());
+                            break;
+                        case 1:
+                            PD_Utility.showFragment(getActivity(), new JodTod_G1_L1(), R.id.cl_jod_tod,
+                                    null, JodTod_G1_L1.class.getSimpleName());
+                            break;
+                        case 2:
+                            PD_Utility.showFragment(getActivity(), new JodTod_G1_L1(), R.id.cl_jod_tod,
+                                    null, JodTod_G1_L1.class.getSimpleName());
+                            break;
+                    }
+                    break;
+            }
         }
     }
 

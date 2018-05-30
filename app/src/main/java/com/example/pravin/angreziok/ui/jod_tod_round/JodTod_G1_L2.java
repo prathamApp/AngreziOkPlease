@@ -23,7 +23,6 @@ import com.example.pravin.angreziok.BaseFragment;
 import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.animations.MyBounceInterpolator;
 import com.example.pravin.angreziok.interfaces.SpeechResult;
-import com.example.pravin.angreziok.ui.bole_toh_round.BoleToh;
 import com.example.pravin.angreziok.ui.fragment_intro_character;
 import com.example.pravin.angreziok.ui.samajh_ke_bolo_round.SamajhKeBolo;
 import com.example.pravin.angreziok.ui.start_data_confirmation.DataConfirmation;
@@ -343,11 +342,13 @@ public class JodTod_G1_L2 extends BaseFragment implements JodTodContract.JodTod_
                     JodTod.gameCounter += 1;
                     if (JodTod.gameCounter <= 1) {
                         bundle.putString("round", "R2");
+                        bundle.putString("level", JodTod.gameLevel);
                         bundle.putInt("count", JodTod.list.get(JodTod.gameCounter));
                         PD_Utility.showFragment(getActivity(), new fragment_intro_character(), R.id.cl_jod_tod,
                                 bundle, fragment_intro_character.class.getSimpleName());
                     } else {
                         Intent intent = new Intent(getActivity(), SamajhKeBolo.class);
+                        intent.putExtra("level","L2");
                         bundle.putParcelableArrayList("playerModalArrayList", jodTodPlayerList);
                         intent.putExtras(bundle);
                         startActivity(intent);

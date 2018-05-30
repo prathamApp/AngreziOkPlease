@@ -1,4 +1,4 @@
-package com.example.pravin.angreziok.ui.bole_toh_round;
+package com.example.pravin.angreziok.ui.jod_tod_round;
 
 import android.app.Dialog;
 import android.graphics.Bitmap;
@@ -24,7 +24,7 @@ import android.widget.Toast;
 import com.example.pravin.angreziok.BaseFragment;
 import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.animations.MyBounceInterpolator;
-import com.example.pravin.angreziok.util.PD_Utility;
+import com.example.pravin.angreziok.ui.bole_toh_round.BoleToh;
 import com.github.anastr.flattimelib.CountDownTimerView;
 import com.github.anastr.flattimelib.intf.OnTimeFinish;
 
@@ -36,10 +36,10 @@ import nl.dionsegijn.konfetti.models.Shape;
 import nl.dionsegijn.konfetti.models.Size;
 
 import static com.example.pravin.angreziok.BaseActivity.ttsService;
-import static com.example.pravin.angreziok.ui.bole_toh_round.BoleToh.playerModalArrayList;
+import static com.example.pravin.angreziok.ui.jod_tod_round.JodTod.jodTodPlayerList;
 
 
-public class BoleToh_G1_L1 extends BaseFragment implements BoleTohContract.BoleToh_G1_L1_View {
+public class JodTod_G1_L1 extends BaseFragment implements JodTodContract.JodTod_G1_L1_View {
 
     @BindView(R.id.mCountDownTimer)
     CountDownTimerView mCountDownTimer;
@@ -62,8 +62,6 @@ public class BoleToh_G1_L1 extends BaseFragment implements BoleTohContract.BoleT
     @BindView(R.id.r1g1_allstar)
     TextView allScore;
 
-    @BindView(R.id.ll_mic)
-    LinearLayout layout_mic;
     @BindView(R.id.iv_image1)
     ImageView iv_image1;
     @BindView(R.id.iv_image2)
@@ -72,6 +70,7 @@ public class BoleToh_G1_L1 extends BaseFragment implements BoleTohContract.BoleT
     ImageView iv_image3;
     @BindView(R.id.iv_image4)
     ImageView iv_image4;
+
     @BindView(R.id.ib_r1g1_speaker)
     ImageButton ib_speaker;
     @BindView(R.id.konfettiView_r1g1)
@@ -80,7 +79,7 @@ public class BoleToh_G1_L1 extends BaseFragment implements BoleTohContract.BoleT
 
     int questionConter = 0;
 
-    BoleTohContract.BoleTohPresenter presenter;
+    JodTodContract.JodTodPresenter presenter;
     String path;
     Dialog dialog;
     int currentTeam = 0;
@@ -93,7 +92,7 @@ public class BoleToh_G1_L1 extends BaseFragment implements BoleTohContract.BoleT
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_bole_toh_g1_l1, container, false);
+        return inflater.inflate(R.layout.fragment_jod_tod_g1_l1, container, false);
     }
 
     @Override
@@ -114,34 +113,34 @@ public class BoleToh_G1_L1 extends BaseFragment implements BoleTohContract.BoleT
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        presenter = new BoleTohPresenterImpl(getActivity(), this, ttsService);
+        presenter = new JodTodPresenterImpl(getActivity(), this, ttsService);
         setOnClickListeners();
         path = presenter.getSdcardPath();
-        presenter.doInitialWork(path);
+        presenter.doInitialWorkG1l1(path);
         setInitialScores();
         showDialog();
 //        customCountDownTimer = new CustomCountDownTimer(mCountDownTimer,getActivity());
     }
 
     private void setInitialScores() {
-        Log.d(":::", "setInitialScores: " + playerModalArrayList.toString());
-        for (int i = 0; i < playerModalArrayList.size(); i++) {
-            switch (playerModalArrayList.get(i).studentAlias) {
+        Log.d(":::", "setInitialScores: " + jodTodPlayerList.toString());
+        for (int i = 0; i < jodTodPlayerList.size(); i++) {
+            switch (jodTodPlayerList.get(i).studentAlias) {
                 case "Rockstars":
                     rockstarLayout.setVisibility(View.VISIBLE);
-                    rockScore.setText(playerModalArrayList.get(i).studentScore);
+                    rockScore.setText(jodTodPlayerList.get(i).studentScore);
                     break;
                 case "Megastars":
                     megastarLayout.setVisibility(View.VISIBLE);
-                    megaScore.setText(playerModalArrayList.get(i).studentScore);
+                    megaScore.setText(jodTodPlayerList.get(i).studentScore);
                     break;
                 case "Superstars":
                     superstarLayout.setVisibility(View.VISIBLE);
-                    superScore.setText(playerModalArrayList.get(i).studentScore);
+                    superScore.setText(jodTodPlayerList.get(i).studentScore);
                     break;
                 case "Allstars":
                     allstarLayout.setVisibility(View.VISIBLE);
-                    allScore.setText(playerModalArrayList.get(i).studentScore);
+                    allScore.setText(jodTodPlayerList.get(i).studentScore);
             }
         }
     }
@@ -158,7 +157,7 @@ public class BoleToh_G1_L1 extends BaseFragment implements BoleTohContract.BoleT
                 .setTimeToLive(1500L)
                 .addShapes(Shape.RECT, Shape.CIRCLE)
                 .addSizes(new Size(12, 5f))
-                .setPosition(-50f,50f, -50f, -50f)
+                .setPosition(-50f, 50f, -50f, -50f)
                 .stream(500, 1000L);
     }
 
@@ -166,7 +165,7 @@ public class BoleToh_G1_L1 extends BaseFragment implements BoleTohContract.BoleT
     private View getCurrentView() {
         View view = null;
 
-        switch (playerModalArrayList.get(currentTeam).studentAlias) {
+        switch (jodTodPlayerList.get(currentTeam).studentAlias) {
             case "Rockstars":
                 view = rockstarLayout;
                 break;
@@ -188,7 +187,7 @@ public class BoleToh_G1_L1 extends BaseFragment implements BoleTohContract.BoleT
         allstarLayout.setBackgroundResource(R.drawable.team_faded);
         superstarLayout.setBackgroundResource(R.drawable.team_faded);
 
-        switch (playerModalArrayList.get(currentTeam).getStudentAlias()) {
+        switch (jodTodPlayerList.get(currentTeam).getStudentAlias()) {
             case "Megastars":
                 megastarLayout.setBackgroundResource(R.drawable.team_one);
                 break;
@@ -205,8 +204,8 @@ public class BoleToh_G1_L1 extends BaseFragment implements BoleTohContract.BoleT
 
     public void showDialog() {
         fadeOtherGroups();
-        String teamName = playerModalArrayList.get(currentTeam).getStudentAlias();
-        final String studentID = playerModalArrayList.get(currentTeam).getStudentID();
+        String teamName = jodTodPlayerList.get(currentTeam).getStudentAlias();
+        final String studentID = jodTodPlayerList.get(currentTeam).getStudentID();
         dialog = new Dialog(getActivity());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -227,7 +226,7 @@ public class BoleToh_G1_L1 extends BaseFragment implements BoleTohContract.BoleT
                 dialog.dismiss();
                 mCountDownTimer.start(15000);
                 BoleToh.animateView(mCountDownTimer, getActivity());
-                presenter.showImagesG1L1(path,studentID);
+                presenter.showImagesG1L1(path, studentID);
             }
         });
 
@@ -273,7 +272,7 @@ public class BoleToh_G1_L1 extends BaseFragment implements BoleTohContract.BoleT
         answerPostProcessing();
     }
 
-    public void answerPostProcessing(){
+    public void answerPostProcessing() {
 
         iv_image1.setClickable(false);
         iv_image2.setClickable(false);
@@ -282,7 +281,7 @@ public class BoleToh_G1_L1 extends BaseFragment implements BoleTohContract.BoleT
 
         mCountDownTimer.pause();
         currentTeam += 1;
-        if (currentTeam < playerModalArrayList.size()) {
+        if (currentTeam < jodTodPlayerList.size()) {
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
@@ -310,24 +309,28 @@ public class BoleToh_G1_L1 extends BaseFragment implements BoleTohContract.BoleT
 
     @OnClick(R.id.ib_r1g1_speaker)
     public void playQuestion() {
-        presenter.replayQuestionroundone();
+        /*presenter.replayQuestionroundone();*/
     }
 
     @Override
-    public void setQuestionImages(final int readQuesNo, Bitmap... bitmaps) {
-        questionConter++;
-        iv_image1.setImageBitmap(bitmaps[0]);
-        iv_image2.setImageBitmap(bitmaps[1]);
-        iv_image3.setImageBitmap(bitmaps[2]);
-        iv_image4.setImageBitmap(bitmaps[3]);
+    public void setQuestionImgs(final int readQuesNo, Bitmap... bitmaps) {
+        try {
+            questionConter++;
+            iv_image1.setImageBitmap(bitmaps[0]);
+            iv_image2.setImageBitmap(bitmaps[1]);
+            iv_image3.setImageBitmap(bitmaps[2]);
+            iv_image4.setImageBitmap(bitmaps[3]);
 
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                presenter.readQuestion(readQuesNo);
-            }
-        }, 1500);
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    presenter.readQuestion(readQuesNo);
+                }
+            }, 1500);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
 

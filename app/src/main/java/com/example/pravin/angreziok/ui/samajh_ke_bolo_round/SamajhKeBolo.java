@@ -51,6 +51,7 @@ public class SamajhKeBolo extends BaseActivity implements SamajhKeBoloContract.S
     static ArrayList<PlayerModal> playerModalArrayList;
     String charIntroPath;
     MediaPlayerUtil mediaPlayerUtil;
+    static String gameLevel;
 
     @BindView(R.id.round_intro_gifview)
     GifView introGifView;
@@ -70,6 +71,7 @@ public class SamajhKeBolo extends BaseActivity implements SamajhKeBoloContract.S
         Intent intent = getIntent();
         Bundle extraBundle = intent.getExtras();
         playerModalArrayList = extraBundle.getParcelableArrayList("playerModalArrayList");
+        gameLevel = intent.getStringExtra("level");
         gameCounter = 0;
         list.clear();
         for (int i = 0; i < 3; i++)
@@ -133,6 +135,7 @@ public class SamajhKeBolo extends BaseActivity implements SamajhKeBoloContract.S
     public void loadFragment() {
         Bundle bundle = new Bundle();
         bundle.putString("round", "R3");
+        bundle.putString("level", gameLevel);
         bundle.putInt("count", list.get(gameCounter));
         PD_Utility.showFragment(SamajhKeBolo.this, new fragment_intro_character(), R.id.cl_samajh_ke_bolo,
                 bundle, fragment_intro_character.class.getSimpleName());

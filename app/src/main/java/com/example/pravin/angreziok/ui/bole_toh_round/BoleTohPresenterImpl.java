@@ -42,6 +42,8 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
     BoleTohContract.BoleToh_G3_L2_View boleTohG3L2View;
     BoleTohContract.BoleToh_G2_L2_View boleTohG2L2View;
     BoleTohContract.BoleToh_G1_L1_View boleTohG1L1View;
+    BoleTohContract.BoleToh_G2_L1_View boleTohG2L1View;
+    BoleTohContract.BoleToh_G3_L1_View boleTohG3L1View;
     List<GenericModalGson> g1l1QuestionData, g2l2QuestionData, g1l2QuestionData, g3l2QuestionData, currentPairList;
     GenericModalGson gsonPicGameData, gsonActGameData, gsonPairGameData;
 
@@ -55,6 +57,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
 
     public BoleTohPresenterImpl(Context mContext) {
         this.mContext = mContext;
+        this.ttsService = ttsService;
         appDatabase = Room.databaseBuilder(mContext,
                 AppDatabase.class, AppDatabase.DB_NAME)
                 .build();
@@ -100,6 +103,26 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
                 .build();
     }
 
+    public BoleTohPresenterImpl(Context context, BoleTohContract.BoleToh_G2_L1_View boleTohG2L1View,
+                                TTSService ttsService) {
+        mContext = context;
+        this.boleTohG2L1View = boleTohG2L1View;
+        this.ttsService = ttsService;
+        appDatabase = Room.databaseBuilder(mContext,
+                AppDatabase.class, AppDatabase.DB_NAME)
+                .build();
+    }
+
+    public BoleTohPresenterImpl(Context context, BoleTohContract.BoleToh_G3_L1_View boleTohG3L1View,
+                                TTSService ttsService) {
+        mContext = context;
+        this.boleTohG3L1View = boleTohG3L1View;
+        this.ttsService = ttsService;
+        appDatabase = Room.databaseBuilder(mContext,
+                AppDatabase.class, AppDatabase.DB_NAME)
+                .build();
+    }
+
     @Override
     public String getSdcardPath() {
         String sdCardPathString = null;
@@ -118,18 +141,41 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
         gsonPicGameData = fetchJsonData("RoundOneGameOne", path);
         g1l1QuestionData = gsonPicGameData.getNodelist();
         Log.d("SIZE", "doInitialWork: " + g1l1QuestionData.size());
-        showImages(sdCardPathString);
     }
 
-    public void showImages(String sdCardPathString) {
+    @Override
+    public void doInitialWorkG2l1(String path) {
+        sdCardPathString = path;
+        gsonActGameData = fetchJsonData("RoundOneGameTwo", path);
+        g2l2QuestionData = gsonActGameData.getNodelist();
+        Log.d("SIZE", "doInitialWork: " + g2l2QuestionData.size());
+    }
+
+    @Override
+    public void doInitialWorkG3l1(String path) {
+        sdCardPathString = path;
+        gsonPairGameData = fetchJsonData("RoundOneGameThree", path);
+        g3l2QuestionData = gsonPairGameData.getNodelist();
+        Log.d("SIZE", "doInitialWork: " + g3l2QuestionData.size());
+    }
+
+    @Override
+    public void showImagesG1L1(String sdCardPathString, String studId) {
         try {
             int[] integerArray = getUniqueRandomNumber(0, g1l1QuestionData.size(), 4);
             readQuestionNo = getRandomNumber(0, 4);
-            String imagePath = sdCardPathString + "images/PicGameL1/";
+            String imagePath = sdCardPathString + "images/PicGameL2/";
+
             resTextArray.clear();
             resIdArray.clear();
             resImageArray.clear();
             resAudioArray.clear();
+
+            setQuestionStartTime();
+            studentID = studId;
+            resourceID = g1l1QuestionData.get(integerArray[readQuestionNo]).getResourceId();
+            questionId = resourceID;
+
             for (int i = 0; i < 4; i++) {
                 resTextArray.add(g1l1QuestionData.get(integerArray[i]).getResourceText());
                 resImageArray.add(g1l1QuestionData.get(integerArray[i]).getResourceImage());
@@ -141,6 +187,74 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
                     BitmapFactory.decodeFile(imagePath + resImageArray.get(2)),
                     BitmapFactory.decodeFile(imagePath + resImageArray.get(3))};
             boleTohG1L1View.setQuestionImages(readQuestionNo, bitmap);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void showImagesG2L1(String path, String studId) {
+        try {
+            int[] integerArray = getUniqueRandomNumber(0, g2l2QuestionData.size(), 2);
+            readQuestionNo = getRandomNumber(0, 2);
+            String imagePath = sdCardPathString + "images/ActionL2/";
+
+            resTextArray.clear();
+            resIdArray.clear();
+            resImageArray.clear();
+            resAudioArray.clear();
+
+            setQuestionStartTime();
+            studentID = studId;
+            resourceID = g2l2QuestionData.get(integerArray[readQuestionNo]).getResourceId();
+            questionId = resourceID;
+
+            for (int i = 0; i < 2; i++) {
+                resTextArray.add(g2l2QuestionData.get(integerArray[i]).getResourceText());
+                resImageArray.add(g2l2QuestionData.get(integerArray[i]).getResourceImage());
+                resAudioArray.add(g2l2QuestionData.get(integerArray[i]).getResourceImage());
+                resIdArray.add(g2l2QuestionData.get(integerArray[i]).getResourceId());
+            }
+            String[] gifPaths = new String[]{(imagePath + resImageArray.get(0)),
+                    (imagePath + resImageArray.get(1))};
+            boleTohG2L1View.setQuestionGifs(readQuestionNo, gifPaths);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void showImagesG3L1(String path, String studId) {
+        try {
+            readQuestionNo = getRandomNumber(0, g3l2QuestionData.size());
+            currentPairList =  g3l2QuestionData.get(readQuestionNo).getNodelist();
+            readQuestionNo= getRandomNumber(0, currentPairList.size());
+            Collections.shuffle(currentPairList);
+            int[] integerArray = getUniqueRandomNumber(0, currentPairList.size(), 2);
+            String imagePath = sdCardPathString + "images/PairsGameL2/";
+
+            resTextArray.clear();
+            resIdArray.clear();
+            resImageArray.clear();
+            resAudioArray.clear();
+
+            setQuestionStartTime();
+            studentID = studId;
+            resourceID = g3l2QuestionData.get(integerArray[readQuestionNo]).getResourceId();
+            questionId = resourceID;
+
+            for (int i = 0; i < 2; i++) {
+                resTextArray.add(currentPairList.get(integerArray[i]).getResourceText());
+                resImageArray.add(currentPairList.get(integerArray[i]).getResourceImage());
+                resAudioArray.add(currentPairList.get(integerArray[i]).getResourceImage());
+                resIdArray.add(currentPairList.get(integerArray[i]).getResourceId());
+            }
+            Bitmap[] bitmap = new Bitmap[]{BitmapFactory.decodeFile(imagePath + resImageArray.get(0)),
+                    BitmapFactory.decodeFile(imagePath + resImageArray.get(1))};
+            boleTohG3L1View.setQuestionImgs(readQuestionNo, bitmap);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -235,24 +349,83 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
 
     @Override
     public void g1_l1_checkAnswer(int imageViewNum, int currentTeam, boolean timeOut) {
+        int scoredMarks, totalMarks = 10;
         if (!timeOut) {
             String imageString = resTextArray.get(imageViewNum - 1);
             if (imageString.equalsIgnoreCase(ttsQuestion)) {
                 boleTohG1L1View.setCelebrationView();
+                scoredMarks = 10;
                 playMusic("Sounds/BilkulSahijawab.mp3", getSdcardPath());
                 int currentTeamScore = Integer.parseInt(playerModalArrayList.get(currentTeam).studentScore);
                 playerModalArrayList.get(currentTeam).setStudentScore(String.valueOf(currentTeamScore + 10));
                 boleTohG1L1View.setCurrentScore();
             } else {
                 //  TODO wrong answer animation
+                scoredMarks = 0;
                 Toast.makeText(mContext, "Wrong", Toast.LENGTH_SHORT).show();
                 playMusic("Sounds/wrong.mp3", getSdcardPath());
             }
         } else {
             //  TODO wrong answer animation
+            scoredMarks = 0;
             Toast.makeText(mContext, "Wrong", Toast.LENGTH_SHORT).show();
             playMusic("Sounds/wrong.mp3", getSdcardPath());
         }
+        addScore(studentID, resourceID, 0, scoredMarks, totalMarks, questionStartTime, 0);
+    }
+
+    @Override
+    public void g2_l1_checkAnswer(int imageViewNum, int currentTeam, boolean timeOut) {
+        int scoredMarks, totalMarks = 10;
+        if (!timeOut) {
+            String imageString = resTextArray.get(imageViewNum - 1);
+            if (imageString.equalsIgnoreCase(ttsQuestion)) {
+                boleTohG2L1View.setCelebrationView();
+                scoredMarks = 10;
+                playMusic("Sounds/BilkulSahijawab.mp3", getSdcardPath());
+                int currentTeamScore = Integer.parseInt(playerModalArrayList.get(currentTeam).studentScore);
+                playerModalArrayList.get(currentTeam).setStudentScore(String.valueOf(currentTeamScore + 10));
+                boleTohG2L1View.setCurrentScore();
+            } else {
+                //  TODO wrong answer animation
+                scoredMarks = 0;
+                Toast.makeText(mContext, "Wrong", Toast.LENGTH_SHORT).show();
+                playMusic("Sounds/wrong.mp3", getSdcardPath());
+            }
+        } else {
+            //  TODO wrong answer animation
+            scoredMarks = 0;
+            Toast.makeText(mContext, "Wrong", Toast.LENGTH_SHORT).show();
+            playMusic("Sounds/wrong.mp3", getSdcardPath());
+        }
+        addScore(studentID, resourceID, 0, scoredMarks, totalMarks, questionStartTime, 0);
+    }
+
+    @Override
+    public void g3_l1_checkAnswer(int imageViewNum, int currentTeam, boolean timeOut) {
+        int scoredMarks, totalMarks = 10;
+        if (!timeOut) {
+            String imageString = resTextArray.get(imageViewNum - 1);
+            if (imageString.equalsIgnoreCase(ttsQuestion)) {
+                boleTohG3L1View.setCelebrationView();
+                scoredMarks = 10;
+                playMusic("Sounds/BilkulSahijawab.mp3", getSdcardPath());
+                int currentTeamScore = Integer.parseInt(playerModalArrayList.get(currentTeam).studentScore);
+                playerModalArrayList.get(currentTeam).setStudentScore(String.valueOf(currentTeamScore + 10));
+                boleTohG3L1View.setCurrentScore();
+            } else {
+                //  TODO wrong answer animation
+                scoredMarks = 0;
+                Toast.makeText(mContext, "Wrong", Toast.LENGTH_SHORT).show();
+                playMusic("Sounds/wrong.mp3", getSdcardPath());
+            }
+        } else {
+            //  TODO wrong answer animation
+            scoredMarks = 0;
+            Toast.makeText(mContext, "Wrong", Toast.LENGTH_SHORT).show();
+            playMusic("Sounds/wrong.mp3", getSdcardPath());
+        }
+        addScore(studentID, resourceID, 0, scoredMarks, totalMarks, questionStartTime, 0);
     }
 
     @Override
@@ -436,8 +609,8 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
                 @Override
                 protected Object doInBackground(Object... objects) {
                     String AppStartDateTime = appDatabase.getStatusDao().getValue("AppStartDateTime");
-                    score.setSessionID(""+appDatabase.getStatusDao().getValue("CurrentSession"));
-                    score.setDeviceID(""+appDatabase.getStatusDao().getValue("DeviceID"));
+                    score.setSessionID("" + appDatabase.getStatusDao().getValue("CurrentSession"));
+                    score.setDeviceID("" + appDatabase.getStatusDao().getValue("DeviceID"));
                     score.setEndDateTime("" + AOPApplication.getCurrentDateTime(true, AppStartDateTime));
                     appDatabase.getScoreDao().insert(score);
                     BackupDatabase.backup(mContext);
@@ -510,7 +683,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
     public void fragmentOnPause() {
         if (mediaPlayerUtil != null)
             mediaPlayerUtil.stopMedia();
-        if(ttsService != null )
+        if (ttsService != null)
             ttsService.stop();
     }
 }

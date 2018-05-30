@@ -14,7 +14,15 @@ public interface BoleTohContract {
 
         void doInitialWork(String path);
 
+        void doInitialWorkG2l1(String path);
+
+        void doInitialWorkG3l1(String path);
+
         void g1_l1_checkAnswer(int imageViewNum, int currentTeam, boolean timeOut);
+
+        void g2_l1_checkAnswer(int imageViewNum, int currentTeam, boolean timeOut);
+
+        void g3_l1_checkAnswer(int imageViewNum, int currentTeam, boolean timeOut);
 
         int[] getUniqueRandomNumber(int min, int max, int numSize);
 
@@ -56,7 +64,11 @@ public interface BoleTohContract {
 
         void checkFinalAnswer_g3_l2(String s, int currentTeam);
 
-        void showImages(String path);
+        void showImagesG1L1(String path,String stidId);
+
+        void showImagesG2L1(String path,String stidId);
+
+        void showImagesG3L1(String path,String stidId);
 
         void fragmentOnPause();
 
@@ -73,6 +85,22 @@ public interface BoleTohContract {
 
         void setCurrentScore();
 
+    }
+
+    interface BoleToh_G2_L1_View {
+        void setQuestionGifs(int readQuesNo, String... mygif);
+
+        void setCelebrationView();
+
+        void setCurrentScore();
+    }
+
+    interface BoleToh_G3_L1_View {
+        void setQuestionImgs(int readQuesNo, Bitmap... bitmaps);
+
+        void setCelebrationView();
+
+        void setCurrentScore();
     }
 
     interface BoleToh_G1_L2_View {

@@ -58,6 +58,7 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
     @BindView(R.id.skip_button_intro)
     Button btn_skip;
     Boolean pauseFlg = false;
+    static String gameLevel;
     static ArrayList<Integer> list = new ArrayList<Integer>();
 
 
@@ -71,6 +72,7 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
         Intent intent = getIntent();
         Bundle extraBundle = intent.getExtras();
         playerModalArrayList = extraBundle.getParcelableArrayList("playerModalArrayList");
+        gameLevel = intent.getStringExtra("level");
 
         list.clear();
         gameCounter = 0;
@@ -136,6 +138,7 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
     public void loadFragment() {
         Bundle bundle = new Bundle();
         bundle.putString("round", "R1");
+        bundle.putString("level", gameLevel);
         bundle.putInt("count", list.get(gameCounter));
         PD_Utility.showFragment(BoleToh.this, new fragment_intro_character(), R.id.cl_bole_toh,
                 bundle, fragment_intro_character.class.getSimpleName());
