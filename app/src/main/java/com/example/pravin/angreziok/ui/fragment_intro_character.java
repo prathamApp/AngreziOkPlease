@@ -24,6 +24,7 @@ import com.example.pravin.angreziok.ui.jod_tod_round.JodTod_G1_L1;
 import com.example.pravin.angreziok.ui.jod_tod_round.JodTod_G1_L2;
 import com.example.pravin.angreziok.ui.jod_tod_round.JodTod_G2_L2;
 import com.example.pravin.angreziok.ui.jod_tod_round.JodTod_G3_L2;
+import com.example.pravin.angreziok.ui.samajh_ke_bolo_round.SamajhKeBolo_G1_L1;
 import com.example.pravin.angreziok.ui.samajh_ke_bolo_round.SamajhKeBolo_G1_L2;
 import com.example.pravin.angreziok.ui.samajh_ke_bolo_round.SamajhKeBolo_G2_L2;
 import com.example.pravin.angreziok.ui.samajh_ke_bolo_round.SamajhKeBolo_G3_L2;
@@ -194,6 +195,26 @@ public class fragment_intro_character extends BaseFragment {
                             break;
                     }
                     break;
+                case "R3":
+                    frag = 3;
+                    switch (count) {
+                        case 0:
+                            instructionsTextView.setText("Where-When Game\n\nआपको एक चित्र के बारें में सवाल पूछा जायेगा| आपको उस सवाल का सही जवाब देना है|");
+                            videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/WhereGame.mp4";
+                            playVideo(Uri.parse(videoPath));
+                            break;
+                        case 1:
+                            instructionsTextView.setText("Compare Game\n\nइस गेम में आपसे एक सवाल पूछा जायेगा|आपको तीन विकल्प दिए जायेंगे| सही विकल्प चुन कर उस शब्द को बोल कर बताओ|");
+                            videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/CampareGame.mp4";
+                            playVideo(Uri.parse(videoPath));
+                            break;
+                        case 2:
+                            instructionsTextView.setText("Say it in English \n\nइस गेम में आप अपनी मातृ भाषा में एक वाक्य सुनेंगे| आपको साथ में 2 अंग्रेजी वाक्य के विकल्प दिए जायेंगे| आपको सही अनुवाद चुनकर उस वाक्य को पढ़ कर सुनना है|");
+                            videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/SayItInEnglish.mp4";
+                            playVideo(Uri.parse(videoPath));
+                            break;
+                    }
+                    break;
             }
 
         }
@@ -318,6 +339,22 @@ public class fragment_intro_character extends BaseFragment {
                         case 2:
                             PD_Utility.showFragment(getActivity(), new JodTod_G1_L1(), R.id.cl_jod_tod,
                                     null, JodTod_G1_L1.class.getSimpleName());
+                            break;
+                    }
+                    break;
+                case 3:
+                    switch (count) {
+                        case 0:
+                            PD_Utility.showFragment(getActivity(), new SamajhKeBolo_G1_L1(), R.id.cl_samajh_ke_bolo,
+                                    null, SamajhKeBolo_G1_L1.class.getSimpleName());
+                            break;
+                        case 1:
+                            PD_Utility.showFragment(getActivity(), new SamajhKeBolo_G1_L1(), R.id.cl_samajh_ke_bolo,
+                                    null, SamajhKeBolo_G1_L1.class.getSimpleName());
+                            break;
+                        case 2:
+                            PD_Utility.showFragment(getActivity(), new SamajhKeBolo_G1_L1(), R.id.cl_samajh_ke_bolo,
+                                    null, SamajhKeBolo_G1_L1.class.getSimpleName());
                             break;
                     }
                     break;

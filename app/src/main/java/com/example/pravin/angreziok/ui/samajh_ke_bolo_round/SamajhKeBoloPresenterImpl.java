@@ -2,6 +2,8 @@ package com.example.pravin.angreziok.ui.samajh_ke_bolo_round;
 
 import android.arch.persistence.room.Room;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
@@ -13,6 +15,7 @@ import com.example.pravin.angreziok.domain.Score;
 import com.example.pravin.angreziok.interfaces.MediaCallbacks;
 import com.example.pravin.angreziok.modalclasses.GenericModalGson;
 import com.example.pravin.angreziok.services.TTSService;
+import com.example.pravin.angreziok.ui.bole_toh_round.BoleToh;
 import com.example.pravin.angreziok.util.MediaPlayerUtil;
 import com.example.pravin.angreziok.util.SDCardUtil;
 import com.google.gson.Gson;
@@ -37,18 +40,35 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
     public TTSService ttsService;
     Context mContext;
     public MediaPlayerUtil mediaPlayerUtil;
+    SamajhKeBoloContract.SamajhKeBolo_G1_L1_View samajhKeBoloG1L1View;
     SamajhKeBoloContract.SamajhKeBolo_G1_L2_View samajhKeBoloG1L2View;
     SamajhKeBoloContract.SamajhKeBolo_G3_L2_View samajhKeBoloG3L2View;
     SamajhKeBoloContract.SamajhKeBolo_G2_L2_View samajhKeBoloG2L2View;
-    List<GenericModalGson> g2l2QuestionData, g1l2QuestionData, g3l2QuestionData, g3l2CurrentQuestionList, g1l2CurrentQuestionList;
+    List<GenericModalGson> g1l1QuestionData, g2l2QuestionData, g1l2QuestionData, g3l2QuestionData, g3l2CurrentQuestionList, g1l2CurrentQuestionList;
+    List<GenericModalGson> g1l1List;
     GenericModalGson whereWhenGameData, sayItGameData, askGameData;
     private AppDatabase appDatabase;
+    ArrayList<String> resTextArray = new ArrayList<String>();
+    ArrayList<String> resImageArray = new ArrayList<String>();
+    ArrayList<String> resAudioArray = new ArrayList<String>();
+    ArrayList<String> resIdArray = new ArrayList<String>();
 
-    int randomNumber, scoredMarks, totalMarks = 25;
-    String questionStartTime, studentID, resourceID, questionId;
+    int randomNumber, scoredMarks, totalMarks = 25, readQuestionNo;
+    String questionStartTime, studentID, resourceID, questionId,sdCardPathString,ttsQuestion;
+    float speechRate = 1.0f;
 
     public SamajhKeBoloPresenterImpl(Context mContext) {
         this.mContext = mContext;
+        appDatabase = Room.databaseBuilder(mContext,
+                AppDatabase.class, AppDatabase.DB_NAME)
+                .build();
+    }
+
+    public SamajhKeBoloPresenterImpl(Context context, SamajhKeBoloContract.SamajhKeBolo_G1_L1_View samajhKeBoloG1L1View,
+                                     TTSService ttsService) {
+        mContext = context;
+        this.samajhKeBoloG1L1View = samajhKeBoloG1L1View;
+        this.ttsService = ttsService;
         appDatabase = Room.databaseBuilder(mContext,
                 AppDatabase.class, AppDatabase.DB_NAME)
                 .build();
@@ -97,6 +117,14 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
     }
 
     @Override
+    public void doInitialWorkG1l1(String path) {
+        sdCardPathString = path;
+        whereWhenGameData = fetchJsonData("RoundThreeGameOne", path);
+        g1l1QuestionData = whereWhenGameData.getNodelist();
+        Log.d("SIZE", "doInitialWork: " + g1l1QuestionData.size());
+    }
+
+    @Override
     public void setCurrentScore(int currentMarks) {
         scoredMarks += currentMarks;
     }
@@ -126,6 +154,80 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
             e.printStackTrace();
         }
         return returnGsonData;
+    }
+
+    @Override
+    public void showImagesG1L1(String path, String studId) {
+        try {
+            readQuestionNo = getRandomNumber(0, g1l1QuestionData.size());
+            g1l1List =  g1l1QuestionData.get(readQuestionNo).getNodelist();
+            readQuestionNo= getRandomNumber(0, g1l1List.size());
+            Collections.shuffle(g1l1List);
+            int[] integerArray = getUniqueRandomNumber(0, g1l1List.size(), 2);
+            String imagePath = sdCardPathString + "images/WhereGameL2/";
+
+            resTextArray.clear();
+            resIdArray.clear();
+            resImageArray.clear();
+            resAudioArray.clear();
+
+            setQuestionStartTime();
+            studentID = studId;
+            resourceID = g1l1QuestionData.get(integerArray[readQuestionNo]).getResourceId();
+            questionId = resourceID;
+
+            for (int i = 0; i < 2; i++) {
+                resTextArray.add(g1l1List.get(integerArray[i]).getResourceText());
+                resImageArray.add(g1l1List.get(integerArray[i]).getResourceImage());
+                resAudioArray.add(g1l1List.get(integerArray[i]).getResourceImage());
+                resIdArray.add(g1l1List.get(integerArray[i]).getResourceId());
+            }
+            Bitmap[] bitmap = new Bitmap[]{BitmapFactory.decodeFile(imagePath + resImageArray.get(0)),
+                    BitmapFactory.decodeFile(imagePath + resImageArray.get(1))};
+            samajhKeBoloG1L1View.setQuestionImgs(readQuestionNo, bitmap);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void g1_l1_checkAnswer(int imageViewNum, int currentTeam, boolean timeOut) {
+        int scoredMarks, totalMarks = 10;
+        if (!timeOut) {
+            String imageString = resTextArray.get(imageViewNum - 1);
+            if (imageString.equalsIgnoreCase(ttsQuestion)) {
+                samajhKeBoloG1L1View.setCelebrationView();
+                scoredMarks = 10;
+                playMusic("Sounds/BilkulSahijawab.mp3", getSdcardPath());
+                int currentTeamScore = Integer.parseInt(SamajhKeBolo.playerModalArrayList.get(currentTeam).studentScore);
+                SamajhKeBolo.playerModalArrayList.get(currentTeam).setStudentScore(String.valueOf(currentTeamScore + 10));
+                samajhKeBoloG1L1View.setCurrentScore();
+            } else {
+                //  TODO wrong answer animation
+                scoredMarks = 0;
+                Toast.makeText(mContext, "Wrong", Toast.LENGTH_SHORT).show();
+                playMusic("Sounds/wrong.mp3", getSdcardPath());
+            }
+        } else {
+            //  TODO wrong answer animation
+            scoredMarks = 0;
+            Toast.makeText(mContext, "Wrong", Toast.LENGTH_SHORT).show();
+            playMusic("Sounds/wrong.mp3", getSdcardPath());
+        }
+        addScore(studentID, resourceID, 0, scoredMarks, totalMarks, questionStartTime, 0);
+    }
+
+    @Override
+    public void readQuestion(int questionToRead) {
+        ttsQuestion = resTextArray.get(questionToRead);
+        Log.d("speechRate", "readQuestion: " + speechRate + "," + ttsQuestion);
+        ttsService.play("Where is " + ttsQuestion);
+    }
+
+    @Override
+    public void replayQuestionroundone() {
+        readQuestion(readQuestionNo);
     }
 
     @Override

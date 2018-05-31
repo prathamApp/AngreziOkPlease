@@ -9,6 +9,11 @@ public interface SamajhKeBoloContract {
     interface SamajhKeBoloPresenter {
 
         String getSdcardPath();
+        void doInitialWorkG1l1(String path);
+        void showImagesG1L1(String path, String studId);
+        void g1_l1_checkAnswer(int imageViewNum, int currentTeam, boolean timeOut);
+        void readQuestion(int questionToRead);
+        void replayQuestionroundone();
         void set_g1_l2_data(String path);
         void setImage_gl_l2(String studentID);
         String getCurrentQuestion_g1_l2();
@@ -46,6 +51,14 @@ public interface SamajhKeBoloContract {
         void hideOptionView();
         void setQuestionImage(String path);
         void showOptions_g1_l2();
+    }
+
+    interface SamajhKeBolo_G1_L1_View {
+        void setQuestionImgs(int readQuesNo, android.graphics.Bitmap... bitmaps);
+
+        void setCelebrationView();
+
+        void setCurrentScore();
     }
 
     interface SamajhKeBolo_G2_L2_View {

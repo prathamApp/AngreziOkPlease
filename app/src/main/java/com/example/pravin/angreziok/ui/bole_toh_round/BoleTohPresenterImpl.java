@@ -260,7 +260,6 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
         }
     }
 
-
     @Override
     public void readQuestion(int questionToRead) {
         ttsQuestion = resTextArray.get(questionToRead);
