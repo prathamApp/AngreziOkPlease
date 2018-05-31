@@ -1,6 +1,7 @@
 package com.example.pravin.angreziok.ui.jod_tod_round;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -25,6 +26,9 @@ import com.example.pravin.angreziok.BaseFragment;
 import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.animations.MyBounceInterpolator;
 import com.example.pravin.angreziok.ui.bole_toh_round.BoleToh;
+import com.example.pravin.angreziok.ui.fragment_intro_character;
+import com.example.pravin.angreziok.ui.samajh_ke_bolo_round.SamajhKeBolo;
+import com.example.pravin.angreziok.util.PD_Utility;
 import com.github.anastr.flattimelib.CountDownTimerView;
 import com.github.anastr.flattimelib.intf.OnTimeFinish;
 
@@ -61,6 +65,8 @@ public class JodTod_G1_L1 extends BaseFragment implements JodTodContract.JodTod_
     TextView superScore;
     @BindView(R.id.r1g1_allstar)
     TextView allScore;
+    @BindView(R.id.iv_ques_img_r2_g1_l2)
+    TextView tv_ques_img;
 
     @BindView(R.id.iv_image1)
     ImageView iv_image1;
@@ -82,7 +88,7 @@ public class JodTod_G1_L1 extends BaseFragment implements JodTodContract.JodTod_
     JodTodContract.JodTodPresenter presenter;
     String path;
     Dialog dialog;
-    int currentTeam = 0;
+    int currentTeam = 0,questionNo;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -232,6 +238,11 @@ public class JodTod_G1_L1 extends BaseFragment implements JodTodContract.JodTod_
 
     }
 
+    @Override
+    public void setQuestionDynamically(String questionText) {
+        tv_ques_img.setText(questionText);
+    }
+
     private void setOnClickListeners() {
         mCountDownTimer.setOnTimeFinish(new OnTimeFinish() {
             @Override
@@ -299,8 +310,21 @@ public class JodTod_G1_L1 extends BaseFragment implements JodTodContract.JodTod_
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    Toast.makeText(getActivity(), "QUESTION END CALL NEXT GAME", Toast.LENGTH_SHORT).show();
-                    //TODO display Score screen after final round
+                    Bundle bundle = new Bundle();
+                    JodTod.gameCounter += 1;
+                    if (JodTod.gameCounter <= 1) {
+                        bundle.putString("round", "R2");
+                        bundle.putString("level", JodTod.gameLevel);
+                        bundle.putInt("count", JodTod.list.get(JodTod.gameCounter));
+                        PD_Utility.showFragment(getActivity(), new fragment_intro_character(), R.id.cl_jod_tod,
+                                bundle, fragment_intro_character.class.getSimpleName());
+                    } else {
+                        Intent intent = new Intent(getActivity(), SamajhKeBolo.class);
+                        intent.putExtra("level",""+JodTod.gameLevel);
+                        bundle.putParcelableArrayList("playerModalArrayList", jodTodPlayerList);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                    }
                 }
             }, 2500);
 
@@ -309,12 +333,13 @@ public class JodTod_G1_L1 extends BaseFragment implements JodTodContract.JodTod_
 
     @OnClick(R.id.ib_r1g1_speaker)
     public void playQuestion() {
-        /*presenter.replayQuestionroundone();*/
+        presenter.readLetter(questionNo);
     }
 
     @Override
     public void setQuestionImgs(final int readQuesNo, Bitmap... bitmaps) {
         try {
+            questionNo = readQuesNo;
             questionConter++;
             iv_image1.setImageBitmap(bitmaps[0]);
             iv_image2.setImageBitmap(bitmaps[1]);
@@ -325,7 +350,7 @@ public class JodTod_G1_L1 extends BaseFragment implements JodTodContract.JodTod_
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    presenter.readQuestion(readQuesNo);
+                    presenter.readLetter(readQuesNo);
                 }
             }, 1500);
         } catch (Exception e) {

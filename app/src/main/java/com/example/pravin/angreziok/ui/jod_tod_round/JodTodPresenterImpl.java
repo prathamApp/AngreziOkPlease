@@ -45,7 +45,7 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
     GenericModalGson gsonListenAndSpellGameData, gsonAlphabetGameData, gsonRhymeGameData;
     List<GenericModalGson> g3l2QuestionData, g1l2QuestionData, g2l2QuestionData, g2l2SubList,g1l1QuestionData,g1l1SubData;
     int randomNumber1, randomNumber,readQuestionNo;
-    String rhymeCheckWord, questionWord;
+    String rhymeCheckWord, questionWord, myAlphabet;
     String sdCardPathString, questionStartTime, studentID, resourceID, questionId;
     public MediaPlayerUtil mediaPlayerUtil;
     private AppDatabase appDatabase;
@@ -150,15 +150,17 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
             setQuestionStartTime();
             studentID = studId;
             resourceID = g1l1QuestionData.get(integerArray[readQuestionNo]).getResourceId();
-            String myAlphabet = g1l1QuestionData.get(integerArray[readQuestionNo]).getResourceText();
+            myAlphabet = g1l1QuestionData.get(integerArray[readQuestionNo]).getResourceText();
+            jodTodG1L1View.setQuestionDynamically(myAlphabet);
             questionId = resourceID;
 
             for (int i = 0; i < 4; i++) {
                 g1l1SubData = g1l1QuestionData.get(integerArray[i]).getNodelist();
-                resTextArray.add(g1l1SubData.get(i).getResourceText());
-                resImageArray.add(g1l1QuestionData.get(i).getResourceImage());
-                resAudioArray.add(g1l1QuestionData.get(i).getResourceImage());
-                resIdArray.add(g1l1QuestionData.get(i).getResourceId());
+                Collections.shuffle(g1l1SubData);
+                resTextArray.add(g1l1SubData.get(0).getResourceText());
+                resImageArray.add(g1l1SubData.get(0).getResourceImage());
+                resAudioArray.add(g1l1SubData.get(0).getResourceImage());
+                resIdArray.add(g1l1SubData.get(0).getResourceId());
             }
             Bitmap[] bitmap = new Bitmap[]{BitmapFactory.decodeFile(imagePath + resImageArray.get(0)),
                     BitmapFactory.decodeFile(imagePath + resImageArray.get(1)),
@@ -203,6 +205,13 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
         ttsQuestion = resTextArray.get(questionToRead);
         Log.d("speechRate", "readQuestion: " + speechRate + "," + ttsQuestion);
         ttsService.play("Where is " + ttsQuestion);
+    }
+
+    @Override
+    public void readLetter(int questionToRead) {
+        ttsQuestion = resTextArray.get(questionToRead);
+        Log.d("speechRate", "readQuestion: " + speechRate + "," + myAlphabet);
+        ttsService.play("Which of these starts with, " + myAlphabet);
     }
 
     @Override

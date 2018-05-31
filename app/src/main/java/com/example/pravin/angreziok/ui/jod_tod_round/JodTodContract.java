@@ -20,6 +20,8 @@ public interface JodTodContract {
 
         void readQuestion(int questionToRead);
 
+        void readLetter(int questionToRead);
+
         void g1_l1_checkAnswer(int imageViewNum, int currentTeam, boolean timeOut);
 
         void startTTS(String text);
@@ -81,6 +83,8 @@ public interface JodTodContract {
         void setCelebrationView();
 
         void setCurrentScore();
+
+        void setQuestionDynamically(String questionText);
     }
 
     interface JodTod_G1_L2_View {

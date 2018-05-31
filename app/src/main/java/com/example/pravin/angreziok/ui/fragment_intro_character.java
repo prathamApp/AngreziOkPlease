@@ -175,7 +175,7 @@ public class fragment_intro_character extends BaseFragment {
                     }
                     break;
                 case "R2":
-                    frag = 1;
+                    frag = 2;
                     switch (count) {
                         case 0:
                             instructionsTextView.setText("Alphabets Game");
@@ -289,7 +289,7 @@ public class fragment_intro_character extends BaseFragment {
             }
         } else {
             switch (no) {
-                case 12:
+                case 1:
                     switch (count) {
                         case 0:
                             PD_Utility.showFragment(getActivity(), new BoleToh_G1_L1(), R.id.cl_bole_toh,
@@ -305,7 +305,7 @@ public class fragment_intro_character extends BaseFragment {
                             break;
                     }
                     break;
-                case 1:
+                case 2:
                     switch (count) {
                         case 0:
                             PD_Utility.showFragment(getActivity(), new JodTod_G1_L1(), R.id.cl_jod_tod,

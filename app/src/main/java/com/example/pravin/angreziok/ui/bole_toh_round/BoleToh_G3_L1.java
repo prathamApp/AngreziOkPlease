@@ -1,6 +1,7 @@
 package com.example.pravin.angreziok.ui.bole_toh_round;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -24,11 +25,11 @@ import android.widget.Toast;
 import com.example.pravin.angreziok.BaseFragment;
 import com.example.pravin.angreziok.R;
 import com.example.pravin.angreziok.animations.MyBounceInterpolator;
-import com.example.pravin.angreziok.custom.GifView;
+import com.example.pravin.angreziok.ui.fragment_intro_character;
+import com.example.pravin.angreziok.ui.jod_tod_round.JodTod;
+import com.example.pravin.angreziok.util.PD_Utility;
 import com.github.anastr.flattimelib.CountDownTimerView;
 import com.github.anastr.flattimelib.intf.OnTimeFinish;
-
-import java.io.FileInputStream;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,6 +39,8 @@ import nl.dionsegijn.konfetti.models.Shape;
 import nl.dionsegijn.konfetti.models.Size;
 
 import static com.example.pravin.angreziok.BaseActivity.ttsService;
+import static com.example.pravin.angreziok.ui.bole_toh_round.BoleToh.gameCounter;
+import static com.example.pravin.angreziok.ui.bole_toh_round.BoleToh.gameLevel;
 import static com.example.pravin.angreziok.ui.bole_toh_round.BoleToh.playerModalArrayList;
 
 
@@ -282,8 +285,21 @@ public class BoleToh_G3_L1 extends BaseFragment implements BoleTohContract.BoleT
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    Toast.makeText(getActivity(), "QUESTION END CALL NEXT GAME", Toast.LENGTH_SHORT).show();
-                    //TODO display Score screen after final round
+                    Bundle bundle = new Bundle();
+                    gameCounter += 1;
+                    if (gameCounter <= 1) {
+                        bundle.putString("round", "R1");
+                        bundle.putString("level", gameLevel);
+                        bundle.putInt("count", BoleToh.list.get(gameCounter));
+                        PD_Utility.showFragment(getActivity(), new fragment_intro_character(), R.id.cl_bole_toh,
+                                bundle, fragment_intro_character.class.getSimpleName());
+                    } else {
+                        Intent intent = new Intent(getActivity(), JodTod.class);
+                        intent.putExtra("level", "" + gameLevel);
+                        bundle.putParcelableArrayList("playerModalArrayList", playerModalArrayList);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                    }
                 }
             }, 2500);
 

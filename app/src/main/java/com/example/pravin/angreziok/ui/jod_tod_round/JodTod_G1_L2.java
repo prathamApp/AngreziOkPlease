@@ -348,7 +348,7 @@ public class JodTod_G1_L2 extends BaseFragment implements JodTodContract.JodTod_
                                 bundle, fragment_intro_character.class.getSimpleName());
                     } else {
                         Intent intent = new Intent(getActivity(), SamajhKeBolo.class);
-                        intent.putExtra("level","L2");
+                        intent.putExtra("level",""+JodTod.gameLevel);
                         bundle.putParcelableArrayList("playerModalArrayList", jodTodPlayerList);
                         intent.putExtras(bundle);
                         startActivity(intent);

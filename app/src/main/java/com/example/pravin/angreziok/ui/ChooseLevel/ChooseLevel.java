@@ -85,7 +85,7 @@ public class ChooseLevel extends BaseActivity {
 
     @OnClick(R.id.tv_Level1)
     public void startGame(){
-        Intent intent = new Intent(this, JodTod.class);
+        Intent intent = new Intent(this, BoleToh.class);
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("playerModalArrayList", playerModalArrayList);
         intent.putExtras(bundle);
