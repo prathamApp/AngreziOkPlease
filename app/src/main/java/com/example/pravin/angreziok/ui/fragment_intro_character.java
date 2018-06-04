@@ -23,6 +23,7 @@ import com.example.pravin.angreziok.ui.bole_toh_round.BoleToh_G3_L2;
 import com.example.pravin.angreziok.ui.jod_tod_round.JodTod_G1_L1;
 import com.example.pravin.angreziok.ui.jod_tod_round.JodTod_G1_L2;
 import com.example.pravin.angreziok.ui.jod_tod_round.JodTod_G2_L2;
+import com.example.pravin.angreziok.ui.jod_tod_round.JodTod_G3_L1;
 import com.example.pravin.angreziok.ui.jod_tod_round.JodTod_G3_L2;
 import com.example.pravin.angreziok.ui.samajh_ke_bolo_round.SamajhKeBolo_G1_L1;
 import com.example.pravin.angreziok.ui.samajh_ke_bolo_round.SamajhKeBolo_G1_L2;
@@ -330,16 +331,16 @@ public class fragment_intro_character extends BaseFragment {
                 case 2:
                     switch (count) {
                         case 0:
-                            PD_Utility.showFragment(getActivity(), new JodTod_G1_L1(), R.id.cl_jod_tod,
-                                    null, JodTod_G1_L1.class.getSimpleName());
+                            PD_Utility.showFragment(getActivity(), new JodTod_G3_L1(), R.id.cl_jod_tod,
+                                    null, JodTod_G3_L1.class.getSimpleName());
                             break;
                         case 1:
-                            PD_Utility.showFragment(getActivity(), new JodTod_G1_L1(), R.id.cl_jod_tod,
-                                    null, JodTod_G1_L1.class.getSimpleName());
+                            PD_Utility.showFragment(getActivity(), new JodTod_G3_L1(), R.id.cl_jod_tod,
+                                    null, JodTod_G3_L1.class.getSimpleName());
                             break;
                         case 2:
-                            PD_Utility.showFragment(getActivity(), new JodTod_G1_L1(), R.id.cl_jod_tod,
-                                    null, JodTod_G1_L1.class.getSimpleName());
+                            PD_Utility.showFragment(getActivity(), new JodTod_G3_L1(), R.id.cl_jod_tod,
+                                    null, JodTod_G3_L1.class.getSimpleName());
                             break;
                     }
                     break;

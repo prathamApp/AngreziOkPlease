@@ -42,7 +42,7 @@ import static com.example.pravin.angreziok.ui.jod_tod_round.JodTod.animateView;
 import static com.example.pravin.angreziok.ui.jod_tod_round.JodTod.jodTodPlayerList;
 
 
-public class JodTod_G3_L2 extends BaseFragment implements JodTodContract.JodTod_G3_L2_View {
+public class JodTod_G3_L1 extends BaseFragment implements JodTodContract.JodTod_G3_L2_View {
 
     @BindView(R.id.mCountDownTimer)
     CountDownTimerView mCountDownTimer;
@@ -288,7 +288,7 @@ public class JodTod_G3_L2 extends BaseFragment implements JodTodContract.JodTod_
     }
 
     private void setDataForGame() {
-        presenter.set_g3_l2_data(0);
+        presenter.set_g3_l2_data(1);
         showQuestion.setText("Fill the missing letters");
     }
 

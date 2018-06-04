@@ -30,7 +30,7 @@ public interface JodTodContract {
 
         String getSdcardPath();
 
-        void set_g3_l2_data();
+        void set_g3_l2_data(int level);
 
         void set_g1_l2_data();
 

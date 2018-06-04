@@ -229,9 +229,12 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
 
 
     @Override
-    public void set_g3_l2_data() {
+    public void set_g3_l2_data(int level) {
         // TODO Create json file for game three
-        gsonListenAndSpellGameData = fetchJsonData("RoundTwoGameThree", getSdcardPath());
+        if(level==0)
+            gsonListenAndSpellGameData = fetchJsonData("RoundTwoGameThree", getSdcardPath());
+        else
+            gsonListenAndSpellGameData = fetchJsonData("RoundTwoGameThreeLevelOne", getSdcardPath());
         g3l2QuestionData = gsonListenAndSpellGameData.getNodelist();
         String gameTitle = gsonListenAndSpellGameData.getNodeTitle();
         jodTodG3L2View.setGameTitleFromJson(gameTitle);
