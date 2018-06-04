@@ -41,10 +41,11 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
     Context mContext;
     public MediaPlayerUtil mediaPlayerUtil;
     SamajhKeBoloContract.SamajhKeBolo_G1_L1_View samajhKeBoloG1L1View;
+    SamajhKeBoloContract.SamajhKeBolo_G3_L1_View samajhKeBoloG3L1View;
     SamajhKeBoloContract.SamajhKeBolo_G1_L2_View samajhKeBoloG1L2View;
     SamajhKeBoloContract.SamajhKeBolo_G3_L2_View samajhKeBoloG3L2View;
     SamajhKeBoloContract.SamajhKeBolo_G2_L2_View samajhKeBoloG2L2View;
-    List<GenericModalGson> g1l1QuestionData, g2l2QuestionData, g1l2QuestionData, g3l2QuestionData, g3l2CurrentQuestionList, g1l2CurrentQuestionList;
+    List<GenericModalGson> g1l1QuestionData, g2l2QuestionData, g1l2QuestionData, g3l2QuestionData, g3l1QuestionData, g3l2CurrentQuestionList, g1l2CurrentQuestionList, g3l1CurrentQuestionList;
     List<GenericModalGson> g1l1List;
     GenericModalGson whereWhenGameData, sayItGameData, askGameData;
     private AppDatabase appDatabase;
@@ -68,6 +69,16 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
                                      TTSService ttsService) {
         mContext = context;
         this.samajhKeBoloG1L1View = samajhKeBoloG1L1View;
+        this.ttsService = ttsService;
+        appDatabase = Room.databaseBuilder(mContext,
+                AppDatabase.class, AppDatabase.DB_NAME)
+                .build();
+    }
+
+    public SamajhKeBoloPresenterImpl(Context context, SamajhKeBoloContract.SamajhKeBolo_G3_L1_View samajhKeBoloG3L1View,
+                                     TTSService ttsService) {
+        mContext = context;
+        this.samajhKeBoloG3L1View = samajhKeBoloG3L1View;
         this.ttsService = ttsService;
         appDatabase = Room.databaseBuilder(mContext,
                 AppDatabase.class, AppDatabase.DB_NAME)
@@ -119,10 +130,12 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
     @Override
     public void doInitialWorkG1l1(String path) {
         sdCardPathString = path;
-        whereWhenGameData = fetchJsonData("RoundThreeGameOne", path);
+        whereWhenGameData = fetchJsonData("RoundThreeGameOneLevelOne", path);
         g1l1QuestionData = whereWhenGameData.getNodelist();
         Log.d("SIZE", "doInitialWork: " + g1l1QuestionData.size());
     }
+
+
 
     @Override
     public void setCurrentScore(int currentMarks) {
@@ -378,6 +391,15 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
     }
 
     @Override
+    public void set_g3_l1_data(String path) {
+        askGameData = fetchJsonData("RoundThreeGameThreeLevelOne", path);
+        g3l1QuestionData = askGameData.getNodelist();
+        g3l1CurrentQuestionList = g3l1QuestionData;
+        String gameTitle = askGameData.getNodeTitle();
+        samajhKeBoloG3L1View.setGameTitleFromJson(gameTitle);
+    }
+
+    @Override
     public void setQuestion_g3_l2(String studId) {
         samajhKeBoloG3L2View.hideOptionView();
         Collections.shuffle(g3l2CurrentQuestionList);
@@ -479,6 +501,36 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
         }.execute();
     }
 
+    @Override
+    public String[] getOptions() {
+        int[] optionsIds;
+        int[] randomOptions;
+        do {
+            optionsIds = getUniqueRandomNumber(0, g3l1QuestionData.size(), 2);
+        } while (optionsIds[0] == randomNumber || optionsIds[1] == randomNumber);
+        String[] optionsText = new String[3];
+        randomOptions = getUniqueRandomNumber(0, 3, 3);
+        optionsText[randomOptions[0]] = g3l1QuestionData.get(optionsIds[0]).getResourceText();
+        optionsText[randomOptions[1]] = g3l1QuestionData.get(optionsIds[1]).getResourceText();
+        optionsText[randomOptions[2]] = g3l1QuestionData.get(randomNumber).getResourceText();
+        return optionsText;
+    }
+
+    @Override
+    public void setImage_g3_l1(String studId) {
+        samajhKeBoloG3L1View.hideOptionView();
+        randomNumber = getRandomNumber(0, g3l1QuestionData.size());
+        String questionNative = g3l1QuestionData.get(randomNumber).getResourceQuestion();
+        Toast.makeText(mContext, "actual ans: " + g3l1QuestionData.get(randomNumber).getResourceText(), Toast.LENGTH_SHORT).show();
+        setQuestionStartTime();
+        studentID = studId;
+        resourceID = g3l1QuestionData.get(randomNumber).getResourceId();
+        questionId = resourceID;
+        samajhKeBoloG3L1View.setQuestionTextNative(questionNative);
+        String questionString = g3l1QuestionData.get(randomNumber).getResourceQuestion();
+        samajhKeBoloG3L1View.setQuestionText(questionString);
+    }
+
     public void addScore(String studentID, String resourceID, int questionId, int scoredMarks, int totalMarks, String startDateTime, int questionLevel) {
         try {
             final Score score = new Score();
@@ -504,6 +556,37 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
             }.execute();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void checkFinalAnswer_g3_l1(String ans, int currentTeam) {
+        int scoredMarks, totalMarks = 10;
+        if (g3l1QuestionData.get(randomNumber).getResourceText().equalsIgnoreCase(ans)) {
+            //  TODO correct answer animation + increase score of group
+            samajhKeBoloG3L1View.setCelebrationView();
+            scoredMarks = 10;
+            playMusic("Sounds/BilkulSahijawab.mp3", getSdcardPath());
+            int currentTeamScore = Integer.parseInt(SamajhKeBolo.playerModalArrayList.get(currentTeam).studentScore);
+            SamajhKeBolo.playerModalArrayList.get(currentTeam).setStudentScore(String.valueOf(currentTeamScore + 10));
+            samajhKeBoloG3L1View.setCurrentScore();
+        } else {
+            //  TODO wrong answer animation
+            scoredMarks = 0;
+            Toast.makeText(mContext, "Wrong", Toast.LENGTH_SHORT).show();
+            playMusic("Sounds/wrong.mp3", getSdcardPath());
+        }
+        addScore(studentID, resourceID, 0, scoredMarks, totalMarks, questionStartTime, 0);
+    }
+
+    @Override
+    public void g3_l1_checkAnswer(String ans) {
+        String actualAns = g3l1QuestionData.get(randomNumber).getResourceText();
+
+        if (ans.equalsIgnoreCase(actualAns)) {
+            samajhKeBoloG3L1View.setAnswer(ans);
+        } else {
+            samajhKeBoloG3L1View.showOptions();
         }
     }
 

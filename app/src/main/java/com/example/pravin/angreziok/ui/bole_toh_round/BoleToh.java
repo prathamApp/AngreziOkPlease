@@ -104,8 +104,8 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
     private void showGif(String charIntroPath) {
         try {
             btn_skip.setVisibility(View.VISIBLE);
-/*            InputStream gif = new FileInputStream(charIntroPath + "Bole-to-round-Intro.gif");
-            introGifView.setGifResource(gif);*/
+            InputStream gif = new FileInputStream(charIntroPath + "Bole-to-round-Intro.gif");
+            introGifView.setGifResource(gif);
             playSound(charIntroPath);
         } catch (Exception e) {
             Log.e("Cant Play Video", e.getMessage());

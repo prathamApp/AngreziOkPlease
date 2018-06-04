@@ -11,6 +11,10 @@ public interface SamajhKeBoloContract {
         String getSdcardPath();
         void doInitialWorkG1l1(String path);
         void showImagesG1L1(String path, String studId);
+        void setImage_g3_l1(String studId);
+        String[] getOptions();
+        void g3_l1_checkAnswer(String ans);
+        void checkFinalAnswer_g3_l1(String ans, int currentTeam);
         void g1_l1_checkAnswer(int imageViewNum, int currentTeam, boolean timeOut);
         void readQuestion(int questionToRead);
         void replayQuestionroundone();
@@ -33,12 +37,12 @@ public interface SamajhKeBoloContract {
         void g2_l2_checkAnswer(String result);
 
         void set_g3_l2_data(String path);
+        void set_g3_l1_data(String path);
         void setQuestion_g3_l2(String studentID);
         String[] getOptions_g3_l2();
         void checkAnswerOfOptions(String answer, int currentTeam);
         void checkAnswerOfStt(String answer,int currentTeam);
         void fragmentOnPause();
-
         void setCurrentScore(int scoredMarks);
         }
 
@@ -55,10 +59,20 @@ public interface SamajhKeBoloContract {
 
     interface SamajhKeBolo_G1_L1_View {
         void setQuestionImgs(int readQuesNo, android.graphics.Bitmap... bitmaps);
-
         void setCelebrationView();
-
         void setCurrentScore();
+    }
+
+    interface SamajhKeBolo_G3_L1_View {
+        void setQuestionText(String questionString);
+        void initiateQuestion();
+        void setCurrentScore();
+        void setCelebrationView();
+        void setGameTitleFromJson(String gameName);
+        void hideOptionView();
+        void setQuestionTextNative(String path);
+        void setAnswer(String ans);
+        void showOptions();
     }
 
     interface SamajhKeBolo_G2_L2_View {
