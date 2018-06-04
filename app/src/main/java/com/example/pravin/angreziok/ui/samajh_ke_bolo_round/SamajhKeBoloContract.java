@@ -11,6 +11,7 @@ public interface SamajhKeBoloContract {
         String getSdcardPath();
         void doInitialWorkG1l1(String path);
         void showImagesG1L1(String path, String studId);
+        void showImagesG2L1(String path, String studId);
         void setImage_g3_l1(String studId);
         String[] getOptions();
         void g3_l1_checkAnswer(String ans);
@@ -61,6 +62,12 @@ public interface SamajhKeBoloContract {
         void setQuestionImgs(int readQuesNo, android.graphics.Bitmap... bitmaps);
         void setCelebrationView();
         void setCurrentScore();
+    }
+
+    interface SamajhKeBolo_G2_L1_View {
+        void setQuestionImgsG2L1(int readQuesNo, android.graphics.Bitmap... bitmaps);
+        void setCelebrationViewG2L1();
+        void setCurrentScoreG2L1();
     }
 
     interface SamajhKeBolo_G3_L1_View {

@@ -41,6 +41,7 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
     Context mContext;
     public MediaPlayerUtil mediaPlayerUtil;
     SamajhKeBoloContract.SamajhKeBolo_G1_L1_View samajhKeBoloG1L1View;
+    SamajhKeBoloContract.SamajhKeBolo_G2_L1_View samajhKeBoloG2L1View;
     SamajhKeBoloContract.SamajhKeBolo_G3_L1_View samajhKeBoloG3L1View;
     SamajhKeBoloContract.SamajhKeBolo_G1_L2_View samajhKeBoloG1L2View;
     SamajhKeBoloContract.SamajhKeBolo_G3_L2_View samajhKeBoloG3L2View;
@@ -69,6 +70,16 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
                                      TTSService ttsService) {
         mContext = context;
         this.samajhKeBoloG1L1View = samajhKeBoloG1L1View;
+        this.ttsService = ttsService;
+        appDatabase = Room.databaseBuilder(mContext,
+                AppDatabase.class, AppDatabase.DB_NAME)
+                .build();
+    }
+
+    public SamajhKeBoloPresenterImpl(Context context, SamajhKeBoloContract.SamajhKeBolo_G2_L1_View samajhKeBoloG2L1View,
+                                     TTSService ttsService) {
+        mContext = context;
+        this.samajhKeBoloG2L1View = samajhKeBoloG2L1View;
         this.ttsService = ttsService;
         appDatabase = Room.databaseBuilder(mContext,
                 AppDatabase.class, AppDatabase.DB_NAME)
