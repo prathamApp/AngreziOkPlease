@@ -146,7 +146,13 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
         Log.d("SIZE", "doInitialWork: " + g1l1QuestionData.size());
     }
 
-
+    @Override
+    public void doInitialWorkG2l1(String path) {
+        sdCardPathString = path;
+        askGameData = fetchJsonData("RoundThreeGameTwoLevelOne", path);
+        g2l1QuestionData = askGameData.getNodelist();
+        Log.d("SIZE", "doInitialWork: " + g2l1QuestionData.size());
+    }
 
     @Override
     public void setCurrentScore(int currentMarks) {
@@ -223,7 +229,7 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
             readQuestionNo= getRandomNumber(0, currentTrioList.size());
             Collections.shuffle(currentTrioList);
             int[] integerArray = getUniqueRandomNumber(0, currentTrioList.size(), 3);
-            String imagePath = sdCardPathString + "images/PairsGameL2/";
+            String imagePath = sdCardPathString + "images/WhereGameL2/";
 
             resTextArray.clear();
             resIdArray.clear();
@@ -242,7 +248,8 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
                 resIdArray.add(currentTrioList.get(integerArray[i]).getResourceId());
             }
             Bitmap[] bitmap = new Bitmap[]{BitmapFactory.decodeFile(imagePath + resImageArray.get(0)),
-                    BitmapFactory.decodeFile(imagePath + resImageArray.get(1))};
+                    BitmapFactory.decodeFile(imagePath + resImageArray.get(1)),
+                    BitmapFactory.decodeFile(imagePath + resImageArray.get(2))};
             samajhKeBoloG2L1View.setQuestionImgsG2L1(readQuestionNo, bitmap);
 
         } catch (Exception e) {
@@ -262,6 +269,33 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
                 int currentTeamScore = Integer.parseInt(SamajhKeBolo.playerModalArrayList.get(currentTeam).studentScore);
                 SamajhKeBolo.playerModalArrayList.get(currentTeam).setStudentScore(String.valueOf(currentTeamScore + 10));
                 samajhKeBoloG1L1View.setCurrentScore();
+            } else {
+                //  TODO wrong answer animation
+                scoredMarks = 0;
+                Toast.makeText(mContext, "Wrong", Toast.LENGTH_SHORT).show();
+                playMusic("Sounds/wrong.mp3", getSdcardPath());
+            }
+        } else {
+            //  TODO wrong answer animation
+            scoredMarks = 0;
+            Toast.makeText(mContext, "Wrong", Toast.LENGTH_SHORT).show();
+            playMusic("Sounds/wrong.mp3", getSdcardPath());
+        }
+        addScore(studentID, resourceID, 0, scoredMarks, totalMarks, questionStartTime, 0);
+    }
+
+    @Override
+    public void g2_l1_checkAnswer(int imageViewNum, int currentTeam, boolean timeOut) {
+        int scoredMarks, totalMarks = 10;
+        if (!timeOut) {
+            String imageString = resTextArray.get(imageViewNum - 1);
+            if (imageString.equalsIgnoreCase(ttsQuestion)) {
+                samajhKeBoloG2L1View.setCelebrationView();
+                scoredMarks = 10;
+                playMusic("Sounds/BilkulSahijawab.mp3", getSdcardPath());
+                int currentTeamScore = Integer.parseInt(SamajhKeBolo.playerModalArrayList.get(currentTeam).studentScore);
+                SamajhKeBolo.playerModalArrayList.get(currentTeam).setStudentScore(String.valueOf(currentTeamScore + 10));
+                samajhKeBoloG2L1View.setCurrentScore();
             } else {
                 //  TODO wrong answer animation
                 scoredMarks = 0;

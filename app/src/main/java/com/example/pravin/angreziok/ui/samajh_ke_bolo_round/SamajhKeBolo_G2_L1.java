@@ -94,11 +94,11 @@ public class SamajhKeBolo_G2_L1 extends BaseFragment implements SamajhKeBoloCont
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_samajh_ke_bolo_g1_l1, container, false);
+        return inflater.inflate(R.layout.fragment_samajh_ke_bolo_g2_l1, container, false);
     }
 
     @Override
-    public void setCurrentScoreG2L1() {
+    public void setCurrentScore() {
         setInitialScores();
         bounceView(getCurrentView());
     }
@@ -118,10 +118,10 @@ public class SamajhKeBolo_G2_L1 extends BaseFragment implements SamajhKeBoloCont
         presenter = new SamajhKeBoloPresenterImpl(getActivity(), this, ttsService);
         setOnClickListeners();
         path = presenter.getSdcardPath();
-        presenter.doInitialWorkG1l1(path);
+        presenter.doInitialWorkG2l1(path);
         setInitialScores();
         showDialog();
-//        customCountDownTimer = new CustomCountDownTimer(mCountDownTimer,getActivity());
+        //customCountDownTimer = new CustomCountDownTimer(mCountDownTimer,getActivity());
     }
 
     private void setInitialScores() {
@@ -148,7 +148,7 @@ public class SamajhKeBolo_G2_L1 extends BaseFragment implements SamajhKeBoloCont
     }
 
     @Override
-    public void setCelebrationViewG2L1() {
+    public void setCelebrationView() {
         konfettiView.setVisibility(View.VISIBLE);
 
         konfettiView.build()
@@ -251,19 +251,19 @@ public class SamajhKeBolo_G2_L1 extends BaseFragment implements SamajhKeBoloCont
 
     @OnClick(R.id.iv_image1)
     public void setIv_image1() {
-        presenter.g1_l1_checkAnswer(1, currentTeam, false);
+        presenter.g2_l1_checkAnswer(1, currentTeam, false);
         answerPostProcessing();
     }
 
     @OnClick(R.id.iv_image2)
     public void setIv_image2() {
-        presenter.g1_l1_checkAnswer(2, currentTeam, false);
+        presenter.g2_l1_checkAnswer(2, currentTeam, false);
         answerPostProcessing();
     }
 
     @OnClick(R.id.iv_image3)
     public void setIv_image3() {
-        presenter.g1_l1_checkAnswer(3, currentTeam, false);
+        presenter.g2_l1_checkAnswer(3, currentTeam, false);
         answerPostProcessing();
     }
 

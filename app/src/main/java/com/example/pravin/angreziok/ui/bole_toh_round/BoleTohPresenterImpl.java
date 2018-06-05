@@ -196,8 +196,8 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
     @Override
     public void showImagesG2L1(String path, String studId) {
         try {
-            int[] integerArray = getUniqueRandomNumber(0, g2l2QuestionData.size(), 2);
-            readQuestionNo = getRandomNumber(0, 2);
+            int[] integerArray = getUniqueRandomNumber(0, g2l2QuestionData.size(), 4);
+            readQuestionNo = getRandomNumber(0, 4);
             String imagePath = sdCardPathString + "images/ActionL2/";
 
             resTextArray.clear();
@@ -210,14 +210,16 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
             resourceID = g2l2QuestionData.get(integerArray[readQuestionNo]).getResourceId();
             questionId = resourceID;
 
-            for (int i = 0; i < 2; i++) {
+            for (int i = 0; i < 4; i++) {
                 resTextArray.add(g2l2QuestionData.get(integerArray[i]).getResourceText());
                 resImageArray.add(g2l2QuestionData.get(integerArray[i]).getResourceImage());
                 resAudioArray.add(g2l2QuestionData.get(integerArray[i]).getResourceImage());
                 resIdArray.add(g2l2QuestionData.get(integerArray[i]).getResourceId());
             }
             String[] gifPaths = new String[]{(imagePath + resImageArray.get(0)),
-                    (imagePath + resImageArray.get(1))};
+                    (imagePath + resImageArray.get(1)),
+                    (imagePath + resImageArray.get(2)),
+                    (imagePath + resImageArray.get(3))};
             boleTohG2L1View.setQuestionGifs(readQuestionNo, gifPaths);
 
         } catch (Exception e) {
