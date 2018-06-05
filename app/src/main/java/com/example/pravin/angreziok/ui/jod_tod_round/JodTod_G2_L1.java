@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -46,40 +47,50 @@ public class JodTod_G2_L1 extends BaseFragment implements JodTodContract.JodTod_
 
     @BindView(R.id.mCountDownTimer)
     CountDownTimerView mCountDownTimer;
-    @BindView(R.id.myflowlayout)
-    LinearLayout flowLayout;
-    @BindView(R.id.ll_g1_l2_allstar)
+    @BindView(R.id.ll_g2_l1_allstar)
     LinearLayout allstarLayout;
-    @BindView(R.id.ll_g1_l2_megastar)
+    @BindView(R.id.ll_g2_l1_megastar)
     LinearLayout megastarLayout;
-    @BindView(R.id.ll_g1_l2_rockstar)
+    @BindView(R.id.ll_g2_l1_rockstar)
     LinearLayout rockstarLayout;
-    @BindView(R.id.ll_g1_l2_superstar)
+    @BindView(R.id.ll_g2_l1_superstar)
     LinearLayout superstarLayout;
-    @BindView(R.id.r2_g1_l2_sttOptions)
-    LinearLayout sttOptions;
-    @BindView(R.id.g1_l2_megastar)
+    @BindView(R.id.q1)
+    LinearLayout q1_layout;
+    @BindView(R.id.q2)
+    LinearLayout q2_layout;
+    @BindView(R.id.g2_l1_megastar)
     TextView megaScore;
-    @BindView(R.id.g1_l2_rockstar)
+    @BindView(R.id.g2_l1_rockstar)
     TextView rockScore;
-    @BindView(R.id.g1_l2_superstar)
+    @BindView(R.id.g2_l1_superstar)
     TextView superScore;
-    @BindView(R.id.g1_l2_allstar)
+    @BindView(R.id.g2_l1_allstar)
     TextView allScore;
     @BindView(R.id.tv_question)
     TextView showQuestion;
-    @BindView(R.id.iv_ques_img_r2_g1_l2)
-    TextView tv_ques_img;
-    @BindView(R.id.konfettiView_g1_l2)
+    @BindView(R.id.question)
+    TextView question;
+    @BindView(R.id.question1)
+    TextView question1;
+    @BindView(R.id.ans1)
+    TextView ans1;
+    @BindView(R.id.question2)
+    TextView question2;
+    @BindView(R.id.ans2)
+    TextView ans2;
+    @BindView(R.id.iv_mike1)
+    ImageView mike1;
+    @BindView(R.id.iv_mike2)
+    ImageView mike2;
+    @BindView(R.id.konfettiView_g2_l1)
     KonfettiView konfettiView;
-    @BindView(R.id.iv_submit_ans)
-    ImageView submitAnswer;
     @BindView(R.id.tv_game_title)
     TextView gameTitle;
 
     String text;
     JodTodContract.JodTodPresenter presenter;
-    int speechCount, currentTeam, score = 0, timeOfTimer = 20000;
+    int currentTeam, score = 0, timeOfTimer = 20000,clickedMike;
     float totalAnsCounter = 0f, correctAnsCounter = 0f;
     Dialog dialog;
     boolean timerEnd = false;
@@ -100,18 +111,13 @@ public class JodTod_G2_L1 extends BaseFragment implements JodTodContract.JodTod_
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
         presenter = new JodTodPresenterImpl(getActivity(), this, ttsService);
-        presenter.set_g2_l2_data();
+        presenter.set_g2_data(2);
         setInitialScores();
         setDataForGame();
         currentTeam = 0;
         totalAnsCounter = 0;
         correctAnsCounter = 0;
         showDialog();
-    }
-
-    @Override
-    public void setGameTitleFromJson(String gameName) {
-        gameTitle.setText(gameName);
     }
 
     private void setInitialScores() {
@@ -169,9 +175,6 @@ public class JodTod_G2_L1 extends BaseFragment implements JodTodContract.JodTod_
         Button button = dialog.findViewById(R.id.dialog_btn_scan_qr);
         text.setText("Next question would be for " + teamName);
         button.setText("Ready ??");
-        sttOptions.setVisibility(View.GONE);
-        flowLayout.removeAllViews();
-
         timerEnd = false;
 
         dialog.show();
@@ -182,17 +185,11 @@ public class JodTod_G2_L1 extends BaseFragment implements JodTodContract.JodTod_
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                totalAnsCounter = 0;
-                correctAnsCounter = 0;
-                String question = presenter.g2_l2_getQuestionText(studentID);
-                initiateQuestion(question);
-                setQuestionDynamically(question);
+                String question = presenter.g2_l1_getQuestionText(studentID);
+                String[] wordsToSay = presenter.getWordsToSay();
+                initiateQuestion(question, wordsToSay);
             }
         });
-    }
-
-    private void setQuestionDynamically(String questionText) {
-        tv_ques_img.setText(questionText);
     }
 
     private void fadeOtherGroups() {
@@ -214,6 +211,44 @@ public class JodTod_G2_L1 extends BaseFragment implements JodTodContract.JodTod_
             case "Allstars":
                 allstarLayout.setBackgroundResource(R.drawable.team_four);
         }
+    }
+
+    public void bounceView(View view) {
+        Animation rubber = AnimationUtils.loadAnimation(getActivity(), R.anim.popup);
+        MyBounceInterpolator interpolator = new MyBounceInterpolator(0.2, 15);
+        rubber.setInterpolator(interpolator);
+        view.startAnimation(rubber);
+    }
+
+    private void setDataForGame() {
+        showQuestion.setText("Say these Words");
+    }
+
+    private void playTTS() {
+        presenter.startTTS(text);
+    }
+
+    private void startTimer() {
+        mCountDownTimer.ready();
+        mCountDownTimer.start(timeOfTimer);
+        mCountDownTimer.setOnEndAnimationFinish(new OnTimeFinish() {
+            @Override
+            public void onFinish() {
+                timerEnd = true;
+                //submitAns();
+            }
+        });
+        JodTod.animateView(mCountDownTimer, getActivity());
+    }
+
+    public void startSTT() {
+        sttService.initCallback(JodTod_G2_L1.this);
+        sttService.startListening();
+    }
+
+    @Override
+    public void setGameTitleFromJson(String gameName) {
+        gameTitle.setText(gameName);
     }
 
     @Override
@@ -238,126 +273,48 @@ public class JodTod_G2_L1 extends BaseFragment implements JodTodContract.JodTod_
         bounceView(getCurrentView());
     }
 
-    public void bounceView(View view) {
-        Animation rubber = AnimationUtils.loadAnimation(getActivity(), R.anim.popup);
-        MyBounceInterpolator interpolator = new MyBounceInterpolator(0.2, 15);
-        rubber.setInterpolator(interpolator);
-        view.startAnimation(rubber);
-    }
-
     @Override
-    public void initiateQuestion(String question) {
+    public void initiateQuestion(String questionText, String[] wordsToSay) {
         startTimer();
-        text = question;
+        question.setText(questionText);
+        question1.setText(wordsToSay[0]);
+        question2.setText(wordsToSay[1]);
+        text = questionText;
         playTTS();
-    }
-
-    private void setDataForGame() {
-        showQuestion.setText("Say these Words");
-    }
-
-    private void playTTS() {
-        presenter.startTTS(text);
-    }
-
-    private void startTimer() {
-        mCountDownTimer.ready();
-        mCountDownTimer.start(timeOfTimer);
-        mCountDownTimer.setOnEndAnimationFinish(new OnTimeFinish() {
-            @Override
-            public void onFinish() {
-                timerEnd = true;
-                submitAns();
-            }
-        });
-        JodTod.animateView(mCountDownTimer, getActivity());
-    }
-
-    @OnClick(R.id.iv_submit_ans)
-    public void submitAns() {
-        submitAnswer.setClickable(false);
-        mCountDownTimer.pause();
-//       TODO Check answer  presenter.checkFinalAnswer_g1_l2(answer.getText().toString(), currentTeam);
-        float finalPercentage = 0f;
-        Log.d("finalPercentage", "correctAnsCounter: " + correctAnsCounter);
-        Log.d("finalPercentage", "totalAnsCounter: " + totalAnsCounter);
-
-        if (correctAnsCounter > 0 && totalAnsCounter > 0)
-            finalPercentage = (correctAnsCounter / totalAnsCounter) * 100f;
-        String currScore = "" + score;
-        Log.d("finalPercentage", "finalPercentage: " + finalPercentage);
-        presenter.checkFinalAnswer_g2_l2(finalPercentage, currScore, currentTeam);
-
-        currentTeam += 1;
-        if (currentTeam < jodTodPlayerList.size()) {
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    submitAnswer.setClickable(true);
-                    score = 0;
-                    showDialog();
-                }
-            }, 2500);
-        } else {
-            currentTeam = 0;
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-
-                    getActivity().findViewById(R.id.iv_submit_ans).setOnClickListener(null);
-                    // TODO  Next Round start process  G3
-                    Bundle bundle = new Bundle();
-                    JodTod.gameCounter += 1;
-                    if (JodTod.gameCounter <= 1) {
-                        bundle.putString("round", "R2");
-                        bundle.putString("level", JodTod.gameLevel);
-                        bundle.putInt("count", JodTod.list.get(JodTod.gameCounter));
-                        PD_Utility.showFragment(getActivity(), new fragment_intro_character(), R.id.cl_jod_tod,
-                                bundle, fragment_intro_character.class.getSimpleName());
-                    } else {
-                        Intent intent = new Intent(getActivity(), SamajhKeBolo.class);
-                        intent.putExtra("level", "L2");
-                        bundle.putParcelableArrayList("playerModalArrayList", jodTodPlayerList);
-                        intent.putExtras(bundle);
-                        startActivity(intent);
-                    }
-
-                    /*Intent intent = new Intent(getActivity(), SamajhKeBolo.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putParcelableArrayList("PlayerList", jodTodPlayerList);
-                    intent.putExtras(bundle);
-                    startActivity(intent);*/
-
-                }
-            }, 2500);
-
-        }
-    }
-
-    public void startSTT() {
-        sttService.initCallback(JodTod_G2_L1.this);
-        sttService.startListening();
     }
 
     @Override
     public void onResult(String result) {
-        sttOptions.setVisibility(View.VISIBLE);
-        Log.d("JodTod", "STTResult: " + result);
-        if (!timerEnd)
-            presenter.g2_l2_checkAnswer(result);
+        if (clickedMike==1){
+            ans1.setText(result);
+            if (result.equalsIgnoreCase(question1.getText().toString()))
+                q1_layout.setBackgroundResource(R.drawable.green_answer_background);
+            else
+                q1_layout.setBackgroundResource(R.drawable.red_answer_background);
+        }else {
+            ans2.setText(result);
+            if (result.equalsIgnoreCase(question2.getText().toString()))
+                q2_layout.setBackgroundResource(R.drawable.green_answer_background);
+            else
+                q2_layout.setBackgroundResource(R.drawable.red_answer_background);
+        }
     }
 
-    @OnClick(R.id.ib_r2g1_mic)
-    public void micClicked() {
-        speechCount++;
+    @OnClick(R.id.ib_g2_l1_speaker)
+    public void soundClicked() {
+        presenter.startTTS(text);
+    }
+
+    @OnClick(R.id.iv_mike1)
+    public void mike1Clicked() {
+        clickedMike = 1;
         startSTT();
     }
 
-    @OnClick(R.id.ib_g1_l2_speaker)
-    public void soundClicked() {
-        presenter.startTTS(text);
+    @OnClick(R.id.iv_mike2)
+    public void mike2Clicked() {
+        clickedMike = 2;
+        startSTT();
     }
 
     @Override

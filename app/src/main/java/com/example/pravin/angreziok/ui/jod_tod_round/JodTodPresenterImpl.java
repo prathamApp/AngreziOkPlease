@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+
 import static com.example.pravin.angreziok.ui.jod_tod_round.JodTod.jodTodPlayerList;
 
 /**
@@ -44,8 +45,8 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
     JodTodContract.JodTod_G2_L1_View jodTodG2L1View;
     public TTSService ttsService;
     GenericModalGson gsonListenAndSpellGameData, gsonAlphabetGameData, gsonRhymeGameData;
-    List<GenericModalGson> g3l2QuestionData, g1l2QuestionData, g2l2QuestionData, g2l2SubList,g1l1QuestionData,g1l1SubData;
-    int randomNumber1, randomNumber,readQuestionNo;
+    List<GenericModalGson> g3l2QuestionData, g1l2QuestionData, g2l2QuestionData, g2l2SubList, g1l1QuestionData, g1l1SubData;
+    int randomNumber1, randomNumber, readQuestionNo;
     String rhymeCheckWord, questionWord, myAlphabet;
     String sdCardPathString, questionStartTime, studentID, resourceID, questionId;
     public MediaPlayerUtil mediaPlayerUtil;
@@ -84,6 +85,7 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
                 .build();
         g1g2result = new ArrayList<String>();
     }
+
     public JodTodPresenterImpl(Context context, JodTodContract.JodTod_G1_L1_View jodTod_g1_l1_view, TTSService ttsService) {
         mContext = context;
         this.jodTodG1L1View = jodTod_g1_l1_view;
@@ -225,26 +227,13 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
     }
 
     @Override
-    public void setWord_g2_l2() {
-        jodTodG2L2View.hideOptionView();
-        randomNumber1 = getRandomNumber(0, g2l2QuestionData.size());
-        rhymeCheckWord = g2l2QuestionData.get(randomNumber).getResourceText();
-        g2l2SubList = g2l2QuestionData.get(randomNumber).getNodelist();
-        randomNumber = getRandomNumber(0, g2l2SubList.size());
-        questionWord = g2l2SubList.get(randomNumber).getResourceText();
-        jodTodG2L2View.initiateQuestion(questionWord);
-        String questionString = g2l2SubList.get(randomNumber).getResourceQuestion();
-        jodTodG2L2View.setQuestionText(questionString);
-    }
-
-
-    @Override
     public void set_g3_l2_data(int level) {
         // TODO Create json file for game three
-        if(level==0)
-            gsonListenAndSpellGameData = fetchJsonData("RoundTwoGameThree", getSdcardPath());
-        else
+        if (level == 1)
             gsonListenAndSpellGameData = fetchJsonData("RoundTwoGameThreeLevelOne", getSdcardPath());
+        else
+            gsonListenAndSpellGameData = fetchJsonData("RoundTwoGameThree", getSdcardPath());
+
         g3l2QuestionData = gsonListenAndSpellGameData.getNodelist();
         String gameTitle = gsonListenAndSpellGameData.getNodeTitle();
         jodTodG3L2View.setGameTitleFromJson(gameTitle);
@@ -252,7 +241,6 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
 
     @Override
     public void set_g1_l2_data() {
-        // TODO Create json file for game three
         gsonAlphabetGameData = fetchJsonData("RoundTwoGameOne", getSdcardPath());
         g1l2QuestionData = gsonAlphabetGameData.getNodelist();
         String gameTitle = gsonAlphabetGameData.getNodeTitle();
@@ -260,12 +248,14 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
     }
 
     @Override
-    public void set_g2_l2_data() {
-        // TODO Create json file for game three
+    public void set_g2_data(int level) {
         gsonRhymeGameData = fetchJsonData("RoundTwoGameTwo", getSdcardPath());
         g2l2QuestionData = gsonRhymeGameData.getNodelist();
         String gameTitle = gsonRhymeGameData.getNodeTitle();
-        jodTodG2L2View.setGameTitleFromJson(gameTitle);
+        if (level == 1)
+            jodTodG2L1View.setGameTitleFromJson(gameTitle);
+        else
+            jodTodG2L1View.setGameTitleFromJson(gameTitle);
     }
 
     @Override
@@ -390,12 +380,12 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
         jodTodG2L2View.hideOptionView();
 
         randomNumber1 = getRandomNumber(0, g2l2QuestionData.size());
-        rhymeCheckWord = g2l2QuestionData.get(randomNumber).getResourceText();
-        g2l2SubList = g2l2QuestionData.get(randomNumber).getNodelist();
+        rhymeCheckWord = g2l2QuestionData.get(randomNumber1).getResourceText();
+        g2l2SubList = g2l2QuestionData.get(randomNumber1).getNodelist();
         randomNumber = getRandomNumber(0, g2l2SubList.size());
         questionWord = g2l2SubList.get(randomNumber).getResourceText();
 
-        String questionString = g2l2QuestionData.get(randomNumber).getResourceQuestion();
+        String questionString = g2l2QuestionData.get(randomNumber1).getResourceQuestion();
         jodTodG2L2View.setQuestionText(questionString);
 
         if (g1g2result.size() > 0) {
@@ -412,6 +402,27 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
         /*jodTodG2L2View.initiateQuestion(questionWord);*/
 /*        randomNumber = getRandomNumber(0, g2l2QuestionData.size());
         return g2l2QuestionData.get(randomNumber).getResourceText();*/
+    }
+
+    @Override
+    public String g2_l1_getQuestionText(String studId) {
+        randomNumber = getRandomNumber(0, g2l2QuestionData.size());
+        g2l2SubList = g2l2QuestionData.get(randomNumber).getNodelist();
+        Collections.shuffle(g2l2SubList);
+        questionWord = g2l2SubList.get(0).getResourceText();
+        setQuestionStartTime();
+        studentID = studId;
+        resourceID = g2l2SubList.get(0).getResourceId();
+        questionId = resourceID;
+        return questionWord;
+    }
+
+    @Override
+    public String[] getWordsToSay() {
+        String [] words = new String[2];
+        words[0] = g2l2SubList.get(1).getResourceText();
+        words[1] = g2l2SubList.get(2).getResourceText();
+        return words;
     }
 
     @Override
@@ -499,8 +510,8 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
                 @Override
                 protected Object doInBackground(Object... objects) {
                     String AppStartDateTime = appDatabase.getStatusDao().getValue("AppStartDateTime");
-                    score.setSessionID(""+appDatabase.getStatusDao().getValue("CurrentSession"));
-                    score.setDeviceID(""+appDatabase.getStatusDao().getValue("DeviceID"));
+                    score.setSessionID("" + appDatabase.getStatusDao().getValue("CurrentSession"));
+                    score.setDeviceID("" + appDatabase.getStatusDao().getValue("DeviceID"));
                     score.setEndDateTime("" + AOPApplication.getCurrentDateTime(true, AppStartDateTime));
                     appDatabase.getScoreDao().insert(score);
                     BackupDatabase.backup(mContext);
@@ -547,13 +558,14 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
     }
 
     @Override
-    public void onComplete() {    }
+    public void onComplete() {
+    }
 
     @Override
     public void fragmentOnPause() {
         if (mediaPlayerUtil != null)
             mediaPlayerUtil.stopMedia();
-        if(ttsService != null )
+        if (ttsService != null)
             ttsService.stop();
     }
 }

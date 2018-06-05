@@ -88,7 +88,7 @@
                         android:weightSum="4">
 
                         <LinearLayout
-                            android:id="@+id/ll_g1_l2_megastar"
+                            android:id="@+id/ll_g2_l1_megastar"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_marginRight="10dp"
@@ -100,7 +100,7 @@
                             android:weightSum="2">
 
                             <TextView
-                                android:id="@+id/g1_l2_megastar"
+                                android:id="@+id/g2_l1_megastar"
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_gravity="center"
@@ -124,7 +124,7 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/ll_g1_l2_rockstar"
+                            android:id="@+id/ll_g2_l1_rockstar"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_marginRight="10dp"
@@ -136,7 +136,7 @@
                             android:weightSum="2">
 
                             <TextView
-                                android:id="@+id/g1_l2_rockstar"
+                                android:id="@+id/g2_l1_rockstar"
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_gravity="center"
@@ -160,7 +160,7 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/ll_g1_l2_superstar"
+                            android:id="@+id/ll_g2_l1_superstar"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_marginRight="10dp"
@@ -172,7 +172,7 @@
                             android:weightSum="2">
 
                             <TextView
-                                android:id="@+id/g1_l2_superstar"
+                                android:id="@+id/g2_l1_superstar"
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_gravity="center"
@@ -196,7 +196,7 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/ll_g1_l2_allstar"
+                            android:id="@+id/ll_g2_l1_allstar"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_marginRight="10dp"
@@ -208,7 +208,7 @@
                             android:weightSum="2">
 
                             <TextView
-                                android:id="@+id/g1_l2_allstar"
+                                android:id="@+id/g2_l1_allstar"
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_gravity="center"
@@ -256,104 +256,114 @@
                             android:gravity="center"
                             android:orientation="horizontal"
                             android:padding="5dp"
-                            android:weightSum="2">
+                            android:weightSum="1">
 
                             <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_gravity="center"
                                 android:layout_weight="1"
-                                android:background="@drawable/gameimgbg"
-                                android:gravity="center">
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:weightSum="10">
 
                                 <TextView
-                                    android:id="@+id/iv_ques_img_r2_g1_l2"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_gravity="center"
-                                    android:gravity="center"
-                                    android:text=""
-                                    android:textColor="@color/whiteTransparentNormal"
-                                    android:textSize="60dp"
-                                    android:textStyle="bold" />
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:id="@+id/r2_g1_l2_sttOptions"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="center"
-                                android:layout_weight="1"
-                                android:background="@color/colorPrimary"
-                                android:gravity="center"
-                                android:orientation="horizontal"
-                                android:visibility="gone"
-                                android:weightSum="4">
-
-                                <LinearLayout
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
+                                    android:id="@+id/question"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="0dp"
+                                    android:paddingHorizontal="20dp"
+                                    android:layout_marginBottom="10dp"
+                                    android:background="@drawable/gameimgbg"
                                     android:layout_weight="3"
-                                    android:orientation="vertical"
-                                    android:paddingHorizontal="15dp"
-                                    android:weightSum="5">
-
-                                    <TextView
-                                        android:layout_width="match_parent"
-                                        android:layout_height="0dp"
-                                        android:layout_marginBottom="5dp"
-                                        android:layout_marginTop="5dp"
-                                        android:layout_weight="0.8"
-                                        android:background="@drawable/question_gradiance_bg"
-                                        android:gravity="center"
-                                        android:text="Your Answers"
-                                        android:textColor="@color/simple_white"
-                                        android:textSize="30dp"
-                                        android:textStyle="bold|italic" />
-
-                                    <ScrollView
-                                        android:id="@+id/r1g1l2_scroll_view"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="0dp"
-                                        android:layout_gravity="center"
-                                        android:layout_weight="4.1"
-                                        android:background="@color/colorPrimary"
-                                        android:gravity="center"
-                                        android:orientation="vertical"
-                                        android:paddingTop="5dp">
-
-                                        <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-                                            android:id="@+id/myflowlayout"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="match_parent"
-                                            android:background="@drawable/round_two_option_background"
-                                            android:orientation="vertical">
-
-                                        </LinearLayout>
-
-                                    </ScrollView>
-
-                                </LinearLayout>
+                                    android:gravity="center"
+                                    android:textSize="35sp"
+                                    android:textStyle="italic|bold" />
 
                                 <LinearLayout
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_gravity="center"
-                                    android:layout_marginHorizontal="2dp"
-                                    android:layout_weight="1"
-                                    android:background="@color/colorPrimary"
-                                    android:gravity="center"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="5"
                                     android:orientation="vertical"
-                                    android:weightSum="4">
+                                    android:gravity="center"
+                                    android:paddingHorizontal="20dp"
+                                    android:paddingVertical="2dp"
+                                    android:weightSum="2">
 
-                                    <ImageView
-                                        android:id="@+id/iv_submit_ans"
+                                    <LinearLayout
+                                        android:id="@+id/q1"
                                         android:layout_width="match_parent"
                                         android:layout_height="0dp"
-                                        android:layout_weight="3"
-                                        android:background="@drawable/green_answer_background"
-                                        app:srcCompat="@drawable/ic_navigate_next_black" />
+                                        android:background="@drawable/custom_dialog_bg2"
+                                        android:layout_marginVertical="10dp"
+                                        android:layout_weight="1"
+                                        android:weightSum="9">
+
+                                        <TextView
+                                            android:id="@+id/question1"
+                                            android:layout_width="0dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_margin="2dp"
+                                            android:textSize="30sp"
+                                            android:textStyle="bold"
+                                            android:layout_weight="4"
+                                            android:gravity="center" />
+
+                                        <ImageView
+                                            android:id="@+id/iv_mike1"
+                                            android:layout_width="0dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_marginLeft="5dp"
+                                            android:layout_weight="1"
+                                            android:background="@drawable/mike"/>
+
+                                        <TextView
+                                            android:id="@+id/ans1"
+                                            android:layout_width="0dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_margin="2dp"
+                                            android:textSize="30sp"
+                                            android:textStyle="bold"
+                                            android:layout_weight="4"
+                                            android:gravity="center" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:id="@+id/q2"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_marginVertical="10dp"
+                                        android:background="@drawable/custom_dialog_bg2"
+                                        android:layout_weight="1"
+                                        android:weightSum="9">
+
+                                        <TextView
+                                            android:id="@+id/question2"
+                                            android:layout_width="0dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_margin="2dp"
+                                            android:textSize="30sp"
+                                            android:textStyle="bold"
+                                            android:layout_weight="4"
+                                            android:gravity="center" />
+
+                                        <ImageView
+                                            android:id="@+id/iv_mike2"
+                                            android:layout_width="0dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_marginLeft="5dp"
+                                            android:layout_weight="1"
+                                            android:background="@drawable/mike"/>
+
+                                        <TextView
+                                            android:id="@+id/ans2"
+                                            android:layout_width="0dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_margin="2dp"
+                                            android:textSize="30sp"
+                                            android:textStyle="bold"
+                                            android:layout_weight="4"
+                                            android:gravity="center" />
+                                    </LinearLayout>
 
                                 </LinearLayout>
 
@@ -380,9 +390,9 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
-                android:gravity="center_vertical"
+                android:gravity="top"
                 android:orientation="vertical"
-                android:weightSum="3">
+                android:weightSum="2">
 
                 <com.github.anastr.flattimelib.CountDownTimerView
                     android:id="@+id/mCountDownTimer"
@@ -392,16 +402,7 @@
                     android:layout_weight="1" />
 
                 <ImageButton
-                    android:id="@+id/ib_r2g1_mic"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:background="@color/full_transparent"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/mike" />
-
-                <ImageButton
-                    android:id="@+id/ib_g1_l2_speaker"
+                    android:id="@+id/ib_g2_l1_speaker"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
@@ -435,7 +436,7 @@
     </LinearLayout>
 
     <nl.dionsegijn.konfetti.KonfettiView
-        android:id="@+id/konfettiView_g1_l2"
+        android:id="@+id/konfettiView_g2_l1"
         android:layout_width="wrap_content"
         android:layout_height="match_parent" />
 
