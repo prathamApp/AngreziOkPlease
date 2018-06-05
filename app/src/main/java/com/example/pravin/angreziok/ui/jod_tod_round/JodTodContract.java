@@ -16,7 +16,7 @@ public interface JodTodContract {
 
         void doInitialWorkG1l1(String path);
 
-        void showImagesG1L1(String path,String stidId);
+        void showImagesG1L1(String path, String stidId);
 
         void readQuestion(int questionToRead);
 
@@ -117,6 +117,17 @@ public interface JodTodContract {
         void hideOptionView();
 
         void setQuestionText(String questionString);
+    }
+
+    interface JodTod_G2_L1_View {
+
+        void setGameTitleFromJson(String gameName);
+
+        void setCelebrationView();
+
+        void setCurrentScore();
+
+        void initiateQuestion(String question);
     }
 
 }

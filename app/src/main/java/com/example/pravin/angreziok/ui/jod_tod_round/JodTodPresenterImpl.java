@@ -41,6 +41,7 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
     JodTodContract.JodTod_G1_L1_View jodTodG1L1View;
     JodTodContract.JodTod_G2_L2_View jodTodG2L2View;
     JodTodContract.JodTod_G3_L2_View jodTodG3L2View;
+    JodTodContract.JodTod_G2_L1_View jodTodG2L1View;
     public TTSService ttsService;
     GenericModalGson gsonListenAndSpellGameData, gsonAlphabetGameData, gsonRhymeGameData;
     List<GenericModalGson> g3l2QuestionData, g1l2QuestionData, g2l2QuestionData, g2l2SubList,g1l1QuestionData,g1l1SubData;
@@ -101,6 +102,15 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
                 AppDatabase.class, AppDatabase.DB_NAME)
                 .build();
         g1g2result = new ArrayList<String>();
+    }
+
+    public JodTodPresenterImpl(Context context, JodTodContract.JodTod_G2_L1_View jodTod_g2_l1_view, TTSService ttsService) {
+        mContext = context;
+        this.jodTodG2L1View = jodTod_g2_l1_view;
+        this.ttsService = ttsService;
+        appDatabase = Room.databaseBuilder(mContext,
+                AppDatabase.class, AppDatabase.DB_NAME)
+                .build();
     }
 
     @Override
