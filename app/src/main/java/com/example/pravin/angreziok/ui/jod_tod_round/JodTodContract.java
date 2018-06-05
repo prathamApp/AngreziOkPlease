@@ -34,9 +34,7 @@ public interface JodTodContract {
 
         void set_g1_l2_data();
 
-        void set_g2_l2_data();
-
-        void setWord_g2_l2();
+        void set_g2_data(int level);
 
         void g1_l2_checkAnswer(String ans);
 
@@ -49,6 +47,10 @@ public interface JodTodContract {
         String[] getOptions();
 
         String g2_l2_getQuestionText(String studentId);
+
+        String g2_l1_getQuestionText(String studId);
+
+        String[] getWordsToSay();
 
         String g3_l2_getQuestionAudio();
 
@@ -127,7 +129,7 @@ public interface JodTodContract {
 
         void setCurrentScore();
 
-        void initiateQuestion(String question);
+        void initiateQuestion(String questionText, String[] wordsToSay);
     }
 
 }

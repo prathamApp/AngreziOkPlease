@@ -288,7 +288,7 @@ public class JodTod_G3_L2 extends BaseFragment implements JodTodContract.JodTod_
     }
 
     private void setDataForGame() {
-        presenter.set_g3_l2_data(0);
+        presenter.set_g3_l2_data(2);
         showQuestion.setText("Fill the missing letters");
     }
 
