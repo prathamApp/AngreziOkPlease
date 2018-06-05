@@ -46,8 +46,8 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
     SamajhKeBoloContract.SamajhKeBolo_G1_L2_View samajhKeBoloG1L2View;
     SamajhKeBoloContract.SamajhKeBolo_G3_L2_View samajhKeBoloG3L2View;
     SamajhKeBoloContract.SamajhKeBolo_G2_L2_View samajhKeBoloG2L2View;
-    List<GenericModalGson> g1l1QuestionData, g2l2QuestionData, g1l2QuestionData, g3l2QuestionData, g3l1QuestionData, g3l2CurrentQuestionList, g1l2CurrentQuestionList, g3l1CurrentQuestionList;
-    List<GenericModalGson> g1l1List;
+    List<GenericModalGson> g1l1QuestionData, g2l2QuestionData, g2l1QuestionData, g1l2QuestionData, g3l2QuestionData, g3l1QuestionData, g3l2CurrentQuestionList, g1l2CurrentQuestionList, g3l1CurrentQuestionList;
+    List<GenericModalGson> g1l1List, currentTrioList;
     GenericModalGson whereWhenGameData, sayItGameData, askGameData;
     private AppDatabase appDatabase;
     ArrayList<String> resTextArray = new ArrayList<String>();
@@ -209,6 +209,41 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
             Bitmap[] bitmap = new Bitmap[]{BitmapFactory.decodeFile(imagePath + resImageArray.get(0)),
                     BitmapFactory.decodeFile(imagePath + resImageArray.get(1))};
             samajhKeBoloG1L1View.setQuestionImgs(readQuestionNo, bitmap);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void showImagesG2L1(String path, String studId) {
+        try {
+            readQuestionNo = getRandomNumber(0, g2l1QuestionData.size());
+            currentTrioList =  g2l1QuestionData.get(readQuestionNo).getNodelist();
+            readQuestionNo= getRandomNumber(0, currentTrioList.size());
+            Collections.shuffle(currentTrioList);
+            int[] integerArray = getUniqueRandomNumber(0, currentTrioList.size(), 3);
+            String imagePath = sdCardPathString + "images/PairsGameL2/";
+
+            resTextArray.clear();
+            resIdArray.clear();
+            resImageArray.clear();
+            resAudioArray.clear();
+
+            setQuestionStartTime();
+            studentID = studId;
+            resourceID = g2l1QuestionData.get(integerArray[readQuestionNo]).getResourceId();
+            questionId = resourceID;
+
+            for (int i = 0; i < 3; i++) {
+                resTextArray.add(currentTrioList.get(integerArray[i]).getResourceText());
+                resImageArray.add(currentTrioList.get(integerArray[i]).getResourceImage());
+                resAudioArray.add(currentTrioList.get(integerArray[i]).getResourceImage());
+                resIdArray.add(currentTrioList.get(integerArray[i]).getResourceId());
+            }
+            Bitmap[] bitmap = new Bitmap[]{BitmapFactory.decodeFile(imagePath + resImageArray.get(0)),
+                    BitmapFactory.decodeFile(imagePath + resImageArray.get(1))};
+            samajhKeBoloG2L1View.setQuestionImgsG2L1(readQuestionNo, bitmap);
 
         } catch (Exception e) {
             e.printStackTrace();
