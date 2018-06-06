@@ -321,12 +321,12 @@ public class fragment_intro_character extends BaseFragment {
                                     null, BoleToh_G1_L1.class.getSimpleName());
                             break;
                         case 1:
-                            PD_Utility.showFragment(getActivity(), new BoleToh_G2_L1(), R.id.cl_bole_toh,
-                                    null, BoleToh_G2_L1.class.getSimpleName());
+                            PD_Utility.showFragment(getActivity(), new BoleToh_G1_L1(), R.id.cl_bole_toh,
+                                    null, BoleToh_G1_L1.class.getSimpleName());
                             break;
                         case 2:
-                            PD_Utility.showFragment(getActivity(), new BoleToh_G3_L1(), R.id.cl_bole_toh,
-                                    null, BoleToh_G3_L1.class.getSimpleName());
+                            PD_Utility.showFragment(getActivity(), new BoleToh_G1_L1(), R.id.cl_bole_toh,
+                                    null, BoleToh_G1_L1.class.getSimpleName());
                             break;
                     }
                     break;

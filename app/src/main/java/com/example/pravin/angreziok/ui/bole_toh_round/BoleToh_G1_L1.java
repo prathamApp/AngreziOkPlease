@@ -242,16 +242,15 @@ public class BoleToh_G1_L1 extends BaseFragment implements BoleTohContract.BoleT
         mCountDownTimer.setOnTimeFinish(new OnTimeFinish() {
             @Override
             public void onFinish() {
-                Toast.makeText(getActivity(), "finish", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "finish", Toast.LENGTH_SHORT).show();
                 mCountDownTimer.failure();
+                presenter.g1_l1_checkAnswer(10, currentTeam, true);
             }
         });
 
         mCountDownTimer.setOnEndAnimationFinish(new OnTimeFinish() {
             @Override
             public void onFinish() {
-                presenter.g1_l1_checkAnswer(10, currentTeam, true);
-                answerPostProcessing();
             }
         });
     }
@@ -259,27 +258,24 @@ public class BoleToh_G1_L1 extends BaseFragment implements BoleTohContract.BoleT
     @OnClick(R.id.iv_image1)
     public void setIv_image1() {
         presenter.g1_l1_checkAnswer(1, currentTeam, false);
-        answerPostProcessing();
     }
 
     @OnClick(R.id.iv_image2)
     public void setIv_image2() {
         presenter.g1_l1_checkAnswer(2, currentTeam, false);
-        answerPostProcessing();
     }
 
     @OnClick(R.id.iv_image3)
     public void setIv_image3() {
         presenter.g1_l1_checkAnswer(3, currentTeam, false);
-        answerPostProcessing();
     }
 
     @OnClick(R.id.iv_image4)
     public void setIv_image4() {
         presenter.g1_l1_checkAnswer(4, currentTeam, false);
-        answerPostProcessing();
     }
 
+    @Override
     public void answerPostProcessing(){
 
         iv_image1.setClickable(false);

@@ -85,6 +85,7 @@ public interface BoleTohContract {
 
         void setCurrentScore();
 
+        void answerPostProcessing();
     }
 
     interface BoleToh_G2_L1_View {

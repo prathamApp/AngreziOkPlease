@@ -373,6 +373,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
             playMusic("Sounds/wrong.mp3", getSdcardPath());
         }
         addScore(studentID, resourceID, 0, scoredMarks, totalMarks, questionStartTime, 0);
+        boleTohG1L1View.answerPostProcessing();
     }
 
     @Override
