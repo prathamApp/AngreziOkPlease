@@ -290,7 +290,6 @@ public class JodTod_G2_L1 extends BaseFragment implements JodTodContract.JodTod_
                     }
                 }
             }, 2500);
-
         }
     }
 
