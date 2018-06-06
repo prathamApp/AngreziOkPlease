@@ -250,6 +250,8 @@ public class BoleToh_G1_L1 extends BaseFragment implements BoleTohContract.BoleT
         mCountDownTimer.setOnEndAnimationFinish(new OnTimeFinish() {
             @Override
             public void onFinish() {
+                presenter.g1_l1_checkAnswer(10, currentTeam, true);
+                answerPostProcessing();
             }
         });
     }
