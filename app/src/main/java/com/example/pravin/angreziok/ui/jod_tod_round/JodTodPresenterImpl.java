@@ -457,10 +457,9 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
     }
 
     @Override
-    public void checkFinalAnswer_g2_l1(boolean correct, String score, int currentTeam) {
-        int scoredMarks=0,totalMarks=15;
+    public void checkFinalAnswer_g2_l1(boolean correct, int score, int currentTeam) {
         int currentTeamScore = Integer.parseInt(jodTodPlayerList.get(currentTeam).studentScore);
-        currentTeamScore += Integer.parseInt(score);
+        currentTeamScore += score;
 
         jodTodPlayerList.get(currentTeam).setStudentScore("" + currentTeamScore);
         jodTodG2L1View.setCurrentScore();
@@ -471,8 +470,7 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
         } else {
             playMusic("Sounds/wrong.mp3", getSdcardPath());
         }
-        addScore(studentID, resourceID, 0, scoredMarks, totalMarks, questionStartTime, 0);
-        scoredMarks = 0;
+        addScore(studentID, resourceID, 0, score, 15, questionStartTime, 0);
     }
 
 
