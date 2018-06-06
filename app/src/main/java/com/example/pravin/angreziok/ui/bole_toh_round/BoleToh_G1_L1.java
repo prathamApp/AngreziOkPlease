@@ -346,7 +346,7 @@ public class BoleToh_G1_L1 extends BaseFragment implements BoleTohContract.BoleT
             public void run() {
                 presenter.readQuestion(readQuesNo);
             }
-        }, 1500);
+        }, 500);
     }
 }
 
