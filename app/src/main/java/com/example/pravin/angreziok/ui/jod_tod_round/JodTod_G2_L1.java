@@ -253,7 +253,7 @@ public class JodTod_G2_L1 extends BaseFragment implements JodTodContract.JodTod_
             correct = true;
         }
 
-        presenter.checkFinalAnswer_g2_l1(correct, score, currentTeam);  
+        presenter.checkFinalAnswer_g2_l1(correct, score, currentTeam);
 
         currentTeam += 1;
         if (currentTeam < jodTodPlayerList.size()) {
