@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -90,10 +89,10 @@ public class JodTod_G2_L1 extends BaseFragment implements JodTodContract.JodTod_
 
     String text;
     JodTodContract.JodTodPresenter presenter;
-    int currentTeam, score = 0, timeOfTimer = 20000,clickedMike;
+    int currentTeam, score = 0, timeOfTimer = 20000, clickedMike;
     float totalAnsCounter = 0f, correctAnsCounter = 0f;
     Dialog dialog;
-    boolean timerEnd = false;
+    boolean timerEnd = false, firstAns, secondAns;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -235,10 +234,64 @@ public class JodTod_G2_L1 extends BaseFragment implements JodTodContract.JodTod_
             @Override
             public void onFinish() {
                 timerEnd = true;
-                //submitAns();
+                submitAns();
             }
         });
         JodTod.animateView(mCountDownTimer, getActivity());
+    }
+
+    public void submitAns() {
+        mCountDownTimer.pause();
+        boolean correct = false;
+        score = 0;
+        if (firstAns) {
+            score = 10;
+            correct = true;
+        }
+        if (secondAns) {
+            score = 15;
+            correct = true;
+        }
+
+        String currScore = "" + score;
+        presenter.checkFinalAnswer_g2_l1(correct, currScore, currentTeam);
+
+        currentTeam += 1;
+        if (currentTeam < jodTodPlayerList.size()) {
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    score = 0;
+                    firstAns = secondAns = false;
+                    showDialog();
+                }
+            }, 2500);
+        } else {
+            currentTeam = 0;
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Bundle bundle = new Bundle();
+                    JodTod.gameCounter += 1;
+                    if (JodTod.gameCounter <= 1) {
+                        bundle.putString("round", "R2");
+                        bundle.putString("level", JodTod.gameLevel);
+                        bundle.putInt("count", JodTod.list.get(JodTod.gameCounter));
+                        PD_Utility.showFragment(getActivity(), new fragment_intro_character(), R.id.cl_jod_tod,
+                                bundle, fragment_intro_character.class.getSimpleName());
+                    } else {
+                        Intent intent = new Intent(getActivity(), SamajhKeBolo.class);
+                        intent.putExtra("level","L2");
+                        bundle.putParcelableArrayList("playerModalArrayList", jodTodPlayerList);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                    }
+                }
+            }, 2500);
+
+        }
     }
 
     public void startSTT() {
@@ -285,18 +338,26 @@ public class JodTod_G2_L1 extends BaseFragment implements JodTodContract.JodTod_
 
     @Override
     public void onResult(String result) {
-        if (clickedMike==1){
-            ans1.setText(result);
-            if (result.equalsIgnoreCase(question1.getText().toString()))
-                q1_layout.setBackgroundResource(R.drawable.green_answer_background);
-            else
-                q1_layout.setBackgroundResource(R.drawable.red_answer_background);
-        }else {
-            ans2.setText(result);
-            if (result.equalsIgnoreCase(question2.getText().toString()))
-                q2_layout.setBackgroundResource(R.drawable.green_answer_background);
-            else
-                q2_layout.setBackgroundResource(R.drawable.red_answer_background);
+        if (!timerEnd) {
+            if (clickedMike == 1) {
+                ans1.setText(result);
+                if (result.equalsIgnoreCase(question1.getText().toString())) {
+                    firstAns = true;
+                    q1_layout.setBackgroundResource(R.drawable.green_answer_background);
+                } else {
+                    firstAns = false;
+                    q1_layout.setBackgroundResource(R.drawable.red_answer_background);
+                }
+            } else {
+                ans2.setText(result);
+                if (result.equalsIgnoreCase(question2.getText().toString())) {
+                    secondAns = true;
+                    q2_layout.setBackgroundResource(R.drawable.green_answer_background);
+                } else {
+                    secondAns = false;
+                    q2_layout.setBackgroundResource(R.drawable.red_answer_background);
+                }
+            }
         }
     }
 
