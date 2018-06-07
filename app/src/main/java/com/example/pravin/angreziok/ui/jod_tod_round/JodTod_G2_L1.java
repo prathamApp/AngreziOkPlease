@@ -240,6 +240,13 @@ public class JodTod_G2_L1 extends BaseFragment implements JodTodContract.JodTod_
         JodTod.animateView(mCountDownTimer, getActivity());
     }
 
+    private void reinitializeOptions() {
+        ((View)question1.getParent()).setBackgroundResource(0);
+        ((View)question2.getParent()).setBackgroundResource(0);
+        ((View)ans1.getParent()).setBackgroundResource(0);
+        ((View)ans2.getParent()).setBackgroundResource(0);
+    }
+
     public void submitAns() {
         mCountDownTimer.pause();
         boolean correct = false;
