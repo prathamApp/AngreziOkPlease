@@ -290,13 +290,13 @@ public class BoleToh_G3_L1 extends BaseFragment implements BoleTohContract.BoleT
                     gameCounter += 1;
                     if (gameCounter <= 1) {
                         bundle.putString("round", "R1");
-                        bundle.putString("level", gameLevel);
+                        bundle.putString("level", "l1");
                         bundle.putInt("count", BoleToh.list.get(gameCounter));
                         PD_Utility.showFragment(getActivity(), new fragment_intro_character(), R.id.cl_bole_toh,
                                 bundle, fragment_intro_character.class.getSimpleName());
                     } else {
                         Intent intent = new Intent(getActivity(), JodTod.class);
-                        intent.putExtra("level", "" + gameLevel);
+                        intent.putExtra("level", "l1");
                         bundle.putParcelableArrayList("playerModalArrayList", playerModalArrayList);
                         intent.putExtras(bundle);
                         startActivity(intent);
