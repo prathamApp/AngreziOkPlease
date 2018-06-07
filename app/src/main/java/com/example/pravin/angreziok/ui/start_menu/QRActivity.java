@@ -36,6 +36,8 @@ import com.example.pravin.angreziok.ui.start_data_confirmation.DataConfirmation;
 import com.example.pravin.angreziok.ui.tab_usage.TabUsage;
 import com.google.zxing.Result;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.UUID;
 import java.util.regex.Matcher;
@@ -357,9 +359,38 @@ public class QRActivity extends BaseActivity implements QRContract.StartMenuView
             mScannerView.stopCamera();
             Log.d("RawResult:::", "****" + result.getText());
 
-//        Pattern pattern = Pattern.compile("[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}");
-//        Matcher mat = pattern2.matcher("04@-09-vale ketan 009");
-            Pattern pattern = Pattern.compile("[A-Za-z0-9]+-[A-Za-z._]{2,50}");
+            JSONObject jsonobject = new JSONObject(result.getText());
+            String id = jsonobject.getString("stuId");
+            String name = jsonobject.getString("name");
+
+            if (playerModalList.size() <= 0) {
+                qrEntryProcess(result);
+                btn_start_game.setVisibility(View.VISIBLE);
+            }
+            else {
+                for (int i = 0; i < playerModalList.size(); i++) {
+                    // change
+                    String[] currentIdArr = {id};
+                    String currId = currentIdArr[0];
+                    if (playerModalList.get(i).getStudentID().equalsIgnoreCase("" + currId)) {
+                        showQrDialog(", This QR Was Already Scaned");
+                        setStud = false;
+                        dulicateQR = true;
+                        break;
+                    }
+                }
+                if (!dulicateQR) {
+                    qrEntryProcess(result);
+                }
+            }
+        } catch (Exception e) {
+            Toast.makeText(this, "Invalid QR Code !!!", Toast.LENGTH_SHORT).show();
+            scanNextQRCode();
+            BackupDatabase.backup(this);
+            e.printStackTrace();
+        }
+
+/*            Pattern pattern = Pattern.compile("[A-Za-z0-9]+-[A-Za-z._]{2,50}");
             Matcher mat = pattern.matcher(result.getText());
 
             if (mat.matches()) {
@@ -388,37 +419,37 @@ public class QRActivity extends BaseActivity implements QRContract.StartMenuView
             }
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     public void qrEntryProcess(Result result) {
-        totalStudents++;
-        String sid = "", sname = "", sscore = "", salias = "";
-        playerModal = new PlayerModal(sid, sname, sscore, salias);
-        Toast.makeText(this, "" + totalStudents, Toast.LENGTH_SHORT).show();
-        if (totalStudents < 5) {
-            //Valid pattern
-            String[] id = decodeStudentId(result.getText(), "-");
-
+        try {
+            totalStudents++;
+            String sid = "", sname = "", sscore = "", salias = "";
+            playerModal = new PlayerModal(sid, sname, sscore, salias);
+            Toast.makeText(this, "" + totalStudents, Toast.LENGTH_SHORT).show();
+            if (totalStudents < 5) {
+                //Valid pattern
+/*            String[] id = decodeStudentId(result.getText(), "-");
             String stdId = id[0];
             //String stdFirstName = id[1];
-            String[] name = decodeStudentId(id[1], "_");
-            String stdFirstName = name[0];
-            String stdLastName = "";
-            if (name.length > 1)
-                stdLastName = name[1];
+            String[] name = decodeStudentId(id[1], "_");*/
+                JSONObject jsonobject = new JSONObject(result.getText());
+                String stdId = jsonobject.getString("stuId");
+                String stdFirstName = jsonobject.getString("name");
 
-            playerModal.setStudentID(stdId);
-            playerModal.setStudentName(stdFirstName);
-            playerModal.setStudentScore("0");
-            playerModal.setStudentAlias("");
+                playerModal.setStudentID(stdId);
+                playerModal.setStudentName(stdFirstName);
+                playerModal.setStudentScore("0");
+                playerModal.setStudentAlias("");
 
-            playerModalList.add(playerModal);
-            enterStudentData(stdId, stdFirstName);
-            //scanNextQRCode();
-            setStud = true;
-            showQrDialog(stdFirstName);
-        }
+                playerModalList.add(playerModal);
+                enterStudentData(stdId, stdFirstName);
+                //scanNextQRCode();
+                setStud = true;
+                showQrDialog(stdFirstName);
+            }
+        }catch (Exception e){e.printStackTrace();}
 
     }
 
