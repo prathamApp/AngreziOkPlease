@@ -335,13 +335,13 @@ public class SamajhKeBolo_G3_L1 extends BaseFragment implements SamajhKeBoloCont
                     gameCounter += 1;
                     if (gameCounter <= 1) {
                         bundle.putString("round", "R1");
-                        bundle.putString("level", gameLevel);
+                        bundle.putString("level", "l1");
                         bundle.putInt("count", SamajhKeBolo.list.get(gameCounter));
                         PD_Utility.showFragment(getActivity(), new fragment_intro_character(), R.id.cl_bole_toh,
                                 bundle, fragment_intro_character.class.getSimpleName());
                     } else {
                         Intent intent = new Intent(getActivity(), JodTod.class);
-                        intent.putExtra("level","L2");
+                        intent.putExtra("level","l1");
                         bundle.putParcelableArrayList("playerModalArrayList", playerModalArrayList);
                         intent.putExtras(bundle);
                         startActivity(intent);

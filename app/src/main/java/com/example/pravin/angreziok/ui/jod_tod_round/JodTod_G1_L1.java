@@ -247,8 +247,9 @@ public class JodTod_G1_L1 extends BaseFragment implements JodTodContract.JodTod_
         mCountDownTimer.setOnTimeFinish(new OnTimeFinish() {
             @Override
             public void onFinish() {
-                Toast.makeText(getActivity(), "finish", Toast.LENGTH_SHORT).show();
-                mCountDownTimer.failure();
+            mCountDownTimer.failure();
+            presenter.g1_l1_checkAnswer(10, currentTeam, true);
+            answerPostProcessing();
             }
         });
 

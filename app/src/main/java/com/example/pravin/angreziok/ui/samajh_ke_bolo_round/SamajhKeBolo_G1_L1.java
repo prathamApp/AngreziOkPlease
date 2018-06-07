@@ -235,7 +235,8 @@ public class SamajhKeBolo_G1_L1 extends BaseFragment implements SamajhKeBoloCont
         mCountDownTimer.setOnTimeFinish(new OnTimeFinish() {
             @Override
             public void onFinish() {
-                Toast.makeText(getActivity(), "finish", Toast.LENGTH_SHORT).show();
+                presenter.g1_l1_checkAnswer(10, currentTeam, true);
+                answerPostProcessing();
                 mCountDownTimer.failure();
             }
         });
@@ -286,13 +287,13 @@ public class SamajhKeBolo_G1_L1 extends BaseFragment implements SamajhKeBoloCont
                     gameCounter += 1;
                     if (gameCounter <= 1) {
                         bundle.putString("round", "R1");
-                        bundle.putString("level", gameLevel);
+                        bundle.putString("level", "l1");
                         bundle.putInt("count", SamajhKeBolo.list.get(gameCounter));
                         PD_Utility.showFragment(getActivity(), new fragment_intro_character(), R.id.cl_samajh_ke_bolo,
                                 bundle, fragment_intro_character.class.getSimpleName());
                     } else {
                         Intent intent = new Intent(getActivity(), JodTod.class);
-                        intent.putExtra("level", "" + gameLevel);
+                        intent.putExtra("level", "l1");
                         bundle.putParcelableArrayList("SamajhKeBolo.playerModalArrayList", SamajhKeBolo.playerModalArrayList);
                         intent.putExtras(bundle);
                         startActivity(intent);
