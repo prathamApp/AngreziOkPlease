@@ -163,6 +163,7 @@ public class JodTod_G2_L1 extends BaseFragment implements JodTodContract.JodTod_
 
     public void showDialog() {
         fadeOtherGroups();
+        reinitializeOptions();
         String teamName = jodTodPlayerList.get(currentTeam).getStudentAlias();
         final String studentID = jodTodPlayerList.get(currentTeam).getStudentID();
         dialog = new Dialog(getActivity());
@@ -241,10 +242,14 @@ public class JodTod_G2_L1 extends BaseFragment implements JodTodContract.JodTod_
     }
 
     private void reinitializeOptions() {
-        ((View)question1.getParent()).setBackgroundResource(0);
-        ((View)question2.getParent()).setBackgroundResource(0);
-        ((View)ans1.getParent()).setBackgroundResource(0);
-        ((View)ans2.getParent()).setBackgroundResource(0);
+        q1_layout.setBackgroundResource(R.drawable.custom_dialog_bg2);
+        q2_layout.setBackgroundResource(R.drawable.custom_dialog_bg2);
+        ans1.setText("");
+        ans2.setText("");
+        /*question1.setBackgroundResource(R.drawable.custom_dialog_bg2);
+        question2.setBackgroundResource(R.drawable.custom_dialog_bg2);
+        ans1.setBackgroundResource(R.drawable.custom_dialog_bg2);
+        ans2.setBackgroundResource(R.drawable.custom_dialog_bg2);*/
     }
 
     public void submitAns() {
