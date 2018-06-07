@@ -238,16 +238,15 @@ public class BoleToh_G3_L1 extends BaseFragment implements BoleTohContract.BoleT
         mCountDownTimer.setOnTimeFinish(new OnTimeFinish() {
             @Override
             public void onFinish() {
-                Toast.makeText(getActivity(), "finish", Toast.LENGTH_SHORT).show();
                 mCountDownTimer.failure();
+                presenter.g3_l1_checkAnswer(10, currentTeam, true);
+                answerPostProcessing();
             }
         });
 
         mCountDownTimer.setOnEndAnimationFinish(new OnTimeFinish() {
             @Override
             public void onFinish() {
-                presenter.g3_l1_checkAnswer(10, currentTeam, true);
-                answerPostProcessing();
             }
         });
     }
