@@ -82,6 +82,8 @@ public class JodTod_G2_L1 extends BaseFragment implements JodTodContract.JodTod_
     ImageView mike1;
     @BindView(R.id.iv_mike2)
     ImageView mike2;
+    @BindView(R.id.iv_submit_ans)
+    ImageView submitAns;
     @BindView(R.id.konfettiView_g2_l1)
     KonfettiView konfettiView;
     @BindView(R.id.tv_game_title)
@@ -246,10 +248,6 @@ public class JodTod_G2_L1 extends BaseFragment implements JodTodContract.JodTod_
         q2_layout.setBackgroundResource(R.drawable.custom_dialog_bg2);
         ans1.setText("");
         ans2.setText("");
-        /*question1.setBackgroundResource(R.drawable.custom_dialog_bg2);
-        question2.setBackgroundResource(R.drawable.custom_dialog_bg2);
-        ans1.setBackgroundResource(R.drawable.custom_dialog_bg2);
-        ans2.setBackgroundResource(R.drawable.custom_dialog_bg2);*/
     }
 
     public void submitAns() {
@@ -369,6 +367,11 @@ public class JodTod_G2_L1 extends BaseFragment implements JodTodContract.JodTod_
                 }
             }
         }
+    }
+
+    @OnClick(R.id.iv_submit_ans)
+    public void submit(){
+        submitAns();
     }
 
     @OnClick(R.id.ib_g2_l1_speaker)
