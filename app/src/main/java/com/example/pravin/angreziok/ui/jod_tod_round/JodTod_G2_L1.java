@@ -244,8 +244,6 @@ public class JodTod_G2_L1 extends BaseFragment implements JodTodContract.JodTod_
     }
 
     private void reinitializeOptions() {
-        q1_layout.setBackgroundResource(R.drawable.custom_dialog_bg2);
-        q2_layout.setBackgroundResource(R.drawable.custom_dialog_bg2);
         ans1.setText("");
         ans2.setText("");
     }
@@ -351,19 +349,19 @@ public class JodTod_G2_L1 extends BaseFragment implements JodTodContract.JodTod_
                 ans1.setText(result);
                 if (result.equalsIgnoreCase(question1.getText().toString())) {
                     firstAns = true;
-                    q1_layout.setBackgroundResource(R.drawable.green_answer_background);
+                    ans1.setBackgroundResource(R.drawable.green_answer_background);
                 } else {
                     firstAns = false;
-                    q1_layout.setBackgroundResource(R.drawable.red_answer_background);
+                    ans1.setBackgroundResource(R.drawable.red_answer_background);
                 }
             } else {
                 ans2.setText(result);
                 if (result.equalsIgnoreCase(question2.getText().toString())) {
                     secondAns = true;
-                    q2_layout.setBackgroundResource(R.drawable.green_answer_background);
+                    ans2.setBackgroundResource(R.drawable.green_answer_background);
                 } else {
                     secondAns = false;
-                    q2_layout.setBackgroundResource(R.drawable.red_answer_background);
+                    ans2.setBackgroundResource(R.drawable.red_answer_background);
                 }
             }
         }
