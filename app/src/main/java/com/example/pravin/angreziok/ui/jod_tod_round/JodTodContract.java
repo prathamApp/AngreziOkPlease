@@ -89,6 +89,8 @@ public interface JodTodContract {
         void setCurrentScore();
 
         void setQuestionDynamically(String questionText);
+
+        void setGameTitleFromJson(String gameName);
     }
 
     interface JodTod_G1_L2_View {

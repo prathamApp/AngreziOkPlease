@@ -143,6 +143,8 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
         sdCardPathString = path;
         whereWhenGameData = fetchJsonData("RoundThreeGameOneLevelOne", path);
         g1l1QuestionData = whereWhenGameData.getNodelist();
+        String gameTitle = whereWhenGameData.getNodeTitle();
+        samajhKeBoloG1L1View.setGameTitleFromJson(gameTitle);
         Log.d("SIZE", "doInitialWork: " + g1l1QuestionData.size());
     }
 
@@ -151,6 +153,8 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
         sdCardPathString = path;
         askGameData = fetchJsonData("RoundThreeGameTwoLevelOne", path);
         g2l1QuestionData = askGameData.getNodelist();
+        String gameTitle = askGameData.getNodeTitle();
+        samajhKeBoloG2L1View.setGameTitleFromJson(gameTitle);
         Log.d("SIZE", "doInitialWork: " + g2l1QuestionData.size());
     }
 

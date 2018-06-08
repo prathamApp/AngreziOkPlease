@@ -142,6 +142,8 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
         sdCardPathString = path;
         gsonAlphabetGameData = fetchJsonData("RoundTwoGameOne", path);
         g1l1QuestionData = gsonAlphabetGameData.getNodelist();
+        String gameTitle = gsonAlphabetGameData.getNodeTitle();
+        jodTodG1L1View.setGameTitleFromJson(gameTitle);
         Log.d("SIZE", "doInitialWork: " + g1l1QuestionData.size());
     }
 
@@ -226,10 +228,11 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
 
     @Override
     public void set_g3_l2_data(int level) {
-        if (level == 1)
+        if (level == 1) {
             gsonListenAndSpellGameData = fetchJsonData("RoundTwoGameThreeLevelOne", getSdcardPath());
-        else
+        }else {
             gsonListenAndSpellGameData = fetchJsonData("RoundTwoGameThree", getSdcardPath());
+        }
 
         g3l2QuestionData = gsonListenAndSpellGameData.getNodelist();
         String gameTitle = gsonListenAndSpellGameData.getNodeTitle();

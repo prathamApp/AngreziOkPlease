@@ -77,7 +77,8 @@ public class SamajhKeBolo_G2_L1 extends BaseFragment implements SamajhKeBoloCont
     ImageButton ib_speaker;
     @BindView(R.id.konfettiView_r1g1)
     KonfettiView konfettiView;
-
+    @BindView(R.id.tv_game_title)
+    TextView gameTitle;
 
     int questionConter = 0;
 
@@ -122,6 +123,11 @@ public class SamajhKeBolo_G2_L1 extends BaseFragment implements SamajhKeBoloCont
         setInitialScores();
         showDialog();
         //customCountDownTimer = new CustomCountDownTimer(mCountDownTimer,getActivity());
+    }
+
+    @Override
+    public void setGameTitleFromJson(String gameName) {
+        gameTitle.setText(gameName);
     }
 
     private void setInitialScores() {

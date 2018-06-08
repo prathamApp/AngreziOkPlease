@@ -64,12 +64,14 @@ public interface SamajhKeBoloContract {
         void setQuestionImgs(int readQuesNo, android.graphics.Bitmap... bitmaps);
         void setCelebrationView();
         void setCurrentScore();
+        void setGameTitleFromJson(String gameName);
     }
 
     interface SamajhKeBolo_G2_L1_View {
         void setQuestionImgsG2L1(int readQuesNo, android.graphics.Bitmap... bitmaps);
         void setCelebrationView();
         void setCurrentScore();
+        void setGameTitleFromJson(String gameName);
     }
 
     interface SamajhKeBolo_G3_L1_View {
