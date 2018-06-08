@@ -57,7 +57,6 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
 
     public BoleTohPresenterImpl(Context mContext) {
         this.mContext = mContext;
-        this.ttsService = ttsService;
         appDatabase = Room.databaseBuilder(mContext,
                 AppDatabase.class, AppDatabase.DB_NAME)
                 .build();
