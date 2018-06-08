@@ -87,8 +87,8 @@ public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleT
     KonfettiView konfettiView;
     @BindView(R.id.iv_g1_l2_submit_ans)
     ImageView submitAnswer;
-    @BindView(R.id.tv_game_title)
-    TextView gameTitle;
+        @BindView(R.id.tv_game_title)
+        TextView gameTitle;
 
     String text;
     BoleTohContract.BoleTohPresenter presenter;

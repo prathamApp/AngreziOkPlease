@@ -139,6 +139,8 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
         sdCardPathString = path;
         gsonPicGameData = fetchJsonData("RoundOneGameOne", path);
         g1l1QuestionData = gsonPicGameData.getNodelist();
+        String gameTitle = gsonPicGameData.getNodeTitle();
+        boleTohG1L1View.setGameTitleFromJson(gameTitle);
         Log.d("SIZE", "doInitialWork: " + g1l1QuestionData.size());
     }
 
@@ -147,6 +149,8 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
         sdCardPathString = path;
         gsonActGameData = fetchJsonData("RoundOneGameTwo", path);
         g2l2QuestionData = gsonActGameData.getNodelist();
+        String gameTitle = gsonActGameData.getNodeTitle();
+        boleTohG2L1View.setGameTitleFromJson(gameTitle);
         Log.d("SIZE", "doInitialWork: " + g2l2QuestionData.size());
     }
 
@@ -155,6 +159,8 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
         sdCardPathString = path;
         gsonPairGameData = fetchJsonData("RoundOneGameThree", path);
         g3l2QuestionData = gsonPairGameData.getNodelist();
+        String gameTitle = gsonPairGameData.getNodeTitle();
+        boleTohG3L1View.setGameTitleFromJson(gameTitle);
         Log.d("SIZE", "doInitialWork: " + g3l2QuestionData.size());
     }
 

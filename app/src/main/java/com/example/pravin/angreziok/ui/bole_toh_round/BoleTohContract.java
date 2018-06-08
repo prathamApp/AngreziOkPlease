@@ -64,11 +64,11 @@ public interface BoleTohContract {
 
         void checkFinalAnswer_g3_l2(String s, int currentTeam);
 
-        void showImagesG1L1(String path,String stidId);
+        void showImagesG1L1(String path, String stidId);
 
-        void showImagesG2L1(String path,String stidId);
+        void showImagesG2L1(String path, String stidId);
 
-        void showImagesG3L1(String path,String stidId);
+        void showImagesG3L1(String path, String stidId);
 
         void fragmentOnPause();
 
@@ -86,6 +86,8 @@ public interface BoleTohContract {
         void setCurrentScore();
 
         void answerPostProcessing();
+
+        void setGameTitleFromJson(String gameName);
     }
 
     interface BoleToh_G2_L1_View {
@@ -94,6 +96,8 @@ public interface BoleTohContract {
         void setCelebrationView();
 
         void setCurrentScore();
+
+        void setGameTitleFromJson(String gameName);
     }
 
     interface BoleToh_G3_L1_View {
@@ -102,6 +106,8 @@ public interface BoleTohContract {
         void setCelebrationView();
 
         void setCurrentScore();
+
+        void setGameTitleFromJson(String gameName);
     }
 
     interface BoleToh_G1_L2_View {
