@@ -333,16 +333,16 @@ public class fragment_intro_character extends BaseFragment {
                 case 2:
                     switch (count) {
                         case 0:
-                            PD_Utility.showFragment(getActivity(), new JodTod_G2_L1(), R.id.cl_jod_tod,
-                                    null, JodTod_G2_L1.class.getSimpleName());
+                            PD_Utility.showFragment(getActivity(), new JodTod_G1_L1(), R.id.cl_jod_tod,
+                                    null, JodTod_G1_L1.class.getSimpleName());
                             break;
                         case 1:
                             PD_Utility.showFragment(getActivity(), new JodTod_G2_L1(), R.id.cl_jod_tod,
                                     null, JodTod_G2_L1.class.getSimpleName());
                             break;
                         case 2:
-                            PD_Utility.showFragment(getActivity(), new JodTod_G2_L1(), R.id.cl_jod_tod,
-                                    null, JodTod_G2_L1.class.getSimpleName());
+                            PD_Utility.showFragment(getActivity(), new JodTod_G3_L1(), R.id.cl_jod_tod,
+                                    null, JodTod_G3_L1.class.getSimpleName());
                             break;
                     }
                     break;

@@ -178,6 +178,9 @@ public class JodTod_G2_L1 extends BaseFragment implements JodTodContract.JodTod_
         text.setText("Next question would be for " + teamName);
         button.setText("Ready ??");
         timerEnd = false;
+        ans1.setBackgroundResource(R.drawable.custom_dialog_bg2);
+        ans2.setBackgroundResource(R.drawable.custom_dialog_bg2);
+
 
         dialog.show();
 
