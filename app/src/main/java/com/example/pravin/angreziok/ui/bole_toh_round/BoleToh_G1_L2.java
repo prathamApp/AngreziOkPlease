@@ -87,8 +87,8 @@ public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleT
     KonfettiView konfettiView;
     @BindView(R.id.iv_g1_l2_submit_ans)
     ImageView submitAnswer;
-        @BindView(R.id.tv_game_title)
-        TextView gameTitle;
+    @BindView(R.id.tv_game_title)
+    TextView gameTitle;
 
     String text;
     BoleTohContract.BoleTohPresenter presenter;
@@ -253,7 +253,9 @@ public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleT
 
 
     private void playTTS(String questionString) {
+
         presenter.startTTS(questionString);
+
     }
 
     @Override
@@ -331,7 +333,7 @@ public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleT
                                 bundle, fragment_intro_character.class.getSimpleName());
                     } else {
                         Intent intent = new Intent(getActivity(), JodTod.class);
-                        intent.putExtra("level","L2");
+                        intent.putExtra("level", "L2");
                         bundle.putParcelableArrayList("playerModalArrayList", playerModalArrayList);
                         intent.putExtras(bundle);
                         startActivity(intent);
