@@ -542,7 +542,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
         String questionString = g1l2QuestionData.get(randomNumber).getResourceQuestion();
         String imagePath = getSdcardPath() + "images/PicGameL2/" + g1l2QuestionData.get(randomNumber).getResourceImage();
         quetionAudioPath = getSdcardPath() + "Sounds/PicGame/" + g1l2QuestionData.get(randomNumber).getResourceAudio();
-        Log.d("imagePath", "setImage_gl_l2: " + imagePath);
+        Log.d("imagePath", "setImage_gl_l2: " + imagePath+"       SoundPath"+quetionAudioPath);
         setQuestionStartTime();
         studentID = studId;
         resourceID = g1l2QuestionData.get(randomNumber).getResourceId();

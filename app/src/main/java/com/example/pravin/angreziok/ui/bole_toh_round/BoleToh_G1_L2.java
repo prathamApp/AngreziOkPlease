@@ -190,6 +190,7 @@ public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleT
                 presenter.setImage_gl_l2(studentID);
                 if (!playingThroughTts)
                     audioPath = presenter.getQuestionAudio();
+                initiateQuestion(audioPath);
             }
         });
 
@@ -264,7 +265,7 @@ public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleT
             presenter.startTTS(questionString);
         }
         else
-            presenter.playMusic(audioPath, "");
+            presenter.playMusic("", audioPath);
     }
 
     @Override
