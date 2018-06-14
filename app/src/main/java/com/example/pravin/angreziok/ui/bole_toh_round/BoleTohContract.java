@@ -28,6 +28,8 @@ public interface BoleTohContract {
 
         void playMusic(String filename, String path);
 
+        String getQuestionAudio();
+
         void replayQuestionroundone();
 
         void readQuestion(int questionToRead);

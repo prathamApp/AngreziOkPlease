@@ -90,10 +90,12 @@ public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleT
     @BindView(R.id.tv_game_title)
     TextView gameTitle;
 
-    String text;
+    String text,audioPath;
     BoleTohContract.BoleTohPresenter presenter;
     int speechCount, currentTeam, timeOfTimer = 20000;
     Dialog dialog;
+    boolean playingThroughTts = false;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -186,6 +188,8 @@ public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleT
             public void onClick(View v) {
                 dialog.dismiss();
                 presenter.setImage_gl_l2(studentID);
+                if (!playingThroughTts)
+                    audioPath = presenter.getQuestionAudio();
             }
         });
 
@@ -243,6 +247,9 @@ public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleT
     @Override
     public void initiateQuestion(String questionString) {
         startTimer();
+        if (playingThroughTts) {
+            text = questionString;
+        }
         playTTS(questionString);
     }
 
@@ -253,9 +260,11 @@ public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleT
 
 
     private void playTTS(String questionString) {
-
-        presenter.startTTS(questionString);
-
+        if (playingThroughTts) {
+            presenter.startTTS(questionString);
+        }
+        else
+            presenter.playMusic(audioPath, "");
     }
 
     @Override

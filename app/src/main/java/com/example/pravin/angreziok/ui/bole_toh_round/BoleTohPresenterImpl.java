@@ -36,6 +36,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
     String ttsQuestion;
     float speechRate = 1.0f;
     public TTSService ttsService;
+    String quetionAudioPath;
     Context mContext;
     public MediaPlayerUtil mediaPlayerUtil;
     BoleTohContract.BoleToh_G1_L2_View boleTohG1L2View;
@@ -366,13 +367,11 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
                 playerModalArrayList.get(currentTeam).setStudentScore(String.valueOf(currentTeamScore + 10));
                 boleTohG1L1View.setCurrentScore();
             } else {
-                //  TODO wrong answer animation
                 scoredMarks = 0;
                 Toast.makeText(mContext, "Wrong", Toast.LENGTH_SHORT).show();
                 playMusic("Sounds/wrong.mp3", getSdcardPath());
             }
         } else {
-            //  TODO wrong answer animation
             scoredMarks = 0;
             Toast.makeText(mContext, "Wrong", Toast.LENGTH_SHORT).show();
             playMusic("Sounds/wrong.mp3", getSdcardPath());
@@ -394,13 +393,11 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
                 playerModalArrayList.get(currentTeam).setStudentScore(String.valueOf(currentTeamScore + 10));
                 boleTohG2L1View.setCurrentScore();
             } else {
-                //  TODO wrong answer animation
                 scoredMarks = 0;
                 Toast.makeText(mContext, "Wrong", Toast.LENGTH_SHORT).show();
                 playMusic("Sounds/wrong.mp3", getSdcardPath());
             }
         } else {
-            //  TODO wrong answer animation
             scoredMarks = 0;
             Toast.makeText(mContext, "Wrong", Toast.LENGTH_SHORT).show();
             playMusic("Sounds/wrong.mp3", getSdcardPath());
@@ -421,13 +418,11 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
                 playerModalArrayList.get(currentTeam).setStudentScore(String.valueOf(currentTeamScore + 10));
                 boleTohG3L1View.setCurrentScore();
             } else {
-                //  TODO wrong answer animation
                 scoredMarks = 0;
                 Toast.makeText(mContext, "Wrong", Toast.LENGTH_SHORT).show();
                 playMusic("Sounds/wrong.mp3", getSdcardPath());
             }
         } else {
-            //  TODO wrong answer animation
             scoredMarks = 0;
             Toast.makeText(mContext, "Wrong", Toast.LENGTH_SHORT).show();
             playMusic("Sounds/wrong.mp3", getSdcardPath());
@@ -439,7 +434,6 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
     public void checkFinalAnswer_g1_l2(String ans, int currentTeam) {
         int scoredMarks, totalMarks = 10;
         if (g1l2QuestionData.get(randomNumber).getResourceText().equalsIgnoreCase(ans)) {
-            //  TODO correct answer animation + increase score of group
             boleTohG1L2View.setCelebrationView();
             scoredMarks = 10;
             playMusic("Sounds/BilkulSahijawab.mp3", getSdcardPath());
@@ -447,12 +441,16 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
             playerModalArrayList.get(currentTeam).setStudentScore(String.valueOf(currentTeamScore + 10));
             boleTohG1L2View.setCurrentScore();
         } else {
-            //  TODO wrong answer animation
             scoredMarks = 0;
             Toast.makeText(mContext, "Wrong", Toast.LENGTH_SHORT).show();
             playMusic("Sounds/wrong.mp3", getSdcardPath());
         }
         addScore(studentID, resourceID, 0, scoredMarks, totalMarks, questionStartTime, 0);
+    }
+
+    @Override
+    public String getQuestionAudio() {
+        return quetionAudioPath;
     }
 
     @Override
@@ -480,7 +478,6 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
     public void checkFinalAnswer_g3_l2(String ans, int currentTeam) {
         int scoredMarks, totalMarks = 10;
         if (currentPairList.get(1).getResourceText().equalsIgnoreCase(ans)) {
-            //  TODO correct answer animation + increase score of group
             boleTohG3L2View.setCelebrationView();
             scoredMarks = 10;
             playMusic("Sounds/BilkulSahijawab.mp3", getSdcardPath());
@@ -488,7 +485,6 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
             playerModalArrayList.get(currentTeam).setStudentScore(String.valueOf(currentTeamScore + 10));
             boleTohG3L2View.setCurrentScore();
         } else {
-            //  TODO wrong answer animation
             scoredMarks = 0;
             Toast.makeText(mContext, "Wrong", Toast.LENGTH_SHORT).show();
             playMusic("Sounds/wrong.mp3", getSdcardPath());
@@ -545,6 +541,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
         randomNumber = getRandomNumber(0, g1l2QuestionData.size());
         String questionString = g1l2QuestionData.get(randomNumber).getResourceQuestion();
         String imagePath = getSdcardPath() + "images/PicGameL2/" + g1l2QuestionData.get(randomNumber).getResourceImage();
+        quetionAudioPath = getSdcardPath() + "Sounds/PicGame/" + g1l2QuestionData.get(randomNumber).getResourceAudio();
         Log.d("imagePath", "setImage_gl_l2: " + imagePath);
         setQuestionStartTime();
         studentID = studId;
