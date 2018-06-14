@@ -93,10 +93,11 @@ public class BoleToh_G2_L2 extends BaseFragment implements BoleTohContract.BoleT
     @BindView(R.id.tv_game_title)
     TextView gameTitle;
 
-    String text;
+    String text,questionAudio;
     BoleTohContract.BoleTohPresenter presenter;
     int speechCount, currentTeam, timeOfTimer = 20000;
     Dialog dialog;
+    boolean playingThroughTts = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -264,12 +265,16 @@ public class BoleToh_G2_L2 extends BaseFragment implements BoleTohContract.BoleT
     }
 
     private void playTTS() {
-        presenter.startTTS(text);
+        if (playingThroughTts)
+            presenter.startTTS(text);
+        else
+            presenter.playMusic(questionAudio,presenter.getSdcardPath()+"Sounds/ActionGame/");
     }
 
     @Override
-    public void setQuestionText(String questionString) {
+    public void setQuestionText(String questionString, String queAudio) {
         text = questionString;
+        questionAudio = queAudio;
         initiateQuestion();
         question.setText(questionString);
     }
@@ -289,7 +294,8 @@ public class BoleToh_G2_L2 extends BaseFragment implements BoleTohContract.BoleT
 
     @OnClick(R.id.ib_r1g2_speaker)
     public void soundClicked() {
-        presenter.startTTS(text);
+        playTTS();
+    //    presenter.startTTS(text);
     }
 
     @OnClick(R.id.ib_r1g2_mic)
@@ -301,12 +307,33 @@ public class BoleToh_G2_L2 extends BaseFragment implements BoleTohContract.BoleT
             Toast.makeText(getActivity(), "Can be used only 2 Times", Toast.LENGTH_SHORT).show();
     }
 
-    @OnClick({R.id.option1, R.id.option2, R.id.option3})
-    public void optionsClicked(View view) {
+    @OnClick(R.id.option1)
+    public void option1Clicked(View view) {
         // TTS for the options clicked
         TextView option = (TextView) view;
-        answer.setText(option.getText() + "");
-        presenter.startTTS(option.getText() + "");
+        playOptions(0,option.getText()+"");
+    }
+
+    @OnClick(R.id.option2)
+    public void option2Clicked(View view) {
+        // TTS for the options clicked
+        TextView option = (TextView) view;
+        playOptions(1,option.getText()+"");
+    }
+
+    @OnClick(R.id.option3)
+    public void option3Clicked(View view) {
+        // TTS for the options clicked
+        TextView option = (TextView) view;
+        playOptions(2,option.getText()+"");
+    }
+
+    public void playOptions(int optionNo,String optionText){
+        answer.setText(optionText);
+        if (playingThroughTts)
+            presenter.startTTS(optionText);
+        else
+            presenter.playOptionAudio(optionNo);
     }
 
     @OnClick(R.id.iv_r1g2_submit_ans)

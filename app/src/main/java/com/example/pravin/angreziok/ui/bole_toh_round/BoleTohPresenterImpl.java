@@ -36,8 +36,9 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
     String ttsQuestion;
     float speechRate = 1.0f;
     public TTSService ttsService;
-    String quetionAudioPath;
+    String questionAudioPath;
     Context mContext;
+    String[] optionsAudio = new String[3];
     public MediaPlayerUtil mediaPlayerUtil;
     BoleTohContract.BoleToh_G1_L2_View boleTohG1L2View;
     BoleTohContract.BoleToh_G3_L2_View boleTohG3L2View;
@@ -321,7 +322,16 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
         optionsText[randomOptions[0]] = g2l2QuestionData.get(optionsIds[0]).getResourceText();
         optionsText[randomOptions[1]] = g2l2QuestionData.get(optionsIds[1]).getResourceText();
         optionsText[randomOptions[2]] = g2l2QuestionData.get(randomNumber).getResourceText();
+
+        optionsAudio[randomOptions[0]] = g2l2QuestionData.get(optionsIds[0]).getResourceAudio();
+        optionsAudio[randomOptions[1]] = g2l2QuestionData.get(optionsIds[1]).getResourceAudio();
+        optionsAudio[randomOptions[2]] = g2l2QuestionData.get(randomNumber).getResourceAudio();
         return optionsText;
+    }
+
+    @Override
+    public void playOptionAudio(int optionNo){
+        playMusic(optionsAudio[optionNo],getSdcardPath()+"Sounds/ActionGame/");
     }
 
     @Override
@@ -450,7 +460,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
 
     @Override
     public String getQuestionAudio() {
-        return quetionAudioPath;
+        return questionAudioPath;
     }
 
     @Override
@@ -541,8 +551,8 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
         randomNumber = getRandomNumber(0, g1l2QuestionData.size());
         String questionString = g1l2QuestionData.get(randomNumber).getResourceQuestion();
         String imagePath = getSdcardPath() + "images/PicGameL2/" + g1l2QuestionData.get(randomNumber).getResourceImage();
-        quetionAudioPath = getSdcardPath() + "Sounds/PicGame/" + g1l2QuestionData.get(randomNumber).getResourceAudio();
-        Log.d("imagePath", "setImage_gl_l2: " + imagePath+"       SoundPath"+quetionAudioPath);
+        questionAudioPath = getSdcardPath() + "Sounds/PicGame/" + g1l2QuestionData.get(randomNumber).getResourceAudio();
+        Log.d("imagePath", "setImage_gl_l2: " + imagePath+"       SoundPath"+ questionAudioPath);
         setQuestionStartTime();
         studentID = studId;
         resourceID = g1l2QuestionData.get(randomNumber).getResourceId();
@@ -564,7 +574,8 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
         questionId = resourceID;
         boleTohG2L2View.setActionGif(imagePath);
         String questionString = g2l2QuestionData.get(randomNumber).getResourceQuestion();
-        boleTohG2L2View.setQuestionText(questionString);
+        String questionAudio = g2l2QuestionData.get(randomNumber).getResourceAudio();
+        boleTohG2L2View.setQuestionText(questionString,questionAudio);
     }
 
     @Override

@@ -28,6 +28,8 @@ public interface BoleTohContract {
 
         void playMusic(String filename, String path);
 
+        void playOptionAudio(int optionNo);
+
         String getQuestionAudio();
 
         void replayQuestionroundone();
@@ -151,7 +153,7 @@ public interface BoleTohContract {
 
         void setCurrentScore();
 
-        void setQuestionText(String questionString);
+        void setQuestionText(String questionString, String questionAudio);
 
     }
 
