@@ -311,21 +311,54 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
     }
 
     @Override
-    public String[] getOptions() {
-        int[] optionsIds;
+    public String[] getOptions(int game) {
+        int[] optionsIds=null;
         int[] randomOptions;
         do {
-            optionsIds = getUniqueRandomNumber(0, g2l2QuestionData.size(), 2);
+            switch(game){
+                case 1 :
+                    optionsIds = getUniqueRandomNumber(0, g1l2QuestionData.size(), 2);
+                    break;
+                case 2 :
+                    optionsIds = getUniqueRandomNumber(0, g2l2QuestionData.size(), 2);
+                    break;
+                case 3 :
+                    optionsIds = getUniqueRandomNumber(0, g3l2QuestionData.size(), 2);
+                    break;
+            }
         } while (optionsIds[0] == randomNumber || optionsIds[1] == randomNumber);
         String[] optionsText = new String[3];
         randomOptions = getUniqueRandomNumber(0, 3, 3);
-        optionsText[randomOptions[0]] = g2l2QuestionData.get(optionsIds[0]).getResourceText();
-        optionsText[randomOptions[1]] = g2l2QuestionData.get(optionsIds[1]).getResourceText();
-        optionsText[randomOptions[2]] = g2l2QuestionData.get(randomNumber).getResourceText();
 
-        optionsAudio[randomOptions[0]] = g2l2QuestionData.get(optionsIds[0]).getResourceAudio();
-        optionsAudio[randomOptions[1]] = g2l2QuestionData.get(optionsIds[1]).getResourceAudio();
-        optionsAudio[randomOptions[2]] = g2l2QuestionData.get(randomNumber).getResourceAudio();
+        switch(game) {
+            case 1:
+                optionsText[randomOptions[0]] = g1l2QuestionData.get(optionsIds[0]).getResourceText();
+                optionsText[randomOptions[1]] = g1l2QuestionData.get(optionsIds[1]).getResourceText();
+                optionsText[randomOptions[2]] = g1l2QuestionData.get(randomNumber).getResourceText();
+
+                optionsAudio[randomOptions[0]] = g1l2QuestionData.get(optionsIds[0]).getResourceType();
+                optionsAudio[randomOptions[1]] = g1l2QuestionData.get(optionsIds[1]).getResourceType();
+                optionsAudio[randomOptions[2]] = g1l2QuestionData.get(randomNumber).getResourceType();
+                break;
+            case 2:
+                optionsText[randomOptions[0]] = g2l2QuestionData.get(optionsIds[0]).getResourceText();
+                optionsText[randomOptions[1]] = g2l2QuestionData.get(optionsIds[1]).getResourceText();
+                optionsText[randomOptions[2]] = g2l2QuestionData.get(randomNumber).getResourceText();
+
+                optionsAudio[randomOptions[0]] = g2l2QuestionData.get(optionsIds[0]).getResourceType();
+                optionsAudio[randomOptions[1]] = g2l2QuestionData.get(optionsIds[1]).getResourceType();
+                optionsAudio[randomOptions[2]] = g2l2QuestionData.get(randomNumber).getResourceType();
+                break;
+            case 3:
+                optionsText[randomOptions[0]] = g3l2QuestionData.get(optionsIds[0]).getNodelist().get(0).getResourceText();
+                optionsText[randomOptions[1]] = g3l2QuestionData.get(optionsIds[1]).getNodelist().get(1).getResourceText();
+                optionsText[randomOptions[2]] = currentPairList.get(1).getResourceText();
+
+                optionsAudio[randomOptions[0]] = g3l2QuestionData.get(optionsIds[0]).getNodelist().get(0).getResourceType();
+                optionsAudio[randomOptions[1]] = g3l2QuestionData.get(optionsIds[1]).getNodelist().get(1).getResourceType();
+                optionsAudio[randomOptions[2]] = g3l2QuestionData.get(1).getResourceType();
+                break;
+        }
         return optionsText;
     }
 
@@ -334,7 +367,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
         playMusic(optionsAudio[optionNo],getSdcardPath()+"Sounds/ActionGame/");
     }
 
-    @Override
+    /*@Override
     public String[] getOptions_g1_l2() {
         int[] optionsIds;
         int[] randomOptions;
@@ -362,7 +395,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
         optionsText[randomOptions[1]] = g3l2QuestionData.get(optionsIds[1]).getNodelist().get(1).getResourceText();
         optionsText[randomOptions[2]] = currentPairList.get(1).getResourceText();
         return optionsText;
-    }
+    }*/
 
     @Override
     public void g1_l1_checkAnswer(int imageViewNum, int currentTeam, boolean timeOut) {

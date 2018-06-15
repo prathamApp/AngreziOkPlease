@@ -418,7 +418,7 @@ public class BoleToh_G2_L2 extends BaseFragment implements BoleTohContract.BoleT
     @Override
     public void showOptions() {
         options.setVisibility(View.VISIBLE);
-        String[] options = presenter.getOptions();
+        String[] options = presenter.getOptions(2);
         option1.setText(options[0]);
         option2.setText(options[1]);
         option3.setText(options[2]);

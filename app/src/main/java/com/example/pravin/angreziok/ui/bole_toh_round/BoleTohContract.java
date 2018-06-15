@@ -56,12 +56,12 @@ public interface BoleTohContract {
 
         void setImage_gl_l2(String studentID);
 
-        String[] getOptions();
+        String[] getOptions(int game);
 
-        String[] getOptions_g1_l2();
+       /* String[] getOptions_g1_l2();
 
         String[] getOptions_g3_l2();
-
+*/
         void checkFinalAnswer_g2_l2(String ans, int currentTeam);
 
         void checkFinalAnswer_g1_l2(String ans, int currentTeam);
