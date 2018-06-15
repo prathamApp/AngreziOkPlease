@@ -56,7 +56,7 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
     ArrayList<String> resIdArray = new ArrayList<String>();
 
     int randomNumber, scoredMarks, totalMarks = 25, readQuestionNo;
-    String questionStartTime, studentID, resourceID, questionId,sdCardPathString,ttsQuestion;
+    String questionStartTime, studentID, resourceID, questionId,sdCardPathString,ttsQuestion,questionAudioPath;
     float speechRate = 1.0f;
 
     public SamajhKeBoloPresenterImpl(Context mContext) {
@@ -336,6 +336,7 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
         resourceID = g1l2CurrentQuestionList.get(0).getResourceId();
         questionId = resourceID;
         String imagePath = getSdcardPath() + "images/WhereGameL2/" + g1l2CurrentQuestionList.get(0).getResourceImage();
+        questionAudioPath = g1l2CurrentQuestionList.get(0).getResourceAudio();
         Log.d("imagePath", "setImage_gl_l2: " + imagePath);
         Toast.makeText(mContext, "actual ans: " + g1l2CurrentQuestionList.get(0).getResourceText(), Toast.LENGTH_SHORT).show();
         samajhKeBoloG1L2View.setQuestionImage(imagePath);
@@ -344,6 +345,11 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
     @Override
     public String getCurrentQuestion_g1_l2() {
         return g1l2CurrentQuestionList.get(randomNumber).getResourceQuestion();
+    }
+
+    @Override
+    public String getCurrentQuestionAudio() {
+        return questionAudioPath;
     }
 
     @Override
@@ -359,17 +365,6 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
                 samajhKeBoloG3L2View.timerInit();
             }
         });
-    }
-
-    @Override
-    public String[] getOptions_g1_l2() {
-        String[] options = new String[3];
-        options[0] = g1l2CurrentQuestionList.get(0).getResourceText();
-        options[1] = g1l2CurrentQuestionList.get(1).getResourceText();
-        options[2] = g1l2CurrentQuestionList.get(2).getResourceText();
-        List tempList = Arrays.asList(options);
-        Collections.shuffle(tempList);
-        return (String[]) tempList.toArray();
     }
 
     @Override
@@ -527,6 +522,32 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
         }
         addScore(studentID, resourceID, 0, scoredMarks, totalMarks, questionStartTime, 0);
         scoredMarks = 0;
+    }
+
+    @Override
+    public String[] getOptions_g1_l2() {
+        String[] options = new String[3];
+        options[0] = g1l2CurrentQuestionList.get(0).getResourceText();
+        options[1] = g1l2CurrentQuestionList.get(1).getResourceText();
+        options[2] = g1l2CurrentQuestionList.get(2).getResourceText();
+        return options;
+    }
+
+    @Override
+    public String[] getOptionsAudio() {
+        String[] options = new String[3];
+        options[0] = g1l2CurrentQuestionList.get(0).getResourceType();
+        options[1] = g1l2CurrentQuestionList.get(1).getResourceType();
+        options[2] = g1l2CurrentQuestionList.get(2).getResourceType();
+        return options;
+    }
+
+    @Override
+    public Integer[] getShuffledOptions() {
+        int[] optionsInt = new int[]{0,1,2};
+        List tempList = Arrays.asList(optionsInt);
+        Collections.shuffle(tempList);
+        return (Integer[]) tempList.toArray();
     }
 
     @Override

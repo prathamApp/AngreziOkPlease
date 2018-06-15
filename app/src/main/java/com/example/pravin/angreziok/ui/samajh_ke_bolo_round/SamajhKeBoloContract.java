@@ -31,7 +31,9 @@ public interface SamajhKeBoloContract {
         void g1_l2_checkAnswer(String ans);
         void checkFinalAnswer_g1_l2(String ans, int currentTeam);
         void playMusic(String fileName, String path);
-
+        String getCurrentQuestionAudio();
+        Integer[] getShuffledOptions();
+        String[] getOptionsAudio();
         void setWords_g2_l2(String studentID);
         String getCurrentQuestion_g2_l2();
         void set_g2_l2_data(String path);
