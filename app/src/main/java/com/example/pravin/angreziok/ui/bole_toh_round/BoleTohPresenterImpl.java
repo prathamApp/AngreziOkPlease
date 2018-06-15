@@ -171,7 +171,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
         try {
             int[] integerArray = getUniqueRandomNumber(0, g1l1QuestionData.size(), 4);
             readQuestionNo = getRandomNumber(0, 4);
-            String imagePath = sdCardPathString + "images/PicGame/";
+            String imagePath = sdCardPathString + "images/PictureGame/";
 
             resTextArray.clear();
             resIdArray.clear();
@@ -355,7 +355,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
 
             optionsAudio[randomOptions[0]] = g3l2QuestionData.get(optionsIds[0]).getNodelist().get(0).getResourceType();
             optionsAudio[randomOptions[1]] = g3l2QuestionData.get(optionsIds[1]).getNodelist().get(1).getResourceType();
-            optionsAudio[randomOptions[2]] = g3l2QuestionData.get(1).getResourceType();
+            optionsAudio[randomOptions[2]] = currentPairList.get(1).getResourceType();
         } else {
             optionsText[randomOptions[0]] = QuestionData.get(optionsIds[0]).getResourceText();
             optionsText[randomOptions[1]] = QuestionData.get(optionsIds[1]).getResourceText();
@@ -612,8 +612,8 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
         boleTohG1L2View.hideOptionView();
         randomNumber = getRandomNumber(0, g1l2QuestionData.size());
         String questionString = g1l2QuestionData.get(randomNumber).getResourceQuestion();
-        String imagePath = getSdcardPath() + "images/PicGameL2/" + g1l2QuestionData.get(randomNumber).getResourceImage();
-        questionAudioPath = getSdcardPath() + "Sounds/PicGame/" + g1l2QuestionData.get(randomNumber).getResourceAudio();
+        String imagePath = getSdcardPath() + "images/PictureGame/" + g1l2QuestionData.get(randomNumber).getResourceImage();
+        questionAudioPath = getSdcardPath() + "Sounds/PictureGame/" + g1l2QuestionData.get(randomNumber).getResourceAudio();
         Log.d("imagePath", "setImage_gl_l2: " + imagePath + "       SoundPath" + questionAudioPath);
         setQuestionStartTime();
         studentID = studId;
@@ -628,7 +628,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
     public void setImage_g2_l2(String studId) {
         boleTohG2L2View.hideOptionView();
         randomNumber = getRandomNumber(0, g2l2QuestionData.size());
-        String imagePath = getSdcardPath() + "images/ActionL2/" + g2l2QuestionData.get(randomNumber).getResourceImage();
+        String imagePath = getSdcardPath() + "images/ActionGame/" + g2l2QuestionData.get(randomNumber).getResourceImage();
         Toast.makeText(mContext, "actual ans: " + g2l2QuestionData.get(randomNumber).getResourceText(), Toast.LENGTH_SHORT).show();
         setQuestionStartTime();
         studentID = studId;
@@ -647,8 +647,8 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
         String path = getSdcardPath();
         currentPairList = g3l2QuestionData.get(randomNumber).getNodelist();
         Collections.shuffle(currentPairList);
-        String hintImagePath = path + "images/PairsGameL2/" + currentPairList.get(0).getResourceImage();
-        String questionImagePath = path + "images/PairsGameL2/" + currentPairList.get(1).getResourceImage();
+        String hintImagePath = path + "images/PairsGame/" + currentPairList.get(0).getResourceImage();
+        String questionImagePath = path + "images/PairsGame/" + currentPairList.get(1).getResourceImage();
         Toast.makeText(mContext, "Hint:::" + currentPairList.get(0).getResourceText(), Toast.LENGTH_SHORT).show();
         Toast.makeText(mContext, "Question:::" + currentPairList.get(1).getResourceText(), Toast.LENGTH_SHORT).show();
         setQuestionStartTime();

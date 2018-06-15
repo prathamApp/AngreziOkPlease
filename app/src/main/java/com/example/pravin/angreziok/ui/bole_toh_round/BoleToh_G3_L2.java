@@ -304,7 +304,7 @@ public class BoleToh_G3_L2 extends BaseFragment implements BoleTohContract.BoleT
             public void run() {
                 presenter.playMusic(questionHint[1], presenter.getSdcardPath() + "Sounds/PairsGame/");
             }
-        }, 2500);
+        }, 1800);
     }
 
     private void playAudioForQuestion() {
@@ -325,7 +325,10 @@ public class BoleToh_G3_L2 extends BaseFragment implements BoleTohContract.BoleT
 
     @OnClick(R.id.ib_r1g2_speaker)
     public void soundClicked() {
-        playTTS();
+        if (playingThroughTts)
+            playTTS();
+        else
+            playAudioForQuestion();
     }
 
     @OnClick(R.id.ib_r1g2_mic)
