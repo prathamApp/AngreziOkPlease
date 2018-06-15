@@ -77,7 +77,7 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
     @BindView(R.id.tv_game_title)
     TextView gameTitle;
 
-    String text, questionAudio;
+    String text;
     JodTodContract.JodTodPresenter presenter;
     int speechCount, currentTeam, score = 0, timeOfTimer = 20000;
     float totalAnsCounter = 0f, correctAnsCounter = 0f;
@@ -190,8 +190,7 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
                 if (playingThroughTts) {
                     initiateQuestion(question);
                 } else {
-                    questionAudio = presenter.getQuestionAudio();
-                    initiateQuestion(questionAudio);
+                    initiateQuestion(presenter.getQuestionAudio());
                 }
                 setQuestionDynamically(question);
             }
@@ -300,7 +299,7 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
         if (playingThroughTts)
             presenter.startTTS(text);
         else
-            presenter.playMusic("", questionAudio);
+            presenter.playMusic("", text);
     }
 
     private void startTimer() {
