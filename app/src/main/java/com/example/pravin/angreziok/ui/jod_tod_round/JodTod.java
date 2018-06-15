@@ -224,7 +224,6 @@ public class JodTod extends BaseActivity implements JodTodContract.JodTodView, M
         reInitiateScores();
         endSession();
         Intent qrScan = new Intent(this, QRActivity.class);
-        System.exit(0);
         finishAffinity();
         startActivity(qrScan);
     }
@@ -273,7 +272,6 @@ public class JodTod extends BaseActivity implements JodTodContract.JodTodView, M
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("playerModalArrayList", jodTodPlayerList);
         dataConfirmationIntent.putExtras(bundle);
-        System.exit(0);
         finishAffinity();
         startActivity(dataConfirmationIntent);
     }

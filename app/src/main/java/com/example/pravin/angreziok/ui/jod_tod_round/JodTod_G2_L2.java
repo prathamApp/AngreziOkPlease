@@ -100,6 +100,7 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
+        playingThroughTts = false;
         presenter = new JodTodPresenterImpl(getActivity(), this, ttsService);
         presenter.set_g2_data(2);
         setInitialScores();
@@ -186,12 +187,12 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
                 totalAnsCounter = 0;
                 correctAnsCounter = 0;
                 String question = presenter.g2_l2_getQuestionText(studentID);
-                if (!playingThroughTts) {
+                if (playingThroughTts) {
+                    initiateQuestion(question);
+                } else {
                     questionAudio = presenter.getQuestionAudio();
                     initiateQuestion(questionAudio);
-                } else
-                    initiateQuestion(question);
-
+                }
                 setQuestionDynamically(question);
             }
         });
