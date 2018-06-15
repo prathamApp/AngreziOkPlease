@@ -408,7 +408,7 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
 
     @OnClick(R.id.ib_g1_l2_speaker)
     public void soundClicked() {
-        presenter.startTTS(text);
+        playTTS();
     }
 
     @Override
