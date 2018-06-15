@@ -94,6 +94,9 @@ public class SamajhKeBolo_G1_L2 extends BaseFragment implements SamajhKeBoloCont
     SamajhKeBoloContract.SamajhKeBoloPresenter presenter;
     int speechCount, currentTeam;
     Dialog dialog;
+    String[] optionsAudio;
+    Integer[] shuffledOptions;
+    boolean playingThroughTts = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -246,8 +249,12 @@ public class SamajhKeBolo_G1_L2 extends BaseFragment implements SamajhKeBoloCont
     @Override
     public void initiateQuestion() {
         startTimer();
-        text = presenter.getCurrentQuestion_g1_l2();
-        questionText.setText(text);
+        if (playingThroughTts)
+            text = presenter.getCurrentQuestion_g1_l2();
+        else
+            text = presenter.getCurrentQuestionAudio();
+
+        questionText.setText(presenter.getCurrentQuestion_g1_l2());
         playTTS();
     }
 
@@ -258,7 +265,10 @@ public class SamajhKeBolo_G1_L2 extends BaseFragment implements SamajhKeBoloCont
     }
 
     private void playTTS() {
-        presenter.startTTS(text);
+        if (playingThroughTts)
+            presenter.startTTS(text);
+        else
+            presenter.playMusic(text,presenter.getSdcardPath()+"Sounds/WhereGame/");
     }
 
     private void startTimer() {
@@ -275,7 +285,7 @@ public class SamajhKeBolo_G1_L2 extends BaseFragment implements SamajhKeBoloCont
 
     @OnClick(R.id.ib_g1_l2_speaker)
     public void soundClicked() {
-        presenter.startTTS(text);
+        playTTS();
     }
 
     @OnClick(R.id.ib_g1_l2_mic)
@@ -287,12 +297,33 @@ public class SamajhKeBolo_G1_L2 extends BaseFragment implements SamajhKeBoloCont
             Toast.makeText(getActivity(), "Can be used only 2 Times", Toast.LENGTH_SHORT).show();
     }
 
-    @OnClick({R.id.option1, R.id.option2, R.id.option3})
-    public void optionsClicked(View view) {
+    @OnClick(R.id.option1)
+    public void option1Clicked(View view) {
         // TTS for the options clicked
         TextView option = (TextView) view;
-        answer.setText(option.getText() + "");
-        presenter.startTTS(option.getText() + "");
+        playOptions(0,option.getText()+"");
+    }
+
+    @OnClick(R.id.option2)
+    public void option2Clicked(View view) {
+        // TTS for the options clicked
+        TextView option = (TextView) view;
+        playOptions(1,option.getText()+"");
+    }
+
+    @OnClick(R.id.option3)
+    public void option3Clicked(View view) {
+        // TTS for the options clicked
+        TextView option = (TextView) view;
+        playOptions(2,option.getText()+"");
+    }
+
+    public void playOptions(int optionNo,String optionText){
+        answer.setText(optionText);
+        if (playingThroughTts)
+            presenter.startTTS(optionText);
+        else
+            presenter.playMusic(optionsAudio[optionNo],presenter.getSdcardPath()+"Sounds/WhereGame/");
     }
 
     @OnClick(R.id.iv_g1_l2_submit_ans)
@@ -366,10 +397,12 @@ public class SamajhKeBolo_G1_L2 extends BaseFragment implements SamajhKeBoloCont
      @Override
      public void showOptions_g1_l2() {
          options.setVisibility(View.VISIBLE);
+         shuffledOptions = presenter.getShuffledOptions();
          String[] options = presenter.getOptions_g1_l2();
-         option1.setText(options[0]);
-         option2.setText(options[1]);
-         option3.setText(options[2]);
+         optionsAudio = presenter.getOptionsAudio();
+         option1.setText(options[shuffledOptions[0]]);
+         option2.setText(options[shuffledOptions[1]]);
+         option3.setText(options[shuffledOptions[2]]);
      }
 
     @Override
