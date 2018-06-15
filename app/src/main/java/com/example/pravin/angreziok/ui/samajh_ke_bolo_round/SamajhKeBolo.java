@@ -217,7 +217,6 @@ public class SamajhKeBolo extends BaseActivity implements SamajhKeBoloContract.S
         reInitiateScores();
         endSession();
         Intent qrScan = new Intent(this, QRActivity.class);
-        System.exit(0);
         finishAffinity();
         startActivity(qrScan);
     }
@@ -266,7 +265,6 @@ public class SamajhKeBolo extends BaseActivity implements SamajhKeBoloContract.S
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("playerModalArrayList", playerModalArrayList);
         dataConfirmationIntent.putExtras(bundle);
-        System.exit(0);
         finishAffinity();
         startActivity(dataConfirmationIntent);
     }
