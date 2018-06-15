@@ -30,7 +30,6 @@ import com.example.pravin.angreziok.util.PD_Utility;
 import com.github.anastr.flattimelib.CountDownTimerView;
 import com.github.anastr.flattimelib.intf.OnTimeFinish;
 
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -80,8 +79,8 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
 
     String text, questionAudio;
     JodTodContract.JodTodPresenter presenter;
-    int speechCount, currentTeam, score = 0,timeOfTimer=20000;
-    float totalAnsCounter=0f,correctAnsCounter=0f;
+    int speechCount, currentTeam, score = 0, timeOfTimer = 20000;
+    float totalAnsCounter = 0f, correctAnsCounter = 0f;
     Dialog dialog;
     boolean timerEnd = false, playingThroughTts = false;
     ;
@@ -106,8 +105,8 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
         setInitialScores();
         setDataForGame();
         currentTeam = 0;
-        totalAnsCounter=0;
-        correctAnsCounter=0;
+        totalAnsCounter = 0;
+        correctAnsCounter = 0;
         showDialog();
     }
 
@@ -174,7 +173,7 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
         sttOptions.setVisibility(View.GONE);
         flowLayout.removeAllViews();
 
-        timerEnd=false;
+        timerEnd = false;
 
         dialog.show();
 
@@ -184,12 +183,15 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                totalAnsCounter=0;
-                correctAnsCounter=0;
+                totalAnsCounter = 0;
+                correctAnsCounter = 0;
                 String question = presenter.g2_l2_getQuestionText(studentID);
-                if (!playingThroughTts)
+                if (!playingThroughTts) {
                     questionAudio = presenter.getQuestionAudio();
-                initiateQuestion(question);
+                    initiateQuestion(questionAudio);
+                } else
+                    initiateQuestion(question);
+
                 setQuestionDynamically(question);
             }
         });
@@ -232,7 +234,7 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
                 .setTimeToLive(1500L)
                 .addShapes(Shape.RECT, Shape.CIRCLE)
                 .addSizes(new Size(12, 5f))
-                .setPosition(-50f, + 50f, -50f, -50f)
+                .setPosition(-50f, +50f, -50f, -50f)
                 .stream(500, 1000L);
     }
 
@@ -265,11 +267,11 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
         textView.setHeight(50);
         textView.setWidth(flowLayout.getWidth());
         Log.d("changeColor", "Ques : " + text + "    setAnswer : " + ans + "    sttWord : " + sttWord);
-        totalAnsCounter+=1;
+        totalAnsCounter += 1;
 
         if (ans.equalsIgnoreCase("true") && !match) {
             textView.setTextColor(Color.GREEN);
-            correctAnsCounter+=1;
+            correctAnsCounter += 1;
             score += 5;
             presenter.setCurrentScore(5);
         } else {
@@ -289,12 +291,15 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
     }
 
     @Override
-    public void setQuestionText(String questionString){
+    public void setQuestionText(String questionString) {
         showQuestion.setText(questionString);
     }
 
     private void playTTS() {
-        presenter.startTTS(text);
+        if (playingThroughTts)
+            presenter.startTTS(text);
+        else
+            presenter.playMusic("", questionAudio);
     }
 
     private void startTimer() {
@@ -303,7 +308,8 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
         mCountDownTimer.setOnEndAnimationFinish(new OnTimeFinish() {
             @Override
             public void onFinish() {
-                timerEnd=true;submitAns();
+                timerEnd = true;
+                submitAns();
             }
         });
         JodTod.animateView(mCountDownTimer, getActivity());
@@ -314,11 +320,11 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
         submitAnswer.setClickable(false);
         mCountDownTimer.pause();
 //       TODO Check answer  presenter.checkFinalAnswer_g1_l2(answer.getText().toString(), currentTeam);
-        float finalPercentage=0f;
+        float finalPercentage = 0f;
         Log.d("finalPercentage", "correctAnsCounter: " + correctAnsCounter);
         Log.d("finalPercentage", "totalAnsCounter: " + totalAnsCounter);
 
-        if(correctAnsCounter>0 && totalAnsCounter>0)
+        if (correctAnsCounter > 0 && totalAnsCounter > 0)
             finalPercentage = (correctAnsCounter / totalAnsCounter) * 100f;
         String currScore = "" + score;
         Log.d("finalPercentage", "finalPercentage: " + finalPercentage);
@@ -354,7 +360,7 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
                                 bundle, fragment_intro_character.class.getSimpleName());
                     } else {
                         Intent intent = new Intent(getActivity(), SamajhKeBolo.class);
-                        intent.putExtra("level","L2");
+                        intent.putExtra("level", "L2");
                         bundle.putParcelableArrayList("playerModalArrayList", jodTodPlayerList);
                         intent.putExtras(bundle);
                         startActivity(intent);
@@ -380,8 +386,8 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
     @Override
     public void onResult(String result) {
         sttOptions.setVisibility(View.VISIBLE);
-        Log.d("JodTod", "STTResult: "+result);
-        if(!timerEnd)
+        Log.d("JodTod", "STTResult: " + result);
+        if (!timerEnd)
             presenter.g2_l2_checkAnswer(result);
     }
 

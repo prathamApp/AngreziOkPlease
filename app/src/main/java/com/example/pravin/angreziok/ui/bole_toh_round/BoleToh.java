@@ -220,6 +220,7 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
         reInitiateScores();
         endSession();
         Intent qrScan = new Intent(this, QRActivity.class);
+        System.exit(0);
         finishAffinity();
         startActivity(qrScan);
     }
@@ -269,6 +270,7 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("playerModalArrayList", playerModalArrayList);
         dataConfirmationIntent.putExtras(bundle);
+        System.exit(0);
         finishAffinity();
         startActivity(dataConfirmationIntent);
     }
