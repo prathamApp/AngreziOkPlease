@@ -233,6 +233,7 @@ public class ResultScreen extends BaseActivity {
         reInitiateScores();
         endSession();
         Intent qrScan = new Intent(this, QRActivity.class);
+        System.exit(0);
         finishAffinity();
         startActivity(qrScan);
     }
@@ -285,6 +286,7 @@ public class ResultScreen extends BaseActivity {
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("playerModalArrayList", playerModalArrayList);
         dataConfirmationIntent.putExtras(bundle);
+        System.exit(0);
         finishAffinity();
         startActivity(dataConfirmationIntent);
     }
