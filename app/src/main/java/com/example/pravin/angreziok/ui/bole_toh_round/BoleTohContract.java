@@ -28,7 +28,7 @@ public interface BoleTohContract {
 
         void playMusic(String filename, String path);
 
-        void playOptionAudio(int optionNo);
+        void playOptionAudio(int optionNo, int gameNo);
 
         String getQuestionAudio();
 
@@ -80,6 +80,9 @@ public interface BoleTohContract {
 
         String getCurrentHint();
 
+        String[] getCurrentHintAudio();
+
+        String getCurrentQuestionAudio();
     }
 
     interface BoleToh_G1_L1_View {

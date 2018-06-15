@@ -255,7 +255,7 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
         if (level == 1)
             jodTodG2L1View.setGameTitleFromJson(gameTitle);
         else
-            jodTodG2L1View.setGameTitleFromJson(gameTitle);
+            jodTodG2L2View.setGameTitleFromJson(gameTitle);
     }
 
     @Override

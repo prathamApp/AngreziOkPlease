@@ -92,11 +92,13 @@ public class BoleToh_G3_L2 extends BaseFragment implements BoleTohContract.BoleT
     @BindView(R.id.tv_game_title)
     TextView gameTitle;
 
-    String text;
+    String text, questionAudio;
+    String[] questionHint;
     BoleTohContract.BoleTohPresenter presenter;
     int speechCount, currentTeam, timeOfTimer = 20000;
     Dialog dialog;
     Handler handler;
+    boolean playingThroughTts = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -254,17 +256,28 @@ public class BoleToh_G3_L2 extends BaseFragment implements BoleTohContract.BoleT
     public void initiateQuestion() {
         startTimer();
         bounceView(hintImage);
-        text = presenter.getCurrentHint();
-        playTTS();
+        questionHint = new String[2];
+        if (playingThroughTts) {
+            text = presenter.getCurrentHint();
+            playTTS();
+        } else {
+            questionHint = presenter.getCurrentHintAudio();
+            playAudioForHint();
+        }
         handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 bounceView(questionImage);
-                text = presenter.getCurrentQuestion();
-                playTTS();
+                if (playingThroughTts) {
+                    text = presenter.getCurrentQuestion();
+                    playTTS();
+                } else {
+                    questionAudio = presenter.getCurrentQuestionAudio();
+                    playAudioForQuestion();
+                }
             }
-        }, 2500);
+        }, 4000);
     }
 
     private void setDataForGame() {
@@ -283,6 +296,21 @@ public class BoleToh_G3_L2 extends BaseFragment implements BoleTohContract.BoleT
         presenter.startTTS(text);
     }
 
+    private void playAudioForHint() {
+        presenter.playMusic(questionHint[0], presenter.getSdcardPath() + "Sounds/PairsGame/");
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                presenter.playMusic(questionHint[1], presenter.getSdcardPath() + "Sounds/PairsGame/");
+            }
+        }, 2500);
+    }
+
+    private void playAudioForQuestion() {
+        presenter.playMusic(questionAudio, presenter.getSdcardPath() + "Sounds/PairsGame/");
+    }
+
     private void startTimer() {
         mCountDownTimer.ready();
         mCountDownTimer.start(timeOfTimer);
@@ -297,7 +325,7 @@ public class BoleToh_G3_L2 extends BaseFragment implements BoleTohContract.BoleT
 
     @OnClick(R.id.ib_r1g2_speaker)
     public void soundClicked() {
-        presenter.startTTS(text);
+        playTTS();
     }
 
     @OnClick(R.id.ib_r1g2_mic)
@@ -309,12 +337,33 @@ public class BoleToh_G3_L2 extends BaseFragment implements BoleTohContract.BoleT
             Toast.makeText(getActivity(), "Can be used only 2 Times", Toast.LENGTH_SHORT).show();
     }
 
-    @OnClick({R.id.option1, R.id.option2, R.id.option3})
-    public void optionsClicked(View view) {
+    @OnClick(R.id.option1)
+    public void option1Clicked(View view) {
         // TTS for the options clicked
         TextView option = (TextView) view;
-        answer.setText(option.getText() + "");
-        presenter.startTTS(option.getText() + "");
+        playOptions(0,option.getText()+"");
+    }
+
+    @OnClick(R.id.option2)
+    public void option2Clicked(View view) {
+        // TTS for the options clicked
+        TextView option = (TextView) view;
+        playOptions(1,option.getText()+"");
+    }
+
+    @OnClick(R.id.option3)
+    public void option3Clicked(View view) {
+        // TTS for the options clicked
+        TextView option = (TextView) view;
+        playOptions(2,option.getText()+"");
+    }
+
+    public void playOptions(int optionNo,String optionText){
+        answer.setText(optionText);
+        if (playingThroughTts)
+            presenter.startTTS(optionText);
+        else
+            presenter.playOptionAudio(optionNo,3);
     }
 
     @OnClick(R.id.iv_r1g2_submit_ans)
@@ -352,7 +401,7 @@ public class BoleToh_G3_L2 extends BaseFragment implements BoleTohContract.BoleT
                                 bundle, fragment_intro_character.class.getSimpleName());
                     } else {
                         Intent intent = new Intent(getActivity(), JodTod.class);
-                        intent.putExtra("level","L2");
+                        intent.putExtra("level", "L2");
                         bundle.putParcelableArrayList("playerModalArrayList", playerModalArrayList);
                         intent.putExtras(bundle);
                         startActivity(intent);

@@ -90,7 +90,7 @@ public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleT
     @BindView(R.id.tv_game_title)
     TextView gameTitle;
 
-    String text,audioPath;
+    String text, questionAudio;
     BoleTohContract.BoleTohPresenter presenter;
     int speechCount, currentTeam, timeOfTimer = 20000;
     Dialog dialog;
@@ -189,8 +189,8 @@ public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleT
                 dialog.dismiss();
                 presenter.setImage_gl_l2(studentID);
                 if (!playingThroughTts)
-                    audioPath = presenter.getQuestionAudio();
-                initiateQuestion(audioPath);
+                    questionAudio = presenter.getQuestionAudio();
+                initiateQuestion(questionAudio);
             }
         });
 
@@ -251,7 +251,7 @@ public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleT
         if (playingThroughTts) {
             text = questionString;
         }
-        playTTS(questionString);
+        playTTS();
     }
 
     private void setDataForGame() {
@@ -260,12 +260,12 @@ public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleT
     }
 
 
-    private void playTTS(String questionString) {
+    private void playTTS() {
         if (playingThroughTts) {
-            presenter.startTTS(questionString);
+            presenter.startTTS(text);
         }
         else
-            presenter.playMusic("", audioPath);
+            presenter.playMusic("", questionAudio);
     }
 
     @Override
@@ -288,7 +288,7 @@ public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleT
 
     @OnClick(R.id.ib_g1_l2_speaker)
     public void soundClicked() {
-        presenter.startTTS(text);
+        playTTS();
     }
 
     @OnClick(R.id.ib_g1_l2_mic)
@@ -300,12 +300,33 @@ public class BoleToh_G1_L2 extends BaseFragment implements BoleTohContract.BoleT
             Toast.makeText(getActivity(), "Can be used only 2 Times", Toast.LENGTH_SHORT).show();
     }
 
-    @OnClick({R.id.option1, R.id.option2, R.id.option3})
-    public void optionsClicked(View view) {
+    @OnClick(R.id.option1)
+    public void option1Clicked(View view) {
         // TTS for the options clicked
         TextView option = (TextView) view;
-        answer.setText(option.getText() + "");
-        presenter.startTTS(option.getText() + "");
+        playOptions(0,option.getText()+"");
+    }
+
+    @OnClick(R.id.option2)
+    public void option2Clicked(View view) {
+        // TTS for the options clicked
+        TextView option = (TextView) view;
+        playOptions(1,option.getText()+"");
+    }
+
+    @OnClick(R.id.option3)
+    public void option3Clicked(View view) {
+        // TTS for the options clicked
+        TextView option = (TextView) view;
+        playOptions(2,option.getText()+"");
+    }
+
+    public void playOptions(int optionNo,String optionText){
+        answer.setText(optionText);
+        if (playingThroughTts)
+            presenter.startTTS(optionText);
+        else
+            presenter.playOptionAudio(optionNo,1);
     }
 
     @OnClick(R.id.iv_g1_l2_submit_ans)

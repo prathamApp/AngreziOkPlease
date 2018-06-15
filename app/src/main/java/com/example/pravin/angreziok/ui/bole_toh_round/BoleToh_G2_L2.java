@@ -333,7 +333,7 @@ public class BoleToh_G2_L2 extends BaseFragment implements BoleTohContract.BoleT
         if (playingThroughTts)
             presenter.startTTS(optionText);
         else
-            presenter.playOptionAudio(optionNo);
+            presenter.playOptionAudio(optionNo,2);
     }
 
     @OnClick(R.id.iv_r1g2_submit_ans)

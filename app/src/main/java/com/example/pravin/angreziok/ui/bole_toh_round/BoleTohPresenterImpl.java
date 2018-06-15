@@ -171,7 +171,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
         try {
             int[] integerArray = getUniqueRandomNumber(0, g1l1QuestionData.size(), 4);
             readQuestionNo = getRandomNumber(0, 4);
-            String imagePath = sdCardPathString + "images/PicGameL2/";
+            String imagePath = sdCardPathString + "images/PicGame/";
 
             resTextArray.clear();
             resIdArray.clear();
@@ -205,7 +205,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
         try {
             int[] integerArray = getUniqueRandomNumber(0, g2l2QuestionData.size(), 4);
             readQuestionNo = getRandomNumber(0, 4);
-            String imagePath = sdCardPathString + "images/ActionL2/";
+            String imagePath = sdCardPathString + "images/ActionGame/";
 
             resTextArray.clear();
             resIdArray.clear();
@@ -238,11 +238,11 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
     public void showImagesG3L1(String path, String studId) {
         try {
             readQuestionNo = getRandomNumber(0, g3l2QuestionData.size());
-            currentPairList =  g3l2QuestionData.get(readQuestionNo).getNodelist();
-            readQuestionNo= getRandomNumber(0, currentPairList.size());
+            currentPairList = g3l2QuestionData.get(readQuestionNo).getNodelist();
+            readQuestionNo = getRandomNumber(0, currentPairList.size());
             Collections.shuffle(currentPairList);
             int[] integerArray = getUniqueRandomNumber(0, currentPairList.size(), 2);
-            String imagePath = sdCardPathString + "images/PairsGameL2/";
+            String imagePath = sdCardPathString + "images/PairsGame/";
 
             resTextArray.clear();
             resIdArray.clear();
@@ -312,17 +312,17 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
 
     @Override
     public String[] getOptions(int game) {
-        int[] optionsIds=null;
+        int[] optionsIds = null;
         int[] randomOptions;
         do {
-            switch(game){
-                case 1 :
+            switch (game) {
+                case 1:
                     optionsIds = getUniqueRandomNumber(0, g1l2QuestionData.size(), 2);
                     break;
-                case 2 :
+                case 2:
                     optionsIds = getUniqueRandomNumber(0, g2l2QuestionData.size(), 2);
                     break;
-                case 3 :
+                case 3:
                     optionsIds = getUniqueRandomNumber(0, g3l2QuestionData.size(), 2);
                     break;
             }
@@ -330,41 +330,59 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
         String[] optionsText = new String[3];
         randomOptions = getUniqueRandomNumber(0, 3, 3);
 
-        switch(game) {
+        switch (game) {
             case 1:
-                optionsText[randomOptions[0]] = g1l2QuestionData.get(optionsIds[0]).getResourceText();
-                optionsText[randomOptions[1]] = g1l2QuestionData.get(optionsIds[1]).getResourceText();
-                optionsText[randomOptions[2]] = g1l2QuestionData.get(randomNumber).getResourceText();
-
-                optionsAudio[randomOptions[0]] = g1l2QuestionData.get(optionsIds[0]).getResourceType();
-                optionsAudio[randomOptions[1]] = g1l2QuestionData.get(optionsIds[1]).getResourceType();
-                optionsAudio[randomOptions[2]] = g1l2QuestionData.get(randomNumber).getResourceType();
+                optionsText = getOptionTextFilled(randomOptions, optionsIds, g1l2QuestionData, game);
                 break;
             case 2:
-                optionsText[randomOptions[0]] = g2l2QuestionData.get(optionsIds[0]).getResourceText();
-                optionsText[randomOptions[1]] = g2l2QuestionData.get(optionsIds[1]).getResourceText();
-                optionsText[randomOptions[2]] = g2l2QuestionData.get(randomNumber).getResourceText();
-
-                optionsAudio[randomOptions[0]] = g2l2QuestionData.get(optionsIds[0]).getResourceType();
-                optionsAudio[randomOptions[1]] = g2l2QuestionData.get(optionsIds[1]).getResourceType();
-                optionsAudio[randomOptions[2]] = g2l2QuestionData.get(randomNumber).getResourceType();
+                optionsText = getOptionTextFilled(randomOptions, optionsIds, g2l2QuestionData, game);
                 break;
             case 3:
-                optionsText[randomOptions[0]] = g3l2QuestionData.get(optionsIds[0]).getNodelist().get(0).getResourceText();
-                optionsText[randomOptions[1]] = g3l2QuestionData.get(optionsIds[1]).getNodelist().get(1).getResourceText();
-                optionsText[randomOptions[2]] = currentPairList.get(1).getResourceText();
-
-                optionsAudio[randomOptions[0]] = g3l2QuestionData.get(optionsIds[0]).getNodelist().get(0).getResourceType();
-                optionsAudio[randomOptions[1]] = g3l2QuestionData.get(optionsIds[1]).getNodelist().get(1).getResourceType();
-                optionsAudio[randomOptions[2]] = g3l2QuestionData.get(1).getResourceType();
+                optionsText = getOptionTextFilled(randomOptions, optionsIds, g3l2QuestionData, game);
                 break;
         }
         return optionsText;
     }
 
+    private String[] getOptionTextFilled(int[] randomOptions, int[] optionsIds, List<GenericModalGson> QuestionData, int gameNo) {
+
+        String[] optionsText = new String[3];
+
+        if (gameNo == 3) {
+            optionsText[randomOptions[0]] = g3l2QuestionData.get(optionsIds[0]).getNodelist().get(0).getResourceText();
+            optionsText[randomOptions[1]] = g3l2QuestionData.get(optionsIds[1]).getNodelist().get(1).getResourceText();
+            optionsText[randomOptions[2]] = currentPairList.get(1).getResourceText();
+
+            optionsAudio[randomOptions[0]] = g3l2QuestionData.get(optionsIds[0]).getNodelist().get(0).getResourceType();
+            optionsAudio[randomOptions[1]] = g3l2QuestionData.get(optionsIds[1]).getNodelist().get(1).getResourceType();
+            optionsAudio[randomOptions[2]] = g3l2QuestionData.get(1).getResourceType();
+        } else {
+            optionsText[randomOptions[0]] = QuestionData.get(optionsIds[0]).getResourceText();
+            optionsText[randomOptions[1]] = QuestionData.get(optionsIds[1]).getResourceText();
+            optionsText[randomOptions[2]] = QuestionData.get(randomNumber).getResourceText();
+
+            optionsAudio[randomOptions[0]] = QuestionData.get(optionsIds[0]).getResourceType();
+            optionsAudio[randomOptions[1]] = QuestionData.get(optionsIds[1]).getResourceType();
+            optionsAudio[randomOptions[2]] = QuestionData.get(randomNumber).getResourceType();
+        }
+        return optionsText;
+    }
+
     @Override
-    public void playOptionAudio(int optionNo){
-        playMusic(optionsAudio[optionNo],getSdcardPath()+"Sounds/ActionGame/");
+    public void playOptionAudio(int optionNo, int gameNo) {
+        switch (gameNo) {
+            case 1:
+                playMusic(optionsAudio[optionNo], getSdcardPath() + "Sounds/PictureGame/");
+                break;
+
+            case 2:
+                playMusic(optionsAudio[optionNo], getSdcardPath() + "Sounds/ActionGame/");
+                break;
+
+            case 3:
+                playMusic(optionsAudio[optionNo], getSdcardPath() + "Sounds/PairsGame/");
+                break;
+        }
     }
 
     /*@Override
@@ -574,9 +592,20 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
     }
 
     @Override
+    public String getCurrentQuestionAudio() {
+        return currentPairList.get(1).getResourceAudio();
+    }
+
+    @Override
     public String getCurrentHint() {
         return currentPairList.get(0).getResourceQuestion() + "," + currentPairList.get(0).getResourceText();
     }
+
+    @Override
+    public String[] getCurrentHintAudio() {
+        return new String[]{currentPairList.get(0).getResourceAudio(),currentPairList.get(0).getResourceType()};
+    }
+
 
     @Override
     public void setImage_gl_l2(String studId) {
@@ -585,7 +614,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
         String questionString = g1l2QuestionData.get(randomNumber).getResourceQuestion();
         String imagePath = getSdcardPath() + "images/PicGameL2/" + g1l2QuestionData.get(randomNumber).getResourceImage();
         questionAudioPath = getSdcardPath() + "Sounds/PicGame/" + g1l2QuestionData.get(randomNumber).getResourceAudio();
-        Log.d("imagePath", "setImage_gl_l2: " + imagePath+"       SoundPath"+ questionAudioPath);
+        Log.d("imagePath", "setImage_gl_l2: " + imagePath + "       SoundPath" + questionAudioPath);
         setQuestionStartTime();
         studentID = studId;
         resourceID = g1l2QuestionData.get(randomNumber).getResourceId();
@@ -608,7 +637,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
         boleTohG2L2View.setActionGif(imagePath);
         String questionString = g2l2QuestionData.get(randomNumber).getResourceQuestion();
         String questionAudio = g2l2QuestionData.get(randomNumber).getResourceAudio();
-        boleTohG2L2View.setQuestionText(questionString,questionAudio);
+        boleTohG2L2View.setQuestionText(questionString, questionAudio);
     }
 
     @Override
