@@ -39,7 +39,7 @@ public class BaseActivity extends AppCompatActivity {
         ttsService.setActivity(this);
         ttsService.setSpeechRate(0.7f);
         ttsService.setLanguage(new Locale("en", "IN"));
-        sttService = STTService.init(this);
+        sttService = STTService.init(getApplicationContext());
         appDatabase = Room.databaseBuilder(this,
                 AppDatabase.class, AppDatabase.DB_NAME)
                 .build();
@@ -139,5 +139,11 @@ public class BaseActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         ActivityResumed();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d("onstart::","onstart::");
     }
 }
