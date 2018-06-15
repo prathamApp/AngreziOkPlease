@@ -78,12 +78,13 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
     @BindView(R.id.tv_game_title)
     TextView gameTitle;
 
-    String text;
+    String text, questionAudio;
     JodTodContract.JodTodPresenter presenter;
     int speechCount, currentTeam, score = 0,timeOfTimer=20000;
     float totalAnsCounter=0f,correctAnsCounter=0f;
     Dialog dialog;
-    boolean timerEnd = false;
+    boolean timerEnd = false, playingThroughTts = false;
+    ;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -186,6 +187,8 @@ public class JodTod_G2_L2 extends BaseFragment implements JodTodContract.JodTod_
                 totalAnsCounter=0;
                 correctAnsCounter=0;
                 String question = presenter.g2_l2_getQuestionText(studentID);
+                if (!playingThroughTts)
+                    questionAudio = presenter.getQuestionAudio();
                 initiateQuestion(question);
                 setQuestionDynamically(question);
             }

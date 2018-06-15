@@ -44,6 +44,7 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
     JodTodContract.JodTod_G3_L2_View jodTodG3L2View;
     JodTodContract.JodTod_G2_L1_View jodTodG2L1View;
     public TTSService ttsService;
+    String questionAudioPath;
     GenericModalGson gsonListenAndSpellGameData, gsonAlphabetGameData, gsonRhymeGameData;
     List<GenericModalGson> g3l2QuestionData, g1l2QuestionData, g2l2QuestionData, g2l2SubList, g1l1QuestionData, g1l1SubData;
     int randomNumber1, randomNumber, readQuestionNo;
@@ -257,6 +258,12 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
         else
             jodTodG2L2View.setGameTitleFromJson(gameTitle);
     }
+
+    @Override
+    public String getQuestionAudio() {
+        return questionAudioPath;
+    }
+
 
     @Override
     public void g1_l2_checkAnswer(String ans) {

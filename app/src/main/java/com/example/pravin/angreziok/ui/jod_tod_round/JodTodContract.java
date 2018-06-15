@@ -20,6 +20,8 @@ public interface JodTodContract {
 
         void readQuestion(int questionToRead);
 
+        String getQuestionAudio();
+
         void readLetter(int questionToRead);
 
         void g1_l1_checkAnswer(int imageViewNum, int currentTeam, boolean timeOut);
