@@ -121,6 +121,8 @@ public interface BoleTohContract {
         void setCurrentScore();
 
         void setGameTitleFromJson(String gameName);
+
+        void setQuestion(String correctAns);
     }
 
     interface BoleToh_G1_L2_View {
