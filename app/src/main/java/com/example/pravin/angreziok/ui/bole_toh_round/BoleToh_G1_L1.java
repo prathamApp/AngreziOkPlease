@@ -230,7 +230,6 @@ public class BoleToh_G1_L1 extends BaseFragment implements BoleTohContract.BoleT
         button.setText("Ready ??");
 
         dialog.show();
-
         Button scanNextQR = dialog.findViewById(R.id.dialog_btn_scan_qr);
 
         scanNextQR.setOnClickListener(new View.OnClickListener() {
@@ -242,7 +241,6 @@ public class BoleToh_G1_L1 extends BaseFragment implements BoleTohContract.BoleT
                 presenter.showImagesG1L1(path,studentID);
             }
         });
-
     }
 
     private void setOnClickListeners() {
