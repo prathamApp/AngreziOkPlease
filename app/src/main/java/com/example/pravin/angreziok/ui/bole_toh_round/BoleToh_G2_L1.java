@@ -85,6 +85,8 @@ public class BoleToh_G2_L1 extends BaseFragment implements BoleTohContract.BoleT
     KonfettiView konfettiView;
     @BindView(R.id.tv_game_title)
     TextView gameTitle;
+    @BindView(R.id.tv_question)
+    TextView gameQuestion;
 
     int questionConter = 0;
 
@@ -336,9 +338,14 @@ public class BoleToh_G2_L1 extends BaseFragment implements BoleTohContract.BoleT
         }
     }
 
+    @Override
+    public void setQuestion(String correctAns) {
+        gameQuestion.setText("Where is "+correctAns+" ?");
+    }
+
     @OnClick(R.id.ib_r1g1_speaker)
     public void playQuestion() {
-        presenter.replayQuestionroundone();
+        presenter.playQuestionAudio(2);
     }
 
     @Override
@@ -354,7 +361,7 @@ public class BoleToh_G2_L1 extends BaseFragment implements BoleTohContract.BoleT
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    presenter.readQuestion(readQuesNo);
+                    presenter.playQuestionAudio(2);
                 }
             }, 500);
         } catch (Exception e) {

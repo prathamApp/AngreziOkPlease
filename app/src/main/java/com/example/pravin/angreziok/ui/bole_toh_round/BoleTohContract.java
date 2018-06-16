@@ -60,10 +60,10 @@ public interface BoleTohContract {
 
         String[] getOptions(int game);
 
-       /* String[] getOptions_g1_l2();
+        /* String[] getOptions_g1_l2();
 
-        String[] getOptions_g3_l2();
-*/
+         String[] getOptions_g3_l2();
+ */
         void checkFinalAnswer_g2_l2(String ans, int currentTeam);
 
         void checkFinalAnswer_g1_l2(String ans, int currentTeam);
@@ -109,6 +109,8 @@ public interface BoleTohContract {
         void setCurrentScore();
 
         void setGameTitleFromJson(String gameName);
+
+        void setQuestion(String correctAns);
     }
 
     interface BoleToh_G3_L1_View {
