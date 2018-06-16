@@ -78,7 +78,6 @@ public class SamajhKeBolo_G1_L1 extends BaseFragment implements SamajhKeBoloCont
     @BindView(R.id.tv_game_title)
     TextView gameTitle;
 
-
     int questionConter = 0;
 
     SamajhKeBoloContract.SamajhKeBoloPresenter presenter;

@@ -425,6 +425,13 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
     }
 
     @Override
+    public String g2_l1_getQuestionTextAudio() {
+        return g2l2SubList.get(0).getResourceAudio();
+    }
+
+
+
+    @Override
     public String[] getWordsToSay() {
         String [] words = new String[2];
         words[0] = g2l2SubList.get(1).getResourceText();
