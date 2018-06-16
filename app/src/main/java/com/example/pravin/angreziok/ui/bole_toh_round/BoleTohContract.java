@@ -30,6 +30,8 @@ public interface BoleTohContract {
 
         void playOptionAudio(int optionNo, int gameNo);
 
+        void playQuestionAudio(int gameNo);
+
         String getQuestionAudio();
 
         void replayQuestionroundone();
@@ -95,6 +97,8 @@ public interface BoleTohContract {
         void answerPostProcessing();
 
         void setGameTitleFromJson(String gameName);
+
+        void setQuestion(String correctAns);
     }
 
     interface BoleToh_G2_L1_View {
