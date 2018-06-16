@@ -112,7 +112,7 @@ public class JodTod_G2_L1 extends BaseFragment implements JodTodContract.JodTod_
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
         presenter = new JodTodPresenterImpl(getActivity(), this, ttsService);
-        presenter.set_g2_data(2);
+        presenter.set_g2_data(1);
         setInitialScores();
         setDataForGame();
         currentTeam = 0;

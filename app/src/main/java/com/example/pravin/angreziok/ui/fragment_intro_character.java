@@ -333,7 +333,7 @@ public class fragment_intro_character extends BaseFragment {
                 case 2:
                     switch (count) {
                         case 0:
-                            PD_Utility.showFragment(getActivity(), new JodTod_G1_L1(), R.id.cl_jod_tod,
+                            PD_Utility.showFragment(getActivity(), new JodTod_G2_L1(), R.id.cl_jod_tod,
                                     null, JodTod_G1_L1.class.getSimpleName());
                             break;
                         case 1:
@@ -341,7 +341,7 @@ public class fragment_intro_character extends BaseFragment {
                                     null, JodTod_G2_L1.class.getSimpleName());
                             break;
                         case 2:
-                            PD_Utility.showFragment(getActivity(), new JodTod_G3_L1(), R.id.cl_jod_tod,
+                            PD_Utility.showFragment(getActivity(), new JodTod_G2_L1(), R.id.cl_jod_tod,
                                     null, JodTod_G3_L1.class.getSimpleName());
                             break;
                     }
@@ -349,11 +349,11 @@ public class fragment_intro_character extends BaseFragment {
                 case 3:
                     switch (count) {
                         case 0:
-                            PD_Utility.showFragment(getActivity(), new SamajhKeBolo_G1_L1(), R.id.cl_samajh_ke_bolo,
+                            PD_Utility.showFragment(getActivity(), new SamajhKeBolo_G3_L1(), R.id.cl_samajh_ke_bolo,
                                     null, SamajhKeBolo_G1_L1.class.getSimpleName());
                             break;
                         case 1:
-                            PD_Utility.showFragment(getActivity(), new SamajhKeBolo_G2_L1(), R.id.cl_samajh_ke_bolo,
+                            PD_Utility.showFragment(getActivity(), new SamajhKeBolo_G3_L1(), R.id.cl_samajh_ke_bolo,
                                     null, SamajhKeBolo_G2_L1.class.getSimpleName());
                             break;
                         case 2:
