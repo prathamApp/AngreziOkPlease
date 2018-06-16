@@ -298,11 +298,11 @@ public class fragment_intro_character extends BaseFragment {
                 case 3:
                     switch (count) {
                         case 0:
-                            PD_Utility.showFragment(getActivity(), new SamajhKeBolo_G1_L2(), R.id.cl_samajh_ke_bolo,
+                            PD_Utility.showFragment(getActivity(), new SamajhKeBolo_G3_L2(), R.id.cl_samajh_ke_bolo,
                                     null, SamajhKeBolo_G1_L2.class.getSimpleName());
                             break;
                         case 1:
-                            PD_Utility.showFragment(getActivity(), new SamajhKeBolo_G2_L2(), R.id.cl_samajh_ke_bolo,
+                            PD_Utility.showFragment(getActivity(), new SamajhKeBolo_G3_L2(), R.id.cl_samajh_ke_bolo,
                                     null, SamajhKeBolo_G2_L2.class.getSimpleName());
                             break;
                         case 2:
@@ -321,11 +321,11 @@ public class fragment_intro_character extends BaseFragment {
                                     null, BoleToh_G1_L1.class.getSimpleName());
                             break;
                         case 1:
-                            PD_Utility.showFragment(getActivity(), new BoleToh_G2_L1(), R.id.cl_bole_toh,
+                            PD_Utility.showFragment(getActivity(), new BoleToh_G1_L1(), R.id.cl_bole_toh,
                                     null, BoleToh_G2_L1.class.getSimpleName());
                             break;
                         case 2:
-                            PD_Utility.showFragment(getActivity(), new BoleToh_G3_L1(), R.id.cl_bole_toh,
+                            PD_Utility.showFragment(getActivity(), new BoleToh_G1_L1(), R.id.cl_bole_toh,
                                     null, BoleToh_G3_L1.class.getSimpleName());
                             break;
                     }
