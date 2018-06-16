@@ -89,12 +89,12 @@ public class JodTod_G2_L1 extends BaseFragment implements JodTodContract.JodTod_
     @BindView(R.id.tv_game_title)
     TextView gameTitle;
 
-    String text;
+    String text ,questionAudio;
     JodTodContract.JodTodPresenter presenter;
     int currentTeam, score = 0, timeOfTimer = 20000, clickedMike;
     float totalAnsCounter = 0f, correctAnsCounter = 0f;
     Dialog dialog;
-    boolean timerEnd = false, firstAns, secondAns;
+    boolean timerEnd = false, firstAns, secondAns,playingThroughTts = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -191,6 +191,8 @@ public class JodTod_G2_L1 extends BaseFragment implements JodTodContract.JodTod_
             public void onClick(View v) {
                 dialog.dismiss();
                 String question = presenter.g2_l1_getQuestionText(studentID);
+                if (!playingThroughTts)
+                    questionAudio = presenter.g2_l1_getQuestionTextAudio();
                 String[] wordsToSay = presenter.getWordsToSay();
                 initiateQuestion(question, wordsToSay);
             }
@@ -230,7 +232,10 @@ public class JodTod_G2_L1 extends BaseFragment implements JodTodContract.JodTod_
     }
 
     private void playTTS() {
-        presenter.startTTS(text);
+        if (playingThroughTts)
+            presenter.startTTS(text);
+        else
+            presenter.playMusic(questionAudio,presenter.getSdcardPath()+"Sounds/RhymeGame/");
     }
 
     private void startTimer() {
@@ -377,7 +382,7 @@ public class JodTod_G2_L1 extends BaseFragment implements JodTodContract.JodTod_
 
     @OnClick(R.id.ib_g2_l1_speaker)
     public void soundClicked() {
-        presenter.startTTS(text);
+        playTTS();
     }
 
     @OnClick(R.id.iv_mike1)

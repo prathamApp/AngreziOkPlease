@@ -52,6 +52,8 @@ public interface JodTodContract {
 
         String g2_l1_getQuestionText(String studId);
 
+        String g2_l1_getQuestionTextAudio();
+
         String[] getWordsToSay();
 
         String g3_l2_getQuestionAudio();
