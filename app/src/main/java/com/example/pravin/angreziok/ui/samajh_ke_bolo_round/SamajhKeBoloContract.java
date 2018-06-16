@@ -79,7 +79,7 @@ public interface SamajhKeBoloContract {
     }
 
     interface SamajhKeBolo_G3_L1_View {
-        void setQuestionText(String questionString);
+        void setQuestionText(String questionString, String setQuestionText);
         void initiateQuestion();
         void setCurrentScore();
         void setCelebrationView();

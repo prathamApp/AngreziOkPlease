@@ -659,6 +659,7 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
         samajhKeBoloG3L1View.hideOptionView();
         randomNumber = getRandomNumber(0, g3l1QuestionData.size());
         String questionNative = g3l1QuestionData.get(randomNumber).getResourceQuestion();
+        questionAudioPath = getSdcardPath()+"Sounds/SayItInEnglish/"+g3l1QuestionData.get(randomNumber).getResourceAudio();
         Toast.makeText(mContext, "actual ans: " + g3l1QuestionData.get(randomNumber).getResourceText(), Toast.LENGTH_SHORT).show();
         setQuestionStartTime();
         studentID = studId;
@@ -666,7 +667,7 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
         questionId = resourceID;
         samajhKeBoloG3L1View.setQuestionTextNative(questionNative);
         String questionString = g3l1QuestionData.get(randomNumber).getResourceQuestion();
-        samajhKeBoloG3L1View.setQuestionText(questionString);
+        samajhKeBoloG3L1View.setQuestionText(questionString +" "+questionNative , questionAudioPath);
     }
 
     public void addScore(String studentID, String resourceID, int questionId, int scoredMarks, int totalMarks, String startDateTime, int questionLevel) {

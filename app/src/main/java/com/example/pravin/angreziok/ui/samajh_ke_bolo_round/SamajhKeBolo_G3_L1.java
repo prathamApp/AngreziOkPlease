@@ -90,10 +90,11 @@ public class SamajhKeBolo_G3_L1 extends BaseFragment implements SamajhKeBoloCont
     @BindView(R.id.tv_game_title)
     TextView gameTitle;
 
-    String text;
+    String text,audioPath;
     SamajhKeBoloContract.SamajhKeBoloPresenter presenter;
     int speechCount, currentTeam, timeOfTimer = 20000;
     Dialog dialog;
+    boolean playingThroughTts = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -251,7 +252,10 @@ public class SamajhKeBolo_G3_L1 extends BaseFragment implements SamajhKeBoloCont
     @Override
     public void initiateQuestion() {
         startTimer();
-        playTTS();
+        if(playingThroughTts)
+            playTTS();
+        else
+            presenter.playMusic("",audioPath);
     }
 
     private void setDataForGame() {
@@ -265,8 +269,9 @@ public class SamajhKeBolo_G3_L1 extends BaseFragment implements SamajhKeBoloCont
     }
 
     @Override
-    public void setQuestionText(String questionString) {
+    public void setQuestionText(String questionString, String questionAudioPath) {
         text = questionString;
+        audioPath = questionAudioPath;
         initiateQuestion();
         question.setText(questionString);
     }
@@ -286,7 +291,10 @@ public class SamajhKeBolo_G3_L1 extends BaseFragment implements SamajhKeBoloCont
 
     @OnClick(R.id.ib_r1g2_speaker)
     public void soundClicked() {
-        presenter.startTTS(text);
+        if(playingThroughTts)
+            presenter.startTTS(text);
+        else
+            presenter.playMusic("",audioPath);
     }
 
     @OnClick(R.id.ib_r1g2_mic)
