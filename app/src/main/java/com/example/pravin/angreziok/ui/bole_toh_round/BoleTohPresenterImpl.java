@@ -36,7 +36,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
     String ttsQuestion;
     float speechRate = 1.0f;
     public TTSService ttsService;
-    String questionAudioPath;
+    String questionAudioPath,correctAns;
     Context mContext;
     String[] optionsAudio = new String[3];
     public MediaPlayerUtil mediaPlayerUtil;
@@ -181,12 +181,13 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
             setQuestionStartTime();
             studentID = studId;
             resourceID = g1l1QuestionData.get(integerArray[readQuestionNo]).getResourceId();
+            correctAns = g1l1QuestionData.get(integerArray[readQuestionNo]).getResourceText();
             questionId = resourceID;
 
             for (int i = 0; i < 4; i++) {
                 resTextArray.add(g1l1QuestionData.get(integerArray[i]).getResourceText());
                 resImageArray.add(g1l1QuestionData.get(integerArray[i]).getResourceImage());
-                resAudioArray.add(g1l1QuestionData.get(integerArray[i]).getResourceImage());
+                resAudioArray.add(g1l1QuestionData.get(integerArray[i]).getResourceType());
                 resIdArray.add(g1l1QuestionData.get(integerArray[i]).getResourceId());
             }
             Bitmap[] bitmap = new Bitmap[]{BitmapFactory.decodeFile(imagePath + resImageArray.get(0)),
@@ -194,6 +195,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
                     BitmapFactory.decodeFile(imagePath + resImageArray.get(2)),
                     BitmapFactory.decodeFile(imagePath + resImageArray.get(3))};
             boleTohG1L1View.setQuestionImages(readQuestionNo, bitmap);
+            boleTohG1L1View.setQuestion(correctAns);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -215,12 +217,13 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
             setQuestionStartTime();
             studentID = studId;
             resourceID = g2l2QuestionData.get(integerArray[readQuestionNo]).getResourceId();
+            correctAns = g2l2QuestionData.get(integerArray[readQuestionNo]).getResourceText();
             questionId = resourceID;
 
             for (int i = 0; i < 4; i++) {
                 resTextArray.add(g2l2QuestionData.get(integerArray[i]).getResourceText());
                 resImageArray.add(g2l2QuestionData.get(integerArray[i]).getResourceImage());
-                resAudioArray.add(g2l2QuestionData.get(integerArray[i]).getResourceImage());
+                resAudioArray.add(g2l2QuestionData.get(integerArray[i]).getResourceType());
                 resIdArray.add(g2l2QuestionData.get(integerArray[i]).getResourceId());
             }
             String[] gifPaths = new String[]{(imagePath + resImageArray.get(0)),
@@ -228,6 +231,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
                     (imagePath + resImageArray.get(2)),
                     (imagePath + resImageArray.get(3))};
             boleTohG2L1View.setQuestionGifs(readQuestionNo, gifPaths);
+            boleTohG2L1View.setQuestion(correctAns);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -251,22 +255,42 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
 
             setQuestionStartTime();
             studentID = studId;
-            resourceID = g3l2QuestionData.get(integerArray[readQuestionNo]).getResourceId();
+            resourceID = currentPairList.get(integerArray[readQuestionNo]).getResourceId();
+            correctAns = currentPairList.get(integerArray[readQuestionNo]).getResourceText();
             questionId = resourceID;
 
             for (int i = 0; i < 2; i++) {
                 resTextArray.add(currentPairList.get(integerArray[i]).getResourceText());
                 resImageArray.add(currentPairList.get(integerArray[i]).getResourceImage());
-                resAudioArray.add(currentPairList.get(integerArray[i]).getResourceImage());
+                resAudioArray.add(currentPairList.get(integerArray[i]).getResourceType());
                 resIdArray.add(currentPairList.get(integerArray[i]).getResourceId());
             }
             Bitmap[] bitmap = new Bitmap[]{BitmapFactory.decodeFile(imagePath + resImageArray.get(0)),
                     BitmapFactory.decodeFile(imagePath + resImageArray.get(1))};
             boleTohG3L1View.setQuestionImgs(readQuestionNo, bitmap);
+            boleTohG3L1View.setQuestion(correctAns);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void playQuestionAudio(int gameNo) {
+        switch (gameNo) {
+            case 1:
+                playMusic(resAudioArray.get(readQuestionNo), getSdcardPath() + "Sounds/PictureGame/");
+                break;
+
+            case 2:
+                playMusic(resAudioArray.get(readQuestionNo), getSdcardPath() + "Sounds/ActionGame/");
+                break;
+
+            case 3:
+                playMusic(resAudioArray.get(readQuestionNo), getSdcardPath() + "Sounds/PairsGame/");
+                break;
+        }
+
     }
 
     @Override
@@ -420,7 +444,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
         int scoredMarks, totalMarks = 10;
         if (!timeOut) {
             String imageString = resTextArray.get(imageViewNum - 1);
-            if (imageString.equalsIgnoreCase(ttsQuestion)) {
+            if (imageString.equalsIgnoreCase(correctAns)) {
                 boleTohG1L1View.setCelebrationView();
                 scoredMarks = 10;
                 playMusic("Sounds/BilkulSahijawab.mp3", getSdcardPath());
@@ -446,7 +470,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
         int scoredMarks, totalMarks = 10;
         if (!timeOut) {
             String imageString = resTextArray.get(imageViewNum - 1);
-            if (imageString.equalsIgnoreCase(ttsQuestion)) {
+            if (imageString.equalsIgnoreCase(correctAns)) {
                 boleTohG2L1View.setCelebrationView();
                 scoredMarks = 10;
                 playMusic("Sounds/BilkulSahijawab.mp3", getSdcardPath());
@@ -471,7 +495,7 @@ public class BoleTohPresenterImpl implements BoleTohContract.BoleTohPresenter, M
         int scoredMarks, totalMarks = 10;
         if (!timeOut) {
             String imageString = resTextArray.get(imageViewNum - 1);
-            if (imageString.equalsIgnoreCase(ttsQuestion)) {
+            if (imageString.equalsIgnoreCase(correctAns)) {
                 boleTohG3L1View.setCelebrationView();
                 scoredMarks = 10;
                 playMusic("Sounds/BilkulSahijawab.mp3", getSdcardPath());
