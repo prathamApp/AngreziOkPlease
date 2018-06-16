@@ -99,9 +99,10 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
 
 
     SamajhKeBoloContract.SamajhKeBoloPresenter presenter;
-    String text;
+    String text,questionAudio,scriptAudio;
     int speechCount, currentTeam;
     Dialog dialog;
+    boolean playingThroughTts = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -195,7 +196,7 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                presenter.setQuestion_g3_l2(studentID);
+                presenter.setQuestion_g3_l2(studentID,playingThroughTts);
                 initiateQuestion();
             }
         });
@@ -250,8 +251,15 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
 
     @Override
     public void setQuestion(String questionText, String questionAudio, String primaryQuestion) {
-        text = questionAudio;
         question.setText(questionText);
+        text = questionAudio;
+        showQuestion.setText(primaryQuestion);
+    }
+
+    @Override
+    public void setQuestionAudios(String queAudio, String scriptQuestionAudio, String primaryQuestion) {
+        questionAudio = queAudio;
+        scriptAudio = scriptQuestionAudio;
         showQuestion.setText(primaryQuestion);
     }
 
@@ -273,7 +281,10 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
     }
 
     private void playTTS() {
-        presenter.startTTSForCallbacks(text);
+        if (playingThroughTts)
+            presenter.startTTSForCallbacks(text);
+        else
+            presenter.playMusicConsecutively(scriptAudio,questionAudio,presenter.getSdcardPath()+"Sounds/SamajhKeBoloGame/");
     }
 
     private void setDataForGame() {
@@ -295,7 +306,10 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
 
     @OnClick(R.id.ib_g3_l2_speaker)
     public void soundClicked() {
-        presenter.startTTS(question.getText().toString());
+        if (playingThroughTts)
+            presenter.startTTS(question.getText().toString());
+        else
+            presenter.playMusic(questionAudio,presenter.getSdcardPath()+"Sounds/SamajhKeBoloGame/");
     }
 
     @OnClick(R.id.ib_g3_l2_mic)

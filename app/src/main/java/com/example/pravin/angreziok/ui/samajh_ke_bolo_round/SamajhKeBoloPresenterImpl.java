@@ -15,7 +15,6 @@ import com.example.pravin.angreziok.domain.Score;
 import com.example.pravin.angreziok.interfaces.MediaCallbacks;
 import com.example.pravin.angreziok.modalclasses.GenericModalGson;
 import com.example.pravin.angreziok.services.TTSService;
-import com.example.pravin.angreziok.ui.bole_toh_round.BoleToh;
 import com.example.pravin.angreziok.util.MediaPlayerUtil;
 import com.example.pravin.angreziok.util.SDCardUtil;
 import com.google.gson.Gson;
@@ -31,7 +30,6 @@ import java.util.Collections;
 import java.util.List;
 
 import static com.example.pravin.angreziok.AOPApplication.getRandomNumber;
-import static com.example.pravin.angreziok.BaseActivity.ttsService;
 import static com.example.pravin.angreziok.ui.samajh_ke_bolo_round.SamajhKeBolo.playerModalArrayList;
 
 
@@ -56,8 +54,9 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
     ArrayList<String> resIdArray = new ArrayList<String>();
 
     int randomNumber, scoredMarks, totalMarks = 25, readQuestionNo;
-    String questionStartTime, studentID, resourceID, questionId,sdCardPathString,ttsQuestion,questionAudioPath;
+    String questionStartTime, studentID, resourceID, questionId,sdCardPathString,ttsQuestion,questionAudioPath,secondFile;
     float speechRate = 1.0f;
+    boolean audioStartFlagForGame3 = false;
 
     public SamajhKeBoloPresenterImpl(Context mContext) {
         this.mContext = mContext;
@@ -436,6 +435,21 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
     }
 
     @Override
+    public void playMusicConsecutively(String firstFileName, String secondFileName, String path) {
+        try {
+            audioStartFlagForGame3 = true;
+            secondFile = secondFileName;
+            if (mediaPlayerUtil == null) {
+                mediaPlayerUtil = new MediaPlayerUtil(mContext);
+                mediaPlayerUtil.initCallback(SamajhKeBoloPresenterImpl.this);
+            }
+            mediaPlayerUtil.playMedia(path + firstFileName);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public void setWords_g2_l2(String studId) {
         samajhKeBoloG2L2View.hideOptionView();
         randomNumber = getRandomNumber(0, g2l2QuestionData.size());
@@ -479,19 +493,18 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
     }
 
     @Override
-    public void setQuestion_g3_l2(String studId) {
+    public void setQuestion_g3_l2(String studId, boolean playingThroughTts) {
         samajhKeBoloG3L2View.hideOptionView();
         Collections.shuffle(g3l2CurrentQuestionList);
         setQuestionStartTime();
         studentID = studId;
         resourceID = g3l2CurrentQuestionList.get(0).getResourceId();
         questionId = resourceID;
-        samajhKeBoloG3L2View.setQuestion(getCurrentQuestion_g3_l2(),getCurrentQuestionAudio_g3_l2(),getPrimaryQuestion_g3_l2());
-        samajhKeBoloG3L2View.setQuestionWords(getOptions_g3_l2());
-    }
+        samajhKeBoloG3L2View.setQuestion(getCurrentQuestion_g3_l2(),getCurrentQuestionScript_g3_l2(),getPrimaryQuestion_g3_l2());
+        if (!playingThroughTts)
+        samajhKeBoloG3L2View.setQuestionAudios(getCurrentQuestionAudio_g3_l2(),getCurrentQuestionScriptAudio_g3_l2(),getPrimaryQuestion_g3_l2());
 
-    public String getPrimaryQuestion_g3_l2() {
-        return g3l2QuestionData.get(randomNumber).getResourceText();
+        samajhKeBoloG3L2View.setQuestionWords(getOptions_g3_l2());
     }
 
     public String getCurrentQuestion_g3_l2() {
@@ -499,7 +512,19 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
     }
 
     public String getCurrentQuestionAudio_g3_l2() {
+        return g3l2CurrentQuestionList.get(0).getResourceType();
+    }
+
+    public String getCurrentQuestionScript_g3_l2() {
         return g3l2CurrentQuestionList.get(0).getResourceAudio();
+    }
+
+    public String getCurrentQuestionScriptAudio_g3_l2() {
+        return g3l2CurrentQuestionList.get(0).getResourceImage();
+    }
+
+    public String getPrimaryQuestion_g3_l2() {
+        return g3l2QuestionData.get(randomNumber).getResourceText();
     }
 
     @Override
@@ -527,18 +552,18 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
     @Override
     public String[] getOptions_g1_l2() {
         String[] options = new String[3];
-        options[0] = g1l2CurrentQuestionList.get(0).getResourceText();
-        options[1] = g1l2CurrentQuestionList.get(1).getResourceText();
-        options[2] = g1l2CurrentQuestionList.get(2).getResourceText();
+        for (int i=0;i<3;i++) {
+            options[i] = g1l2CurrentQuestionList.get(i).getResourceText();
+        }
         return options;
     }
 
     @Override
     public String[] getOptionsAudio() {
         String[] options = new String[3];
-        options[0] = g1l2CurrentQuestionList.get(0).getResourceType();
-        options[1] = g1l2CurrentQuestionList.get(1).getResourceType();
-        options[2] = g1l2CurrentQuestionList.get(2).getResourceType();
+        for (int i=0;i<3;i++) {
+            options[i] = g1l2CurrentQuestionList.get(i).getResourceType();
+        }
         return options;
     }
 
@@ -558,10 +583,9 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
     @Override
     public String[] getOptions_g3_l2() {
         String[] options = new String[4];
-        options[0] = g3l2CurrentQuestionList.get(0).getResourceText();
-        options[1] = g3l2CurrentQuestionList.get(1).getResourceText();
-        options[2] = g3l2CurrentQuestionList.get(2).getResourceText();
-        options[3] = g3l2CurrentQuestionList.get(3).getResourceText();
+        for (int i=0;i<4;i++){
+            options[i] = g3l2CurrentQuestionList.get(i).getResourceText();
+        }
         List tempList = Arrays.asList(options);
         Collections.shuffle(tempList);
         return (String[]) tempList.toArray();
@@ -717,7 +741,10 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
 
     @Override
     public void onComplete() {
-
+        if (audioStartFlagForGame3){
+            audioStartFlagForGame3 = false;
+            playMusic(secondFile,getSdcardPath()+"Sounds/SamajhKeBoloGame/");
+        }
     }
 
     @Override

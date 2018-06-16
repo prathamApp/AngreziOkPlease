@@ -31,6 +31,7 @@ public interface SamajhKeBoloContract {
         void g1_l2_checkAnswer(String ans);
         void checkFinalAnswer_g1_l2(String ans, int currentTeam);
         void playMusic(String fileName, String path);
+        void playMusicConsecutively(String firstFileName, String secondFileName, String path);
         String getCurrentQuestionAudio();
         Integer[] getShuffledOptions();
         String[] getOptionsAudio();
@@ -43,7 +44,7 @@ public interface SamajhKeBoloContract {
 
         void set_g3_l2_data(String path);
         void set_g3_l1_data(String path);
-        void setQuestion_g3_l2(String studentID);
+        void setQuestion_g3_l2(String studentID, boolean playingThroughTts);
         String[] getOptions_g3_l2();
         void checkAnswerOfOptions(String answer, int currentTeam);
         void checkAnswerOfStt(String answer,int currentTeam);
@@ -106,6 +107,7 @@ public interface SamajhKeBoloContract {
         void initiateQuestion();
         void hideOptionView();
         void setQuestion(String question, String questionAudio, String primaryQuestion);
+        void setQuestionAudios(String question, String questionAudio, String primaryQuestion);
         void setQuestionWords(String[] words);
         void setAnswer(String ans);
         void animateMic();
