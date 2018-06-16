@@ -85,6 +85,7 @@ public class SamajhKeBolo_G1_L1 extends BaseFragment implements SamajhKeBoloCont
     String path;
     Dialog dialog;
     int currentTeam = 0;
+    boolean playingThroughTts = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -121,7 +122,6 @@ public class SamajhKeBolo_G1_L1 extends BaseFragment implements SamajhKeBoloCont
         presenter.doInitialWorkG1l1(path);
         setInitialScores();
         showDialog();
-//        customCountDownTimer = new CustomCountDownTimer(mCountDownTimer,getActivity());
     }
 
     @Override
@@ -314,7 +314,7 @@ public class SamajhKeBolo_G1_L1 extends BaseFragment implements SamajhKeBoloCont
 
     @OnClick(R.id.ib_r1g1_speaker)
     public void playQuestion() {
-        presenter.replayQuestionroundone();
+        presenter.playQuestionAudioConsecutively();
     }
 
     @Override
@@ -328,7 +328,10 @@ public class SamajhKeBolo_G1_L1 extends BaseFragment implements SamajhKeBoloCont
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    presenter.readQuestion(readQuesNo);
+                    if(playingThroughTts)
+                        presenter.readQuestion(readQuesNo);
+                    else
+                        presenter.playQuestionAudioConsecutively();
                 }
             }, 1500);
         } catch (Exception e) {

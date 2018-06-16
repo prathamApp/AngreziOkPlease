@@ -51,12 +51,13 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
     ArrayList<String> resTextArray = new ArrayList<String>();
     ArrayList<String> resImageArray = new ArrayList<String>();
     ArrayList<String> resAudioArray = new ArrayList<String>();
+    ArrayList<String> resQuestionAudioArray = new ArrayList<String>();
     ArrayList<String> resIdArray = new ArrayList<String>();
 
     int randomNumber, scoredMarks, totalMarks = 25, readQuestionNo;
-    String questionStartTime, studentID, resourceID, questionId,sdCardPathString,ttsQuestion,questionAudioPath,secondFile;
+    String correctAns, questionStartTime, studentID, resourceID, questionId,sdCardPathString,ttsQuestion,questionAudioPath,secondFile;
     float speechRate = 1.0f;
-    boolean audioStartFlagForGame3 = false;
+    boolean audioStartFlagForGame3 = false, audioStartFlagForGame1= false ;
 
     public SamajhKeBoloPresenterImpl(Context mContext) {
         this.mContext = mContext;
@@ -197,22 +198,25 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
             readQuestionNo= getRandomNumber(0, g1l1List.size());
             Collections.shuffle(g1l1List);
             int[] integerArray = getUniqueRandomNumber(0, g1l1List.size(), 2);
-            String imagePath = sdCardPathString + "images/WhereGameL2/";
+            String imagePath = sdCardPathString + "images/WhereGame/";
 
             resTextArray.clear();
             resIdArray.clear();
             resImageArray.clear();
             resAudioArray.clear();
+            resQuestionAudioArray.clear();
 
             setQuestionStartTime();
             studentID = studId;
-            resourceID = g1l1QuestionData.get(integerArray[readQuestionNo]).getResourceId();
+            resourceID = g1l1List.get(integerArray[readQuestionNo]).getResourceId();
+//            correctAns = g1l1List.get(integerArray[readQuestionNo]).getResourceText();
             questionId = resourceID;
 
             for (int i = 0; i < 2; i++) {
                 resTextArray.add(g1l1List.get(integerArray[i]).getResourceText());
                 resImageArray.add(g1l1List.get(integerArray[i]).getResourceImage());
-                resAudioArray.add(g1l1List.get(integerArray[i]).getResourceImage());
+                resAudioArray.add(g1l1List.get(integerArray[i]).getResourceAudio());
+                resQuestionAudioArray.add(g1l1List.get(integerArray[i]).getResourceAudio());
                 resIdArray.add(g1l1List.get(integerArray[i]).getResourceId());
             }
             Bitmap[] bitmap = new Bitmap[]{BitmapFactory.decodeFile(imagePath + resImageArray.get(0)),
@@ -232,7 +236,7 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
             readQuestionNo= getRandomNumber(0, currentTrioList.size());
             Collections.shuffle(currentTrioList);
             int[] integerArray = getUniqueRandomNumber(0, currentTrioList.size(), 3);
-            String imagePath = sdCardPathString + "images/WhereGameL2/";
+            String imagePath = sdCardPathString + "images/WhereGame/";
 
             resTextArray.clear();
             resIdArray.clear();
@@ -317,8 +321,13 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
     @Override
     public void readQuestion(int questionToRead) {
         ttsQuestion = resTextArray.get(questionToRead);
-        Log.d("speechRate", "readQuestion: " + speechRate + "," + ttsQuestion);
         ttsService.play("Where is " + ttsQuestion);
+    }
+
+    @Override
+    public void playQuestionAudioConsecutively() {
+        audioStartFlagForGame1 = true;
+        playMusic(resAudioArray.get(readQuestionNo),getSdcardPath()+"Sounds/WhereGame/");
     }
 
     @Override
@@ -334,7 +343,7 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
         studentID = studId;
         resourceID = g1l2CurrentQuestionList.get(0).getResourceId();
         questionId = resourceID;
-        String imagePath = getSdcardPath() + "images/WhereGameL2/" + g1l2CurrentQuestionList.get(0).getResourceImage();
+        String imagePath = getSdcardPath() + "images/WhereGame/" + g1l2CurrentQuestionList.get(0).getResourceImage();
         questionAudioPath = g1l2CurrentQuestionList.get(0).getResourceAudio();
         Log.d("imagePath", "setImage_gl_l2: " + imagePath);
         Toast.makeText(mContext, "actual ans: " + g1l2CurrentQuestionList.get(0).getResourceText(), Toast.LENGTH_SHORT).show();
@@ -744,6 +753,10 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
         if (audioStartFlagForGame3){
             audioStartFlagForGame3 = false;
             playMusic(secondFile,getSdcardPath()+"Sounds/SamajhKeBoloGame/");
+        }
+        if (audioStartFlagForGame1){
+            audioStartFlagForGame1 = false;
+            playMusic(resQuestionAudioArray.get(readQuestionNo),getSdcardPath()+"Sounds/WhereGame/");
         }
     }
 

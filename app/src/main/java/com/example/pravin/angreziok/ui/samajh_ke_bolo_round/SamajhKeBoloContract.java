@@ -21,6 +21,7 @@ public interface SamajhKeBoloContract {
         void g2_l1_checkAnswer(int imageViewNum, int currentTeam, boolean timeOut);
         void readQuestion(int questionToRead);
         void replayQuestionroundone();
+        void playQuestionAudioConsecutively();
         void set_g1_l2_data(String path);
         void setImage_gl_l2(String studentID);
         String getCurrentQuestion_g1_l2();
