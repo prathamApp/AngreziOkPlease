@@ -203,8 +203,8 @@ public class fragment_intro_character extends BaseFragment {
                     frag = 3;
                     switch (count) {
                         case 0:
-                            instructionsTextView.setText("Compare Game\n\nइस गेम में आपसे एक सवाल पूछा जायेगा|आपको तीन विकल्प दिए जायेंगे| सही विकल्प चुन कर उस शब्द को बोल कर बताओ|");
-                            videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/CampareGame.mp4";
+                            instructionsTextView.setText("Where-When Game\n\nआपको एक चित्र के बारें में सवाल पूछा जायेगा| आपको उस सवाल का सही जवाब देना है|");
+                            videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/WhereGame.mp4";
                             playVideo(Uri.parse(videoPath));
                             break;
                         case 1:
@@ -213,8 +213,8 @@ public class fragment_intro_character extends BaseFragment {
                             playVideo(Uri.parse(videoPath));
                             break;
 /*                        case 2:
-                            instructionsTextView.setText("Where-When Game\n\nआपको एक चित्र के बारें में सवाल पूछा जायेगा| आपको उस सवाल का सही जवाब देना है|");
-                            videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/WhereGame.mp4";
+                            instructionsTextView.setText("Compare Game\n\nइस गेम में आपसे एक सवाल पूछा जायेगा|आपको तीन विकल्प दिए जायेंगे| सही विकल्प चुन कर उस शब्द को बोल कर बताओ|");
+                            videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/CampareGame.mp4";
                             playVideo(Uri.parse(videoPath));
                             break;*/
                     }
@@ -298,16 +298,16 @@ public class fragment_intro_character extends BaseFragment {
                 case 3:
                     switch (count) {
                         case 0:
-                            PD_Utility.showFragment(getActivity(), new SamajhKeBolo_G3_L2(), R.id.cl_samajh_ke_bolo,
+                            PD_Utility.showFragment(getActivity(), new SamajhKeBolo_G1_L2(), R.id.cl_samajh_ke_bolo,
                                     null, SamajhKeBolo_G1_L2.class.getSimpleName());
                             break;
                         case 1:
                             PD_Utility.showFragment(getActivity(), new SamajhKeBolo_G3_L2(), R.id.cl_samajh_ke_bolo,
-                                    null, SamajhKeBolo_G2_L2.class.getSimpleName());
+                                    null, SamajhKeBolo_G3_L2.class.getSimpleName());
                             break;
                         case 2:
-                            PD_Utility.showFragment(getActivity(), new SamajhKeBolo_G3_L2(), R.id.cl_samajh_ke_bolo,
-                                    null, SamajhKeBolo_G3_L2.class.getSimpleName());
+                            PD_Utility.showFragment(getActivity(), new SamajhKeBolo_G2_L2(), R.id.cl_samajh_ke_bolo,
+                                    null, SamajhKeBolo_G2_L2.class.getSimpleName());
                             break;
                     }
                     break;
@@ -333,7 +333,7 @@ public class fragment_intro_character extends BaseFragment {
                 case 2:
                     switch (count) {
                         case 0:
-                            PD_Utility.showFragment(getActivity(), new JodTod_G2_L1(), R.id.cl_jod_tod,
+                            PD_Utility.showFragment(getActivity(), new JodTod_G1_L1(), R.id.cl_jod_tod,
                                     null, JodTod_G1_L1.class.getSimpleName());
                             break;
                         case 1:
@@ -341,7 +341,7 @@ public class fragment_intro_character extends BaseFragment {
                                     null, JodTod_G2_L1.class.getSimpleName());
                             break;
                         case 2:
-                            PD_Utility.showFragment(getActivity(), new JodTod_G2_L1(), R.id.cl_jod_tod,
+                            PD_Utility.showFragment(getActivity(), new JodTod_G3_L1(), R.id.cl_jod_tod,
                                     null, JodTod_G3_L1.class.getSimpleName());
                             break;
                     }
@@ -349,16 +349,16 @@ public class fragment_intro_character extends BaseFragment {
                 case 3:
                     switch (count) {
                         case 0:
-                            PD_Utility.showFragment(getActivity(), new SamajhKeBolo_G3_L1(), R.id.cl_samajh_ke_bolo,
+                            PD_Utility.showFragment(getActivity(), new SamajhKeBolo_G1_L1(), R.id.cl_samajh_ke_bolo,
                                     null, SamajhKeBolo_G1_L1.class.getSimpleName());
                             break;
                         case 1:
                             PD_Utility.showFragment(getActivity(), new SamajhKeBolo_G3_L1(), R.id.cl_samajh_ke_bolo,
-                                    null, SamajhKeBolo_G2_L1.class.getSimpleName());
+                                    null, SamajhKeBolo_G3_L1.class.getSimpleName());
                             break;
                         case 2:
-                            PD_Utility.showFragment(getActivity(), new SamajhKeBolo_G3_L1(), R.id.cl_samajh_ke_bolo,
-                                    null, SamajhKeBolo_G3_L1.class.getSimpleName());
+                            PD_Utility.showFragment(getActivity(), new SamajhKeBolo_G2_L1(), R.id.cl_samajh_ke_bolo,
+                                    null, SamajhKeBolo_G2_L1.class.getSimpleName());
                             break;
                     }
                     break;

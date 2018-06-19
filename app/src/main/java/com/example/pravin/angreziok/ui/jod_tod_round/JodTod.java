@@ -30,6 +30,7 @@ import com.example.pravin.angreziok.database.AppDatabase;
 import com.example.pravin.angreziok.database.BackupDatabase;
 import com.example.pravin.angreziok.interfaces.MediaCallbacks;
 import com.example.pravin.angreziok.modalclasses.PlayerModal;
+import com.example.pravin.angreziok.ui.bole_toh_round.BoleToh;
 import com.example.pravin.angreziok.ui.fragment_intro_character;
 import com.example.pravin.angreziok.ui.start_data_confirmation.DataConfirmation;
 import com.example.pravin.angreziok.ui.start_menu.QRActivity;
@@ -64,6 +65,7 @@ public class JodTod extends BaseActivity implements JodTodContract.JodTodView, M
     JodTodContract.JodTodPresenter presenter;
     static ArrayList<Integer> list = new ArrayList<Integer>();
     static int gameCounter = 0;
+    static boolean dialogFlag=false;
     Boolean pauseFlg = false;
 
 
@@ -169,10 +171,12 @@ public class JodTod extends BaseActivity implements JodTodContract.JodTodView, M
 
     @Override
     public void onBackPressed() {
-        quitOrNot();
+        if(!dialogFlag)
+            quitOrNot();
     }
 
     private void quitOrNot() {
+        dialogFlag=true;
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -195,6 +199,7 @@ public class JodTod extends BaseActivity implements JodTodContract.JodTodView, M
             public void onClick(View v) {
                 if (mediaPlayerUtil != null)
                     mediaPlayerUtil.pauseMedia();
+                dialogFlag=false;
                 dialog.dismiss();
             }
         });
@@ -204,6 +209,7 @@ public class JodTod extends BaseActivity implements JodTodContract.JodTodView, M
             public void onClick(View v) {
                 if (mediaPlayerUtil != null)
                     mediaPlayerUtil.pauseMedia();
+                dialogFlag=false;
                 dialog.dismiss();
                 restartGame();
             }
@@ -214,6 +220,7 @@ public class JodTod extends BaseActivity implements JodTodContract.JodTodView, M
             public void onClick(View v) {
                 if (mediaPlayerUtil != null)
                     mediaPlayerUtil.pauseMedia();
+                dialogFlag=false;
                 dialog.dismiss();
                 quitGame();
             }

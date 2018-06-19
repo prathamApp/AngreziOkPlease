@@ -87,6 +87,7 @@ public class BoleToh_G1_L1 extends BaseFragment implements BoleTohContract.BoleT
     TextView gameQuestion;
 
 
+
     int questionConter = 0;
 
     BoleTohContract.BoleTohPresenter presenter;
@@ -231,6 +232,7 @@ public class BoleToh_G1_L1 extends BaseFragment implements BoleTohContract.BoleT
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setContentView(R.layout.custom_dialog_for_qrscan);
         dialog.setCanceledOnTouchOutside(false);
+        dialog.setCancelable(false);
         TextView text = dialog.findViewById(R.id.dialog_tv_student_name);
         Button button = dialog.findViewById(R.id.dialog_btn_scan_qr);
         text.setText("Next question would be for " + teamName);

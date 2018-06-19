@@ -284,7 +284,7 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
         if (playingThroughTts)
             presenter.startTTSForCallbacks(text);
         else
-            presenter.playMusicConsecutively(scriptAudio,questionAudio,presenter.getSdcardPath()+"Sounds/SamajhKeBoloGame/");
+            presenter.playMusicConsecutively(scriptAudio,questionAudio,presenter.getSdcardPath()+"Sounds/SayItInEnglish/");
     }
 
     private void setDataForGame() {
@@ -309,7 +309,7 @@ public class SamajhKeBolo_G3_L2 extends BaseFragment implements SamajhKeBoloCont
         if (playingThroughTts)
             presenter.startTTS(question.getText().toString());
         else
-            presenter.playMusic(questionAudio,presenter.getSdcardPath()+"Sounds/SamajhKeBoloGame/");
+            presenter.playMusic(questionAudio,presenter.getSdcardPath()+"Sounds/SayItInEnglish/");
     }
 
     @OnClick(R.id.ib_g3_l2_mic)

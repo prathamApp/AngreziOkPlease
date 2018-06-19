@@ -58,6 +58,7 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
     @BindView(R.id.skip_button_intro)
     Button btn_skip;
     Boolean pauseFlg = false;
+    static boolean dialogFlag=false;
     static String gameLevel;
     static ArrayList<Integer> list = new ArrayList<Integer>();
 
@@ -165,10 +166,12 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
 
     @Override
     public void onBackPressed() {
-        quitOrNot();
+        if(!dialogFlag)
+            quitOrNot();
     }
 
     private void quitOrNot() {
+        dialogFlag = true;
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -191,6 +194,7 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
             public void onClick(View v) {
                 if (mediaPlayerUtil != null)
                     mediaPlayerUtil.pauseMedia();
+                dialogFlag=false;
                 dialog.dismiss();
             }
         });
@@ -200,6 +204,7 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
             public void onClick(View v) {
                 if (mediaPlayerUtil != null)
                     mediaPlayerUtil.pauseMedia();
+                dialogFlag=false;
                 dialog.dismiss();
                 restartGame();
             }
@@ -210,6 +215,7 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
             public void onClick(View v) {
                 if (mediaPlayerUtil != null)
                     mediaPlayerUtil.pauseMedia();
+                dialogFlag=false;
                 dialog.dismiss();
                 quitGame();
             }
