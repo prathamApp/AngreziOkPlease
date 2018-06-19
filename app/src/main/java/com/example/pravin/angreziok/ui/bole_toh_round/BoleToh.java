@@ -128,9 +128,10 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
 
 
     @OnClick(R.id.skip_button_intro)
-    public void startGame() {
+    public void startGame(View view) {
         if (mediaPlayerUtil != null)
             mediaPlayerUtil.pauseMedia();
+        view.setClickable(false);
         loadFragment();
     }
 

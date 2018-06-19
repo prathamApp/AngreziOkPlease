@@ -67,6 +67,8 @@ public class JodTod_G1_L1 extends BaseFragment implements JodTodContract.JodTod_
     TextView allScore;
     @BindView(R.id.iv_ques_img_r2_g1_l2)
     TextView tv_ques_img;
+    @BindView(R.id.tv_question)
+    TextView tv_question;
 
     @BindView(R.id.iv_image1)
     ImageView iv_image1;
@@ -250,6 +252,7 @@ public class JodTod_G1_L1 extends BaseFragment implements JodTodContract.JodTod_
     @Override
     public void setQuestionDynamically(String questionText) {
         tv_ques_img.setText(questionText);
+        tv_question.setText("Which of these starts with, "+questionText);
     }
 
     private void setOnClickListeners() {
@@ -330,7 +333,7 @@ public class JodTod_G1_L1 extends BaseFragment implements JodTodContract.JodTod_
                                 bundle, fragment_intro_character.class.getSimpleName());
                     } else {
                         Intent intent = new Intent(getActivity(), SamajhKeBolo.class);
-                        intent.putExtra("level",""+JodTod.gameLevel);
+                        intent.putExtra("level","L1");
                         bundle.putParcelableArrayList("playerModalArrayList", jodTodPlayerList);
                         intent.putExtras(bundle);
                         startActivity(intent);

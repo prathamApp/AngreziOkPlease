@@ -348,9 +348,8 @@ public class SamajhKeBolo_G3_L1 extends BaseFragment implements SamajhKeBoloCont
                         PD_Utility.showFragment(getActivity(), new fragment_intro_character(), R.id.cl_bole_toh,
                                 bundle, fragment_intro_character.class.getSimpleName());
                     } else {
-                        Intent intent = new Intent(getActivity(), JodTod.class);
-                        intent.putExtra("level","l1");
-                        bundle.putParcelableArrayList("playerModalArrayList", playerModalArrayList);
+                        Intent intent = new Intent(getActivity(), ResultScreen.class);
+                        bundle.putParcelableArrayList("PlayerList", playerModalArrayList);
                         intent.putExtras(bundle);
                         startActivity(intent);
                     }

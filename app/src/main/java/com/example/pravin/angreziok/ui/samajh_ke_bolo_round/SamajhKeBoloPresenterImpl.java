@@ -216,7 +216,7 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
                 resTextArray.add(g1l1List.get(integerArray[i]).getResourceText());
                 resImageArray.add(g1l1List.get(integerArray[i]).getResourceImage());
                 resAudioArray.add(g1l1List.get(integerArray[i]).getResourceAudio());
-                resQuestionAudioArray.add(g1l1List.get(integerArray[i]).getResourceAudio());
+                resQuestionAudioArray.add(g1l1List.get(integerArray[i]).getResourceType());
                 resIdArray.add(g1l1List.get(integerArray[i]).getResourceId());
             }
             Bitmap[] bitmap = new Bitmap[]{BitmapFactory.decodeFile(imagePath + resImageArray.get(0)),
@@ -269,7 +269,7 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
         int scoredMarks, totalMarks = 10;
         if (!timeOut) {
             String imageString = resTextArray.get(imageViewNum - 1);
-            if (imageString.equalsIgnoreCase(ttsQuestion)) {
+            if (imageString.equalsIgnoreCase(resTextArray.get(readQuestionNo))) {
                 samajhKeBoloG1L1View.setCelebrationView();
                 scoredMarks = 10;
                 playMusic("Sounds/BilkulSahijawab.mp3", getSdcardPath());

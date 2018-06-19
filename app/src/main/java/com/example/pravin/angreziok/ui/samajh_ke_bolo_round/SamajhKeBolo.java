@@ -74,7 +74,7 @@ public class SamajhKeBolo extends BaseActivity implements SamajhKeBoloContract.S
         gameLevel = intent.getStringExtra("level");
         gameCounter = 0;
         list.clear();
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 2; i++)
             list.add(i);
         Collections.shuffle(list);
         Log.d("games", "\n\n\nShuffle: \n\n\n");
@@ -125,9 +125,10 @@ public class SamajhKeBolo extends BaseActivity implements SamajhKeBoloContract.S
 
 
     @OnClick(R.id.skip_button_intro)
-    public void startGame() {
+    public void startGame(View view) {
         if (mediaPlayerUtil != null)
             mediaPlayerUtil.pauseMedia();
+        view.setClickable(false);
         loadFragment();
     }
 
