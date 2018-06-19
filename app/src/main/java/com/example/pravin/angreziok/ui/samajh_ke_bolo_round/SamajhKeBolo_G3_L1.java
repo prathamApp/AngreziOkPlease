@@ -341,7 +341,7 @@ public class SamajhKeBolo_G3_L1 extends BaseFragment implements SamajhKeBoloCont
                     getActivity().findViewById(R.id.iv_r1g2_submit_ans).setOnClickListener(null);
                     Bundle bundle = new Bundle();
                     gameCounter += 1;
-                    if (gameCounter <= 1) {
+                    if (gameCounter <= 0) {
                         bundle.putString("round", "R1");
                         bundle.putString("level", "l1");
                         bundle.putInt("count", SamajhKeBolo.list.get(gameCounter));

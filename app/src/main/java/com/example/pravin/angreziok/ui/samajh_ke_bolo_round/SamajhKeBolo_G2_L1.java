@@ -301,7 +301,7 @@ public class SamajhKeBolo_G2_L1 extends BaseFragment implements SamajhKeBoloCont
                 public void run() {
                     Bundle bundle = new Bundle();
                     gameCounter += 1;
-                    if (gameCounter <= 1) {
+                    if (gameCounter <= 0) {
                         bundle.putString("round", "R1");
                         bundle.putString("level", "l1");
                         bundle.putInt("count", SamajhKeBolo.list.get(gameCounter));

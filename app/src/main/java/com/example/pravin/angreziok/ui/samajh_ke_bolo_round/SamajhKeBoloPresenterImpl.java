@@ -701,8 +701,7 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
     @Override
     public void checkFinalAnswer_g3_l1(String ans, int currentTeam) {
         int scoredMarks, totalMarks = 10;
-        if (g3l1QuestionData.get(randomNumber).getResourceText().equalsIgnoreCase(ans)) {
-            //  TODO correct answer animation + increase score of group
+        if (ans.contains(g3l1QuestionData.get(randomNumber).getResourceText())) {
             samajhKeBoloG3L1View.setCelebrationView();
             scoredMarks = 10;
             playMusic("Sounds/BilkulSahijawab.mp3", getSdcardPath());
@@ -710,7 +709,6 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
             SamajhKeBolo.playerModalArrayList.get(currentTeam).setStudentScore(String.valueOf(currentTeamScore + 10));
             samajhKeBoloG3L1View.setCurrentScore();
         } else {
-            //  TODO wrong answer animation
             scoredMarks = 0;
             Toast.makeText(mContext, "Wrong", Toast.LENGTH_SHORT).show();
             playMusic("Sounds/wrong.mp3", getSdcardPath());
