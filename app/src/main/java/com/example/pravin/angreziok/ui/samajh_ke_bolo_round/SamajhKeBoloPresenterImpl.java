@@ -751,7 +751,7 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
     public void onComplete() {
         if (audioStartFlagForGame3){
             audioStartFlagForGame3 = false;
-            playMusic(secondFile,getSdcardPath()+"Sounds/SamajhKeBoloGame/");
+            playMusic(secondFile,getSdcardPath()+"Sounds/SayItInEnglish/");
         }
         if (audioStartFlagForGame1){
             audioStartFlagForGame1 = false;

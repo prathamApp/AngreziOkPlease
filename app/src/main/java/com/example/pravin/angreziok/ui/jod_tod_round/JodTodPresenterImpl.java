@@ -155,7 +155,7 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
 
             readQuestionNo = getRandomNumber(0, 4);
             int[] integerArray = getUniqueRandomNumber(0, g1l1QuestionData.size(), 4);
-            String imagePath = sdCardPathString + "images/PicGameL2/";
+            String imagePath = sdCardPathString + "images/PictureGame/";
 
             resTextArray.clear();
             resIdArray.clear();
