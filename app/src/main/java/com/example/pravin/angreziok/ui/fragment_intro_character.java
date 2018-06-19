@@ -212,11 +212,11 @@ public class fragment_intro_character extends BaseFragment {
                             videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/SayItInEnglish.mp4";
                             playVideo(Uri.parse(videoPath));
                             break;
-/*                        case 2:
+                        case 2:
                             instructionsTextView.setText("Compare Game\n\nइस गेम में आपसे एक सवाल पूछा जायेगा|आपको तीन विकल्प दिए जायेंगे| सही विकल्प चुन कर उस शब्द को बोल कर बताओ|");
                             videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/CampareGame.mp4";
                             playVideo(Uri.parse(videoPath));
-                            break;*/
+                            break;
                     }
                     break;
             }

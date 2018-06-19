@@ -578,7 +578,7 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
 
     @Override
     public Integer[] getShuffledOptions() {
-        int[] optionsInt = new int[]{0,1,2};
+        Integer[] optionsInt = new Integer[]{0,1,2};
         List tempList = Arrays.asList(optionsInt);
         Collections.shuffle(tempList);
         return (Integer[]) tempList.toArray();
@@ -648,9 +648,9 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
         } while (optionsIds[0] == randomNumber || optionsIds[1] == randomNumber);
         String[] optionsText = new String[3];
         randomOptions = getUniqueRandomNumber(0, 3, 3);
-        optionsText[randomOptions[0]] = g3l1QuestionData.get(optionsIds[0]).getResourceText();
-        optionsText[randomOptions[1]] = g3l1QuestionData.get(optionsIds[1]).getResourceText();
-        optionsText[randomOptions[2]] = g3l1QuestionData.get(randomNumber).getResourceText();
+        optionsText[randomOptions[0]] = g3l1QuestionData.get(optionsIds[0]).getResourceType();
+        optionsText[randomOptions[1]] = g3l1QuestionData.get(optionsIds[1]).getResourceType();
+        optionsText[randomOptions[2]] = g3l1QuestionData.get(randomNumber).getResourceType();
         return optionsText;
     }
 
@@ -667,7 +667,7 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
         questionId = resourceID;
         samajhKeBoloG3L1View.setQuestionTextNative(questionNative);
         String questionString = g3l1QuestionData.get(randomNumber).getResourceQuestion();
-        samajhKeBoloG3L1View.setQuestionText(questionString +" "+questionNative , questionAudioPath);
+        samajhKeBoloG3L1View.setQuestionText(""+questionString , questionAudioPath);
     }
 
     public void addScore(String studentID, String resourceID, int questionId, int scoredMarks, int totalMarks, String startDateTime, int questionLevel) {
@@ -718,9 +718,9 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
 
     @Override
     public void g3_l1_checkAnswer(String ans) {
-        String actualAns = g3l1QuestionData.get(randomNumber).getResourceText();
+        String actualAns = g3l1QuestionData.get(randomNumber).getResourceType();
 
-        if (ans.equalsIgnoreCase(actualAns)) {
+        if (actualAns.contains(ans)) {
             samajhKeBoloG3L1View.setAnswer(ans);
         } else {
             samajhKeBoloG3L1View.showOptions();

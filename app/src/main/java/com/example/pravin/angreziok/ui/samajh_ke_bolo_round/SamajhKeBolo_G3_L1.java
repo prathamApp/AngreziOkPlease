@@ -262,7 +262,6 @@ public class SamajhKeBolo_G3_L1 extends BaseFragment implements SamajhKeBoloCont
     private void setDataForGame() {
         String path = presenter.getSdcardPath();
         presenter.set_g3_l1_data(path);
-        question.setText("Identify the action?");
     }
 
     private void playTTS() {
