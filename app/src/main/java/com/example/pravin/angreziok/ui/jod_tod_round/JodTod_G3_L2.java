@@ -157,6 +157,7 @@ public class JodTod_G3_L2 extends BaseFragment implements JodTodContract.JodTod_
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setContentView(R.layout.custom_dialog_for_qrscan);
+        dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(false);
         TextView text = dialog.findViewById(R.id.dialog_tv_student_name);
         Button button = dialog.findViewById(R.id.dialog_btn_scan_qr);

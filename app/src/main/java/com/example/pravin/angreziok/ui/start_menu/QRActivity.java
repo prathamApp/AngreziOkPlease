@@ -205,6 +205,7 @@ public class QRActivity extends BaseActivity implements QRContract.StartMenuView
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setContentView(R.layout.custom_dialog_for_qrscan);
+        dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(false);
         ButterKnife.bind(this);
         TextView text = (TextView) dialog.findViewById(R.id.dialog_tv_student_name);
@@ -230,6 +231,7 @@ public class QRActivity extends BaseActivity implements QRContract.StartMenuView
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setContentView(R.layout.custom_dialog_crl_login);
+        dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(false);
         ButterKnife.bind(this);
 

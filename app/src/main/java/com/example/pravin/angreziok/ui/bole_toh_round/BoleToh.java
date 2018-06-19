@@ -58,7 +58,6 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
     @BindView(R.id.skip_button_intro)
     Button btn_skip;
     Boolean pauseFlg = false;
-    static boolean dialogFlag=false;
     static String gameLevel;
     static ArrayList<Integer> list = new ArrayList<Integer>();
 
@@ -166,18 +165,17 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
 
     @Override
     public void onBackPressed() {
-        if(!dialogFlag)
             quitOrNot();
     }
 
     private void quitOrNot() {
-        dialogFlag = true;
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setContentView(R.layout.custom_dialog_quit);
         TextView dialogText = dialog.findViewById(R.id.dialog_tv_student_name);
         dialog.setCanceledOnTouchOutside(false);
+        dialog.setCancelable(false);
         Button replayBtn = dialog.findViewById(R.id.dialog_btn_yes);
         Button quitBtn = dialog.findViewById(R.id.dialog_btn_no);
         ImageView closeBtn = dialog.findViewById(R.id.iv_close_dialog);
@@ -194,7 +192,6 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
             public void onClick(View v) {
                 if (mediaPlayerUtil != null)
                     mediaPlayerUtil.pauseMedia();
-                dialogFlag=false;
                 dialog.dismiss();
             }
         });
@@ -204,7 +201,6 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
             public void onClick(View v) {
                 if (mediaPlayerUtil != null)
                     mediaPlayerUtil.pauseMedia();
-                dialogFlag=false;
                 dialog.dismiss();
                 restartGame();
             }
@@ -215,7 +211,6 @@ public class BoleToh extends BaseActivity implements BoleTohContract.BoleTohView
             public void onClick(View v) {
                 if (mediaPlayerUtil != null)
                     mediaPlayerUtil.pauseMedia();
-                dialogFlag=false;
                 dialog.dismiss();
                 quitGame();
             }

@@ -139,6 +139,7 @@ public class AdminConsole extends BaseActivity implements AdminConsoleContract.A
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setContentView(R.layout.dialog_admin);
+        dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(false);
         Button button_left = dialog.findViewById(R.id.dialog_btn_left);
         Button button_right = dialog.findViewById(R.id.dialog_btn_right);

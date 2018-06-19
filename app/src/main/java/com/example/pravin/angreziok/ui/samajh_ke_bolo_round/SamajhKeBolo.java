@@ -171,6 +171,7 @@ public class SamajhKeBolo extends BaseActivity implements SamajhKeBoloContract.S
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setContentView(R.layout.custom_dialog_quit);
         TextView dialogText = dialog.findViewById(R.id.dialog_tv_student_name);
+        dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(false);
         Button replayBtn = dialog.findViewById(R.id.dialog_btn_yes);
         Button quitBtn = dialog.findViewById(R.id.dialog_btn_no);
