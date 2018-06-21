@@ -389,7 +389,7 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
         g2l2SubList = g2l2QuestionData.get(randomNumber1).getNodelist();
         randomNumber = getRandomNumber(0, g2l2SubList.size());
         questionWord = g2l2SubList.get(randomNumber).getResourceText();
-        questionAudioPath = getSdcardPath() + "Sounds/RhymingGame/" + g2l2SubList.get(randomNumber).getResourceAudio();
+        questionAudioPath = getSdcardPath() + "Sounds/RhymeGame/" + g2l2SubList.get(randomNumber).getResourceAudio();
         Log.d("QAudio", "Question Audio: "+questionAudioPath);
 
         String questionString = g2l2QuestionData.get(randomNumber1).getResourceQuestion();

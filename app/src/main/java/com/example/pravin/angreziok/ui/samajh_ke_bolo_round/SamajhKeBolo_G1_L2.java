@@ -302,21 +302,21 @@ public class SamajhKeBolo_G1_L2 extends BaseFragment implements SamajhKeBoloCont
     public void option1Clicked(View view) {
         // TTS for the options clicked
         TextView option = (TextView) view;
-        playOptions(0,option.getText()+"");
+        playOptions(shuffledOptions[0],option.getText()+"");
     }
 
     @OnClick(R.id.option2)
     public void option2Clicked(View view) {
         // TTS for the options clicked
         TextView option = (TextView) view;
-        playOptions(1,option.getText()+"");
+        playOptions(shuffledOptions[1],option.getText()+"");
     }
 
     @OnClick(R.id.option3)
     public void option3Clicked(View view) {
         // TTS for the options clicked
         TextView option = (TextView) view;
-        playOptions(2,option.getText()+"");
+        playOptions(shuffledOptions[2],option.getText()+"");
     }
 
     public void playOptions(int optionNo,String optionText){

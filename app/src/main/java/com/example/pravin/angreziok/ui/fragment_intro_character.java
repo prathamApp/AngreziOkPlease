@@ -143,13 +143,13 @@ public class fragment_intro_character extends BaseFragment {
                             playVideo(Uri.parse(videoPath));
                             break;
                         case 1:
-                            instructionsTextView.setText("Compare Game\n\nइस गेम में आपसे एक सवाल पूछा जायेगा|आपको तीन विकल्प दिए जायेंगे| सही विकल्प चुन कर उस शब्द को बोल कर बताओ|");
-                            videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/CampareGame.mp4";
+                            instructionsTextView.setText("Say it in English \n\nइस गेम में आप अपनी मातृ भाषा में एक वाक्य सुनेंगे| आपको साथ में 2 अंग्रेजी वाक्य के विकल्प दिए जायेंगे| आपको सही अनुवाद चुनकर उस वाक्य को पढ़ कर सुनना है|");
+                            videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/SayItInEnglish.mp4";
                             playVideo(Uri.parse(videoPath));
                             break;
                         case 2:
-                            instructionsTextView.setText("Say it in English \n\nइस गेम में आप अपनी मातृ भाषा में एक वाक्य सुनेंगे| आपको साथ में 2 अंग्रेजी वाक्य के विकल्प दिए जायेंगे| आपको सही अनुवाद चुनकर उस वाक्य को पढ़ कर सुनना है|");
-                            videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/SayItInEnglish.mp4";
+                            instructionsTextView.setText("Compare Game\n\nइस गेम में आपसे एक सवाल पूछा जायेगा|आपको तीन विकल्प दिए जायेंगे| सही विकल्प चुन कर उस शब्द को बोल कर बताओ|");
+                            videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/CampareGame.mp4";
                             playVideo(Uri.parse(videoPath));
                             break;
                     }
@@ -306,7 +306,7 @@ public class fragment_intro_character extends BaseFragment {
                                     null, SamajhKeBolo_G3_L2.class.getSimpleName());
                             break;
                         case 2:
-                            PD_Utility.showFragment(getActivity(), new SamajhKeBolo_G2_L2(), R.id.cl_samajh_ke_bolo,
+                            PD_Utility.showFragment(getActivity(), new SamajhKeBolo_G1_L2(), R.id.cl_samajh_ke_bolo,
                                     null, SamajhKeBolo_G2_L2.class.getSimpleName());
                             break;
                     }

@@ -352,7 +352,7 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
 
     @Override
     public String getCurrentQuestion_g1_l2() {
-        return g1l2CurrentQuestionList.get(randomNumber).getResourceQuestion();
+        return g1l2CurrentQuestionList.get(0).getResourceQuestion();
     }
 
     @Override
@@ -520,12 +520,12 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
         return g3l2CurrentQuestionList.get(0).getResourceQuestion();
     }
 
-    public String getCurrentQuestionAudio_g3_l2() {
-        return g3l2CurrentQuestionList.get(0).getResourceType();
-    }
-
     public String getCurrentQuestionScript_g3_l2() {
         return g3l2CurrentQuestionList.get(0).getResourceAudio();
+    }
+
+    public String getCurrentQuestionAudio_g3_l2() {
+        return g3l2CurrentQuestionList.get(0).getResourceType();
     }
 
     public String getCurrentQuestionScriptAudio_g3_l2() {
@@ -558,22 +558,20 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
         scoredMarks = 0;
     }
 
+    String[] optionsAudio = new String[3];
     @Override
     public String[] getOptions_g1_l2() {
         String[] options = new String[3];
         for (int i=0;i<3;i++) {
             options[i] = g1l2CurrentQuestionList.get(i).getResourceText();
+            optionsAudio[i] = g1l2CurrentQuestionList.get(i).getResourceType();
         }
         return options;
     }
 
     @Override
     public String[] getOptionsAudio() {
-        String[] options = new String[3];
-        for (int i=0;i<3;i++) {
-            options[i] = g1l2CurrentQuestionList.get(i).getResourceType();
-        }
-        return options;
+        return optionsAudio;
     }
 
     @Override
@@ -602,7 +600,7 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
 
     @Override
     public void checkAnswerOfOptions(String answer, int currentTeam) {
-        if (g3l2CurrentQuestionList.get(0).getResourceText().equalsIgnoreCase(answer)) {
+        if (g3l2CurrentQuestionList.get(0).getResourceText().contains(answer)) {
             int currentTeamScore = Integer.parseInt(playerModalArrayList.get(currentTeam).studentScore);
             playerModalArrayList.get(currentTeam).setStudentScore(String.valueOf(currentTeamScore + 15));
             scoredMarks = 15;
@@ -752,6 +750,7 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
         if (audioStartFlagForGame3){
             audioStartFlagForGame3 = false;
             playMusic(secondFile,getSdcardPath()+"Sounds/SayItInEnglish/");
+            samajhKeBoloG3L2View.timerInit();
         }
         if (audioStartFlagForGame1){
             audioStartFlagForGame1 = false;
