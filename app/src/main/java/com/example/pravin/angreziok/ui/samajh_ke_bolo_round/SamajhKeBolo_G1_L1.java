@@ -79,6 +79,8 @@ public class SamajhKeBolo_G1_L1 extends BaseFragment implements SamajhKeBoloCont
     KonfettiView konfettiView;
     @BindView(R.id.tv_game_title)
     TextView gameTitle;
+    @BindView(R.id.tv_question)
+    TextView questionTv;
 
     int questionConter = 0;
 
@@ -316,6 +318,11 @@ public class SamajhKeBolo_G1_L1 extends BaseFragment implements SamajhKeBoloCont
     @OnClick(R.id.ib_r1g1_speaker)
     public void playQuestion() {
         presenter.playQuestionAudioConsecutively();
+    }
+
+    @Override
+    public void setQuestionText(String whereQuestion) {
+        questionTv.setText("Shaow me a "+whereQuestion);
     }
 
     @Override

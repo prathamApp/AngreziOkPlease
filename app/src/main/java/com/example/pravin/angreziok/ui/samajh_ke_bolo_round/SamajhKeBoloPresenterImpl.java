@@ -209,7 +209,7 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
             setQuestionStartTime();
             studentID = studId;
             resourceID = g1l1List.get(integerArray[readQuestionNo]).getResourceId();
-//            correctAns = g1l1List.get(integerArray[readQuestionNo]).getResourceText();
+            correctAns = g1l1List.get(integerArray[readQuestionNo]).getResourceText();
             questionId = resourceID;
 
             for (int i = 0; i < 2; i++) {
@@ -222,7 +222,7 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
             Bitmap[] bitmap = new Bitmap[]{BitmapFactory.decodeFile(imagePath + resImageArray.get(0)),
                     BitmapFactory.decodeFile(imagePath + resImageArray.get(1))};
             samajhKeBoloG1L1View.setQuestionImgs(readQuestionNo, bitmap);
-
+            samajhKeBoloG1L1View.setQuestionText(""+correctAns);
         } catch (Exception e) {
             e.printStackTrace();
         }

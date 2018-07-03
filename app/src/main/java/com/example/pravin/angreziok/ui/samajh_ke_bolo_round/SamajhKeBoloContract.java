@@ -68,6 +68,7 @@ public interface SamajhKeBoloContract {
         void setQuestionImgs(int readQuesNo, android.graphics.Bitmap... bitmaps);
         void setCelebrationView();
         void setCurrentScore();
+        void setQuestionText(String question);
         void setGameTitleFromJson(String gameName);
     }
 

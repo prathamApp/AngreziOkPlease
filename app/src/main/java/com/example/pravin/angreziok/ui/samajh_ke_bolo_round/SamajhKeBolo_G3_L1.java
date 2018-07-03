@@ -276,7 +276,6 @@ public class SamajhKeBolo_G3_L1 extends BaseFragment implements SamajhKeBoloCont
         question.setText(questionString);
     }
 
-
     private void startTimer() {
         mCountDownTimer.ready();
         mCountDownTimer.start(timeOfTimer);

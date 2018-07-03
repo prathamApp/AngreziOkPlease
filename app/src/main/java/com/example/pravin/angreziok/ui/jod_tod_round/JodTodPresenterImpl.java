@@ -174,7 +174,7 @@ public class JodTodPresenterImpl implements JodTodContract.JodTodPresenter, Medi
                 Collections.shuffle(g1l1SubData);
                 resTextArray.add(g1l1SubData.get(0).getResourceText());
                 resImageArray.add(g1l1SubData.get(0).getResourceImage());
-                resAudioArray.add(g1l1SubData.get(0).getResourceImage());
+                resAudioArray.add(g1l1SubData.get(0).getNodeDesc());
                 resIdArray.add(g1l1SubData.get(0).getResourceId());
             }
             Bitmap[] bitmap = new Bitmap[]{BitmapFactory.decodeFile(imagePath + resImageArray.get(0)),

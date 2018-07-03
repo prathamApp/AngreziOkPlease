@@ -161,20 +161,19 @@ public class fragment_intro_character extends BaseFragment {
                     frag = 1;
                     switch (count) {
                         case 0:
-                            instructionsTextView.setText("Picture Game\n\nLEVEL 1");
-                            videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/PictureGame.mp4";
+                            instructionsTextView.setText("Picture Game\n\nआप पर्दे पर चार चित्र देखेंगे| मैं जो शब्द बोलूंगी उसे ध्यान से सुनो और  सही चित्र पर क्लिक करों|");
+                            videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/PictureGameL1.mp4";
                             playVideo(Uri.parse(videoPath));
                             break;
                         case 1:
-                            instructionsTextView.setText("Action Game\n\nआप पर्दे पर एक क्रिया देखेंगे|\n" +
-                                    "उस क्रिया का नाम अंग्रेजी में बताईयें|");
-                            videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/ActionGame.mp4";
+                            instructionsTextView.setText("Action Game\n\nआप पर्दे पर चार क्रियायें देखेंगे| मैं जो क्रिया शब्द बोलूंगी उसे ध्यान से सुनो और सही चित्र पर क्लिक करों|");
+                            videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/ActionGameL1.mp4";
                             playVideo(Uri.parse(videoPath));
                             break;
                         case 2:
-                            instructionsTextView.setText("Pairs Game\n\n इस गेम में आप पर्दे पर दो चित्र देखेंगे|\n" +
-                                    "मैं आपको पहले चित्र के बारें में बताउंगी| आप  मुझे उसी तरह दुसरे चित्र के बारें में बताओ|");
-                            videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/PairsGame.mp4";
+                            instructionsTextView.setText("Pairs Game\n\nइस गेम में आप पर्दे पर दो चित्र देखेंगे|\n " +
+                                    "मैं आपको एक चित्र के बारें में बताउंगी| आपको उस चित्र पर क्लिक करना है|");
+                            videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/PairGameL1.mp4";
                             playVideo(Uri.parse(videoPath));
                             break;
                     }
@@ -183,18 +182,19 @@ public class fragment_intro_character extends BaseFragment {
                     frag = 2;
                     switch (count) {
                         case 0:
-                            instructionsTextView.setText("Alphabets Game");
-                            videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/AlphabetGame.mp4";
+                            instructionsTextView.setText("Alphabets Game\n\n\"अब आप पर्दे पर एक अक्षर देखेंगे और उसकी आवाज़ सुनेंगे| आप पर्दे पर चार चित्र भी देखेंगे|\n" +
+                                    "आपको दिए गए अक्षर से शुरू होने वाले चित्र पर क्लिक करना है|");
+                            videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/AlphabetGameL1.mp4";
                             playVideo(Uri.parse(videoPath));
                             break;
                         case 1:
-                            instructionsTextView.setText("Alphabets Game");
-                            videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/AlphabetGame.mp4";
+                            instructionsTextView.setText("Rhyming Game\n\n\"आप पर्दे पर तीन शब्द देखेंगे| मैं आपके लिए पहला शब्द पढूंगी| आप मुझे बाक़ी दो शब्द पढ़कर सुनाओ|");
+                            videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/RhymingGameL1.mp4";
                             playVideo(Uri.parse(videoPath));
                             break;
                         case 2:
-                            instructionsTextView.setText("Alphabets Game");
-                            videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/AlphabetGame.mp4";
+                            instructionsTextView.setText("Listen and Spell\n\nइस गेम में आपको अक्षर से खाली स्थान भर कर एक शब्द बनाना है| और जानकारी के लिए यह विडियो देखे| ");
+                            videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/ListenAndSpellL1.mp4";
                             playVideo(Uri.parse(videoPath));
                             break;
                     }
@@ -203,13 +203,14 @@ public class fragment_intro_character extends BaseFragment {
                     frag = 3;
                     switch (count) {
                         case 0:
-                            instructionsTextView.setText("Where-When Game\n\nआपको एक चित्र के बारें में सवाल पूछा जायेगा| आपको उस सवाल का सही जवाब देना है|");
-                            videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/WhereGame.mp4";
+                            instructionsTextView.setText("Where-When Game\n\nइस गेम में आप पर्दे पर दो चित्र देखेंगे|\n" +
+                                    "मैं आपको एक चित्र के बारें में बताउंगी| आपको उस चित्र पर क्लिक करना है|");
+                            videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/WhereGameL1.mp4";
                             playVideo(Uri.parse(videoPath));
                             break;
                         case 1:
-                            instructionsTextView.setText("Say it in English \n\nइस गेम में आप अपनी मातृ भाषा में एक वाक्य सुनेंगे| आपको साथ में 2 अंग्रेजी वाक्य के विकल्प दिए जायेंगे| आपको सही अनुवाद चुनकर उस वाक्य को पढ़ कर सुनना है|");
-                            videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/SayItInEnglish.mp4";
+                            instructionsTextView.setText("Say it in English \n\nइस गेम में आप अपनी मातृ भाषा में एक वाक्य सुनेंगे| आप हमें उस वाक्य का अंग्रेजी में सही अनुवाद बताएँ |");
+                            videoPath = PD_Utility.getExternalPath(getActivity()) + "Videos/SayItInEnglishL1.mp4";
                             playVideo(Uri.parse(videoPath));
                             break;
                         case 2:
