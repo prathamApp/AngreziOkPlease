@@ -452,6 +452,7 @@ public class SamajhKeBoloPresenterImpl implements SamajhKeBoloContract.SamajhKeB
                 mediaPlayerUtil = new MediaPlayerUtil(mContext);
                 mediaPlayerUtil.initCallback(SamajhKeBoloPresenterImpl.this);
             }
+            Log.d("Data", "playMusicConsecutively: "+path + firstFileName);
             mediaPlayerUtil.playMedia(path + firstFileName);
         } catch (Exception e) {
             e.printStackTrace();

@@ -322,7 +322,7 @@ public class SamajhKeBolo_G1_L1 extends BaseFragment implements SamajhKeBoloCont
 
     @Override
     public void setQuestionText(String whereQuestion) {
-        questionTv.setText("Shaow me a "+whereQuestion);
+        questionTv.setText("Show me - "+whereQuestion);
     }
 
     @Override

@@ -12,5 +12,6 @@ public interface QRContract {
 
     public interface StartMenuPresenter {
         void displayToast();
+        void playMusic();
     }
 }

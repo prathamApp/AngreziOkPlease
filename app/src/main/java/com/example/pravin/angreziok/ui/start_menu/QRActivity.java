@@ -87,6 +87,7 @@ public class QRActivity extends BaseActivity implements QRContract.StartMenuView
         playerModalList = new ArrayList<>();
         mScannerView.setResultHandler(this);
         content_frame.addView((mScannerView));
+        //presenter.playMusic();
 
         initCamera();
         /* 1) In case migration needed and no problem with data loss then this would work

@@ -94,7 +94,7 @@ public class JodTod_G2_L1 extends BaseFragment implements JodTodContract.JodTod_
     int currentTeam, score = 0, timeOfTimer = 20000, clickedMike;
     float totalAnsCounter = 0f, correctAnsCounter = 0f;
     Dialog dialog;
-    boolean timerEnd = false, firstAns, secondAns,playingThroughTts = false;
+    boolean timerEnd = false, firstAns, secondAns, playingThroughTts = true;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
